@@ -4,5 +4,8 @@
     "ultracite/biome/core",
     "ultracite/biome/remix",
     "ultracite/biome/react"
-  ]
+  ],
+  "files": {
+    "includes": ["!bun.lock", "!.agents", "!.cursor"]
+  }
 }
