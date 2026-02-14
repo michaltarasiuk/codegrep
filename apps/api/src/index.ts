@@ -1,4 +1,3 @@
-import "dotenv/config";
 import { Elysia } from "elysia";
 import { env } from "./lib/env";
 import { authModule } from "./modules/auth/controller";
