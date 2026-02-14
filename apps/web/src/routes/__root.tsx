@@ -21,9 +21,6 @@ function RootComponent() {
           <Button variant="invisible">Sign in</Button>
         </Header.Item>
         <Header.Item>
-          <Button>Sign up</Button>
-        </Header.Item>
-        <Header.Item>
           <IconButton aria-label="Appearance settings" icon={SlidersIcon} />
         </Header.Item>
       </Header>
