@@ -1,5 +1,5 @@
 {
-  "name": "web",
+  "name": "@repo/web",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -7,11 +7,16 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@primer/react-brand": "^0.64.0",
+    "@primer/octicons-react": "^19.22.0",
+    "@primer/primitives": "^11.4.0",
+    "@primer/react": "^38.11.0",
+    "@repo/tsconfig": "workspace:*",
     "@tanstack/react-router": "^1.159.10",
     "@tanstack/react-router-devtools": "^1.159.10",
+    "better-auth": "^1.4.18",
     "react": "^19.2.0",
-    "react-dom": "^19.2.0"
+    "react-dom": "^19.2.0",
+    "zod": "^4.3.6"
   },
   "devDependencies": {
     "@tanstack/router-plugin": "^1.159.12",

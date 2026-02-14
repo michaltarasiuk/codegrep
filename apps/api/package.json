@@ -1,0 +1,25 @@
+{
+  "name": "@repo/api",
+  "scripts": {
+    "dev": "bun run --watch src/index.ts",
+    "db:up": "docker compose up -d db",
+    "db:down": "docker compose down",
+    "db:push": "drizzle-kit push",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate",
+    "db:studio": "drizzle-kit studio"
+  },
+  "dependencies": {
+    "@repo/tsconfig": "workspace:*",
+    "better-auth": "^1.4.18",
+    "drizzle-orm": "^0.45.1",
+    "elysia": "latest",
+    "pg": "^8.18.0",
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "@types/pg": "^8.16.0",
+    "bun-types": "latest",
+    "drizzle-kit": "^0.31.9"
+  }
+}

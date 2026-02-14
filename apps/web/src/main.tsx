@@ -1,6 +1,7 @@
-import "@primer/react-brand/lib/css/main.css";
+import "@primer/primitives/dist/css/functional/themes/light.css";
+import "@primer/primitives/dist/css/functional/themes/dark.css";
 
-import { AnimationProvider, ThemeProvider } from "@primer/react-brand";
+import { BaseStyles, ThemeProvider } from "@primer/react";
 import { createRouter, RouterProvider } from "@tanstack/react-router";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
@@ -24,10 +25,10 @@ if (!rootElement) {
 
 createRoot(rootElement).render(
   <StrictMode>
-    <ThemeProvider>
-      <AnimationProvider>
+    <ThemeProvider colorMode="auto">
+      <BaseStyles>
         <RouterProvider router={router} />
-      </AnimationProvider>
+      </BaseStyles>
     </ThemeProvider>
   </StrictMode>
 );
