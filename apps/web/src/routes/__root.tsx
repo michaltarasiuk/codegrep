@@ -1,6 +1,7 @@
 import { MarkGithubIcon, SlidersIcon } from "@primer/octicons-react";
 import { Button, Header, IconButton, Stack } from "@primer/react";
 import { createRootRoute, Outlet } from "@tanstack/react-router";
+import { signIn } from "@/lib/auth-client";
 
 export const Route = createRootRoute({
   component: RootComponent,
@@ -18,7 +19,16 @@ function RootComponent() {
           </Header.Link>
         </Header.Item>
         <Header.Item>
-          <Button variant="invisible">Sign in</Button>
+          <Button
+            onClick={() =>
+              signIn.social({
+                provider: "github",
+              })
+            }
+            variant="invisible"
+          >
+            Sign in
+          </Button>
         </Header.Item>
         <Header.Item>
           <IconButton aria-label="Appearance settings" icon={SlidersIcon} />

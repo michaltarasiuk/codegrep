@@ -1,15 +1,13 @@
 import { Elysia } from "elysia";
 import { authService } from "./service";
 
-const BETTER_AUTH_ACCEPT_METHODS = ["GET", "POST"];
+const ALLOWED_METHODS = new Set(["GET", "POST"]);
 
-export const authModule = new Elysia({ prefix: "/api/auth" }).all(
-  "*",
-  (context) => {
-    if (!BETTER_AUTH_ACCEPT_METHODS.includes(context.request.method)) {
-      context.set.status = 405;
+export const authPlugin = new Elysia({ name: "auth" })
+  .onBeforeHandle(({ request, set }) => {
+    if (!ALLOWED_METHODS.has(request.method)) {
+      set.status = 405;
       return "Method Not Allowed";
     }
-    return authService.handler(context.request);
-  }
-);
+  })
+  .mount("/api/auth", authService.handler);
