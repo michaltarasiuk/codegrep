@@ -26,7 +26,6 @@ function RootComponent() {
                 callbackURL: `${window.location.origin}/`,
               })
             }
-            variant="invisible"
           >
             Sign in
           </Button>
