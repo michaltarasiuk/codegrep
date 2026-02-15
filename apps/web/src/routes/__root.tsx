@@ -1,6 +1,7 @@
-import { MarkGithubIcon, SlidersIcon } from "@primer/octicons-react";
-import { Button, Header, IconButton, Stack } from "@primer/react";
+import { MarkGithubIcon } from "@primer/octicons-react";
+import { Button, Header, Stack } from "@primer/react";
 import { createRootRoute, Outlet } from "@tanstack/react-router";
+import { AppearanceSettings } from "@/components/appearance-settings";
 import { signIn } from "@/lib/auth-client";
 
 export const Route = createRootRoute({
@@ -31,7 +32,7 @@ function RootComponent() {
           </Button>
         </Header.Item>
         <Header.Item>
-          <IconButton aria-label="Appearance settings" icon={SlidersIcon} />
+          <AppearanceSettings />
         </Header.Item>
       </Header>
       <Outlet />
