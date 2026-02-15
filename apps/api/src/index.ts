@@ -4,7 +4,7 @@ import { env } from "@/lib/env";
 import { authPlugin } from "./modules/auth";
 
 new Elysia()
-  .use(cors({ origin: env.WEB_URL }))
+  .use(cors())
   .use(authPlugin)
   .listen(env.SERVER_PORT, ({ hostname, port }) => {
     console.log(`Server running at http://${hostname}:${port}`);

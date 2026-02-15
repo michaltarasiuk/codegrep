@@ -2,7 +2,6 @@ import { z } from "zod";
 
 const EnvSchema = z.object({
   SERVER_PORT: z.string(),
-  WEB_URL: z.url(),
   DATABASE_URL: z.url(),
   BETTER_AUTH_SECRET: z.string(),
   BETTER_AUTH_URL: z.url(),
