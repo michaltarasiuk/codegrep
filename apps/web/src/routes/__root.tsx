@@ -23,6 +23,7 @@ function RootComponent() {
             onClick={() =>
               signIn.social({
                 provider: "github",
+                callbackURL: `${window.location.origin}/`,
               })
             }
             variant="invisible"
