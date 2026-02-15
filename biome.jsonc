@@ -5,6 +5,13 @@
     "ultracite/biome/remix",
     "ultracite/biome/react"
   ],
+  "linter": {
+    "rules": {
+      "style": {
+        "noNonNullAssertion": "off"
+      }
+    }
+  },
   "files": {
     "includes": ["!bun.lock", "!.agents", "!.cursor"]
   }
