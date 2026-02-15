@@ -1,7 +1,7 @@
 import { cors } from "@elysiajs/cors";
 import { Elysia } from "elysia";
 import { env } from "@/lib/env";
-import { authPlugin } from "./modules/auth/controller";
+import { authPlugin } from "./modules/auth";
 
 new Elysia()
   .use(cors({ origin: env.WEB_URL }))
