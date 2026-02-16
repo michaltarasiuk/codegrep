@@ -13,7 +13,7 @@
   let {
     ref = $bindable(null),
     open = $bindable(true),
-    onOpenChange = () => {},
+    onOpenChange = () => undefined,
     class: className,
     style,
     children,

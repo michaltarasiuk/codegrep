@@ -5,7 +5,7 @@
     "dev": "turbo run dev",
     "build": "turbo run build",
     "typecheck": "turbo run typecheck",
-    "check": "ultracite check",
+    "check": "ultracite check && turbo run typecheck",
     "fix": "ultracite fix"
   },
   "devDependencies": {

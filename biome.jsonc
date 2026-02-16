@@ -7,9 +7,6 @@
   ],
   "linter": {
     "rules": {
-      "complexity": {
-        "useOptionalChain": "off"
-      },
       "correctness": {
         "noUndeclaredVariables": "off"
       },
@@ -20,16 +17,11 @@
       "style": {
         "noExportedImports": "off",
         "noNonNullAssertion": "off",
-        "useConsistentTypeDefinitions": "off",
-        "useReadonlyClassProperties": "off",
-        "useTemplate": "off"
+        "useReadonlyClassProperties": "off"
       },
       "suspicious": {
         "noAssignInExpressions": "off",
-        "noDocumentCookie": "off",
-        "noEmptyBlockStatements": "off",
-        "noEvolvingTypes": "off",
-        "noExplicitAny": "off"
+        "noDocumentCookie": "off"
       }
     }
   },

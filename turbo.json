@@ -8,9 +8,6 @@
     "dev": {
       "persistent": true
     },
-    "preview": {
-      "persistent": true
-    },
     "typecheck": {}
   }
 }
