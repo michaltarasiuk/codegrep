@@ -2,6 +2,7 @@
   import * as Sidebar from "$lib/components/ui/sidebar/index.js";
   import type { ComponentProps } from "svelte";
   import NavUser from "./nav-user.svelte";
+  import ThemeToggle from "./theme-toggle.svelte";
 
   let { ...restProps }: ComponentProps<typeof Sidebar.Root> = $props();
 </script>
@@ -17,5 +18,6 @@
                 avatar: "https://avatars.githubusercontent.com/u/69385846",
             }}
     />
+    <ThemeToggle />
   </Sidebar.Footer>
 </Sidebar.Root>
