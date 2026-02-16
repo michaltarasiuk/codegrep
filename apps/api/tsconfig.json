@@ -1,9 +1,26 @@
 {
-  "extends": "@repo/tsconfig/node.json",
+  "$schema": "https://json.schemastore.org/tsconfig",
   "compilerOptions": {
+    "strict": true,
+    "strictNullChecks": true,
+    "noUnusedParameters": true,
+    "noUnusedLocals": true,
+    "noFallthroughCasesInSwitch": true,
+    "types": ["bun-types"],
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"]
-    }
+      "$/*": ["src/*"]
+    },
+    "noUncheckedSideEffectImports": true,
+    "moduleResolution": "node",
+    "module": "ES2022",
+    "noEmit": true,
+    "verbatimModuleSyntax": true,
+    "forceConsistentCasingInFileNames": true,
+    "esModuleInterop": true,
+    "erasableSyntaxOnly": true,
+    "target": "ES2021",
+    "moduleDetection": "force",
+    "skipLibCheck": true
   }
 }

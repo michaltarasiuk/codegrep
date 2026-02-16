@@ -1,6 +1,7 @@
 {
-  "name": "@repo/api",
+  "name": "api",
   "scripts": {
+    "typecheck": "tsc --noEmit",
     "dev": "bun run --watch src/index.ts",
     "db:up": "docker compose up -d db",
     "db:down": "docker compose down",
@@ -11,7 +12,6 @@
   },
   "dependencies": {
     "@elysiajs/cors": "^1.4.1",
-    "@repo/tsconfig": "workspace:*",
     "better-auth": "^1.4.18",
     "drizzle-orm": "^0.45.1",
     "elysia": "latest",

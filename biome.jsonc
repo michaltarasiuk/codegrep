@@ -2,13 +2,34 @@
   "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
   "extends": [
     "ultracite/biome/core",
-    "ultracite/biome/remix",
-    "ultracite/biome/react"
+    "ultracite/biome/astro",
+    "ultracite/biome/svelte"
   ],
   "linter": {
     "rules": {
+      "complexity": {
+        "useOptionalChain": "off"
+      },
+      "correctness": {
+        "noUndeclaredVariables": "off"
+      },
+      "performance": {
+        "noBarrelFile": "off",
+        "noNamespaceImport": "off"
+      },
       "style": {
-        "noNonNullAssertion": "off"
+        "noExportedImports": "off",
+        "noNonNullAssertion": "off",
+        "useConsistentTypeDefinitions": "off",
+        "useReadonlyClassProperties": "off",
+        "useTemplate": "off"
+      },
+      "suspicious": {
+        "noAssignInExpressions": "off",
+        "noDocumentCookie": "off",
+        "noEmptyBlockStatements": "off",
+        "noEvolvingTypes": "off",
+        "noExplicitAny": "off"
       }
     }
   },

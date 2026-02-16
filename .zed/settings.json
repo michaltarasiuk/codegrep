@@ -46,6 +46,5 @@
         "source.organizeImports.biome": true
       }
     }
-  },
-  "file_scan_exclusions": ["**/routeTree.gen.ts"]
+  }
 }
