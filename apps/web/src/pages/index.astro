@@ -1,7 +1,33 @@
 ---
 import "../styles/global.css";
+import { ModeWatcher } from "mode-watcher";
 import AppLayout from "../lib/components/app-layout.svelte";
 ---
+
+<script is:inline>
+  const isBrowser = typeof localStorage !== "undefined";
+  const getThemePreference = () => {
+    if (isBrowser && localStorage.getItem("theme")) {
+      return localStorage.getItem("theme");
+    }
+    return window.matchMedia("(prefers-color-scheme: dark)").matches
+      ? "dark"
+      : "light";
+  };
+  const isDark = getThemePreference() === "dark";
+  document.documentElement.classList[isDark ? "add" : "remove"]("dark");
+
+  if (isBrowser) {
+    const observer = new MutationObserver(() => {
+      const isDark = document.documentElement.classList.contains("dark");
+      localStorage.setItem("theme", isDark ? "dark" : "light");
+    });
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["class"],
+    });
+  }
+</script>
 
 <html lang="en">
   <head>
@@ -14,5 +40,6 @@ import AppLayout from "../lib/components/app-layout.svelte";
   </head>
   <body>
     <AppLayout client:load />
+    <ModeWatcher client:load />
   </body>
 </html>
