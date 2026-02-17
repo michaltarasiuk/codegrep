@@ -12,15 +12,11 @@
     });
     return unsub;
   });
-
-  function handleToggle() {
-    toggleMode();
-  }
 </script>
 
 <Sidebar.Menu>
   <Sidebar.MenuItem>
-    <Sidebar.MenuButton onclick={handleToggle}>
+    <Sidebar.MenuButton onclick={toggleMode}>
       {#if isDark}
         <SunIcon />
         Light mode

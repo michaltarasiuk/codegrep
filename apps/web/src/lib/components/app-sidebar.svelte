@@ -13,10 +13,10 @@
   <Sidebar.Footer>
     <NavUser
       user={{
-                name: "John Doe",
-                email: "john.doe@gmail.com",
-                avatar: "https://avatars.githubusercontent.com/u/69385846",
-            }}
+        name: "John Doe",
+        email: "john.doe@gmail.com",
+        avatar: "https://avatars.githubusercontent.com/u/69385846",
+      }}
     />
     <ThemeToggle />
   </Sidebar.Footer>

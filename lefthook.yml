@@ -1,7 +1,7 @@
 pre-commit:
   jobs:
-    - run: bun x ultracite fix
-      glob:
+    - run: bun x prettier --write {staged_files}
+      glob: &source-glob
         - "**/*.js"
         - "**/*.jsx"
         - "**/*.ts"
@@ -9,4 +9,10 @@ pre-commit:
         - "**/*.json"
         - "**/*.jsonc"
         - "**/*.css"
+        - "**/*.svelte"
+        - "**/*.astro"
       stage_fixed: true
+    - run: bun x ultracite fix
+      glob: *source-glob
+      stage_fixed: true
+    - run: bun run typecheck

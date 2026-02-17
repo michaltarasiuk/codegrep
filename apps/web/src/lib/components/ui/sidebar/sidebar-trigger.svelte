@@ -25,9 +25,9 @@
   class={cn("size-7", className)}
   type="button"
   onclick={(e) => {
-		onclick?.(e);
-		sidebar.toggle();
-	}}
+    onclick?.(e);
+    sidebar.toggle();
+  }}
   {...restProps}
 >
   <PanelLeftIcon />

@@ -5,6 +5,9 @@
     "ultracite/biome/astro",
     "ultracite/biome/svelte"
   ],
+  "formatter": {
+    "enabled": false
+  },
   "linter": {
     "rules": {
       "correctness": {
