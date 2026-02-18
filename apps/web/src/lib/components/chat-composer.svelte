@@ -8,7 +8,7 @@
   <InputGroup.Textarea placeholder="Ask, Search or Chat..." />
   <InputGroup.Addon align="block-end">
     <InputGroup.Text class="ms-auto">52% used</InputGroup.Text>
-    <Separator orientation="vertical" class="!h-4" />
+    <Separator orientation="vertical" />
     <InputGroup.Button
       variant="default"
       class="rounded-full"
