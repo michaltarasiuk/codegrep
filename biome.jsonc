@@ -18,6 +18,9 @@
       "correctness": {
         "noUndeclaredVariables": "off"
       },
+      "nursery": {
+        "useSortedClasses": "off"
+      },
       "performance": {
         "noBarrelFile": "off",
         "noNamespaceImport": "off"
