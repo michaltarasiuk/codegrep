@@ -14,16 +14,14 @@
   });
 </script>
 
-<Sidebar.Menu>
-  <Sidebar.MenuItem>
-    <Sidebar.MenuButton onclick={toggleMode}>
-      {#if isDark}
-        <SunIcon />
-        Light mode
-      {:else}
-        <MoonIcon />
-        Dark mode
-      {/if}
-    </Sidebar.MenuButton>
-  </Sidebar.MenuItem>
-</Sidebar.Menu>
+<Sidebar.MenuItem>
+  <Sidebar.MenuButton onclick={toggleMode}>
+    {#if isDark}
+      <SunIcon />
+      Light mode
+    {:else}
+      <MoonIcon />
+      Dark mode
+    {/if}
+  </Sidebar.MenuButton>
+</Sidebar.MenuItem>

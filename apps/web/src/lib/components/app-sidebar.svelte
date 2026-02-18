@@ -1,8 +1,10 @@
 <script lang="ts">
   import type { Snippet } from "svelte";
+  import GithubIcon from "@lucide/svelte/icons/github";
+  import PlusIcon from "@lucide/svelte/icons/plus";
   import * as Sidebar from "$lib/components/ui/sidebar/index.js";
-  import UserMenu from "./user-menu.svelte";
-  import ThemeToggle from "./theme-toggle.svelte";
+  import UserMenuItem from "./user-menu-item.svelte";
+  import ThemeMenuItem from "./theme-menu-item.svelte";
 
   interface Props {
     children: Snippet;
@@ -14,18 +16,29 @@
 <Sidebar.Provider
   style="--sidebar-width: calc(var(--spacing) * 72); --header-height: calc(var(--spacing) * 12);"
 >
-  <Sidebar.Root collapsible="offcanvas" variant="inset">
-    <Sidebar.Header />
+  <Sidebar.Root variant="inset">
+    <Sidebar.Header>
+      <Sidebar.Menu>
+        <Sidebar.MenuItem>
+          <Sidebar.MenuButton>
+            <PlusIcon />
+            New chat
+          </Sidebar.MenuButton>
+        </Sidebar.MenuItem>
+      </Sidebar.Menu>
+    </Sidebar.Header>
     <Sidebar.Content />
     <Sidebar.Footer>
-      <UserMenu
-        user={{
-          name: "John Doe",
-          email: "john.doe@gmail.com",
-          avatar: "https://avatars.githubusercontent.com/u/69385846",
-        }}
-      />
-      <ThemeToggle />
+      <Sidebar.Menu>
+        <UserMenuItem
+          user={{
+            name: "John Doe",
+            email: "john.doe@gmail.com",
+            avatar: "https://avatars.githubusercontent.com/u/69385846",
+          }}
+        />
+        <ThemeMenuItem />
+      </Sidebar.Menu>
     </Sidebar.Footer>
   </Sidebar.Root>
   <Sidebar.Inset>
