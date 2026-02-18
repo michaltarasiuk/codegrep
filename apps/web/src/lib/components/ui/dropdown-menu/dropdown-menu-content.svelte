@@ -28,5 +28,4 @@
     )}
     {...restProps}
   />
-  w
 </DropdownMenuPortal>
