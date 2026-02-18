@@ -8,6 +8,11 @@
   "formatter": {
     "enabled": false
   },
+  "html": {
+    "formatter": {
+      "selfCloseVoidElements": "always"
+    }
+  },
   "linter": {
     "rules": {
       "correctness": {
