@@ -1,7 +1,14 @@
 <script lang="ts">
+  import type { Snippet } from "svelte";
   import * as Sidebar from "$lib/components/ui/sidebar/index.js";
   import UserMenu from "./user-menu.svelte";
   import ThemeToggle from "./theme-toggle.svelte";
+
+  interface Props {
+    children: Snippet;
+  }
+
+  const { children }: Props = $props();
 </script>
 
 <Sidebar.Provider
@@ -29,6 +36,6 @@
         <Sidebar.Trigger class="-ms-1" />
       </div>
     </header>
-    <slot />
+    {@render children()}
   </Sidebar.Inset>
 </Sidebar.Provider>
