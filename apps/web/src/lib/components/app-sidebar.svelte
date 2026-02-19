@@ -1,6 +1,5 @@
 <script lang="ts">
   import type { Snippet } from "svelte";
-  import GithubIcon from "@lucide/svelte/icons/github";
   import PlusIcon from "@lucide/svelte/icons/plus";
   import * as Sidebar from "$lib/components/ui/sidebar/index.js";
   import UserMenuItem from "./user-menu-item.svelte";
