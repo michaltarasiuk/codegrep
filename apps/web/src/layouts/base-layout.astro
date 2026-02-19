@@ -1,6 +1,7 @@
 ---
 import "$styles/global.css";
 import { ModeWatcher } from "mode-watcher";
+import AppCommand from "$lib/components/app-command.svelte";
 import AppSidebar from "$lib/components/app-sidebar.svelte";
 ---
 
@@ -39,6 +40,7 @@ import AppSidebar from "$lib/components/app-sidebar.svelte";
     <title>GitHub Grep</title>
   </head>
   <body>
+    <AppCommand client:load />
     <AppSidebar client:load>
       <slot />
     </AppSidebar>
