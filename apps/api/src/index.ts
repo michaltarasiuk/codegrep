@@ -1,6 +1,8 @@
 import { cors } from "@elysiajs/cors";
 import { Elysia } from "elysia";
+
 import { env } from "$/lib/env";
+
 import { authPlugin } from "./modules/auth";
 
 new Elysia()

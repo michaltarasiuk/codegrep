@@ -3,11 +3,13 @@
   "type": "module",
   "version": "0.0.1",
   "scripts": {
+    "astro": "astro",
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "typecheck": "tsc --noEmit",
-    "astro": "astro"
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "type:check": "tsc --noEmit"
   },
   "dependencies": {
     "@astrojs/svelte": "^7.2.5",

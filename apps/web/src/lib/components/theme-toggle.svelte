@@ -2,6 +2,7 @@
   import MoonIcon from "@lucide/svelte/icons/moon";
   import SunIcon from "@lucide/svelte/icons/sun";
   import { mode, toggleMode } from "mode-watcher";
+
   import * as Sidebar from "$lib/components/ui/sidebar/index.js";
 
   let isDark = $state(false);

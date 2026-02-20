@@ -1,5 +1,6 @@
 <script lang="ts">
   import ArrowUpIcon from "@lucide/svelte/icons/arrow-up";
+
   import * as InputGroup from "$lib/components/ui/input-group/index.js";
   import { Separator } from "$lib/components/ui/separator/index.js";
 </script>

@@ -1,9 +1,11 @@
 <script lang="ts">
-  import type { Snippet } from "svelte";
   import PlusIcon from "@lucide/svelte/icons/plus";
+  import type { Snippet } from "svelte";
+
   import * as Sidebar from "$lib/components/ui/sidebar/index.js";
-  import UserAccountMenu from "./user-account-menu.svelte";
+
   import ThemeToggle from "./theme-toggle.svelte";
+  import UserAccountMenu from "./user-account-menu.svelte";
 
   interface Props {
     children: Snippet;

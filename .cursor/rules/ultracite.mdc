@@ -1,6 +1,12 @@
 # Code Standards
 
-This project uses **Prettier** for formatting (including Astro and Svelte). Run `bun run format` to format, or `bun run fix` before committing.
+This project uses **Prettier** for formatting and **ESLint flat config** for linting across Astro, Svelte, and TypeScript.
+
+Run these commands before committing:
+
+- `bun run format`
+- `bun run lint`
+- `bun run type:check`
 
 ---
 
@@ -32,20 +38,17 @@ Write code that is **accessible, performant, type-safe, and maintainable**. Focu
 - Handle errors appropriately in async code with try-catch blocks
 - Don't use async functions as Promise executors
 
-### React & JSX
+### Astro & Svelte
 
-- Use function components over class components
-- Call hooks at the top level only, never conditionally
-- Specify all dependencies in hook dependency arrays correctly
-- Use the `key` prop for elements in iterables (prefer unique IDs over array indices)
-- Nest children between opening and closing tags instead of passing as props
-- Don't define components inside other components
+- Prefer Svelte 5 runes patterns already used in the codebase (`$props`, `$bindable`)
+- Keep component APIs typed (prop types and exported API aliases where useful)
 - Use semantic HTML and ARIA attributes for accessibility:
   - Provide meaningful alt text for images
   - Use proper heading hierarchy
   - Add labels for form inputs
   - Include keyboard event handlers alongside mouse events
   - Use semantic elements (`<button>`, `<nav>`, etc.) instead of divs with roles
+- Keep UI primitives aligned with current libraries (Bits UI + local wrapper components)
 
 ### Error Handling & Debugging
 
@@ -65,7 +68,7 @@ Write code that is **accessible, performant, type-safe, and maintainable**. Focu
 ### Security
 
 - Add `rel="noopener"` when using `target="_blank"` on links
-- Avoid `dangerouslySetInnerHTML` unless absolutely necessary
+- Avoid raw HTML injection (`set:html`, `{@html}`) unless absolutely necessary
 - Don't use `eval()` or assign directly to `document.cookie`
 - Validate and sanitize user input
 
@@ -75,20 +78,19 @@ Write code that is **accessible, performant, type-safe, and maintainable**. Focu
 - Use top-level regex literals instead of creating them in loops
 - Prefer specific imports over namespace imports
 - Avoid barrel files (index files that re-export everything)
-- Use proper image components (e.g., Next.js `<Image>`) over `<img>` tags
+- Prefer optimized image handling in Astro over raw `<img>` where practical
 
 ### Framework-Specific Guidance
 
-**Next.js:**
-- Use Next.js `<Image>` component for images
-- Use `next/head` or App Router metadata API for head elements
-- Use Server Components for async data fetching instead of async Client Components
-
-**React 19+:**
-- Use ref as a prop instead of `React.forwardRef`
-
-**Solid/Svelte/Vue/Qwik:**
+**Astro/Svelte:**
 - Use `class` and `for` attributes (not `className` or `htmlFor`)
+- Keep imports sorted (see `simple-import-sort` warnings)
+- Favor reusable UI wrappers under `apps/web/src/lib/components/ui`
+
+**API (Elysia + Better Auth + Drizzle):**
+- Keep route/plugin composition explicit and small
+- Validate env-based configuration and fail fast on missing values
+- Keep auth/database integrations typed and close to their module boundaries
 
 ---
 
@@ -110,4 +112,4 @@ Write code that is **accessible, performant, type-safe, and maintainable**. Focu
 
 ---
 
-Run `bun run fix` before committing to ensure formatting compliance.
+Run `bun run format && bun run lint && bun run type:check` before committing.

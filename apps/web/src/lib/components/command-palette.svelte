@@ -5,6 +5,7 @@
   import LogoutIcon from "@tabler/icons-svelte/icons/logout";
   import UserCircleIcon from "@tabler/icons-svelte/icons/user-circle";
   import { mode, toggleMode } from "mode-watcher";
+
   import * as Command from "$lib/components/ui/command/index.js";
 
   let open = $state(false);

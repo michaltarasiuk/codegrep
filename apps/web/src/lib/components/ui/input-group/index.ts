@@ -6,12 +6,9 @@ import Text from "./input-group-text.svelte";
 import Textarea from "./input-group-textarea.svelte";
 
 export {
-  Root,
   Addon,
   Button,
   Input,
-  Text,
-  Textarea,
   //
   Root as InputGroup,
   Addon as InputGroupAddon,
@@ -19,4 +16,7 @@ export {
   Input as InputGroupInput,
   Text as InputGroupText,
   Textarea as InputGroupTextarea,
+  Root,
+  Text,
+  Textarea,
 };
