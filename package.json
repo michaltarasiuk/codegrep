@@ -9,7 +9,7 @@
     "lint": "turbo run lint",
     "lint:fix": "eslint . --fix",
     "type:check": "turbo run type:check",
-    "check": "bun run format:check && turbo run type:check && bun run lint:check",
+    "check": "bun run format:check && turbo run type:check && bun run lint",
     "fix": "prettier --write ."
   },
   "devDependencies": {
