@@ -1,0 +1,30 @@
+/** @type {import("prettier").Config} */
+const config = {
+  plugins: [
+    "prettier-plugin-astro",
+    "prettier-plugin-svelte",
+    "prettier-plugin-tailwindcss",
+  ],
+  trailingComma: "es5",
+  overrides: [
+    {
+      files: "*.astro",
+      options: {
+        parser: "astro",
+      },
+    },
+    {
+      files: "*.svelte",
+      options: {
+        parser: "svelte",
+      },
+    },
+    {
+      files: ["*.json", "*.jsonc"],
+      options: {
+        trailingComma: "none",
+      },
+    },
+  ],
+};
+export default config;

@@ -14,7 +14,8 @@ const ignoreFilePath = fileURLToPath(
   new globalThis.URL("./.gitignore", import.meta.url)
 );
 
-export default [
+/** @type {import("eslint").Linter.Config[]} */
+const config = [
   includeIgnoreFile(ignoreFilePath),
   {
     ignores: [".agent/**", ".agents/**"],
@@ -64,3 +65,4 @@ export default [
     },
   },
 ];
+export default config;

@@ -1,5 +1,6 @@
 {
   "name": "githubgrep",
+  "type": "module",
   "scripts": {
     "prepare": "lefthook install",
     "dev": "turbo run dev",
