@@ -2,8 +2,8 @@
   import type { Snippet } from "svelte";
   import PlusIcon from "@lucide/svelte/icons/plus";
   import * as Sidebar from "$lib/components/ui/sidebar/index.js";
-  import UserMenuItem from "./user-menu-item.svelte";
-  import ThemeMenuItem from "./theme-menu-item.svelte";
+  import UserAccountMenu from "./user-account-menu.svelte";
+  import ThemeToggle from "./theme-toggle.svelte";
 
   interface Props {
     children: Snippet;
@@ -29,14 +29,14 @@
     <Sidebar.Content />
     <Sidebar.Footer>
       <Sidebar.Menu>
-        <UserMenuItem
+        <UserAccountMenu
           user={{
             name: "John Doe",
             email: "john.doe@gmail.com",
             avatar: "https://avatars.githubusercontent.com/u/69385846",
           }}
         />
-        <ThemeMenuItem />
+        <ThemeToggle />
       </Sidebar.Menu>
     </Sidebar.Footer>
   </Sidebar.Root>

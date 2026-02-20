@@ -1,14 +1,6 @@
-# Ultracite Code Standards
+# Code Standards
 
-This project uses **Ultracite**, a zero-config preset that enforces strict code quality standards through automated formatting and linting.
-
-## Quick Reference
-
-- **Format code**: `bun x ultracite fix`
-- **Check for issues**: `bun x ultracite check`
-- **Diagnose setup**: `bun x ultracite doctor`
-
-**Prettier** is used for formatting (including Astro and Svelte). **Biome** (via Ultracite) is used for linting only. Most issues are automatically fixable.
+This project uses **Prettier** for formatting (including Astro and Svelte). Run `bun run format` to format, or `bun run fix` before committing.
 
 ---
 
@@ -107,11 +99,9 @@ Write code that is **accessible, performant, type-safe, and maintainable**. Focu
 - Don't use `.only` or `.skip` in committed code
 - Keep test suites reasonably flat - avoid excessive `describe` nesting
 
-## When Biome Can't Help
+## What to Focus On
 
-Biome's linter will catch most issues automatically. Focus your attention on:
-
-1. **Business logic correctness** - Biome can't validate your algorithms
+1. **Business logic correctness** - Validate your algorithms
 2. **Meaningful naming** - Use descriptive names for functions, variables, and types
 3. **Architecture decisions** - Component structure, data flow, and API design
 4. **Edge cases** - Handle boundary conditions and error states
@@ -120,4 +110,4 @@ Biome's linter will catch most issues automatically. Focus your attention on:
 
 ---
 
-Formatting is done by Prettier; lint fixes by Ultracite/Biome. Run `bun run fix` (or `bun run format` then `bun x ultracite fix`) before committing to ensure compliance.
+Run `bun run fix` before committing to ensure formatting compliance.

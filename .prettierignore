@@ -1,3 +1,4 @@
+!.cursor/hooks.json
 .agents
 .cursor
 bun.lock

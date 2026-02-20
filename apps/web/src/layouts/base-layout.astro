@@ -1,8 +1,8 @@
 ---
 import "$styles/global.css";
 import { ModeWatcher } from "mode-watcher";
-import AppCommand from "$lib/components/app-command.svelte";
-import AppSidebar from "$lib/components/app-sidebar.svelte";
+import CommandPalette from "$lib/components/command-palette.svelte";
+import ShellSidebar from "$lib/components/shell-sidebar.svelte";
 ---
 
 <script is:inline>
@@ -37,13 +37,12 @@ import AppSidebar from "$lib/components/app-sidebar.svelte";
     <link rel="icon" href="/favicon.ico" />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
-    <title>GitHub Grep</title>
   </head>
   <body>
-    <AppCommand client:load />
-    <AppSidebar client:load>
+    <CommandPalette client:load />
+    <ShellSidebar client:load>
       <slot />
-    </AppSidebar>
+    </ShellSidebar>
     <ModeWatcher client:load modeStorageKey="theme" />
   </body>
 </html>
