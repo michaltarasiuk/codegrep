@@ -1,15 +1,5 @@
 pre-commit:
   jobs:
     - run: bun x prettier --write {staged_files}
-      glob: &source-glob
-        - "**/*.js"
-        - "**/*.jsx"
-        - "**/*.ts"
-        - "**/*.tsx"
-        - "**/*.json"
-        - "**/*.jsonc"
-        - "**/*.css"
-        - "**/*.svelte"
-        - "**/*.astro"
-      stage_fixed: true
+    - run: bun x eslint {staged_files}
     - run: bun run type:check
