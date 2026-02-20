@@ -1,7 +1,6 @@
 pre-commit:
   jobs:
-    - run: bun x prettier --write --ignore-unknown {staged_files}
-    - run: bun x eslint --no-warn-ignored {staged_files}
-      glob: "*.{js,mjs,cjs,ts,mts,cts,svelte,astro}"
-    - run: bun x tsc --noEmit --pretty false {staged_files}
+    - run: bun x prettier {staged_files} --write --ignore-unknown
+    - run: bun x eslint {staged_files} --no-warn-ignored
+    - run: bun x tsc {staged_files} --noEmit --pretty false
       glob: "*.{ts,tsx}"
