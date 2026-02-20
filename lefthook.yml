@@ -2,4 +2,5 @@ pre-commit:
   jobs:
     - run: bun x prettier --write {staged_files}
     - run: bun x eslint {staged_files}
-    - run: bun run type:check
+    - run: bun x tsc --noEmit --pretty false {staged_files}
+      glob: "*.{ts,tsx}"
