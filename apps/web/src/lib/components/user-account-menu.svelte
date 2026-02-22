@@ -3,14 +3,21 @@
   import DotsVerticalIcon from "@tabler/icons-svelte/icons/dots-vertical";
   import LogoutIcon from "@tabler/icons-svelte/icons/logout";
   import UserCircleIcon from "@tabler/icons-svelte/icons/user-circle";
+  import { onMount } from "svelte";
 
   import * as Avatar from "$lib/components/ui/avatar/index.js";
   import * as DropdownMenu from "$lib/components/ui/dropdown-menu/index.js";
   import * as Sidebar from "$lib/components/ui/sidebar/index.js";
+  import { Skeleton } from "$lib/components/ui/skeleton/index.js";
   import { authClient } from "$lib/utils/auth-client";
 
   const session = authClient.useSession();
   const sidebar = Sidebar.useSidebar();
+
+  let hydrated = $state(false);
+  onMount(() => {
+    hydrated = true;
+  });
 
   async function signInWithGithub() {
     await authClient.signIn.social({
@@ -24,7 +31,17 @@
   }
 </script>
 
-{#if $session.data}
+{#if !hydrated || $session.isPending}
+  <Sidebar.MenuItem>
+    <Sidebar.MenuButton size="lg" class="pointer-events-none">
+      <Skeleton class="size-8 rounded-lg" />
+      <div class="grid flex-1 gap-1">
+        <Skeleton class="h-4 w-24" />
+        <Skeleton class="h-3 w-32" />
+      </div>
+    </Sidebar.MenuButton>
+  </Sidebar.MenuItem>
+{:else if $session.data}
   <Sidebar.MenuItem>
     <DropdownMenu.Root>
       <DropdownMenu.Trigger>

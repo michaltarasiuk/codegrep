@@ -52,21 +52,19 @@
   <Command.Input placeholder="Search commands..." />
   <Command.List>
     <Command.Empty>No results found.</Command.Empty>
-    {#if $session.data?.user}
-      <Command.Group heading="Navigation">
-        <Command.Item
-          value="new-chat"
-          keywords={["chat", "new"]}
-          onSelect={() => run(() => {})}
-        >
-          <PlusIcon />
-          <span>New chat</span>
-        </Command.Item>
-      </Command.Group>
-      <Command.Separator />
-    {/if}
+    <Command.Group heading="Navigation">
+      <Command.Item
+        value="new-chat"
+        keywords={["chat", "new"]}
+        onSelect={() => run(() => {})}
+      >
+        <PlusIcon />
+        <span>New chat</span>
+      </Command.Item>
+    </Command.Group>
+    <Command.Separator />
     <Command.Group heading="Account">
-      {#if $session.data?.user}
+      {#if $session.data}
         <Command.Item
           value="account"
           keywords={["account", "profile", "user"]}
