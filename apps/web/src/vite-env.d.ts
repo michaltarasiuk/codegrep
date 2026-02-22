@@ -3,7 +3,7 @@ interface ViteTypeOptions {
 }
 
 interface ImportMetaEnv {
-  VITE_API_URL: string;
+  PUBLIC_API_URL: string;
 }
 
 interface ImportMeta {

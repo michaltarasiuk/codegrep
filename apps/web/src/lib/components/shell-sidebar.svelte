@@ -3,6 +3,7 @@
   import type { Snippet } from "svelte";
 
   import * as Sidebar from "$lib/components/ui/sidebar/index.js";
+  import { authClient } from "$lib/utils/auth-client";
 
   import ThemeToggle from "./theme-toggle.svelte";
   import UserAccountMenu from "./user-account-menu.svelte";
@@ -12,6 +13,8 @@
   }
 
   const { children }: Props = $props();
+
+  const session = authClient.useSession();
 </script>
 
 <Sidebar.Provider
@@ -20,24 +23,20 @@
   <Sidebar.Root variant="inset">
     <Sidebar.Header>
       <Sidebar.Menu>
-        <Sidebar.MenuItem>
-          <Sidebar.MenuButton>
-            <PlusIcon />
-            New chat
-          </Sidebar.MenuButton>
-        </Sidebar.MenuItem>
+        {#if $session.data?.user}
+          <Sidebar.MenuItem>
+            <Sidebar.MenuButton>
+              <PlusIcon />
+              New chat
+            </Sidebar.MenuButton>
+          </Sidebar.MenuItem>
+        {/if}
       </Sidebar.Menu>
     </Sidebar.Header>
     <Sidebar.Content />
     <Sidebar.Footer>
       <Sidebar.Menu>
-        <UserAccountMenu
-          user={{
-            name: "John Doe",
-            email: "john.doe@gmail.com",
-            avatar: "https://avatars.githubusercontent.com/u/69385846",
-          }}
-        />
+        <UserAccountMenu />
         <ThemeToggle />
       </Sidebar.Menu>
     </Sidebar.Footer>

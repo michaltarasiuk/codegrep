@@ -5,6 +5,7 @@ import { db } from "$/db";
 import { account, session, user, verification } from "$/db/schema";
 
 export const authService = betterAuth({
+  trustedOrigins: [process.env.WEB_URL],
   database: drizzleAdapter(db, {
     provider: "pg",
     schema: {

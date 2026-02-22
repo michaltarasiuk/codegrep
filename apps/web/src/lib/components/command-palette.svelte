@@ -1,4 +1,5 @@
 <script lang="ts">
+  import LogInIcon from "@lucide/svelte/icons/log-in";
   import MoonIcon from "@lucide/svelte/icons/moon";
   import PlusIcon from "@lucide/svelte/icons/plus";
   import SunIcon from "@lucide/svelte/icons/sun";
@@ -7,6 +8,9 @@
   import { mode, toggleMode } from "mode-watcher";
 
   import * as Command from "$lib/components/ui/command/index.js";
+  import { authClient } from "$lib/utils/auth-client";
+
+  const session = authClient.useSession();
 
   let open = $state(false);
   let isDark = $state(false);
@@ -29,6 +33,17 @@
     command();
     open = false;
   }
+
+  async function signInWithGithub() {
+    await authClient.signIn.social({
+      provider: "github",
+      callbackURL: window.location.href,
+    });
+  }
+
+  async function signOut() {
+    await authClient.signOut();
+  }
 </script>
 
 <svelte:document onkeydown={handleKeydown} />
@@ -37,34 +52,47 @@
   <Command.Input placeholder="Search commands..." />
   <Command.List>
     <Command.Empty>No results found.</Command.Empty>
-    <Command.Group heading="Navigation">
-      <Command.Item
-        value="new-chat"
-        keywords={["chat", "new"]}
-        onSelect={() => run(() => {})}
-      >
-        <PlusIcon />
-        <span>New chat</span>
-      </Command.Item>
-    </Command.Group>
-    <Command.Separator />
+    {#if $session.data?.user}
+      <Command.Group heading="Navigation">
+        <Command.Item
+          value="new-chat"
+          keywords={["chat", "new"]}
+          onSelect={() => run(() => {})}
+        >
+          <PlusIcon />
+          <span>New chat</span>
+        </Command.Item>
+      </Command.Group>
+      <Command.Separator />
+    {/if}
     <Command.Group heading="Account">
-      <Command.Item
-        value="account"
-        keywords={["account", "profile", "user"]}
-        onSelect={() => run(() => {})}
-      >
-        <UserCircleIcon />
-        <span>Account</span>
-      </Command.Item>
-      <Command.Item
-        value="log-out"
-        keywords={["logout", "log out", "sign out"]}
-        onSelect={() => run(() => {})}
-      >
-        <LogoutIcon />
-        <span>Log out</span>
-      </Command.Item>
+      {#if $session.data?.user}
+        <Command.Item
+          value="account"
+          keywords={["account", "profile", "user"]}
+          onSelect={() => run(() => {})}
+        >
+          <UserCircleIcon />
+          <span>Account</span>
+        </Command.Item>
+        <Command.Item
+          value="log-out"
+          keywords={["logout", "log out", "sign out"]}
+          onSelect={() => run(() => signOut())}
+        >
+          <LogoutIcon />
+          <span>Log out</span>
+        </Command.Item>
+      {:else}
+        <Command.Item
+          value="sign-in"
+          keywords={["login", "log in", "sign in", "github"]}
+          onSelect={() => run(() => signInWithGithub())}
+        >
+          <LogInIcon />
+          <span>Sign in</span>
+        </Command.Item>
+      {/if}
     </Command.Group>
     <Command.Separator />
     <Command.Group heading="View">
