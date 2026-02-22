@@ -27,7 +27,7 @@
   import type { Snippet } from "svelte";
   import type { ComponentProps } from "svelte";
 
-  import { cn, type WithoutChildrenOrChild } from "$lib/utils.js";
+  import { cn, type WithoutChildrenOrChild } from "$lib/utils/cn.js";
 
   import SheetOverlay from "./sheet-overlay.svelte";
   import SheetPortal from "./sheet-portal.svelte";

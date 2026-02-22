@@ -2,7 +2,7 @@
   import type { ComponentProps } from "svelte";
 
   import { Textarea } from "$lib/components/ui/textarea/index.js";
-  import { cn } from "$lib/utils.js";
+  import { cn } from "$lib/utils/cn.js";
 
   let {
     ref = $bindable(null),
