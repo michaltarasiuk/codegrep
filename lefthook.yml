@@ -1,8 +1,8 @@
 pre-commit:
   jobs:
     - run: bun x prettier {staged_files} --write --ignore-unknown
-    - run: bun x eslint {staged_files} --no-warn-ignored
-    - run: bun x tsc -p apps/api/tsconfig.json --noEmit --pretty false
+    - run: bun x eslint {staged_files} --no-warn-ignored --max-warnings 0
+    - run: bun x tsc --project apps/api/tsconfig.json --noEmit --pretty false
       glob: "apps/api/**/*.{ts,tsx}"
-    - run: bun x tsc -p apps/web/tsconfig.json --noEmit --pretty false
+    - run: bun x tsc --project apps/web/tsconfig.json --noEmit --pretty false
       glob: "apps/web/**/*.{ts,tsx}"

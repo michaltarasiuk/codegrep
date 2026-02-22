@@ -8,7 +8,6 @@
     "dev": {
       "persistent": true
     },
-    "lint": {},
     "type:check": {}
   }
 }

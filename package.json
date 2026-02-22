@@ -7,7 +7,7 @@
     "build": "turbo run build",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "lint": "turbo run lint",
+    "lint": "eslint . --max-warnings 0",
     "lint:fix": "eslint . --fix",
     "type:check": "turbo run type:check",
     "check": "bun run format:check && turbo run type:check && bun run lint",
