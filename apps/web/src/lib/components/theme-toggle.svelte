@@ -1,28 +1,20 @@
 <script lang="ts">
   import MoonIcon from "@lucide/svelte/icons/moon";
   import SunIcon from "@lucide/svelte/icons/sun";
-  import { mode, toggleMode } from "mode-watcher";
+  import { toggleMode } from "mode-watcher";
 
   import * as Sidebar from "$lib/components/ui/sidebar/index.js";
-
-  let isDark = $state(false);
-
-  $effect(() => {
-    const unsub = mode.subscribe((value) => {
-      isDark = value === "dark";
-    });
-    return unsub;
-  });
 </script>
 
 <Sidebar.MenuItem>
   <Sidebar.MenuButton onclick={toggleMode}>
-    {#if isDark}
-      <SunIcon />
+    <span class="hidden items-center gap-2 dark:inline-flex">
+      <SunIcon class="size-4" />
       Light mode
-    {:else}
-      <MoonIcon />
+    </span>
+    <span class="inline-flex items-center gap-2 dark:hidden">
+      <MoonIcon class="size-4" />
       Dark mode
-    {/if}
+    </span>
   </Sidebar.MenuButton>
 </Sidebar.MenuItem>
