@@ -20,7 +20,7 @@
         "prettier-plugin-tailwindcss": "^0.7.2",
         "svelte-eslint-parser": "^1.4.1",
         "turbo": "^2.3.3",
-        "typescript": "5.9.2",
+        "typescript": "catalog:",
         "typescript-eslint": "^8.56.0",
       },
     },
@@ -28,7 +28,7 @@
       "name": "api",
       "dependencies": {
         "@elysiajs/cors": "^1.4.1",
-        "better-auth": "^1.4.18",
+        "better-auth": "catalog:",
         "drizzle-orm": "^0.45.1",
         "elysia": "latest",
         "pg": "^8.18.0",
@@ -46,11 +46,11 @@
         "@astrojs/svelte": "^7.2.5",
         "@tailwindcss/vite": "^4.1.18",
         "astro": "^5.17.1",
-        "better-auth": "^1.4.18",
+        "better-auth": "catalog:",
         "mode-watcher": "0.5.1",
         "svelte": "^5.51.2",
         "tailwindcss": "^4.1.18",
-        "typescript": "^5.9.3",
+        "typescript": "catalog:",
       },
       "devDependencies": {
         "@internationalized/date": "^3.10.0",
@@ -66,6 +66,10 @@
         "zod": "^4.1.13",
       },
     },
+  },
+  "catalog": {
+    "better-auth": "^1.4.18",
+    "typescript": "5.9.2",
   },
   "packages": {
     "@astrojs/compiler": ["@astrojs/compiler@2.13.1", "", {}, "sha512-f3FN83d2G/v32ipNClRKgYv30onQlMZX1vCeZMjPsMMPl1mDpmbl0+N5BYo4S/ofzqJyS5hvwacEo0CCVDn/Qg=="],
@@ -1335,8 +1339,6 @@
     "vaul-svelte/runed": ["runed@0.23.4", "", { "dependencies": { "esm-env": "^1.0.0" }, "peerDependencies": { "svelte": "^5.7.0" } }, "sha512-9q8oUiBYeXIDLWNK5DfCWlkL0EW3oGbk845VdKlPeia28l751VpfesaB/+7pI6rnbx1I6rqoZ2fZxptOJLxILA=="],
 
     "vaul-svelte/svelte-toolbelt": ["svelte-toolbelt@0.7.1", "", { "dependencies": { "clsx": "^2.1.1", "runed": "^0.23.2", "style-to-object": "^1.0.8" }, "peerDependencies": { "svelte": "^5.0.0" } }, "sha512-HcBOcR17Vx9bjaOceUvxkY3nGmbBmCBBbuWLLEWO6jtmWH8f/QoWmbyUfQZrpDINH39en1b8mptfPQT9VKQ1xQ=="],
-
-    "web/typescript": ["typescript@5.9.3", "", { "bin": { "tsc": "bin/tsc", "tsserver": "bin/tsserver" } }, "sha512-jl1vZzPDinLr9eUt3J/t7V6FgNEw9QjvBPdysz9KfQDD41fQrC2Y4vKQdiaUpFT4bXlb1RHhLpp8wtm6M5TgSw=="],
 
     "zod-to-ts/zod": ["zod@3.25.76", "", {}, "sha512-gzUt/qt81nXsFGKIFcC3YnfEAx5NkunCfnDlvuBSSFS02bcXu4Lmea0AFIUwbLWxWPx3d9p8S5QoaujKcNQxcQ=="],
 
