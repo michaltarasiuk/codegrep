@@ -24,29 +24,34 @@
   }
 </script>
 
-{#if $session.data?.user}
+{#if $session.data}
   <Sidebar.MenuItem>
     <DropdownMenu.Root>
       <DropdownMenu.Trigger>
-        <Sidebar.MenuButton
-          size="lg"
-          class="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
-        >
-          <Avatar.Root class="size-8 rounded-lg grayscale">
-            <Avatar.Image
-              src={$session.data.user.image}
-              alt={$session.data.user.name}
-            />
-            <Avatar.Fallback class="rounded-lg" />
-          </Avatar.Root>
-          <div class="grid flex-1 text-start text-sm leading-tight">
-            <span class="truncate font-medium">{$session.data.user.name}</span>
-            <span class="text-muted-foreground truncate text-xs">
-              {$session.data.user.email}
-            </span>
-          </div>
-          <DotsVerticalIcon class="ms-auto size-4" />
-        </Sidebar.MenuButton>
+        {#snippet child({ props })}
+          <Sidebar.MenuButton
+            {...props}
+            size="lg"
+            class="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+          >
+            <Avatar.Root class="size-8 rounded-lg grayscale">
+              <Avatar.Image
+                src={$session.data!.user.image}
+                alt={$session.data!.user.name}
+              />
+              <Avatar.Fallback class="rounded-lg" />
+            </Avatar.Root>
+            <div class="grid flex-1 text-start text-sm leading-tight">
+              <span class="truncate font-medium">
+                {$session.data!.user.name}
+              </span>
+              <span class="text-muted-foreground truncate text-xs">
+                {$session.data!.user.email}
+              </span>
+            </div>
+            <DotsVerticalIcon class="ms-auto size-4" />
+          </Sidebar.MenuButton>
+        {/snippet}
       </DropdownMenu.Trigger>
       <DropdownMenu.Content
         class="w-(--bits-dropdown-menu-anchor-width) min-w-56 rounded-lg"
