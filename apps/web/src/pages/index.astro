@@ -1,10 +1,10 @@
 ---
 import BaseLayout from "$layouts/base-layout.astro";
-import ChatComposer from "$lib/components/chat-composer.svelte";
+import ChatInput from "$lib/components/chat-input.svelte";
 ---
 
 <BaseLayout>
   <main class="mx-auto flex size-full max-w-3xl flex-col justify-end px-4 py-6">
-    <ChatComposer client:load />
+    <ChatInput client:load />
   </main>
 </BaseLayout>
