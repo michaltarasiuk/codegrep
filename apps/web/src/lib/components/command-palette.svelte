@@ -16,10 +16,10 @@
   let isDark = $state(false);
 
   $effect(() => {
-    const unsub = mode.subscribe((value) => {
+    const unsubscribe = mode.subscribe((value) => {
       isDark = value === "dark";
     });
-    return unsub;
+    return unsubscribe;
   });
 
   function handleKeydown(e: KeyboardEvent) {
