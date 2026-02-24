@@ -97,7 +97,7 @@
       <Command.Item
         value="toggle-theme"
         keywords={["theme", "dark", "light", "mode"]}
-        onSelect={() => executeAndClose(toggleMode)}
+        onSelect={() => executeAndClose(() => toggleMode())}
       >
         {#if isDarkMode}
           <SunIcon />
