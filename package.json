@@ -41,6 +41,7 @@
       "apps/*"
     ],
     "catalog": {
+      "ai": "^6.0.97",
       "better-auth": "^1.4.18",
       "typescript": "5.9.2"
     }
