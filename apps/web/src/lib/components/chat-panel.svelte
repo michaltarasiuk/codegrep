@@ -29,7 +29,7 @@
 
 <div class="relative size-full">
   <ScrollArea.Root class="size-full">
-    <div class="mx-auto flex w-full max-w-4xl flex-col gap-3 pb-36">
+    <div class="flex size-full max-w-4xl flex-col gap-3 pb-36">
       {#each chat.messages as message, messageIndex (messageIndex)}
         {#each message.parts as messagePart, partIndex (partIndex)}
           {#if messagePart.type === "text"}

@@ -12,29 +12,29 @@
 
   const session = authClient.useSession();
 
-  let open = $state(false);
-  let isDark = $state(false);
+  let isOpen = $state(false);
+  let isDarkMode = $state(false);
 
   $effect(() => {
     const unsubscribe = mode.subscribe((value) => {
-      isDark = value === "dark";
+      isDarkMode = value === "dark";
     });
     return unsubscribe;
   });
 
-  function handleKeydown(e: KeyboardEvent) {
+  function handleCommandShortcut(e: KeyboardEvent) {
     if (e.key === "k" && (e.metaKey || e.ctrlKey)) {
       e.preventDefault();
-      open = !open;
+      isOpen = !isOpen;
     }
   }
 
-  function run(command: () => void) {
+  function executeAndClose(command: () => void) {
     command();
-    open = false;
+    isOpen = false;
   }
 
-  async function signInWithGithub() {
+  async function signInWithGitHub() {
     await authClient.signIn.social({
       provider: "github",
       callbackURL: window.location.href,
@@ -46,9 +46,9 @@
   }
 </script>
 
-<svelte:document onkeydown={handleKeydown} />
+<svelte:document onkeydown={handleCommandShortcut} />
 
-<Command.Dialog bind:open>
+<Command.Dialog bind:open={isOpen}>
   <Command.Input placeholder="Search commands..." />
   <Command.List>
     <Command.Empty>No results found.</Command.Empty>
@@ -56,7 +56,7 @@
       <Command.Item
         value="new-chat"
         keywords={["chat", "new"]}
-        onSelect={() => run(() => {})}
+        onSelect={() => executeAndClose(() => {})}
       >
         <PlusIcon />
         <span>New chat</span>
@@ -68,7 +68,7 @@
         <Command.Item
           value="account"
           keywords={["account", "profile", "user"]}
-          onSelect={() => run(() => {})}
+          onSelect={() => executeAndClose(() => {})}
         >
           <UserCircleIcon />
           <span>Account</span>
@@ -76,7 +76,7 @@
         <Command.Item
           value="log-out"
           keywords={["logout", "log out", "sign out"]}
-          onSelect={() => run(() => signOut())}
+          onSelect={() => executeAndClose(() => signOut())}
         >
           <LogoutIcon />
           <span>Log out</span>
@@ -85,7 +85,7 @@
         <Command.Item
           value="sign-in"
           keywords={["login", "log in", "sign in", "github"]}
-          onSelect={() => run(() => signInWithGithub())}
+          onSelect={() => executeAndClose(() => signInWithGitHub())}
         >
           <LogInIcon />
           <span>Sign in</span>
@@ -97,9 +97,9 @@
       <Command.Item
         value="toggle-theme"
         keywords={["theme", "dark", "light", "mode"]}
-        onSelect={() => run(toggleMode)}
+        onSelect={() => executeAndClose(toggleMode)}
       >
-        {#if isDark}
+        {#if isDarkMode}
           <SunIcon />
           <span>Switch to light mode</span>
         {:else}
