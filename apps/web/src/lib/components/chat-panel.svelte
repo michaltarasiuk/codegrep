@@ -1,9 +1,8 @@
 <script lang="ts">
   import { Chat } from "@ai-sdk/svelte";
-  import ArrowUpIcon from "@lucide/svelte/icons/arrow-up";
   import { DefaultChatTransport } from "ai";
 
-  import * as InputGroup from "$lib/components/ui/input-group/index.js";
+  import * as PromptInput from "$lib/components/prompt-input/index.js";
   import * as ScrollArea from "$lib/components/ui/scroll-area/index.js";
   import { cn } from "$lib/utils/cn";
 
@@ -19,10 +18,9 @@
   let isLoading = $derived(
     chat.status === "streaming" || chat.status === "submitted"
   );
-  let isSubmitDisabled = $derived(!messageInput.trim() || isLoading);
 
-  function submitMessage() {
-    chat.sendMessage({ text: messageInput });
+  function handleSubmit({ text }: PromptInput.PromptInputMessage) {
+    chat.sendMessage({ text });
     messageInput = "";
   }
 </script>
@@ -55,37 +53,25 @@
     </div>
   </ScrollArea.Root>
 
-  <form
-    class="absolute inset-x-0 bottom-0 pt-2"
-    onsubmit={(e) => {
-      e.preventDefault();
-      submitMessage();
-    }}
-  >
-    <InputGroup.Root class="mx-auto max-w-4xl">
-      <InputGroup.Textarea
-        bind:value={messageInput}
-        placeholder="Ask about the codebase..."
-        class="max-h-72"
-        onkeydown={(e) => {
-          if (e.key === "Enter" && !e.shiftKey && !isSubmitDisabled) {
-            e.preventDefault();
-            submitMessage();
-          }
-        }}
-      />
-      <InputGroup.Addon align="block-end">
-        <InputGroup.Button
-          type="submit"
-          variant="default"
-          size="icon-xs"
-          class="ms-auto rounded-full"
-          disabled={isSubmitDisabled}
-        >
-          <ArrowUpIcon />
-          <span class="sr-only">Send</span>
-        </InputGroup.Button>
-      </InputGroup.Addon>
-    </InputGroup.Root>
-  </form>
+  <div class="absolute inset-x-0 bottom-0 pt-2">
+    <PromptInput.Provider>
+      <PromptInput.Root class="mx-auto max-w-4xl" onSubmit={handleSubmit}>
+        <PromptInput.Body>
+          <PromptInput.Textarea
+            bind:value={messageInput}
+            class="max-h-72"
+            placeholder="Ask about the codebase..."
+          />
+        </PromptInput.Body>
+        <PromptInput.Footer>
+          <PromptInput.Submit
+            status={chat.status}
+            size="icon-xs"
+            class="ms-auto"
+            onStop={() => chat.stop()}
+          />
+        </PromptInput.Footer>
+      </PromptInput.Root>
+    </PromptInput.Provider>
+  </div>
 </div>

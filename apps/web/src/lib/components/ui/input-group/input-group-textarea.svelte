@@ -8,7 +8,7 @@
     ref = $bindable(null),
     value = $bindable(),
     class: className,
-    ...props
+    ...restProps
   }: ComponentProps<typeof Textarea> = $props();
 </script>
 
@@ -20,5 +20,5 @@
     className
   )}
   bind:value
-  {...props}
+  {...restProps}
 />

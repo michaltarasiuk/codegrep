@@ -7,7 +7,7 @@
     ref = $bindable(null),
     class: className,
     children,
-    ...props
+    ...restProps
   }: WithElementRef<HTMLAttributes<HTMLDivElement>> = $props();
 </script>
 
@@ -30,7 +30,7 @@
 
     className
   )}
-  {...props}
+  {...restProps}
 >
   {@render children?.()}
 </div>
