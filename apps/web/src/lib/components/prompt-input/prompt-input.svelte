@@ -2,7 +2,11 @@
   import type { FileUIPart } from "ai";
   import type { Snippet } from "svelte";
   import { onDestroy } from "svelte";
-  import type { HTMLFormAttributes } from "svelte/elements";
+  import type {
+    ChangeEventHandler,
+    EventHandler,
+    HTMLFormAttributes,
+  } from "svelte/elements";
 
   import * as InputGroup from "$lib/components/ui/input-group/index.js";
   import * as Tooltip from "$lib/components/ui/tooltip/index.js";
@@ -26,12 +30,12 @@
     syncHiddenInput?: boolean;
     maxFiles?: number;
     maxFileSize?: number;
+    children?: Snippet;
     onError?: (error: PromptInputError) => void;
     onSubmit: (
       message: PromptInputMessage,
-      event: SubmitEvent & { currentTarget: EventTarget & HTMLFormElement }
+      e: SubmitEvent
     ) => void | Promise<void>;
-    children?: Snippet;
   };
 
   let {
@@ -42,9 +46,9 @@
     syncHiddenInput = false,
     maxFiles,
     maxFileSize,
+    children,
     onError,
     onSubmit,
-    children,
     ...restProps
   }: PromptInputProps = $props();
 
@@ -62,33 +66,36 @@
   let formRef = $state<HTMLFormElement | null>(null);
   let attachmentsCount = $derived(attachments.files.length);
 
-  const clearAll = () => {
-    attachments.clear();
-    referencedSources.clear();
-  };
-
-  const matchesAccept = (file: File) => {
-    if (!accept || accept.trim() === "") {
-      return true;
-    }
-
-    const patterns = accept
+  const getAcceptPatterns = () =>
+    (accept ?? "")
       .split(",")
       .map((part) => part.trim())
       .filter(Boolean);
 
-    return patterns.some((pattern) => {
-      if (pattern.endsWith("/*")) {
-        return file.type.startsWith(pattern.slice(0, -1));
-      }
-      return file.type === pattern;
-    });
+  const matchesPattern = (file: File, pattern: string) =>
+    pattern.endsWith("/*")
+      ? file.type.startsWith(pattern.slice(0, -1))
+      : file.type === pattern;
+
+  const matchesAccept = (file: File) => {
+    const patterns = getAcceptPatterns();
+    return (
+      patterns.length === 0 ||
+      patterns.some((pattern) => matchesPattern(file, pattern))
+    );
   };
+
+  const isWithinSizeLimit = (file: File) =>
+    typeof maxFileSize === "number" ? file.size <= maxFileSize : true;
+
+  const getCapacity = () =>
+    typeof maxFiles === "number"
+      ? Math.max(0, maxFiles - attachments.files.length)
+      : undefined;
 
   const addWithValidation = (fileList: File[] | FileList) => {
     const incoming = [...fileList];
     const accepted = incoming.filter(matchesAccept);
-
     if (incoming.length > 0 && accepted.length === 0) {
       onError?.({
         code: "accept",
@@ -96,11 +103,7 @@
       });
       return;
     }
-
-    const withinSize = (file: File) =>
-      maxFileSize ? file.size <= maxFileSize : true;
-    const sized = accepted.filter(withinSize);
-
+    const sized = accepted.filter(isWithinSizeLimit);
     if (accepted.length > 0 && sized.length === 0) {
       onError?.({
         code: "max_file_size",
@@ -108,82 +111,64 @@
       });
       return;
     }
-
-    const capacity =
-      typeof maxFiles === "number"
-        ? Math.max(0, maxFiles - attachments.files.length)
-        : undefined;
+    const capacity = getCapacity();
     const capped =
       typeof capacity === "number" ? sized.slice(0, capacity) : sized;
-
     if (typeof capacity === "number" && sized.length > capacity) {
       onError?.({
         code: "max_files",
         message: "Too many files. Some were not added.",
       });
     }
-
     if (capped.length > 0) {
       attachments.add(capped);
     }
   };
 
-  const handleFileChange = (event: Event) => {
-    const input = event.currentTarget as HTMLInputElement;
+  const clearAll = () => {
+    attachments.clear();
+    referencedSources.clear();
+  };
+
+  const clearAfterSuccessfulSubmit = () => {
+    clearAll();
+    if (usingProvider) {
+      controller.textInput.clear();
+    }
+  };
+
+  const parseAttachment = async (
+    attachment: (typeof attachments.files)[number]
+  ): Promise<FileUIPart> => {
+    const { id: _id, ...item } = attachment;
+    let url = item.url;
+    if (url.startsWith("blob:")) {
+      url = (await convertBlobUrlToDataUrl(item.url)) ?? url;
+    }
+    return { ...item, url };
+  };
+
+  const handleFileChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+    const input = e.currentTarget as HTMLInputElement;
     if (input.files) {
       addWithValidation(input.files);
     }
     input.value = "";
   };
 
-  const handleOpenDialog = () => {
-    fileInputRef?.click();
-  };
-
-  const handleSubmit = async (
-    event: SubmitEvent & { currentTarget: EventTarget & HTMLFormElement }
-  ) => {
-    event.preventDefault();
-
-    const form = event.currentTarget;
+  const handleSubmit: EventHandler<SubmitEvent> = async (e) => {
+    e.preventDefault();
+    const form = e.currentTarget as HTMLFormElement;
     const text = usingProvider
       ? controller.textInput.value
       : ((new FormData(form).get("message") as string) ?? "");
-
     if (!usingProvider) {
       form.reset();
     }
-
     try {
-      const convertedFiles: FileUIPart[] = await Promise.all(
-        attachments.files.map(async (attachment) => {
-          const { id, ...item } = attachment;
-          void id;
-          if (item.url?.startsWith("blob:")) {
-            const dataUrl = await convertBlobUrlToDataUrl(item.url);
-            return { ...item, url: dataUrl ?? item.url };
-          }
-          return item;
-        })
-      );
-
-      const result = onSubmit({ files: convertedFiles, text }, event);
-      if (result && typeof (result as Promise<void>).then === "function") {
-        try {
-          await result;
-          clearAll();
-          if (usingProvider) {
-            controller.textInput.clear();
-          }
-        } catch {
-          // Keep values to support retry.
-        }
-      } else {
-        clearAll();
-        if (usingProvider) {
-          controller.textInput.clear();
-        }
-      }
+      const files = await Promise.all(attachments.files.map(parseAttachment));
+      await onSubmit({ text, files }, e);
+      clearAfterSuccessfulSubmit();
     } catch {
       // Keep values to support retry.
     }
@@ -193,8 +178,9 @@
     if (!usingProvider) {
       return;
     }
-
-    controller.registerFileInput(fileInputRef, handleOpenDialog);
+    controller.registerFileInput(fileInputRef, () => {
+      fileInputRef?.click();
+    });
   });
 
   $effect(() => {
@@ -205,28 +191,27 @@
   });
 
   $effect(() => {
-    if (!formRef || globalDrop) {
+    if (globalDrop || !formRef) {
       return;
     }
-
-    const onDragOver = (event: DragEvent) => {
-      if (event.dataTransfer?.types.includes("Files")) {
-        event.preventDefault();
+    const onDrop = (e: DragEvent) => {
+      const types = e.dataTransfer?.types ?? [];
+      if (types.includes("Files")) {
+        e.preventDefault();
+      }
+      const files = e.dataTransfer?.files ?? [];
+      if (files.length > 0) {
+        addWithValidation(files);
       }
     };
-
-    const onDrop = (event: DragEvent) => {
-      if (event.dataTransfer?.types.includes("Files")) {
-        event.preventDefault();
-      }
-      if (event.dataTransfer?.files && event.dataTransfer.files.length > 0) {
-        addWithValidation(event.dataTransfer.files);
+    const onDragOver = (e: DragEvent) => {
+      const types = e.dataTransfer?.types ?? [];
+      if (types.includes("Files")) {
+        e.preventDefault();
       }
     };
-
-    formRef.addEventListener("dragover", onDragOver);
     formRef.addEventListener("drop", onDrop);
-
+    formRef.addEventListener("dragover", onDragOver);
     return () => {
       formRef?.removeEventListener("drop", onDrop);
       formRef?.removeEventListener("dragover", onDragOver);
@@ -237,27 +222,24 @@
     if (!globalDrop) {
       return;
     }
-
-    const onDrop = (event: DragEvent) => {
-      if (event.dataTransfer?.types.includes("Files")) {
-        event.preventDefault();
+    const onDrop = (e: DragEvent) => {
+      const types = e.dataTransfer?.types ?? [];
+      if (types.includes("Files")) {
+        e.preventDefault();
       }
-      const files = event.dataTransfer?.files ?? [];
-
+      const files = e.dataTransfer?.files ?? [];
       if (files.length > 0) {
         addWithValidation(files);
       }
     };
-
-    const onDragOver = (event: DragEvent) => {
-      if (event.dataTransfer?.types.includes("Files")) {
-        event.preventDefault();
+    const onDragOver = (e: DragEvent) => {
+      const types = e.dataTransfer?.types ?? [];
+      if (types.includes("Files")) {
+        e.preventDefault();
       }
     };
-
     document.addEventListener("drop", onDrop);
     document.addEventListener("dragover", onDragOver);
-
     return () => {
       document.removeEventListener("drop", onDrop);
       document.removeEventListener("dragover", onDragOver);

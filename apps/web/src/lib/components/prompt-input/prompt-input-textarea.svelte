@@ -30,6 +30,7 @@
   const effectiveValue = $derived(
     boundToController ? controller!.textInput.value : value
   );
+
   let isComposing = $state(false);
 
   const handleInput: FormEventHandler<HTMLTextAreaElement> = (e) => {
@@ -81,8 +82,8 @@
     }
   };
 
-  const handlePaste: ClipboardEventHandler<HTMLTextAreaElement> = (event) => {
-    const items = event.clipboardData?.items ?? [];
+  const handlePaste: ClipboardEventHandler<HTMLTextAreaElement> = (e) => {
+    const items = e.clipboardData?.items ?? [];
     const files: File[] = [];
     for (const item of items) {
       if (item.kind === "file") {
@@ -93,7 +94,7 @@
       }
     }
     if (files.length > 0) {
-      event.preventDefault();
+      e.preventDefault();
       attachments.add(files);
     }
   };
