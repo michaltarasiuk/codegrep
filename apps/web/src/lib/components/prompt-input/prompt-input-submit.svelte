@@ -9,6 +9,8 @@
   import { Spinner } from "$lib/components/ui/spinner/index.js";
   import { cn } from "$lib/utils/cn.js";
 
+  import { getPromptInputController } from "./prompt-input-context.svelte";
+
   let {
     status,
     variant = "default",
@@ -23,24 +25,27 @@
     onStop?: () => void;
   } = $props();
 
+  const controller = getPromptInputController();
+
   let isGenerating = $derived(status === "submitted" || status === "streaming");
 
-  const handleClick = (event: MouseEvent) => {
+  const handleClick = (e: MouseEvent) => {
     if (isGenerating && onStop) {
-      event.preventDefault();
+      e.preventDefault();
       onStop();
       return;
     }
-    onclick?.(event as never);
+    onclick?.(e as never);
   };
 </script>
 
 <InputGroup.Button
-  aria-label={isGenerating ? "Stop" : "Submit"}
   type={isGenerating && onStop ? "button" : "submit"}
+  aria-label={isGenerating ? "Stop" : "Submit"}
   {variant}
   {size}
   class={cn(className)}
+  disabled={controller ? !controller.textInput.value : false}
   onclick={handleClick}
   {...restProps}
 >

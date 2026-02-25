@@ -15,8 +15,8 @@
   });
 
   let messageInput = $state("");
-  let isLoading = $derived(
-    chat.status === "streaming" || chat.status === "submitted"
+  let isGenerating = $derived(
+    chat.status === "submitted" || chat.status === "streaming"
   );
 
   function handleSubmit({ text }: PromptInput.PromptInputMessage) {
@@ -45,7 +45,7 @@
         {/each}
       {/each}
 
-      {#if isLoading}
+      {#if isGenerating}
         <div class="px-1">
           <Spinner />
         </div>

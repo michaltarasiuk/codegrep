@@ -16,10 +16,10 @@
 
   const attachments = getPromptInputAttachments();
 
-  const handleSelect = (event: Event) => {
-    event.preventDefault();
+  const handleSelect = (e: Event) => {
+    e.preventDefault();
     attachments.openFileDialog();
-    onSelect?.(event);
+    onSelect?.(e);
   };
 </script>
 
