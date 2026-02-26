@@ -11,7 +11,7 @@
   import * as InputGroup from "$lib/components/ui/input-group/index.js";
   import * as Tooltip from "$lib/components/ui/tooltip/index.js";
   import { cn } from "$lib/utils/cn.js";
-  import { convertBlobUrlToDataUrl } from "$lib/utils/url.js";
+  import { blobUrlToDataUrl } from "$lib/utils/url.js";
 
   import {
     AttachmentsState,
@@ -143,13 +143,13 @@
     const { id: _id, ...item } = attachment;
     let url = item.url;
     if (url.startsWith("blob:")) {
-      url = (await convertBlobUrlToDataUrl(item.url)) ?? url;
+      url = (await blobUrlToDataUrl(item.url)) ?? url;
     }
     return { ...item, url };
   };
 
   const handleFileChange: ChangeEventHandler<HTMLInputElement> = (e) => {
-    const input = e.currentTarget as HTMLInputElement;
+    const input = e.currentTarget;
     if (input.files) {
       addWithValidation(input.files);
     }
