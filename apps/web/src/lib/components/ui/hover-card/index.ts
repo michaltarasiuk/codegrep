@@ -4,12 +4,13 @@ import Portal from "./hover-card-portal.svelte";
 import Trigger from "./hover-card-trigger.svelte";
 
 export {
-  Content,
-  Root as HoverCard,
-  Content as HoverCardContent,
-  Portal as HoverCardPortal,
-  Trigger as HoverCardTrigger,
-  Portal,
   Root,
   Trigger,
+  Content,
+  Portal,
+  //
+  Root as HoverCard,
+  Trigger as HoverCardTrigger,
+  Content as HoverCardContent,
+  Portal as HoverCardPortal,
 };

@@ -1,3 +1,7 @@
 import Root from "./button.svelte";
 
-export { Root as Button, Root };
+export {
+  Root,
+  //
+  Root as Button,
+};

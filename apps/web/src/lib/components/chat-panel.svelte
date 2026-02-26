@@ -3,6 +3,8 @@
   import { DefaultChatTransport } from "ai";
 
   import * as PromptInput from "$lib/components/prompt-input/index.js";
+  import * as Suggestion from "$lib/components/suggestion";
+  import { SUGGESTIONS } from "$lib/components/suggestion/consts.js";
   import * as ScrollArea from "$lib/components/ui/scroll-area/index.js";
   import { cn } from "$lib/utils/cn";
 
@@ -17,6 +19,10 @@
   let isGenerating = $derived(
     chat.status === "submitted" || chat.status === "streaming"
   );
+
+  function handleSuggestionPick(text: string) {
+    chat.sendMessage({ text });
+  }
 
   function handleSubmit({ text }: PromptInput.PromptInputMessage) {
     chat.sendMessage({ text });
@@ -51,7 +57,15 @@
     </div>
   </ScrollArea.Root>
 
-  <div class="absolute inset-x-0 bottom-0 pt-2">
+  <div class="absolute inset-x-0 bottom-0 space-y-2 pt-2">
+    {#if !chat.lastMessage}
+      <Suggestion.Root>
+        {#each SUGGESTIONS as suggestion (suggestion)}
+          <Suggestion.Item {suggestion} onpick={handleSuggestionPick} />
+        {/each}
+      </Suggestion.Root>
+    {/if}
+
     <PromptInput.Provider>
       <PromptInput.Root class="mx-auto max-w-4xl" onSubmit={handleSubmit}>
         <PromptInput.Body>

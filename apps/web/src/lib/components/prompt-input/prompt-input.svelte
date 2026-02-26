@@ -23,7 +23,10 @@
     setReferencedSourcesState,
   } from "./prompt-input-context.svelte.js";
 
-  type PromptInputProps = Omit<HTMLFormAttributes, "onsubmit" | "onerror"> & {
+  interface PromptInputProps extends Omit<
+    HTMLFormAttributes,
+    "onsubmit" | "onerror"
+  > {
     accept?: string;
     multiple?: boolean;
     globalDrop?: boolean;
@@ -36,10 +39,9 @@
       message: PromptInputMessage,
       e: SubmitEvent
     ) => void | Promise<void>;
-  };
+  }
 
   let {
-    class: className,
     accept,
     multiple,
     globalDrop = false,
@@ -47,6 +49,7 @@
     maxFiles,
     maxFileSize,
     children,
+    class: className,
     onError,
     onSubmit,
     ...restProps

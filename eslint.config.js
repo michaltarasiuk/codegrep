@@ -55,6 +55,12 @@ const config = [
     },
   },
   {
+    files: ["**/components/**/index.ts"],
+    rules: {
+      "simple-import-sort/exports": "off",
+    },
+  },
+  {
     files: ["apps/web/**/*.{js,mjs,cjs,ts,mts,cts,svelte,astro}"],
     languageOptions: {
       globals: {
