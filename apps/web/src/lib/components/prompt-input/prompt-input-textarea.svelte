@@ -33,16 +33,6 @@
 
   let isComposing = $state(false);
 
-  const handleInput: FormEventHandler<HTMLTextAreaElement> = (e) => {
-    const newValue = e.currentTarget.value;
-    if (boundToController) {
-      controller!.textInput.setInput(newValue);
-    } else {
-      value = newValue;
-    }
-    oninput?.(e);
-  };
-
   const handleKeyDown: KeyboardEventHandler<HTMLTextAreaElement> = (e) => {
     // Call the external onkeydown handler first
     onkeydown?.(e);
@@ -80,6 +70,16 @@
         attachments.remove(lastAttachment.id);
       }
     }
+  };
+
+  const handleInput: FormEventHandler<HTMLTextAreaElement> = (e) => {
+    const newValue = e.currentTarget.value;
+    if (boundToController) {
+      controller!.textInput.setInput(newValue);
+    } else {
+      value = newValue;
+    }
+    oninput?.(e);
   };
 
   const handlePaste: ClipboardEventHandler<HTMLTextAreaElement> = (e) => {

@@ -14,14 +14,12 @@
     }),
   });
 
-  let messageInput = $state("");
   let isGenerating = $derived(
     chat.status === "submitted" || chat.status === "streaming"
   );
 
   function handleSubmit({ text }: PromptInput.PromptInputMessage) {
     chat.sendMessage({ text });
-    messageInput = "";
   }
 </script>
 
@@ -58,7 +56,6 @@
       <PromptInput.Root class="mx-auto max-w-4xl" onSubmit={handleSubmit}>
         <PromptInput.Body>
           <PromptInput.Textarea
-            bind:value={messageInput}
             class="max-h-72"
             placeholder="Ask about the codebase..."
           />
