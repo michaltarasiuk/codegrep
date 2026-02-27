@@ -17,7 +17,7 @@
   class="w-full overflow-x-auto whitespace-nowrap"
   {...restProps}
 >
-  <div class={cn("flex w-max flex-nowrap items-center gap-2", className)}>
+  <div class={cn("flex w-max flex-nowrap items-center gap-2 py-2", className)}>
     {@render children?.()}
   </div>
 </ScrollArea.Root>

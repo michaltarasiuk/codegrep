@@ -57,7 +57,7 @@
     </div>
   </ScrollArea.Root>
 
-  <div class="absolute inset-x-0 bottom-0 space-y-2 pt-2">
+  <div class="absolute inset-x-0 bottom-0 pt-2">
     {#if !chat.lastMessage}
       <Suggestion.Root>
         {#each SUGGESTIONS as suggestion (suggestion)}
