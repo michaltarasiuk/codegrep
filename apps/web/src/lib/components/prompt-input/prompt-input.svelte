@@ -34,24 +34,24 @@
     maxFiles?: number;
     maxFileSize?: number;
     children?: Snippet;
-    onError?: (error: PromptInputError) => void;
-    onSubmit: (
+    onerror?: (error: PromptInputError) => void;
+    onsubmit: (
       message: PromptInputMessage,
       e: SubmitEvent
     ) => void | Promise<void>;
   }
 
   let {
-    accept,
-    multiple,
     globalDrop = false,
     syncHiddenInput = false,
+    accept,
+    multiple,
     maxFiles,
     maxFileSize,
+    onerror,
+    onsubmit,
     children,
     class: className,
-    onError,
-    onSubmit,
     ...restProps
   }: PromptInputProps = $props();
 
@@ -100,7 +100,7 @@
     const incoming = [...fileList];
     const accepted = incoming.filter(matchesAccept);
     if (incoming.length > 0 && accepted.length === 0) {
-      onError?.({
+      onerror?.({
         code: "accept",
         message: "No files match the accepted types.",
       });
@@ -108,7 +108,7 @@
     }
     const sized = accepted.filter(isWithinSizeLimit);
     if (accepted.length > 0 && sized.length === 0) {
-      onError?.({
+      onerror?.({
         code: "max_file_size",
         message: "All files exceed the maximum size.",
       });
@@ -118,7 +118,7 @@
     const capped =
       typeof capacity === "number" ? sized.slice(0, capacity) : sized;
     if (typeof capacity === "number" && sized.length > capacity) {
-      onError?.({
+      onerror?.({
         code: "max_files",
         message: "Too many files. Some were not added.",
       });
@@ -170,7 +170,7 @@
     }
     try {
       const files = await Promise.all(attachments.files.map(parseAttachment));
-      await onSubmit({ text, files }, e);
+      await onsubmit({ text, files }, e);
       clearAfterSuccessfulSubmit();
     } catch {
       // Keep values to support retry.

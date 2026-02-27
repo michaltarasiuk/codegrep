@@ -17,9 +17,9 @@
   let {
     value = $bindable(""),
     placeholder = "What would you like to know?",
-    class: className,
     onkeydown,
     oninput,
+    class: className,
     ...restProps
   }: ComponentProps<typeof InputGroup.Textarea> = $props();
 

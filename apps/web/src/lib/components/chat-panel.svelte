@@ -67,7 +67,7 @@
     {/if}
 
     <PromptInput.Provider>
-      <PromptInput.Root class="mx-auto max-w-4xl" onSubmit={handleSubmit}>
+      <PromptInput.Root class="mx-auto max-w-4xl" onsubmit={handleSubmit}>
         <PromptInput.Body>
           <PromptInput.Textarea
             class="max-h-72"
@@ -79,7 +79,7 @@
             status={chat.status}
             size="icon-xs"
             class="ms-auto"
-            onStop={() => chat.stop()}
+            onstop={() => chat.stop()}
           />
         </PromptInput.Footer>
       </PromptInput.Root>

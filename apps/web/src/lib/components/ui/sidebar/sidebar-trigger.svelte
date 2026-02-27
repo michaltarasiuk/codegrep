@@ -9,8 +9,8 @@
 
   let {
     ref = $bindable(null),
-    class: className,
     onclick,
+    class: className,
     ...restProps
   }: ComponentProps<typeof Button> & {
     onclick?: (e: MouseEvent) => void;

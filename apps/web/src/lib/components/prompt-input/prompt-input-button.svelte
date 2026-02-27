@@ -14,11 +14,11 @@
       };
 
   let {
-    tooltip,
     variant = "ghost",
     size = "icon-sm",
-    class: className,
+    tooltip,
     children,
+    class: className,
     ...restProps
   }: ComponentProps<typeof InputGroup.Button> & {
     tooltip?: PromptInputButtonTooltip;

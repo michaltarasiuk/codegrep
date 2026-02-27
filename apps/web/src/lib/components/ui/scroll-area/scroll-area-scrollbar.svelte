@@ -5,9 +5,9 @@
 
   let {
     ref = $bindable(null),
-    class: className,
     orientation = "vertical",
     children,
+    class: className,
     ...restProps
   }: WithoutChild<ScrollAreaPrimitive.ScrollbarProps> = $props();
 </script>

@@ -6,8 +6,8 @@
   export type CommandRootApi = CommandPrimitive.Root;
 
   let {
-    api = $bindable(null),
     ref = $bindable(null),
+    api = $bindable(null),
     value = $bindable(""),
     class: className,
     ...restProps

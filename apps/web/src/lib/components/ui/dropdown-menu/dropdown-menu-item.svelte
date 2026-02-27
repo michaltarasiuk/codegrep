@@ -5,9 +5,9 @@
 
   let {
     ref = $bindable(null),
-    class: className,
-    inset,
     variant = "default",
+    inset,
+    class: className,
     ...restProps
   }: DropdownMenuPrimitive.ItemProps & {
     inset?: boolean;

@@ -8,11 +8,11 @@
   let {
     ref = $bindable(null),
     viewportRef = $bindable(null),
-    class: className,
     orientation = "vertical",
     scrollbarXClasses = "",
     scrollbarYClasses = "",
     children,
+    class: className,
     ...restProps
   }: WithoutChild<ScrollAreaPrimitive.RootProps> & {
     orientation?: "vertical" | "horizontal" | "both" | undefined;

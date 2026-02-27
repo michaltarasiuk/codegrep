@@ -12,17 +12,17 @@
   import { getPromptInputController } from "./prompt-input-context.svelte";
 
   let {
-    status,
     variant = "default",
     size = "icon-sm",
-    class: className,
-    children,
-    onStop,
+    status,
+    onstop,
     onclick,
+    children,
+    class: className,
     ...restProps
   }: ComponentProps<typeof InputGroup.Button> & {
     status?: ChatStatus;
-    onStop?: () => void;
+    onstop?: () => void;
   } = $props();
 
   const controller = getPromptInputController();
@@ -30,9 +30,9 @@
   let isGenerating = $derived(status === "submitted" || status === "streaming");
 
   const handleClick = (e: MouseEvent) => {
-    if (isGenerating && onStop) {
+    if (isGenerating && onstop) {
       e.preventDefault();
-      onStop();
+      onstop();
       return;
     }
     onclick?.(e as never);
@@ -40,7 +40,7 @@
 </script>
 
 <InputGroup.Button
-  type={isGenerating && onStop ? "button" : "submit"}
+  type={isGenerating && onstop ? "button" : "submit"}
   aria-label={isGenerating ? "Stop" : "Submit"}
   {variant}
   {size}

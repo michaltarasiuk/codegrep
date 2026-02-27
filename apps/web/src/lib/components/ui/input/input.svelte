@@ -19,10 +19,10 @@
   let {
     ref = $bindable(null),
     value = $bindable(),
-    type,
     files = $bindable(),
-    class: className,
+    type,
     "data-slot": dataSlot = "input",
+    class: className,
     ...restProps
   }: Props = $props();
 </script>

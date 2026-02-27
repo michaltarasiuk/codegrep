@@ -34,10 +34,10 @@
 
   let {
     ref = $bindable(null),
-    class: className,
     side = "right",
     portalProps,
     children,
+    class: className,
     ...restProps
   }: WithoutChildrenOrChild<SheetPrimitive.ContentProps> & {
     portalProps?: WithoutChildrenOrChild<ComponentProps<typeof SheetPortal>>;

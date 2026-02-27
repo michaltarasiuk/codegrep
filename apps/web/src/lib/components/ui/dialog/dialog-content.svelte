@@ -11,10 +11,10 @@
 
   let {
     ref = $bindable(null),
-    class: className,
+    showCloseButton = true,
     portalProps,
     children,
-    showCloseButton = true,
+    class: className,
     ...restProps
   }: WithoutChildrenOrChild<DialogPrimitive.ContentProps> & {
     portalProps?: WithoutChildrenOrChild<ComponentProps<typeof DialogPortal>>;

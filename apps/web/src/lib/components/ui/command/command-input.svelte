@@ -6,8 +6,8 @@
 
   let {
     ref = $bindable(null),
-    class: className,
     value = $bindable(""),
+    class: className,
     ...restProps
   }: CommandPrimitive.InputProps = $props();
 </script>

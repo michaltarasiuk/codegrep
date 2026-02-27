@@ -6,8 +6,8 @@
 
   let {
     ref = $bindable(null),
-    children,
     child,
+    children,
     class: className,
     ...restProps
   }: WithElementRef<HTMLAttributes<HTMLElement>> & {

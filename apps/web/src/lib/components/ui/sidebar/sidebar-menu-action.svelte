@@ -6,10 +6,10 @@
 
   let {
     ref = $bindable(null),
-    class: className,
     showOnHover = false,
-    children,
     child,
+    children,
+    class: className,
     ...restProps
   }: WithElementRef<HTMLButtonAttributes> & {
     child?: Snippet<[{ props: Record<string, unknown> }]>;

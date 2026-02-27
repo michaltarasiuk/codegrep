@@ -11,8 +11,8 @@
   import Command from "./command.svelte";
 
   let {
-    open = $bindable(false),
     ref = $bindable(null),
+    open = $bindable(false),
     value = $bindable(""),
     title = "Command Palette",
     description = "Search for a command to run",

@@ -6,8 +6,8 @@
 
   let {
     ref = $bindable(null),
-    class: className,
     children,
+    class: className,
     ...restProps
   }: ComponentProps<typeof SelectPrimitive.GroupHeading> = $props();
 </script>

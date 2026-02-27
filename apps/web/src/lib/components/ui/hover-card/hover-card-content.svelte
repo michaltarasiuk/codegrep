@@ -8,10 +8,10 @@
 
   let {
     ref = $bindable(null),
-    class: className,
     align = "center",
     sideOffset = 4,
     portalProps,
+    class: className,
     ...restProps
   }: HoverCardPrimitive.ContentProps & {
     portalProps?: WithoutChildrenOrChild<

@@ -5,12 +5,12 @@
   import { cn } from "$lib/utils/cn.js";
 
   let {
-    suggestion,
     variant = "outline",
     size = "sm",
-    class: className,
-    children,
+    suggestion,
     onpick,
+    children,
+    class: className,
     ...restProps
   }: ComponentProps<typeof Button> & {
     suggestion: string;

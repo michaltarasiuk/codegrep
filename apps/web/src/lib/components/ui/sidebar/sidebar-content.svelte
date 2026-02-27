@@ -5,8 +5,8 @@
 
   let {
     ref = $bindable(null),
-    class: className,
     children,
+    class: className,
     ...restProps
   }: WithElementRef<HTMLAttributes<HTMLElement>> = $props();
 </script>

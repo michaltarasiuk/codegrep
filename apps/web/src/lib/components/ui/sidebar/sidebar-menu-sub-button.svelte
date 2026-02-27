@@ -6,11 +6,11 @@
 
   let {
     ref = $bindable(null),
-    children,
-    child,
-    class: className,
-    size = "md",
     isActive = false,
+    size = "md",
+    child,
+    children,
+    class: className,
     ...restProps
   }: WithElementRef<HTMLAnchorAttributes> & {
     child?: Snippet<[{ props: Record<string, unknown> }]>;

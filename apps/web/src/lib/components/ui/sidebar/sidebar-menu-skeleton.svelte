@@ -6,9 +6,9 @@
 
   let {
     ref = $bindable(null),
-    class: className,
     showIcon = false,
     children,
+    class: className,
     ...restProps
   }: WithElementRef<HTMLAttributes<HTMLElement>> & {
     showIcon?: boolean;

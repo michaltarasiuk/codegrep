@@ -12,8 +12,8 @@
     side = "left",
     variant = "sidebar",
     collapsible = "offcanvas",
-    class: className,
     children,
+    class: className,
     ...restProps
   }: WithElementRef<HTMLAttributes<HTMLDivElement>> & {
     side?: "left" | "right";

@@ -32,9 +32,9 @@
 
   let {
     ref = $bindable(null),
-    class: className,
-    children,
     align = "inline-start",
+    children,
+    class: className,
     ...restProps
   }: WithElementRef<HTMLAttributes<HTMLDivElement>> & {
     align?: InputGroupAddonAlign;

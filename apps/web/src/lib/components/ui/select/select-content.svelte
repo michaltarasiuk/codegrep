@@ -11,11 +11,11 @@
 
   let {
     ref = $bindable(null),
-    class: className,
     sideOffset = 4,
+    preventScroll = true,
     portalProps,
     children,
-    preventScroll = true,
+    class: className,
     ...restProps
   }: WithoutChild<SelectPrimitive.ContentProps> & {
     portalProps?: WithoutChildrenOrChild<ComponentProps<typeof SelectPortal>>;

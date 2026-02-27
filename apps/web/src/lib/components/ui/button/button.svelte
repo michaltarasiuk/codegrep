@@ -50,14 +50,14 @@
 
 <script lang="ts">
   let {
-    class: className,
-    variant = "default",
-    size = "default",
     ref = $bindable(null),
     href = undefined,
     type = "button",
+    variant = "default",
+    size = "default",
     disabled,
     children,
+    class: className,
     ...restProps
   }: ButtonProps = $props();
 </script>

@@ -6,10 +6,10 @@
 
   let {
     ref = $bindable(null),
-    class: className,
     value,
     label,
     children: childrenProp,
+    class: className,
     ...restProps
   }: WithoutChild<SelectPrimitive.ItemProps> = $props();
 </script>

@@ -30,11 +30,11 @@
 
   let {
     ref = $bindable(null),
-    class: className,
-    children,
     type = "button",
     variant = "ghost",
     size = "xs",
+    children,
+    class: className,
     ...restProps
   }: Omit<ComponentProps<typeof Button>, "href" | "size"> & {
     size?: InputGroupButtonSize;

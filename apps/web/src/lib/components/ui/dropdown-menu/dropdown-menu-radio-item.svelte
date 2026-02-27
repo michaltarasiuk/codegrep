@@ -6,8 +6,8 @@
 
   let {
     ref = $bindable(null),
-    class: className,
     children: childrenProp,
+    class: className,
     ...restProps
   }: WithoutChild<DropdownMenuPrimitive.RadioItemProps> = $props();
 </script>
