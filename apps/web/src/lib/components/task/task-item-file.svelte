@@ -14,7 +14,7 @@
 <div
   bind:this={ref}
   class={cn(
-    "inline-flex items-center gap-1 rounded-md border bg-secondary px-1.5 py-0.5 text-foreground text-xs",
+    "bg-secondary text-foreground inline-flex items-center gap-1 rounded-md border px-1.5 py-0.5 text-xs",
     className
   )}
   {...restProps}
