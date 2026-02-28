@@ -5,9 +5,9 @@
   import { cn } from "$lib/utils/cn.js";
 
   let {
+    suggestion,
     variant = "outline",
     size = "sm",
-    suggestion,
     onpick,
     children,
     class: className,

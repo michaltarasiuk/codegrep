@@ -1,12 +1,14 @@
 <script lang="ts">
   import { Chat } from "@ai-sdk/svelte";
+  import CopyIcon from "@lucide/svelte/icons/copy";
+  import RefreshCcwIcon from "@lucide/svelte/icons/refresh-ccw";
   import { DefaultChatTransport } from "ai";
 
+  import * as Message from "$lib/components/message/index.js";
   import * as PromptInput from "$lib/components/prompt-input/index.js";
   import * as Suggestion from "$lib/components/suggestion";
   import { SUGGESTIONS } from "$lib/components/suggestion/consts.js";
   import * as ScrollArea from "$lib/components/ui/scroll-area/index.js";
-  import { cn } from "$lib/utils/cn";
 
   import Spinner from "./ui/spinner/spinner.svelte";
 
@@ -19,6 +21,10 @@
   let isGenerating = $derived(
     chat.status === "submitted" || chat.status === "streaming"
   );
+
+  function handleCopy(text: string) {
+    navigator.clipboard.writeText(text);
+  }
 
   function handleSuggestionPick(text: string) {
     chat.sendMessage({ text });
@@ -35,16 +41,35 @@
       {#each chat.messages as message, messageIndex (messageIndex)}
         {#each message.parts as messagePart, partIndex (partIndex)}
           {#if messagePart.type === "text"}
-            <div
-              class={cn(
-                "w-fit max-w-4/5 rounded-xl px-4 py-2 text-sm leading-relaxed",
-                message.role === "user"
-                  ? "bg-primary text-primary-foreground ms-auto"
-                  : "bg-muted"
-              )}
-            >
-              {messagePart.text}
-            </div>
+            {@const isLastMessage = messageIndex === chat.messages.length - 1}
+            <Message.Root from={message.role}>
+              <Message.Content
+                class={message.role === "assistant"
+                  ? "bg-muted rounded-lg px-4 py-3"
+                  : "bg-primary text-primary-foreground rounded-lg px-4 py-3"}
+              >
+                {messagePart.text}
+              </Message.Content>
+
+              {#if message.role === "assistant" && isLastMessage}
+                <Message.Actions>
+                  <Message.Action
+                    label="Retry"
+                    tooltip="Retry"
+                    onclick={() => chat.regenerate()}
+                  >
+                    <RefreshCcwIcon class="size-3" />
+                  </Message.Action>
+                  <Message.Action
+                    label="Copy"
+                    tooltip="Copy"
+                    onclick={() => handleCopy(messagePart.text)}
+                  >
+                    <CopyIcon class="size-3" />
+                  </Message.Action>
+                </Message.Actions>
+              {/if}
+            </Message.Root>
           {/if}
         {/each}
       {/each}
