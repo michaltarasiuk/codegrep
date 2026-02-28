@@ -40,48 +40,41 @@
     <Conversation.Content
       class="mx-auto flex size-full max-w-4xl flex-col gap-3 pb-36"
     >
-      {#if chat.messages.length === 0}
-        <Conversation.EmptyState
-          title="Ask your repository"
-          description="Search, debug, and understand this codebase with AI"
-        />
-      {:else}
-        {#each chat.messages as message, messageIndex (messageIndex)}
-          {#each message.parts as messagePart, partIndex (partIndex)}
-            {#if messagePart.type === "text"}
-              {@const isLastMessage = messageIndex === chat.messages.length - 1}
-              <Message.Root from={message.role}>
-                <Message.Content
-                  class={message.role === "assistant"
-                    ? "bg-muted rounded-lg px-4 py-3"
-                    : "bg-primary text-primary-foreground rounded-lg px-4 py-3"}
-                >
-                  {messagePart.text}
-                </Message.Content>
+      {#each chat.messages as message, messageIndex (messageIndex)}
+        {#each message.parts as messagePart, partIndex (partIndex)}
+          {#if messagePart.type === "text"}
+            {@const isLastMessage = messageIndex === chat.messages.length - 1}
+            <Message.Root from={message.role}>
+              <Message.Content
+                class={message.role === "assistant"
+                  ? "bg-muted rounded-lg px-4 py-3"
+                  : "bg-primary text-primary-foreground rounded-lg px-4 py-3"}
+              >
+                {messagePart.text}
+              </Message.Content>
 
-                {#if message.role === "assistant" && isLastMessage}
-                  <Message.Actions>
-                    <Message.Action
-                      label="Retry"
-                      tooltip="Retry"
-                      onclick={() => chat.regenerate()}
-                    >
-                      <RefreshCcwIcon class="size-3" />
-                    </Message.Action>
-                    <Message.Action
-                      label="Copy"
-                      tooltip="Copy"
-                      onclick={() => handleCopy(messagePart.text)}
-                    >
-                      <CopyIcon class="size-3" />
-                    </Message.Action>
-                  </Message.Actions>
-                {/if}
-              </Message.Root>
-            {/if}
-          {/each}
+              {#if message.role === "assistant" && isLastMessage}
+                <Message.Actions>
+                  <Message.Action
+                    label="Retry"
+                    tooltip="Retry"
+                    onclick={() => chat.regenerate()}
+                  >
+                    <RefreshCcwIcon class="size-3" />
+                  </Message.Action>
+                  <Message.Action
+                    label="Copy"
+                    tooltip="Copy"
+                    onclick={() => handleCopy(messagePart.text)}
+                  >
+                    <CopyIcon class="size-3" />
+                  </Message.Action>
+                </Message.Actions>
+              {/if}
+            </Message.Root>
+          {/if}
         {/each}
-      {/if}
+      {/each}
 
       {#if isGenerating}
         <div class="px-1">
