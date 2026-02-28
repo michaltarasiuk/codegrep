@@ -4,11 +4,11 @@
   import RefreshCcwIcon from "@lucide/svelte/icons/refresh-ccw";
   import { DefaultChatTransport } from "ai";
 
+  import * as Conversation from "$lib/components/conversation/index.js";
   import * as Message from "$lib/components/message/index.js";
   import * as PromptInput from "$lib/components/prompt-input/index.js";
   import * as Suggestion from "$lib/components/suggestion";
   import { SUGGESTIONS } from "$lib/components/suggestion/consts.js";
-  import * as ScrollArea from "$lib/components/ui/scroll-area/index.js";
 
   import Spinner from "./ui/spinner/spinner.svelte";
 
@@ -36,51 +36,60 @@
 </script>
 
 <div class="relative size-full">
-  <ScrollArea.Root class="size-full">
-    <div class="flex size-full max-w-4xl flex-col gap-3 pb-36">
-      {#each chat.messages as message, messageIndex (messageIndex)}
-        {#each message.parts as messagePart, partIndex (partIndex)}
-          {#if messagePart.type === "text"}
-            {@const isLastMessage = messageIndex === chat.messages.length - 1}
-            <Message.Root from={message.role}>
-              <Message.Content
-                class={message.role === "assistant"
-                  ? "bg-muted rounded-lg px-4 py-3"
-                  : "bg-primary text-primary-foreground rounded-lg px-4 py-3"}
-              >
-                {messagePart.text}
-              </Message.Content>
+  <Conversation.Root class="size-full overflow-y-auto">
+    <Conversation.Content
+      class="mx-auto flex size-full max-w-4xl flex-col gap-3 pb-36"
+    >
+      {#if chat.messages.length === 0}
+        <Conversation.EmptyState
+          title="Ask your repository"
+          description="Search, debug, and understand this codebase with AI"
+        />
+      {:else}
+        {#each chat.messages as message, messageIndex (messageIndex)}
+          {#each message.parts as messagePart, partIndex (partIndex)}
+            {#if messagePart.type === "text"}
+              {@const isLastMessage = messageIndex === chat.messages.length - 1}
+              <Message.Root from={message.role}>
+                <Message.Content
+                  class={message.role === "assistant"
+                    ? "bg-muted rounded-lg px-4 py-3"
+                    : "bg-primary text-primary-foreground rounded-lg px-4 py-3"}
+                >
+                  {messagePart.text}
+                </Message.Content>
 
-              {#if message.role === "assistant" && isLastMessage}
-                <Message.Actions>
-                  <Message.Action
-                    label="Retry"
-                    tooltip="Retry"
-                    onclick={() => chat.regenerate()}
-                  >
-                    <RefreshCcwIcon class="size-3" />
-                  </Message.Action>
-                  <Message.Action
-                    label="Copy"
-                    tooltip="Copy"
-                    onclick={() => handleCopy(messagePart.text)}
-                  >
-                    <CopyIcon class="size-3" />
-                  </Message.Action>
-                </Message.Actions>
-              {/if}
-            </Message.Root>
-          {/if}
+                {#if message.role === "assistant" && isLastMessage}
+                  <Message.Actions>
+                    <Message.Action
+                      label="Retry"
+                      tooltip="Retry"
+                      onclick={() => chat.regenerate()}
+                    >
+                      <RefreshCcwIcon class="size-3" />
+                    </Message.Action>
+                    <Message.Action
+                      label="Copy"
+                      tooltip="Copy"
+                      onclick={() => handleCopy(messagePart.text)}
+                    >
+                      <CopyIcon class="size-3" />
+                    </Message.Action>
+                  </Message.Actions>
+                {/if}
+              </Message.Root>
+            {/if}
+          {/each}
         {/each}
-      {/each}
+      {/if}
 
       {#if isGenerating}
         <div class="px-1">
           <Spinner />
         </div>
       {/if}
-    </div>
-  </ScrollArea.Root>
+    </Conversation.Content>
+  </Conversation.Root>
 
   <div class="absolute inset-x-0 bottom-0 pt-2">
     {#if !chat.lastMessage}
