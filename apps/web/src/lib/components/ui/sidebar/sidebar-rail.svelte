@@ -24,7 +24,7 @@
   data-slot="sidebar-rail"
   aria-label="Toggle Sidebar"
   tabIndex={-1}
-  onclick={sidebar.toggle}
+  onclick={() => sidebar.toggle()}
   title="Toggle Sidebar"
   class={cn(
     "hover:after:bg-sidebar-border group-data-[side=left]:-inset-e- absolute inset-y-0 z-20 hidden w-4 -translate-x-1/2 transition-all ease-linear group-data-[side=right]:inset-s-0 after:absolute after:inset-y-0 after:inset-s-[calc(1/2*100%-1px)] after:w-0.5 sm:flex",
