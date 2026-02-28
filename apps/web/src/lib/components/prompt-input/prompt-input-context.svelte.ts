@@ -15,8 +15,8 @@ export class PromptInputControllerState {
   textInput: TextInputState;
   attachments: AttachmentsState;
 
-  constructor(initialInput = () => "") {
-    this.textInput = new TextInputState(initialInput());
+  constructor(initialInput = "") {
+    this.textInput = new TextInputState(initialInput);
     this.attachments = new AttachmentsState();
   }
 
