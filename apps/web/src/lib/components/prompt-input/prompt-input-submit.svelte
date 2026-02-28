@@ -23,6 +23,7 @@
   }: ComponentProps<typeof InputGroup.Button> & {
     status?: ChatStatus;
     onstop?: () => void;
+    onclick?: (e: MouseEvent) => void;
   } = $props();
 
   const controller = getPromptInputController();
@@ -30,12 +31,11 @@
   let isGenerating = $derived(status === "submitted" || status === "streaming");
 
   const handleClick = (e: MouseEvent) => {
-    if (isGenerating && onstop) {
+    onclick?.(e);
+    if (isGenerating) {
       e.preventDefault();
-      onstop();
-      return;
+      onstop?.();
     }
-    onclick?.(e as never);
   };
 </script>
 
