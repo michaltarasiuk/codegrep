@@ -15,7 +15,7 @@
     "ai": "catalog:",
     "better-auth": "catalog:",
     "drizzle-orm": "^0.45.1",
-    "elysia": "latest",
+    "elysia": "catalog:",
     "pg": "^8.18.0"
   },
   "devDependencies": {

@@ -43,6 +43,7 @@
     "catalog": {
       "ai": "^6.0.97",
       "better-auth": "^1.4.18",
+      "elysia": "^1.4.27",
       "typescript": "5.9.2"
     }
   }

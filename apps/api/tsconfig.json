@@ -1,16 +1,15 @@
 {
-  "$schema": "https://json.schemastore.org/tsconfig",
   "extends": ["../../tsconfig.json"],
   "compilerOptions": {
-    "types": ["bun-types"],
     "baseUrl": ".",
-    "paths": {
-      "$/*": ["src/*"]
-    },
-    "moduleResolution": "node",
-    "module": "ES2022",
     "erasableSyntaxOnly": true,
+    "module": "ES2022",
+    "moduleDetection": "force",
+    "moduleResolution": "node",
+    "paths": {
+      "$api/*": ["./src/*"]
+    },
     "target": "ES2021",
-    "moduleDetection": "force"
+    "types": ["bun-types"]
   }
 }

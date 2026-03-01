@@ -1,13 +1,14 @@
 {
-  "exclude": ["dist"],
-  "include": [".astro/types.d.ts", "**/*"],
   "extends": ["astro/tsconfigs/base", "../../tsconfig.json"],
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
+      "$api/*": ["../api/src/*"],
       "$layouts/*": ["./src/layouts/*"],
       "$lib/*": ["./src/lib/*"],
       "$styles/*": ["./src/styles/*"]
     }
-  }
+  },
+  "include": [".astro/types.d.ts", "**/*"],
+  "exclude": ["dist"]
 }

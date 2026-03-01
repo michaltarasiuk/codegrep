@@ -8,7 +8,7 @@
   import { mode, toggleMode } from "mode-watcher";
 
   import * as Command from "$lib/components/ui/command/index.js";
-  import { authClient } from "$lib/utils/auth-client";
+  import { authClient } from "$lib/utils/client";
 
   const session = authClient.useSession();
 
