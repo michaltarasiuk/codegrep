@@ -3,22 +3,22 @@ import { getContext, setContext } from "svelte";
 export class MessageBranchState {
   registeredBranchIndexes = $state<number[]>([]);
 
-  readonly readBranch: () => number;
-  readonly writeBranch: (value: number) => void;
-  readonly readOnBranchChange: () => ((value: number) => void) | undefined;
+  #readBranch: () => number;
+  #writeBranch: (value: number) => void;
+  #readOnBranchChange: () => ((value: number) => void) | undefined;
 
   constructor(
     readBranch: () => number,
     writeBranch: (value: number) => void,
     readOnBranchChange: () => ((value: number) => void) | undefined
   ) {
-    this.readBranch = readBranch;
-    this.writeBranch = writeBranch;
-    this.readOnBranchChange = readOnBranchChange;
+    this.#readBranch = readBranch;
+    this.#writeBranch = writeBranch;
+    this.#readOnBranchChange = readOnBranchChange;
   }
 
   get currentBranch() {
-    return this.readBranch();
+    return this.#readBranch();
   }
 
   get normalizedCurrentBranch() {
@@ -42,11 +42,11 @@ export class MessageBranchState {
     const position = this.registeredBranchIndexes.indexOf(
       normalizedCurrentBranch
     );
-    return position === -1 ? 0 : position;
+    return Math.max(0, position);
   }
 
   sortIndexes(indexes: number[]) {
-    return [...indexes].sort((a, b) => a - b);
+    return indexes.toSorted((a, b) => a - b);
   }
 
   normalizeBranch(value: number) {
@@ -60,7 +60,7 @@ export class MessageBranchState {
 
     const nextBranch =
       this.registeredBranchIndexes.find((index) => index >= value) ??
-      this.registeredBranchIndexes[this.registeredBranchIndexes.length - 1];
+      this.registeredBranchIndexes.at(-1);
 
     return nextBranch ?? 0;
   }
@@ -97,8 +97,8 @@ export class MessageBranchState {
       return;
     }
 
-    this.writeBranch(next);
-    this.readOnBranchChange()?.(next);
+    this.#writeBranch(next);
+    this.#readOnBranchChange()?.(next);
   }
 
   registerBranch(index: number) {
