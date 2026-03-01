@@ -7,7 +7,6 @@
 
   import * as InputGroup from "$lib/components/ui/input-group/index.js";
   import { Spinner } from "$lib/components/ui/spinner/index.js";
-  import { cn } from "$lib/utils/cn.js";
 
   import { getPromptInputController } from "./prompt-input-context.svelte";
 
@@ -18,7 +17,6 @@
     onstop,
     onclick,
     children,
-    class: className,
     ...restProps
   }: ComponentProps<typeof InputGroup.Button> & {
     status?: ChatStatus;
@@ -44,7 +42,6 @@
   aria-label={isGenerating ? "Stop" : "Submit"}
   {variant}
   {size}
-  class={cn(className)}
   disabled={controller ? !controller.textInput.value : false}
   onclick={handleClick}
   {...restProps}

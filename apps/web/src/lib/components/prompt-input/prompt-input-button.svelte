@@ -3,7 +3,6 @@
 
   import * as InputGroup from "$lib/components/ui/input-group/index.js";
   import * as Tooltip from "$lib/components/ui/tooltip/index.js";
-  import { cn } from "$lib/utils/cn.js";
 
   type PromptInputButtonTooltip =
     | string
@@ -18,7 +17,6 @@
     size = "icon-sm",
     tooltip,
     children,
-    class: className,
     ...restProps
   }: ComponentProps<typeof InputGroup.Button> & {
     tooltip?: PromptInputButtonTooltip;
@@ -26,20 +24,14 @@
 </script>
 
 {#if !tooltip}
-  <InputGroup.Button {variant} {size} class={cn(className)} {...restProps}>
+  <InputGroup.Button {variant} {size} {...restProps}>
     {@render children?.()}
   </InputGroup.Button>
 {:else}
   <Tooltip.Root>
     <Tooltip.Trigger>
       {#snippet child({ props })}
-        <InputGroup.Button
-          {variant}
-          {size}
-          class={cn(className)}
-          {...props}
-          {...restProps}
-        >
+        <InputGroup.Button {variant} {size} {...props} {...restProps}>
           {@render children?.()}
         </InputGroup.Button>
       {/snippet}

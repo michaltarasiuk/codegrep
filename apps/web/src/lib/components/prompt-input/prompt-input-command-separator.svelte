@@ -2,12 +2,7 @@
   import type { ComponentProps } from "svelte";
 
   import * as Command from "$lib/components/ui/command/index.js";
-  import { cn } from "$lib/utils/cn.js";
-
-  let {
-    class: className,
-    ...restProps
-  }: ComponentProps<typeof Command.Separator> = $props();
+  let props: ComponentProps<typeof Command.Separator> = $props();
 </script>
 
-<Command.Separator class={cn(className)} {...restProps} />
+<Command.Separator {...props} />
