@@ -4,5 +4,5 @@ pre-commit:
     - run: bun x eslint {staged_files} --no-warn-ignored --max-warnings 0
     - run: bun x tsc --project apps/api/tsconfig.json --noEmit --pretty false
       glob: "apps/api/**/*.{ts,tsx}"
-    - run: bun x tsc --project apps/web/tsconfig.lefthook.json --noEmit --pretty false
+    - run: bun x tsc --project apps/web/tsconfig.cli.json --noEmit --pretty false
       glob: "apps/web/**/*.{ts,tsx}"
