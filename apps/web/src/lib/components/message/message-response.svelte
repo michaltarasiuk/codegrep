@@ -10,9 +10,10 @@
 </script>
 
 <Streamdown
+  baseTheme="shadcn"
   components={{ code: Code, math: Math, mermaid: Mermaid }}
   class={cn(
-    "size-full [&>*:first-child]:mt-0 [&>*:last-child]:mb-0",
+    "size-full overflow-hidden [&>*:first-child]:mt-0 [&>*:last-child]:mb-0",
     className
   )}
   {...props}
