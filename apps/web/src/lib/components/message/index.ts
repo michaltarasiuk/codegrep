@@ -8,6 +8,7 @@ import BranchPage from "./message-branch-page.svelte";
 import BranchPrevious from "./message-branch-previous.svelte";
 import BranchSelector from "./message-branch-selector.svelte";
 import Content from "./message-content.svelte";
+import Parts from "./message-parts.svelte";
 import Response from "./message-response.svelte";
 import Toolbar from "./message-toolbar.svelte";
 
@@ -24,9 +25,11 @@ export {
   BranchNext,
   BranchPage,
   Toolbar,
+  Parts,
   //
   Root as Message,
   Content as MessageContent,
+  Parts as MessageParts,
   Response as MessageResponse,
   Actions as MessageActions,
   Action as MessageAction,

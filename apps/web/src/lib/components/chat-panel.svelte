@@ -2,13 +2,11 @@
   import { Chat } from "@ai-sdk/svelte";
   import CopyIcon from "@lucide/svelte/icons/copy";
   import RefreshCcwIcon from "@lucide/svelte/icons/refresh-ccw";
-  import type { UIMessage } from "ai";
   import { DefaultChatTransport } from "ai";
 
   import * as Conversation from "$lib/components/conversation/index.js";
   import * as Message from "$lib/components/message/index.js";
   import * as PromptInput from "$lib/components/prompt-input/index.js";
-  import * as Reasoning from "$lib/components/reasoning";
   import * as Suggestion from "$lib/components/suggestion";
   import { SUGGESTIONS } from "$lib/components/suggestion/consts.js";
 
@@ -23,9 +21,9 @@
   let isStreaming = $derived(chat.status === "streaming");
   let isGenerating = $derived(chat.status === "submitted" || isStreaming);
 
-  function getReasoningText(message: UIMessage) {
+  function getMessageText(message: (typeof chat.messages)[number]) {
     return message.parts
-      .filter((part) => part.type === "reasoning")
+      .filter((part) => part.type === "text")
       .map((part) => part.text)
       .join("\n\n");
   }
@@ -48,56 +46,35 @@
     <Conversation.Content class="flex min-h-full flex-col gap-3 p-4">
       {#each chat.messages as message, messageIndex (messageIndex)}
         {@const isLastMessage = messageIndex === chat.messages.length - 1}
-        {@const reasoningText = getReasoningText(message)}
-        {#each message.parts as messagePart, partIndex (partIndex)}
-          {#if messagePart.type === "reasoning" && partIndex === 0}
-            <Reasoning.Root
-              class="w-full"
-              isStreaming={isLastMessage &&
-                isStreaming &&
-                message.parts.at(-1)?.type === "reasoning"}
-            >
-              <Reasoning.Trigger />
-              <Reasoning.Content content={reasoningText} />
-            </Reasoning.Root>
-          {:else if messagePart.type === "text"}
-            <Message.Root from={message.role}>
-              <Message.Content
-                class={message.role === "assistant"
-                  ? "bg-muted rounded-lg px-4 py-3"
-                  : "bg-primary text-primary-foreground rounded-lg px-4 py-3"}
-              >
-                {#if message.role === "assistant"}
-                  <Message.Response
-                    content={messagePart.text}
-                    animation={{ enabled: isStreaming && isLastMessage }}
-                  />
-                {:else}
-                  {messagePart.text}
-                {/if}
-              </Message.Content>
+        {@const messageText = getMessageText(message)}
+        <Message.Root from={message.role}>
+          <Message.Content
+            class={message.role === "assistant"
+              ? "bg-muted rounded-lg px-4 py-3"
+              : "bg-primary text-primary-foreground rounded-lg px-4 py-3"}
+          >
+            <Message.Parts {message} {isLastMessage} {isStreaming} />
+          </Message.Content>
 
-              {#if message.role === "assistant" && isLastMessage}
-                <Message.Actions>
-                  <Message.Action
-                    label="Retry"
-                    tooltip="Retry"
-                    onclick={() => chat.regenerate()}
-                  >
-                    <RefreshCcwIcon class="size-3" />
-                  </Message.Action>
-                  <Message.Action
-                    label="Copy"
-                    tooltip="Copy"
-                    onclick={() => handleCopy(messagePart.text)}
-                  >
-                    <CopyIcon class="size-3" />
-                  </Message.Action>
-                </Message.Actions>
-              {/if}
-            </Message.Root>
+          {#if message.role === "assistant" && isLastMessage && messageText}
+            <Message.Actions>
+              <Message.Action
+                label="Retry"
+                tooltip="Retry"
+                onclick={() => chat.regenerate()}
+              >
+                <RefreshCcwIcon class="size-3" />
+              </Message.Action>
+              <Message.Action
+                label="Copy"
+                tooltip="Copy"
+                onclick={() => handleCopy(messageText)}
+              >
+                <CopyIcon class="size-3" />
+              </Message.Action>
+            </Message.Actions>
           {/if}
-        {/each}
+        </Message.Root>
       {/each}
 
       {#if isGenerating}
