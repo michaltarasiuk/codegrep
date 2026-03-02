@@ -48,11 +48,7 @@
         {@const isLastMessage = messageIndex === chat.messages.length - 1}
         {@const messageText = getMessageText(message)}
         <Message.Root from={message.role}>
-          <Message.Content
-            class={message.role === "assistant"
-              ? "bg-muted rounded-lg px-4 py-3"
-              : "bg-primary text-primary-foreground rounded-lg px-4 py-3"}
-          >
+          <Message.Content>
             <Message.Parts {message} {isLastMessage} {isStreaming} />
           </Message.Content>
 
