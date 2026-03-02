@@ -2,11 +2,13 @@
   import { Chat } from "@ai-sdk/svelte";
   import CopyIcon from "@lucide/svelte/icons/copy";
   import RefreshCcwIcon from "@lucide/svelte/icons/refresh-ccw";
+  import type { UIMessage } from "ai";
   import { DefaultChatTransport } from "ai";
 
   import * as Conversation from "$lib/components/conversation/index.js";
   import * as Message from "$lib/components/message/index.js";
   import * as PromptInput from "$lib/components/prompt-input/index.js";
+  import * as Reasoning from "$lib/components/reasoning";
   import * as Suggestion from "$lib/components/suggestion";
   import { SUGGESTIONS } from "$lib/components/suggestion/consts.js";
 
@@ -20,6 +22,13 @@
 
   let isStreaming = $derived(chat.status === "streaming");
   let isGenerating = $derived(chat.status === "submitted" || isStreaming);
+
+  function getReasoningText(message: UIMessage) {
+    return message.parts
+      .filter((part) => part.type === "reasoning")
+      .map((part) => part.text)
+      .join("\n\n");
+  }
 
   function handleCopy(text: string) {
     navigator.clipboard.writeText(text);
@@ -38,9 +47,20 @@
   <Conversation.Root class="min-h-0 flex-1 overflow-y-auto">
     <Conversation.Content class="flex min-h-full flex-col gap-3 p-4">
       {#each chat.messages as message, messageIndex (messageIndex)}
+        {@const isLastMessage = messageIndex === chat.messages.length - 1}
+        {@const reasoningText = getReasoningText(message)}
         {#each message.parts as messagePart, partIndex (partIndex)}
-          {#if messagePart.type === "text"}
-            {@const isLastMessage = messageIndex === chat.messages.length - 1}
+          {#if messagePart.type === "reasoning" && partIndex === 0}
+            <Reasoning.Root
+              class="w-full"
+              isStreaming={isLastMessage &&
+                isStreaming &&
+                message.parts.at(-1)?.type === "reasoning"}
+            >
+              <Reasoning.Trigger />
+              <Reasoning.Content content={reasoningText} />
+            </Reasoning.Root>
+          {:else if messagePart.type === "text"}
             <Message.Root from={message.role}>
               <Message.Content
                 class={message.role === "assistant"
