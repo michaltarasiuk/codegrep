@@ -35,10 +35,10 @@
   }
 </script>
 
-<div class="relative size-full">
-  <Conversation.Root class="size-full overflow-y-auto">
+<div class="flex size-full flex-col">
+  <Conversation.Root class="min-h-0 flex-1 overflow-y-auto">
     <Conversation.Content
-      class="mx-auto flex size-full max-w-4xl flex-col gap-3 pb-36"
+      class="flex min-h-full flex-col justify-end gap-3 p-4"
     >
       {#each chat.messages as message, messageIndex (messageIndex)}
         {#each message.parts as messagePart, partIndex (partIndex)}
@@ -84,7 +84,7 @@
     </Conversation.Content>
   </Conversation.Root>
 
-  <div class="absolute inset-x-0 bottom-0 pt-2">
+  <div class="shrink-0 pt-2">
     {#if !chat.lastMessage}
       <Suggestion.Root>
         {#each SUGGESTIONS as suggestion (suggestion)}
@@ -94,7 +94,7 @@
     {/if}
 
     <PromptInput.Provider>
-      <PromptInput.Root class="mx-auto max-w-4xl" onsubmit={handleSubmit}>
+      <PromptInput.Root onsubmit={handleSubmit}>
         <PromptInput.Body>
           <PromptInput.Textarea
             class="max-h-72"

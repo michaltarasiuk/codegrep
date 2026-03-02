@@ -4,7 +4,9 @@ import ChatPanel from "$lib/components/chat-panel.svelte";
 ---
 
 <BaseLayout>
-  <div class="mx-auto flex size-full max-w-3xl flex-col justify-end px-4 py-6">
+  <div
+    class="mx-auto flex min-h-0 w-full max-w-3xl flex-1 flex-col justify-end px-4 py-6"
+  >
     <ChatPanel client:load />
   </div>
 </BaseLayout>

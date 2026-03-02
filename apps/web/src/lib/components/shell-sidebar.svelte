@@ -44,6 +44,8 @@
         <Sidebar.Trigger class="-ms-1" />
       </div>
     </header>
-    {@render children()}
+    <div class="flex min-h-0 flex-1 flex-col">
+      {@render children()}
+    </div>
   </Sidebar.Inset>
 </Sidebar.Provider>
