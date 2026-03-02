@@ -37,9 +37,7 @@
 
 <div class="flex size-full flex-col">
   <Conversation.Root class="min-h-0 flex-1 overflow-y-auto">
-    <Conversation.Content
-      class="flex min-h-full flex-col justify-end gap-3 p-4"
-    >
+    <Conversation.Content class="flex min-h-full flex-col gap-3 p-4">
       {#each chat.messages as message, messageIndex (messageIndex)}
         {#each message.parts as messagePart, partIndex (partIndex)}
           {#if messagePart.type === "text"}
