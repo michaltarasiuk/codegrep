@@ -17,6 +17,7 @@
     "better-auth": "catalog:",
     "mode-watcher": "0.5.1",
     "svelte": "^5.51.2",
+    "svelte-streamdown": "^3.0.1",
     "tailwindcss": "^4.1.18",
     "typescript": "catalog:"
   },

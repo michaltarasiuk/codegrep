@@ -18,9 +18,8 @@
     }),
   });
 
-  let isGenerating = $derived(
-    chat.status === "submitted" || chat.status === "streaming"
-  );
+  let isStreaming = $derived(chat.status === "streaming");
+  let isGenerating = $derived(chat.status === "submitted" || isStreaming);
 
   function handleCopy(text: string) {
     navigator.clipboard.writeText(text);
@@ -48,7 +47,14 @@
                   ? "bg-muted rounded-lg px-4 py-3"
                   : "bg-primary text-primary-foreground rounded-lg px-4 py-3"}
               >
-                {messagePart.text}
+                {#if message.role === "assistant"}
+                  <Message.Response
+                    content={messagePart.text}
+                    animation={{ enabled: isStreaming && isLastMessage }}
+                  />
+                {:else}
+                  {messagePart.text}
+                {/if}
               </Message.Content>
 
               {#if message.role === "assistant" && isLastMessage}
