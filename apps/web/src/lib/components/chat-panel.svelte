@@ -19,7 +19,7 @@
   });
 
   let isStreaming = $derived(chat.status === "streaming");
-  let isGenerating = $derived(chat.status === "submitted" || isStreaming);
+  let isSubmitted = $derived(chat.status === "submitted");
 
   function getMessageText(message: (typeof chat.messages)[number]) {
     return message.parts
@@ -52,7 +52,7 @@
             <Message.Parts {message} {isLastMessage} {isStreaming} />
           </Message.Content>
 
-          {#if message.role === "assistant" && isLastMessage && messageText}
+          {#if message.role === "assistant" && isLastMessage && !isStreaming}
             <Message.Actions>
               <Message.Action
                 label="Retry"
@@ -73,7 +73,7 @@
         </Message.Root>
       {/each}
 
-      {#if isGenerating}
+      {#if isSubmitted}
         <div class="px-1">
           <Spinner />
         </div>
