@@ -37,7 +37,7 @@
   });
 </script>
 
-<svelte:window onkeydown={(e) => sidebar.handleShortcutKeydown(e)} />
+<svelte:window onkeydown={sidebar.handleShortcutKeydown} />
 
 <Tooltip.Provider delayDuration={0}>
   <div

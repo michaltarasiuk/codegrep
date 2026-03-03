@@ -43,22 +43,22 @@ class SidebarState {
   }
 
   // Event handler to apply to the `<svelte:window>`
-  handleShortcutKeydown(e: KeyboardEvent) {
+  handleShortcutKeydown = (e: KeyboardEvent) => {
     if (e.key === SIDEBAR_KEYBOARD_SHORTCUT && (e.metaKey || e.ctrlKey)) {
       e.preventDefault();
       this.toggle();
     }
-  }
+  };
 
-  setOpenMobile(value: boolean) {
+  setOpenMobile = (value: boolean) => {
     this.openMobile = value;
-  }
+  };
 
-  toggle() {
+  toggle = () => {
     return this.#isMobile.current
       ? (this.openMobile = !this.openMobile)
       : this.setOpen(!this.open);
-  }
+  };
 }
 
 const SYMBOL_KEY = "scn-sidebar";

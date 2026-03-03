@@ -45,11 +45,11 @@ export class MessageBranchState {
     return Math.max(0, position);
   }
 
-  sortIndexes(indexes: number[]) {
+  sortIndexes = (indexes: number[]) => {
     return indexes.toSorted((a, b) => a - b);
-  }
+  };
 
-  normalizeBranch(value: number) {
+  normalizeBranch = (value: number) => {
     if (!this.totalBranches) {
       return 0;
     }
@@ -63,22 +63,22 @@ export class MessageBranchState {
       this.registeredBranchIndexes.at(-1);
 
     return nextBranch ?? 0;
-  }
+  };
 
-  ensureCurrentBranchIsValid() {
+  ensureCurrentBranchIsValid = () => {
     this.setBranch(this.currentBranch);
-  }
+  };
 
-  getNextBranchIndex() {
+  getNextBranchIndex = () => {
     if (!this.totalBranches) {
       return 0;
     }
 
     const nextPosition = (this.currentBranchPosition + 1) % this.totalBranches;
     return this.registeredBranchIndexes[nextPosition] ?? 0;
-  }
+  };
 
-  getPreviousBranchIndex() {
+  getPreviousBranchIndex = () => {
     if (!this.totalBranches) {
       return 0;
     }
@@ -87,9 +87,9 @@ export class MessageBranchState {
       (this.currentBranchPosition - 1 + this.totalBranches) %
       this.totalBranches;
     return this.registeredBranchIndexes[previousPosition] ?? 0;
-  }
+  };
 
-  setBranch(value: number) {
+  setBranch = (value: number) => {
     const next = this.normalizeBranch(value);
     const previous = this.currentBranch;
 
@@ -99,9 +99,9 @@ export class MessageBranchState {
 
     this.#writeBranch(next);
     this.#readOnBranchChange()?.(next);
-  }
+  };
 
-  registerBranch(index: number) {
+  registerBranch = (index: number) => {
     if (!this.registeredBranchIndexes.includes(index)) {
       this.registeredBranchIndexes = this.sortIndexes([
         ...this.registeredBranchIndexes,
@@ -116,27 +116,27 @@ export class MessageBranchState {
       );
       this.ensureCurrentBranchIsValid();
     };
-  }
+  };
 
-  isCurrentBranch(index: number) {
+  isCurrentBranch = (index: number) => {
     return this.normalizedCurrentBranch === index;
-  }
+  };
 
-  goToNext() {
+  goToNext = () => {
     if (!this.hasMultipleBranches) {
       return;
     }
 
     this.setBranch(this.getNextBranchIndex());
-  }
+  };
 
-  goToPrevious() {
+  goToPrevious = () => {
     if (!this.hasMultipleBranches) {
       return;
     }
 
     this.setBranch(this.getPreviousBranchIndex());
-  }
+  };
 }
 
 const MESSAGE_BRANCH_KEY = Symbol.for("scn-message-branch");
