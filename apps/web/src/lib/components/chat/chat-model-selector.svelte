@@ -27,7 +27,10 @@
   }
 </script>
 
-<ModelSelector.Root bind:open={modelSelectorOpen}>
+<ModelSelector.Root
+  bind:open={modelSelectorOpen}
+  onOpenChange={(open) => (modelSelectorOpen = open)}
+>
   <ModelSelector.Trigger>
     {#snippet child({ props })}
       <PromptInput.Button class="w-full hover:bg-transparent!" {...props}>
