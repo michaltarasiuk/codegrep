@@ -42,7 +42,9 @@
   aria-label={isGenerating ? "Stop" : "Submit"}
   {variant}
   {size}
-  disabled={controller ? !controller.textInput.value : false}
+  disabled={controller
+    ? !controller.textInput.value && !controller.attachments.files.length
+    : false}
   onclick={handleClick}
   {...restProps}
 >

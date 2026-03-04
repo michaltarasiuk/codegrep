@@ -36,9 +36,6 @@
   }
 
   function handleSubmit({ text, files }: PromptInput.PromptInputMessage) {
-    if (!text && files.length === 0) {
-      return;
-    }
     chat.sendMessage({ text, files });
   }
 </script>
@@ -87,9 +84,9 @@
       <PromptInput.Root globalDrop multiple onsubmit={handleSubmit}>
         <PromptInput.Header>
           <ChatUI.SourceControls
+            bind:selectedSourceIds
             tabs={TABS}
             sources={SOURCES}
-            bind:selectedSourceIds
           />
         </PromptInput.Header>
 
@@ -106,8 +103,8 @@
 
           <div class="flex items-center gap-2">
             <PromptInput.ActionMenu>
-              <PromptInput.ActionMenuTrigger size="icon-sm" variant="ghost">
-                <ImageIcon class="text-muted-foreground" size={16} />
+              <PromptInput.ActionMenuTrigger variant="ghost" size="icon-sm">
+                <ImageIcon size={16} class="text-muted-foreground" />
               </PromptInput.ActionMenuTrigger>
               <PromptInput.ActionMenuContent>
                 <PromptInput.ActionAddAttachments label="Add image or file" />
