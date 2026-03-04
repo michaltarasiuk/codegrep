@@ -1,16 +1,16 @@
 <script lang="ts">
   import { Chat } from "@ai-sdk/svelte";
   import CopyIcon from "@lucide/svelte/icons/copy";
+  import ImageIcon from "@lucide/svelte/icons/image";
   import RefreshCcwIcon from "@lucide/svelte/icons/refresh-ccw";
   import { DefaultChatTransport } from "ai";
 
-  import * as Conversation from "$lib/components/conversation/index.js";
+  import { MODELS, SOURCES, TABS } from "$lib/components/chat/consts.js";
+  import * as ChatUI from "$lib/components/chat/index.js";
   import * as Message from "$lib/components/message/index.js";
   import * as PromptInput from "$lib/components/prompt-input/index.js";
   import * as Suggestion from "$lib/components/suggestion";
   import { SUGGESTIONS } from "$lib/components/suggestion/consts.js";
-
-  import Spinner from "./ui/spinner/spinner.svelte";
 
   const chat = new Chat({
     transport: new DefaultChatTransport({
@@ -21,6 +21,9 @@
   let isStreaming = $derived(chat.status === "streaming");
   let isSubmitted = $derived(chat.status === "submitted");
 
+  let selectedModel = $state("claude-sonnet-4-20250514");
+  let selectedSourceIds = $state<string[]>([]);
+
   function getMessageText(message: (typeof chat.messages)[number]) {
     return message.parts
       .filter((part) => part.type === "text")
@@ -28,58 +31,48 @@
       .join("\n\n");
   }
 
-  function handleCopy(text: string) {
-    navigator.clipboard.writeText(text);
-  }
-
   function handleSuggestionPick(text: string) {
     chat.sendMessage({ text });
   }
 
-  function handleSubmit({ text }: PromptInput.PromptInputMessage) {
-    chat.sendMessage({ text });
+  function handleSubmit({ text, files }: PromptInput.PromptInputMessage) {
+    if (!text && files.length === 0) {
+      return;
+    }
+    chat.sendMessage({ text, files });
   }
 </script>
 
 <div class="flex size-full flex-col">
-  <Conversation.Root class="min-h-0 flex-1 overflow-y-auto">
-    <Conversation.Content class="flex min-h-full flex-col gap-3 p-4">
-      {#each chat.messages as message, messageIndex (messageIndex)}
-        {@const isLastMessage = messageIndex === chat.messages.length - 1}
-        {@const messageText = getMessageText(message)}
-        <Message.Root from={message.role}>
-          <Message.Content>
-            <Message.Parts {message} {isLastMessage} {isStreaming} />
-          </Message.Content>
+  <ChatUI.Messages messages={chat.messages} {isSubmitted}>
+    {#snippet children(message, isLastMessage)}
+      {@const messageText = getMessageText(message)}
+      <Message.Root from={message.role}>
+        <Message.Content>
+          <Message.Parts {message} {isLastMessage} {isStreaming} />
+        </Message.Content>
 
-          {#if message.role === "assistant" && isLastMessage && !isStreaming}
-            <Message.Actions>
-              <Message.Action
-                label="Retry"
-                tooltip="Retry"
-                onclick={() => chat.regenerate()}
-              >
-                <RefreshCcwIcon class="size-3" />
-              </Message.Action>
-              <Message.Action
-                label="Copy"
-                tooltip="Copy"
-                onclick={() => handleCopy(messageText)}
-              >
-                <CopyIcon class="size-3" />
-              </Message.Action>
-            </Message.Actions>
-          {/if}
-        </Message.Root>
-      {/each}
-
-      {#if isSubmitted}
-        <div class="px-1">
-          <Spinner />
-        </div>
-      {/if}
-    </Conversation.Content>
-  </Conversation.Root>
+        {#if message.role === "assistant" && isLastMessage && !isStreaming}
+          <Message.Actions>
+            <Message.Action
+              label="Retry"
+              tooltip="Retry"
+              onclick={() => chat.regenerate()}
+            >
+              <RefreshCcwIcon class="size-3" />
+            </Message.Action>
+            <Message.Action
+              label="Copy"
+              tooltip="Copy"
+              onclick={() => navigator.clipboard.writeText(messageText)}
+            >
+              <CopyIcon class="size-3" />
+            </Message.Action>
+          </Message.Actions>
+        {/if}
+      </Message.Root>
+    {/snippet}
+  </ChatUI.Messages>
 
   <div class="shrink-0 pt-2">
     {#if !chat.lastMessage}
@@ -91,20 +84,41 @@
     {/if}
 
     <PromptInput.Provider>
-      <PromptInput.Root onsubmit={handleSubmit}>
+      <PromptInput.Root globalDrop multiple onsubmit={handleSubmit}>
+        <PromptInput.Header>
+          <ChatUI.SourceControls
+            tabs={TABS}
+            sources={SOURCES}
+            bind:selectedSourceIds
+          />
+        </PromptInput.Header>
+
         <PromptInput.Body>
           <PromptInput.Textarea
+            placeholder="Plan, search, build anything"
             class="max-h-72"
-            placeholder="Ask about the codebase..."
           />
         </PromptInput.Body>
         <PromptInput.Footer>
-          <PromptInput.Submit
-            status={chat.status}
-            size="icon-xs"
-            class="ms-auto"
-            onstop={() => chat.stop()}
-          />
+          <PromptInput.Tools>
+            <ChatUI.ModelSelector bind:selectedModel models={MODELS} />
+          </PromptInput.Tools>
+
+          <div class="flex items-center gap-2">
+            <PromptInput.ActionMenu>
+              <PromptInput.ActionMenuTrigger size="icon-sm" variant="ghost">
+                <ImageIcon class="text-muted-foreground" size={16} />
+              </PromptInput.ActionMenuTrigger>
+              <PromptInput.ActionMenuContent>
+                <PromptInput.ActionAddAttachments label="Add image or file" />
+              </PromptInput.ActionMenuContent>
+            </PromptInput.ActionMenu>
+            <PromptInput.Submit
+              status={chat.status}
+              size="icon-sm"
+              onstop={() => chat.stop()}
+            />
+          </div>
         </PromptInput.Footer>
       </PromptInput.Root>
     </PromptInput.Provider>
