@@ -81,9 +81,7 @@
             >
               <GlobeIcon class="text-primary" />
               <div class="flex min-w-0 flex-col">
-                <span class="truncate text-sm font-medium"
-                  >{source.title}</span
-                >
+                <span class="truncate text-sm font-medium">{source.title}</span>
                 <span class="text-muted-foreground truncate text-xs"
                   >{source.filename}</span
                 >
