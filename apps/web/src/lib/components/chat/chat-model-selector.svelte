@@ -29,10 +29,12 @@
 
 <ModelSelector.Root bind:open={modelSelectorOpen}>
   <ModelSelector.Trigger>
-    <PromptInput.Button>
-      <ModelSelector.Logo provider={selectedModelData.chefSlug} />
-      <ModelSelector.Name>{selectedModelData.name}</ModelSelector.Name>
-    </PromptInput.Button>
+    {#snippet child({ props })}
+      <PromptInput.Button class="w-full" {...props}>
+        <ModelSelector.Logo provider={selectedModelData.chefSlug} />
+        <ModelSelector.Name>{selectedModelData.name}</ModelSelector.Name>
+      </PromptInput.Button>
+    {/snippet}
   </ModelSelector.Trigger>
   <ModelSelector.Content>
     <ModelSelector.Input placeholder="Search models..." />
