@@ -52,15 +52,15 @@
 
 <PromptInput.HoverCard>
   <PromptInput.HoverCardTrigger>
-    <PromptInput.Button class="h-8!" size="icon-sm" variant="outline">
+    <PromptInput.Button variant="outline" size="icon-sm" class="h-8!">
       <AtSignIcon class="text-muted-foreground" size={12} />
     </PromptInput.Button>
   </PromptInput.HoverCardTrigger>
   <PromptInput.HoverCardContent class="w-100 p-0">
     <PromptInput.Command>
       <PromptInput.CommandInput
+        placeholder="Ask about the codebase..."
         class="border-none focus-visible:ring-0"
-        placeholder="Add files, folders, docs..."
       />
       <PromptInput.CommandList>
         <PromptInput.CommandEmpty class="text-muted-foreground p-3 text-sm">
@@ -82,9 +82,9 @@
               <GlobeIcon class="text-primary" />
               <div class="flex min-w-0 flex-col">
                 <span class="truncate text-sm font-medium">{source.title}</span>
-                <span class="text-muted-foreground truncate text-xs"
-                  >{source.filename}</span
-                >
+                <span class="text-muted-foreground truncate text-xs">
+                  {source.filename}
+                </span>
               </div>
             </PromptInput.CommandItem>
           {/each}
@@ -96,8 +96,8 @@
 
 <PromptInput.HoverCard>
   <PromptInput.HoverCardTrigger>
-    <PromptInput.Button size="sm" variant="outline">
-      <RulerIcon class="text-muted-foreground" size={12} />
+    <PromptInput.Button variant="outline" size="sm">
+      <RulerIcon size={12} class="text-muted-foreground" />
       <span>1</span>
     </PromptInput.Button>
   </PromptInput.HoverCardTrigger>
@@ -117,8 +117,8 @@
 
 <PromptInput.HoverCard>
   <PromptInput.HoverCardTrigger>
-    <PromptInput.Button size="sm" variant="outline">
-      <FilesIcon class="text-muted-foreground" size={12} />
+    <PromptInput.Button variant="outline" size="sm">
+      <FilesIcon size={12} class="text-muted-foreground" />
       <span>{tabs.active.length} Tab</span>
     </PromptInput.Button>
   </PromptInput.HoverCardTrigger>
@@ -128,7 +128,7 @@
       <PromptInput.TabBody>
         {#each tabs.active as tab (tab.path)}
           <PromptInput.TabItem>
-            <GlobeIcon class="text-primary" size={16} />
+            <GlobeIcon size={16} class="text-primary" />
             <span class="truncate" dir="rtl">{tab.path}</span>
           </PromptInput.TabItem>
         {/each}
@@ -139,8 +139,8 @@
       <PromptInput.TabBody>
         {#each tabs.recents as tab (tab.path)}
           <PromptInput.TabItem>
-            <GlobeIcon class="text-primary" size={16} />
-            <span class="truncate" dir="rtl">{tab.path}</span>
+            <GlobeIcon size={16} class="text-primary" />
+            <span dir="rtl" class="truncate">{tab.path}</span>
           </PromptInput.TabItem>
         {/each}
       </PromptInput.TabBody>
