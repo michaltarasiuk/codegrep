@@ -5,7 +5,7 @@
   import RefreshCcwIcon from "@lucide/svelte/icons/refresh-ccw";
   import { DefaultChatTransport } from "ai";
 
-  import { MODELS, SOURCES, TABS } from "$lib/components/chat/consts.js";
+  import { MODELS } from "$lib/components/chat/consts.js";
   import * as ChatUI from "$lib/components/chat/index.js";
   import * as Message from "$lib/components/message/index.js";
   import * as PromptInput from "$lib/components/prompt-input/index.js";
@@ -22,7 +22,6 @@
   let isSubmitted = $derived(chat.status === "submitted");
 
   let selectedModel = $state("claude-sonnet-4-20250514");
-  let selectedSourceIds = $state<string[]>([]);
 
   function getMessageText(message: (typeof chat.messages)[number]) {
     return message.parts
@@ -82,14 +81,6 @@
 
     <PromptInput.Provider>
       <PromptInput.Root globalDrop multiple onsubmit={handleSubmit}>
-        <PromptInput.Header>
-          <ChatUI.SourceControls
-            bind:selectedSourceIds
-            tabs={TABS}
-            sources={SOURCES}
-          />
-        </PromptInput.Header>
-
         <PromptInput.Body>
           <PromptInput.Textarea
             placeholder="Plan, search, build anything"

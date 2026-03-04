@@ -1,20 +1,9 @@
-import type { SourceDocumentUIPart } from "ai";
-
 export interface ChatModel {
   chef: string;
   chefSlug: string;
   id: string;
   name: string;
   providers: string[];
-}
-
-export interface ChatTabs {
-  active: ChatTab[];
-  recents: ChatTab[];
-}
-
-interface ChatTab {
-  path: string;
 }
 
 export const MODELS: ChatModel[] = [
@@ -54,39 +43,3 @@ export const MODELS: ChatModel[] = [
     providers: ["google"],
   },
 ];
-
-export const SOURCES: SourceDocumentUIPart[] = [
-  {
-    filename: "packages/elements/src",
-    mediaType: "text/plain",
-    sourceId: "1",
-    title: "prompt-input.tsx",
-    type: "source-document",
-  },
-  {
-    filename: "apps/test/app/examples",
-    mediaType: "text/plain",
-    sourceId: "2",
-    title: "queue.tsx",
-    type: "source-document",
-  },
-  {
-    filename: "packages/elements/src",
-    mediaType: "text/plain",
-    sourceId: "3",
-    title: "task-queue-panel.tsx",
-    type: "source-document",
-  },
-];
-
-export const TABS: ChatTabs = {
-  active: [{ path: "packages/elements/src/task-queue-panel.tsx" }],
-  recents: [
-    { path: "apps/test/app/examples/task-queue-panel.tsx" },
-    { path: "apps/test/app/page.tsx" },
-    { path: "packages/elements/src/task.tsx" },
-    { path: "apps/test/app/examples/prompt-input.tsx" },
-    { path: "packages/elements/src/queue.tsx" },
-    { path: "apps/test/app/examples/queue.tsx" },
-  ],
-};
