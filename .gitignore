@@ -7,6 +7,9 @@ node_modules/
 # Env files
 .env
 
+# Vercel
+.vercel
+
 # Turbo
 .turbo
 
