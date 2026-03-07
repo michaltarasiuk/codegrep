@@ -1,12 +1,17 @@
 ---
-import BaseLayout from "$layouts/base-layout.astro";
-import ChatPanel from "$lib/components/chat-panel.svelte";
----
+import { client } from "$lib/utils/client";
 
-<BaseLayout>
-  <div
-    class="mx-auto flex min-h-0 w-full max-w-3xl flex-1 flex-col justify-end px-4 py-6"
-  >
-    <ChatPanel client:load />
-  </div>
-</BaseLayout>
+export const prerender = false;
+
+const chat = await client.api.chat.create.post(
+  {},
+  {
+    headers: {
+      cookie: Astro.request.headers.get("cookie"),
+    },
+  }
+);
+if (!chat.error) {
+  return Astro.redirect(`/chat/${chat.data.id}`);
+}
+---

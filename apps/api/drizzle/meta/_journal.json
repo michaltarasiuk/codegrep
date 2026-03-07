@@ -8,6 +8,13 @@
       "when": 1771105375242,
       "tag": "0000_empty_elektra",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1772832620663,
+      "tag": "0001_parched_scarlet_spider",
+      "breakpoints": true
     }
   ]
 }

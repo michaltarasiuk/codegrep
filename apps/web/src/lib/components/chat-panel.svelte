@@ -3,7 +3,7 @@
   import CopyIcon from "@lucide/svelte/icons/copy";
   import ImageIcon from "@lucide/svelte/icons/image";
   import RefreshCcwIcon from "@lucide/svelte/icons/refresh-ccw";
-  import { DefaultChatTransport } from "ai";
+  import { DefaultChatTransport, type UIMessage } from "ai";
 
   import { MODELS } from "$lib/components/chat/consts.js";
   import * as ChatUI from "$lib/components/chat/index.js";
@@ -12,16 +12,37 @@
   import * as Suggestion from "$lib/components/suggestion";
   import { SUGGESTIONS } from "$lib/components/suggestion/consts.js";
 
+  let {
+    chatId,
+    initialMessages = [],
+  }: {
+    chatId: string;
+    initialMessages?: UIMessage[];
+  } = $props();
+
+  let selectedModel = $state(MODELS[0]!.id);
+
   const chat = new Chat({
+    get id() {
+      return chatId;
+    },
+    get messages() {
+      return initialMessages;
+    },
     transport: new DefaultChatTransport({
       api: import.meta.env.PUBLIC_API_URL + "/api/chat",
+      credentials: "include",
+      get body() {
+        return {
+          chatId,
+          model: selectedModel,
+        };
+      },
     }),
   });
 
   let isStreaming = $derived(chat.status === "streaming");
   let isSubmitted = $derived(chat.status === "submitted");
-
-  let selectedModel = $state("claude-sonnet-4-20250514");
 
   function getMessageText(message: (typeof chat.messages)[number]) {
     return message.parts

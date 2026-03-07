@@ -42,6 +42,7 @@ const config = [
       "simple-import-sort": simpleImportSort,
     },
     rules: {
+      "@typescript-eslint/consistent-type-definitions": ["error", "interface"],
       "@typescript-eslint/no-unused-vars": [
         "warn",
         {

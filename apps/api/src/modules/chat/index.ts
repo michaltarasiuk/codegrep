@@ -1,19 +1,79 @@
-import { createGoogleGenerativeAI } from "@ai-sdk/google";
-import { convertToModelMessages, streamText, type UIMessage } from "ai";
-import { Elysia } from "elysia";
+import { createGroq } from "@ai-sdk/groq";
+import { convertToModelMessages, streamText } from "ai";
+import { Elysia, status } from "elysia";
 
-const google = createGoogleGenerativeAI({
-  apiKey: process.env.GOOGLE_GENERATIVE_AI_API_KEY,
+import { CreateFailedError, NotFoundError } from "$api/errors";
+
+import { sessionPlugin } from "../auth/session";
+import { ChatModel } from "./model";
+import { ChatService } from "./service";
+
+const groq = createGroq({
+  apiKey: process.env.GROQ_API_KEY,
 });
 
 export const chatPlugin = new Elysia({
   name: "chat",
   prefix: "/api/chat",
-}).post("/", async ({ body }) => {
-  const { messages } = body as { messages: UIMessage[] };
-  const result = streamText({
-    model: google("gemini-2.5-flash"),
-    messages: await convertToModelMessages(messages),
-  });
-  return result.toUIMessageStreamResponse();
-});
+})
+  .use(sessionPlugin)
+  .get(
+    "/:chatId/messages",
+    async ({ params: { chatId }, userId }) => {
+      const messages = await ChatService.getMessages(chatId, userId);
+
+      if (messages instanceof NotFoundError) {
+        return status(404, messages.message);
+      }
+
+      return messages;
+    },
+    {
+      params: ChatModel.chatParams,
+    }
+  )
+  .post(
+    "/",
+    async ({ body: { chatId, model, messages }, userId }) => {
+      const result = streamText({
+        model: groq(model),
+        messages: await convertToModelMessages(messages),
+      });
+
+      return result.toUIMessageStreamResponse({
+        originalMessages: messages,
+        onFinish: async ({ messages: newMessages }) => {
+          const saved = await ChatService.saveMessages({
+            chatId,
+            userId,
+            messages: newMessages,
+          });
+
+          if (saved instanceof NotFoundError) {
+            console.error("Failed to save messages:", saved.message);
+          }
+        },
+      });
+    },
+    {
+      body: ChatModel.sendMessage,
+    }
+  )
+  .post(
+    "/create",
+    async ({ userId }) => {
+      const result = await ChatService.create(userId);
+
+      if (result instanceof CreateFailedError) {
+        return status(500, result.message);
+      }
+
+      return { id: result.id };
+    },
+    {
+      response: {
+        200: ChatModel.createResponse,
+        500: ChatModel.errorMessage,
+      },
+    }
+  );
