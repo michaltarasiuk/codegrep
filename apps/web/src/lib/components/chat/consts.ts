@@ -6,7 +6,7 @@ export interface ChatModel {
   providers: string[];
 }
 
-export const MODELS: ChatModel[] = [
+export const MODELS = [
   {
     chef: "Meta",
     chefSlug: "meta",
@@ -14,4 +14,4 @@ export const MODELS: ChatModel[] = [
     name: "Llama 3.3 70B",
     providers: ["groq"],
   },
-];
+] as const satisfies ChatModel[];

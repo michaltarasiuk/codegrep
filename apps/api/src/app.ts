@@ -5,7 +5,14 @@ import { authPlugin } from "./modules/auth";
 import { chatPlugin } from "./modules/chat";
 
 export const app = new Elysia()
-  .use(cors({ origin: process.env.WEB_URL, credentials: true }))
+  .use(
+    cors({
+      origin: process.env.WEB_URL,
+      methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+      credentials: true,
+      allowedHeaders: ["Content-Type", "Authorization"],
+    })
+  )
   .use(authPlugin)
   .use(chatPlugin);
 

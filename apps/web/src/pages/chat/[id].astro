@@ -7,11 +7,13 @@ export const prerender = false;
 
 const chatId = Astro.params.id!;
 
-const messages = await client.api.chat({ chatId }).messages.get({
-  headers: {
-    cookie: Astro.request.headers.get("cookie"),
-  },
-});
+const messages = await client.api
+  .chat({
+    chatId,
+  })
+  .messages.get({
+    headers: Object.fromEntries(Astro.request.headers),
+  });
 ---
 
 <BaseLayout>

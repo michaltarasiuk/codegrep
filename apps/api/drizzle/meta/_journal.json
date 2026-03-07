@@ -15,6 +15,13 @@
       "when": 1772832620663,
       "tag": "0001_parched_scarlet_spider",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1772895675907,
+      "tag": "0002_wonderful_gladiator",
+      "breakpoints": true
     }
   ]
 }

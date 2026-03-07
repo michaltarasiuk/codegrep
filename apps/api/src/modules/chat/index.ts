@@ -19,14 +19,14 @@ export const chatPlugin = new Elysia({
   .use(sessionPlugin)
   .get(
     "/:chatId/messages",
-    async ({ params: { chatId }, userId }) => {
-      const messages = await ChatService.getMessages(chatId, userId);
+    async ({ params: { chatId }, user }) => {
+      const result = await ChatService.getMessages(chatId, user.id);
 
-      if (messages instanceof NotFoundError) {
-        return status(404, messages.message);
+      if (result instanceof NotFoundError) {
+        return status(404, result.message);
       }
 
-      return messages;
+      return result;
     },
     {
       params: ChatModel.chatParams,
@@ -34,7 +34,7 @@ export const chatPlugin = new Elysia({
   )
   .post(
     "/",
-    async ({ body: { chatId, model, messages }, userId }) => {
+    async ({ body: { chatId, model, messages }, user }) => {
       const result = streamText({
         model: groq(model),
         messages: await convertToModelMessages(messages),
@@ -45,7 +45,7 @@ export const chatPlugin = new Elysia({
         onFinish: async ({ messages: newMessages }) => {
           const saved = await ChatService.saveMessages({
             chatId,
-            userId,
+            userId: user.id,
             messages: newMessages,
           });
 
@@ -61,8 +61,8 @@ export const chatPlugin = new Elysia({
   )
   .post(
     "/create",
-    async ({ userId }) => {
-      const result = await ChatService.create(userId);
+    async ({ user }) => {
+      const result = await ChatService.create(user.id);
 
       if (result instanceof CreateFailedError) {
         return status(500, result.message);

@@ -6,9 +6,7 @@ export const prerender = false;
 const chat = await client.api.chat.create.post(
   {},
   {
-    headers: {
-      cookie: Astro.request.headers.get("cookie"),
-    },
+    headers: Object.fromEntries(Astro.request.headers),
   }
 );
 if (!chat.error) {

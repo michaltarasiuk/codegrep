@@ -41,7 +41,7 @@
       </div>
     </Sidebar.MenuButton>
   </Sidebar.MenuItem>
-{:else if $session.data}
+{:else if $session.data && !$session.data.user.isAnonymous}
   <Sidebar.MenuItem>
     <DropdownMenu.Root>
       <DropdownMenu.Trigger>

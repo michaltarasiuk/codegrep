@@ -1,8 +1,10 @@
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
+import { anonymous } from "better-auth/plugins";
+import { eq } from "drizzle-orm";
 
 import { db } from "$api/db";
-import { account, session, user, verification } from "$api/db/schema";
+import { account, chat, session, user, verification } from "$api/db/schema";
 
 export const authService = betterAuth({
   trustedOrigins: [process.env.WEB_URL],
@@ -21,4 +23,14 @@ export const authService = betterAuth({
       clientSecret: process.env.GITHUB_CLIENT_SECRET,
     },
   },
+  plugins: [
+    anonymous({
+      onLinkAccount: async ({ anonymousUser, newUser }) => {
+        await db
+          .update(chat)
+          .set({ userId: newUser.user.id })
+          .where(eq(chat.userId, anonymousUser.user.id));
+      },
+    }),
+  ],
 });

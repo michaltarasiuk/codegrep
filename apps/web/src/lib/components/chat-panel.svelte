@@ -20,7 +20,7 @@
     initialMessages?: UIMessage[];
   } = $props();
 
-  let selectedModel = $state(MODELS[0]!.id);
+  let selectedModel = $state(MODELS[0].id);
 
   const chat = new Chat({
     get id() {
