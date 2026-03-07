@@ -62,7 +62,7 @@ export abstract class ChatService {
     const inserts: (typeof message.$inferInsert)[] = [];
 
     for (const m of messages) {
-      let id = m.id;
+      let id = `${chatId}:${m.id}`;
 
       while (seen.has(id)) {
         id = `${chatId}:${generateId()}`;
