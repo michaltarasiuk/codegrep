@@ -20,7 +20,7 @@ export const onRequest = defineMiddleware(async ({ request }, next) => {
   }
   const response = await next();
   if (setCookie) {
-    request.headers.append("set-cookie", setCookie);
+    response.headers.append("set-cookie", setCookie);
   }
   return response;
 });
