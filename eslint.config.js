@@ -37,6 +37,14 @@ const config = [
     },
   },
   {
+    files: ["apps/web/**/*.astro"],
+    languageOptions: {
+      parserOptions: {
+        parser: tseslint.parser,
+      },
+    },
+  },
+  {
     files: ["**/*.{js,mjs,cjs,ts,mts,cts,svelte,astro}"],
     plugins: {
       "simple-import-sort": simpleImportSort,
