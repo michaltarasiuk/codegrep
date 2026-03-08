@@ -12,7 +12,7 @@ export async function load({ request }) {
     }
   );
 
-  if (!chat.error && chat.data?.id) {
+  if (!chat.error) {
     redirect(302, `/chat/${chat.data.id}`);
   }
 
