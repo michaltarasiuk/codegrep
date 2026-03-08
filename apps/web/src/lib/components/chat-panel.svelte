@@ -5,6 +5,7 @@
   import RefreshCcwIcon from "@lucide/svelte/icons/refresh-ccw";
   import { DefaultChatTransport, type UIMessage } from "ai";
 
+  import { PUBLIC_API_URL } from "$env/static/public";
   import { MODELS } from "$lib/components/chat/consts.js";
   import * as ChatUI from "$lib/components/chat/index.js";
   import * as Message from "$lib/components/message/index.js";
@@ -30,7 +31,7 @@
       return initialMessages;
     },
     transport: new DefaultChatTransport({
-      api: import.meta.env.PUBLIC_API_URL + "/api/chat",
+      api: PUBLIC_API_URL + "/api/chat",
       credentials: "include",
       get body() {
         return {

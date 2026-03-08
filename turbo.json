@@ -2,12 +2,8 @@
   "$schema": "https://turborepo.dev/schema.json",
   "ui": "tui",
   "tasks": {
-    "build": {
-      "outputs": ["dist/**"]
-    },
     "dev": {
       "persistent": true
-    },
-    "type:check": {}
+    }
   }
 }

@@ -1,7 +1,15 @@
-import { vitePreprocess } from "@astrojs/svelte";
+import path from "node:path";
 
-/** @type {import("@sveltejs/vite-plugin-svelte").SvelteConfig} */
+import adapter from "@sveltejs/adapter-vercel";
+
+/** @type {import("@sveltejs/kit").Config} */
 const config = {
-  preprocess: vitePreprocess(),
+  kit: {
+    adapter: adapter(),
+    alias: {
+      $api: path.resolve("./../api/src"),
+      $styles: path.resolve("./src/styles"),
+    },
+  },
 };
 export default config;

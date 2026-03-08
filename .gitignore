@@ -1,23 +1,23 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
-
 # Dependencies
-node_modules
 node_modules/
 
-# Env files
+# Environment files
 .env
+**/.env
+**/.env.*
+!**/.env.example
 
-# Vercel
-.vercel
+# Build and framework output
+.vercel/
+.turbo/
+.svelte-kit/
+.netlify/
+vite.config.ts.timestamp-*
 
-# Turbo
-.turbo
-
-# Build Outputs
-.astro/
-dist
-
-# Misc
-.DS_Store
-*.pem
+# Editor and OS junk
 .idea/
+.DS_Store
+Thumbs.db
+
+# Secrets
+*.pem

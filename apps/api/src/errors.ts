@@ -1,29 +1,16 @@
-export class UnauthorizedError extends Error {
-  readonly _tag = "UnauthorizedError";
+import * as errore from "errore";
 
-  constructor() {
-    super("Unauthorized");
-  }
-}
+export class UnauthorizedError extends errore.createTaggedError({
+  name: "UnauthorizedError",
+  message: "Unauthorized",
+}) {}
 
-export class NotFoundError extends Error {
-  readonly _tag = "NotFoundError";
-  readonly resource: string;
-  readonly resourceId: string;
+export class NotFoundError extends errore.createTaggedError({
+  name: "NotFoundError",
+  message: "$resource $id not found",
+}) {}
 
-  constructor({ resource, id }: { resource: string; id: string }) {
-    super(`${resource} ${id} not found`);
-    this.resource = resource;
-    this.resourceId = id;
-  }
-}
-
-export class CreateFailedError extends Error {
-  readonly _tag = "CreateFailedError";
-  readonly resource: string;
-
-  constructor({ resource }: { resource: string }) {
-    super(`Failed to create ${resource}`);
-    this.resource = resource;
-  }
-}
+export class CreateFailedError extends errore.createTaggedError({
+  name: "CreateFailedError",
+  message: "Failed to create $resource",
+}) {}

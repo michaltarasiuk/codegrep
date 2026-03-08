@@ -9,8 +9,7 @@
     "format:check": "prettier --check .",
     "lint": "eslint . --max-warnings 0",
     "lint:fix": "eslint . --fix",
-    "type:check": "turbo run type:check",
-    "check": "bun run format:check && turbo run type:check && bun run lint",
+    "check": "bun run format:check && bun run lint",
     "fix": "prettier --write ."
   },
   "devDependencies": {

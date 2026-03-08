@@ -1,18 +1,8 @@
 /** @type {import("prettier").Config} */
 const config = {
-  plugins: [
-    "prettier-plugin-astro",
-    "prettier-plugin-svelte",
-    "prettier-plugin-tailwindcss",
-  ],
+  plugins: ["prettier-plugin-svelte", "prettier-plugin-tailwindcss"],
   trailingComma: "es5",
   overrides: [
-    {
-      files: "*.astro",
-      options: {
-        parser: "astro",
-      },
-    },
     {
       files: "*.svelte",
       options: {

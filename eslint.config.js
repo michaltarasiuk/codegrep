@@ -30,10 +30,12 @@ const config = [
       parserOptions: {
         parser: tseslint.parser,
         svelteConfig,
+        projectService: true,
+        extraFileExtensions: [".svelte"],
       },
     },
     rules: {
-      "no-useless-assignment": "off",
+      "no-undef": "off",
     },
   },
   {
