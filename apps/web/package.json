@@ -1,5 +1,5 @@
 {
-  "name": "web-kit",
+  "name": "web",
   "type": "module",
   "scripts": {
     "prepare": "svelte-kit sync || echo ''",

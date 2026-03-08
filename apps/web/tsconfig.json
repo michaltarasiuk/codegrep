@@ -1,12 +1,7 @@
 {
   "extends": ["./.svelte-kit/tsconfig.json", "../../tsconfig.json"],
   "compilerOptions": {
-    "baseUrl": ".",
-    "paths": {
-      "$api/*": ["../api/src/*"],
-      "$lib/*": ["./src/lib/*"],
-      "$styles/*": ["./src/styles/*"]
-    },
+    "baseUrl": "./.svelte-kit",
     "rewriteRelativeImportExtensions": true,
     "moduleResolution": "bundler"
   }
