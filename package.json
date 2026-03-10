@@ -10,7 +10,8 @@
     "lint": "eslint . --max-warnings 0",
     "lint:fix": "eslint . --fix",
     "check": "bun run format:check && bun run lint",
-    "fix": "prettier --write . && bun run lint:fix"
+    "fix": "prettier --write . && bun run lint:fix",
+    "type:check": "turbo run type:check"
   },
   "devDependencies": {
     "@eslint/compat": "^2.0.2",
