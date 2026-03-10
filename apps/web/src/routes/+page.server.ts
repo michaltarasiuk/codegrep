@@ -4,8 +4,6 @@ import { client } from "$lib/utils/client";
 
 import type { PageServerLoadEvent } from "./$types";
 
-export const prerender = false;
-
 export async function load({ request }: PageServerLoadEvent) {
   const chat = await client.api.chat.create.post(
     {},

@@ -1,7 +1,6 @@
 <script lang="ts">
   import { Chat } from "@ai-sdk/svelte";
   import CopyIcon from "@lucide/svelte/icons/copy";
-  import ImageIcon from "@lucide/svelte/icons/image";
   import RefreshCcwIcon from "@lucide/svelte/icons/refresh-ccw";
   import { DefaultChatTransport, type UIMessage } from "ai";
 
@@ -94,37 +93,9 @@
     {#if !chat.lastMessage}
       <ChatUI.Suggestions onpick={handleSuggestionPick} />
     {/if}
+  </div>
 
-    <PromptInput.Provider>
-      <PromptInput.Root globalDrop multiple onsubmit={handleSubmit}>
-        <PromptInput.Body>
-          <PromptInput.Textarea
-            placeholder="Ask about the codebase..."
-            class="max-h-72"
-          />
-        </PromptInput.Body>
-        <PromptInput.Footer>
-          <PromptInput.Tools>
-            <ChatUI.ModelSelector bind:selectedModel models={MODELS} />
-          </PromptInput.Tools>
-
-          <div class="flex items-center gap-2">
-            <PromptInput.ActionMenu>
-              <PromptInput.ActionMenuTrigger variant="ghost" size="icon-sm">
-                <ImageIcon size={16} class="text-muted-foreground" />
-              </PromptInput.ActionMenuTrigger>
-              <PromptInput.ActionMenuContent>
-                <PromptInput.ActionAddAttachments label="Add image or file" />
-              </PromptInput.ActionMenuContent>
-            </PromptInput.ActionMenu>
-            <PromptInput.Submit
-              status={chat.status}
-              size="icon-sm"
-              onstop={() => chat.stop()}
-            />
-          </div>
-        </PromptInput.Footer>
-      </PromptInput.Root>
-    </PromptInput.Provider>
+  <div class="shrink-0">
+    <ChatUI.PromptInput {chat} bind:selectedModel {handleSubmit} />
   </div>
 </div>

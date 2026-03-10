@@ -4,14 +4,13 @@
   import * as Suggestion from "../suggestion";
   import { SUGGESTIONS } from "./consts";
 
-  const props: Pick<
-    ComponentProps<typeof Suggestion.Item>,
-    "onpick"
-  > = $props();
+  const {
+    onpick,
+  }: Pick<ComponentProps<typeof Suggestion.Item>, "onpick"> = $props();
 </script>
 
 <Suggestion.Root>
   {#each SUGGESTIONS as suggestion (suggestion)}
-    <Suggestion.Item {suggestion} {...props} />
+    <Suggestion.Item {suggestion} {onpick} />
   {/each}
 </Suggestion.Root>
