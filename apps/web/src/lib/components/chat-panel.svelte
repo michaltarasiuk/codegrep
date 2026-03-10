@@ -105,7 +105,7 @@
       <PromptInput.Root globalDrop multiple onsubmit={handleSubmit}>
         <PromptInput.Body>
           <PromptInput.Textarea
-            placeholder="Plan, search, build anything"
+            placeholder="Ask about the codebase..."
             class="max-h-72"
           />
         </PromptInput.Body>
