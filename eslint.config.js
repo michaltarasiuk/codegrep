@@ -2,7 +2,6 @@ import { fileURLToPath } from "node:url";
 
 import { includeIgnoreFile } from "@eslint/compat";
 import js from "@eslint/js";
-import astro from "eslint-plugin-astro";
 import simpleImportSort from "eslint-plugin-simple-import-sort";
 import svelte from "eslint-plugin-svelte";
 import globals from "globals";
@@ -22,11 +21,14 @@ const config = [
   },
   js.configs.recommended,
   ...tseslint.configs.recommended,
-  ...astro.configs["flat/recommended"],
   ...svelte.configs["flat/recommended"],
   {
     files: ["apps/web/**/*.svelte", "apps/web/**/*.svelte.{js,ts}"],
     languageOptions: {
+      globals: {
+        ...globals.browser,
+        ...globals.es2024,
+      },
       parserOptions: {
         parser: tseslint.parser,
         svelteConfig,
@@ -39,15 +41,7 @@ const config = [
     },
   },
   {
-    files: ["apps/web/**/*.astro"],
-    languageOptions: {
-      parserOptions: {
-        parser: tseslint.parser,
-      },
-    },
-  },
-  {
-    files: ["**/*.{js,mjs,cjs,ts,mts,cts,svelte,astro}"],
+    files: ["**/*.{js,mjs,cjs,ts,mts,cts,svelte}"],
     plugins: {
       "simple-import-sort": simpleImportSort,
     },
@@ -69,24 +63,6 @@ const config = [
     files: ["**/components/**/index.ts"],
     rules: {
       "simple-import-sort/exports": "off",
-    },
-  },
-  {
-    files: ["apps/web/**/*.{js,mjs,cjs,ts,mts,cts,svelte,astro}"],
-    languageOptions: {
-      globals: {
-        ...globals.browser,
-        ...globals.es2024,
-      },
-    },
-  },
-  {
-    files: ["apps/api/**/*.{js,mjs,cjs,ts,mts,cts}"],
-    languageOptions: {
-      globals: {
-        ...globals.node,
-        ...globals.es2024,
-      },
     },
   },
 ];
