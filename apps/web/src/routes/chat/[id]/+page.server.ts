@@ -2,8 +2,6 @@ import { client } from "$lib/utils/client";
 
 import type { PageServerLoadEvent } from "./$types";
 
-export const prerender = false;
-
 export async function load({ params, request }: PageServerLoadEvent) {
   const chatId = params.id;
 

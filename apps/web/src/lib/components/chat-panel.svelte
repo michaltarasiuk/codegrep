@@ -10,8 +10,6 @@
   import * as ChatUI from "$lib/components/chat/index.js";
   import * as Message from "$lib/components/message/index.js";
   import * as PromptInput from "$lib/components/prompt-input/index.js";
-  import * as Suggestion from "$lib/components/suggestion";
-  import { SUGGESTIONS } from "$lib/components/suggestion/consts.js";
 
   let {
     chatId,
@@ -94,11 +92,7 @@
 
   <div class="shrink-0 pt-2">
     {#if !chat.lastMessage}
-      <Suggestion.Root>
-        {#each SUGGESTIONS as suggestion (suggestion)}
-          <Suggestion.Item {suggestion} onpick={handleSuggestionPick} />
-        {/each}
-      </Suggestion.Root>
+      <ChatUI.Suggestions onpick={handleSuggestionPick} />
     {/if}
 
     <PromptInput.Provider>
