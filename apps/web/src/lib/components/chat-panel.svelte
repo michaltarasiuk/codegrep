@@ -59,7 +59,7 @@
 </script>
 
 <div class="flex size-full flex-col">
-  <ChatUI.Messages messages={chat.messages} {isSubmitted}>
+  <ChatUI.Conversation messages={chat.messages} {isSubmitted}>
     {#snippet children(message, isLastMessage)}
       {@const messageText = getMessageText(message)}
       <Message.Root from={message.role}>
@@ -87,7 +87,7 @@
         {/if}
       </Message.Root>
     {/snippet}
-  </ChatUI.Messages>
+  </ChatUI.Conversation>
 
   <div class="shrink-0 pt-2">
     {#if !chat.lastMessage}
