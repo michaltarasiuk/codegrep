@@ -144,7 +144,7 @@ const MESSAGE_BRANCH_KEY = Symbol.for("scn-message-branch");
 export function getMessageBranch() {
   const value = getContext<MessageBranchState | undefined>(MESSAGE_BRANCH_KEY);
   if (!value) {
-    throw new Error("Message branch is not defined");
+    throw new Error("Missing message branch context");
   }
   return value;
 }

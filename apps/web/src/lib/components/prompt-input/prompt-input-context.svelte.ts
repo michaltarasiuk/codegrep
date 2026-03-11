@@ -125,7 +125,7 @@ export function getProviderAttachments() {
     PROVIDER_ATTACHMENTS_KEY
   );
   if (!value) {
-    throw new Error("Provider Attachments is not defined");
+    throw new Error("Missing provider attachments context");
   }
   return value;
 }
@@ -147,7 +147,7 @@ export function getPromptInputReferencedSources() {
     REFERENCED_SOURCES_KEY
   );
   if (!value) {
-    throw new Error("Prompt Input ReferencedSources is not defined");
+    throw new Error("Missing prompt input referenced sources context");
   }
   return value;
 }

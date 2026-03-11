@@ -6,7 +6,7 @@ const CHAT_KEY = Symbol("chat");
 export function getChat() {
   const chat = getContext<(() => Chat) | undefined>(CHAT_KEY);
   if (!chat) {
-    throw new Error("Chat is not defined");
+    throw new Error("Missing chat context");
   }
   return chat();
 }
