@@ -7,11 +7,11 @@
 
   let {
     message,
-    isLastMessage,
+    isLast,
     isStreaming,
   }: {
     message: UIMessage;
-    isLastMessage: boolean;
+    isLast: boolean;
     isStreaming: boolean;
   } = $props();
 
@@ -23,7 +23,7 @@
   );
   let hasReasoning = $derived(reasoningParts.length > 0);
   let isReasoningStreaming = $derived(
-    isLastMessage && isStreaming && message.parts.at(-1)?.type === "reasoning"
+    isLast && isStreaming && message.parts.at(-1)?.type === "reasoning"
   );
 </script>
 

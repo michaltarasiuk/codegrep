@@ -1,21 +1,21 @@
 <script lang="ts">
-  import type { Chat } from "@ai-sdk/svelte";
   import ImageIcon from "@lucide/svelte/icons/image";
 
   import * as PromptInput from "$lib/components/prompt-input/index.js";
 
+  import { getChat } from "./chat-context";
   import ChatModelSelector from "./chat-model-selector.svelte";
   import { MODELS } from "./consts";
 
   let {
-    chat,
     selectedModel = $bindable(MODELS[0].id),
     handleSubmit,
   }: {
-    chat: Chat;
     selectedModel: string;
     handleSubmit: (message: PromptInput.PromptInputMessage) => void;
   } = $props();
+
+  const chat = getChat();
 </script>
 
 <PromptInput.Provider>
