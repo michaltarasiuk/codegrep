@@ -7,6 +7,7 @@
 
   import * as InputGroup from "$lib/components/ui/input-group/index.js";
   import { Spinner } from "$lib/components/ui/spinner/index.js";
+  import { isDefined } from "$lib/utils/is-defined";
 
   import { getPromptInputController } from "./prompt-input-context.svelte";
 
@@ -26,7 +27,15 @@
 
   const controller = getPromptInputController();
 
-  let isGenerating = $derived(status === "submitted" || status === "streaming");
+  const isGenerating = $derived(
+    status === "submitted" || status === "streaming"
+  );
+  const isDisabled = $derived(
+    isDefined(controller)
+      ? !controller.textInput.value.trim().length &&
+          !controller.attachments.files.length
+      : false
+  );
 
   const handleClick = (e: MouseEvent) => {
     onclick?.(e);
@@ -42,9 +51,7 @@
   aria-label={isGenerating ? "Stop" : "Submit"}
   {variant}
   {size}
-  disabled={controller
-    ? !controller.textInput.value && !controller.attachments.files.length
-    : false}
+  disabled={isDisabled}
   onclick={handleClick}
   {...restProps}
 >

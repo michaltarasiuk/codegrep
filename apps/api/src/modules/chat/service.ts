@@ -1,12 +1,13 @@
 import { generateId, type UIMessage } from "ai";
-import { and, asc, eq } from "drizzle-orm";
+import { and, asc, desc, eq } from "drizzle-orm";
 
 import { db } from "$api/db";
 import { chat, message } from "$api/db/schema";
 import { CreateFailedError, NotFoundError } from "$api/errors";
+import { isDefined } from "$api/is-defined";
 
 export abstract class ChatService {
-  static async getById(chatId: string, userId: string) {
+  static async getById({ chatId, userId }: { chatId: string; userId: string }) {
     const [found = null] = await db
       .select()
       .from(chat)
@@ -16,10 +17,30 @@ export abstract class ChatService {
     return found;
   }
 
-  static async getMessages(chatId: string, userId: string) {
-    const found = await this.getById(chatId, userId);
+  static async listByUser({ userId }: { userId: string }) {
+    return db
+      .select({
+        id: chat.id,
+        title: chat.title,
+      })
+      .from(chat)
+      .where(eq(chat.userId, userId))
+      .orderBy(desc(chat.updatedAt));
+  }
 
-    if (!found) {
+  static async getMessages({
+    chatId,
+    userId,
+  }: {
+    chatId: string;
+    userId: string;
+  }) {
+    const found = await this.getById({
+      chatId,
+      userId,
+    });
+
+    if (!isDefined(found)) {
       return new NotFoundError({ resource: "chat", id: chatId });
     }
 
@@ -30,13 +51,38 @@ export abstract class ChatService {
       .orderBy(asc(message.createdAt));
   }
 
-  static async create(userId: string) {
-    const [created] = await db
-      .insert(chat)
-      .values({ id: generateId(), userId })
-      .returning({ id: chat.id });
+  static async create({ title, userId }: { title: string; userId: string }) {
+    const chatId = generateId();
+    const messageId = `${chatId}:${generateId()}`;
 
-    if (!created) {
+    const created = await db.transaction(async (tx) => {
+      const [createdChat] = await tx
+        .insert(chat)
+        .values({ id: chatId, title, userId })
+        .returning({ id: chat.id });
+
+      if (!isDefined(createdChat)) {
+        return null;
+      }
+
+      const [createdMessage] = await tx
+        .insert(message)
+        .values({
+          id: messageId,
+          chatId,
+          role: "user",
+          parts: [{ type: "text", text: title }],
+        })
+        .returning({ id: message.id });
+
+      if (!isDefined(createdMessage)) {
+        return null;
+      }
+
+      return createdChat;
+    });
+
+    if (!isDefined(created)) {
       return new CreateFailedError({ resource: "chat" });
     }
 
@@ -52,9 +98,12 @@ export abstract class ChatService {
     userId: string;
     messages: UIMessage[];
   }) {
-    const found = await this.getById(chatId, userId);
+    const found = await this.getById({
+      chatId,
+      userId,
+    });
 
-    if (!found) {
+    if (!isDefined(found)) {
       return new NotFoundError({ resource: "chat", id: chatId });
     }
 

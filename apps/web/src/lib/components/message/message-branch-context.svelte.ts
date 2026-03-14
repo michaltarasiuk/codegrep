@@ -1,5 +1,7 @@
 import { getContext, setContext } from "svelte";
 
+import { isDefined } from "$lib/utils/is-defined.js";
+
 export class MessageBranchState {
   registeredBranchIndexes = $state<number[]>([]);
 
@@ -143,7 +145,7 @@ const MESSAGE_BRANCH_KEY = Symbol.for("scn-message-branch");
 
 export function getMessageBranch() {
   const value = getContext<MessageBranchState | undefined>(MESSAGE_BRANCH_KEY);
-  if (!value) {
+  if (!isDefined(value)) {
     throw new Error("Missing message branch context");
   }
   return value;

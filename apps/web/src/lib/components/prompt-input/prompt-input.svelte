@@ -11,6 +11,7 @@
   import * as InputGroup from "$lib/components/ui/input-group/index.js";
   import * as Tooltip from "$lib/components/ui/tooltip/index.js";
   import { cn } from "$lib/utils/cn.js";
+  import { isDefined } from "$lib/utils/is-defined.js";
   import { blobUrlToDataUrl } from "$lib/utils/url.js";
 
   import {
@@ -56,7 +57,7 @@
   }: PromptInputProps = $props();
 
   const controller = getPromptInputController();
-  const usingProvider = !!controller;
+  const usingProvider = isDefined(controller);
 
   const localAttachments = new AttachmentsState();
   const attachments = usingProvider ? controller.attachments : localAttachments;
@@ -67,7 +68,7 @@
 
   let fileInputRef = $state<HTMLInputElement | null>(null);
   let formRef = $state<HTMLFormElement | null>(null);
-  let attachmentsCount = $derived(attachments.files.length);
+  const attachmentsCount = $derived(attachments.files.length);
 
   const getAcceptPatterns = () =>
     (accept ?? "")
@@ -153,7 +154,7 @@
 
   const handleFileChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     const input = e.currentTarget;
-    if (input.files) {
+    if (isDefined(input.files)) {
       addWithValidation(input.files);
     }
     input.value = "";
@@ -187,14 +188,14 @@
   });
 
   $effect(() => {
-    if (!syncHiddenInput || !fileInputRef || !!attachmentsCount) {
+    if (!syncHiddenInput || !isDefined(fileInputRef) || !!attachmentsCount) {
       return;
     }
     fileInputRef.value = "";
   });
 
   $effect(() => {
-    if (globalDrop || !formRef) {
+    if (globalDrop || !isDefined(formRef)) {
       return;
     }
     const onDrop = (e: DragEvent) => {

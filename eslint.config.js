@@ -55,6 +55,10 @@ const config = [
           caughtErrorsIgnorePattern: "^_",
         },
       ],
+      "no-console": [
+        "error",
+        { allow: ["error", "warn", "info", "debug", "trace"] },
+      ],
       "simple-import-sort/imports": "warn",
       "simple-import-sort/exports": "warn",
     },

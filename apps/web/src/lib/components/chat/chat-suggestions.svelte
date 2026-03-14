@@ -1,12 +1,8 @@
 <script lang="ts">
-  import type { ComponentProps } from "svelte";
-
   import * as Suggestion from "../suggestion";
   import { SUGGESTIONS } from "./consts";
 
-  const {
-    onpick,
-  }: Pick<ComponentProps<typeof Suggestion.Item>, "onpick"> = $props();
+  let { onpick }: { onpick: (text: string) => void } = $props();
 </script>
 
 <Suggestion.Root>

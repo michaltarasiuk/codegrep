@@ -8,6 +8,7 @@
 
   import * as InputGroup from "$lib/components/ui/input-group/index.js";
   import { cn } from "$lib/utils/cn.js";
+  import { isDefined } from "$lib/utils/is-defined.js";
 
   import {
     getPromptInputAttachments,
@@ -26,7 +27,7 @@
   const controller = getPromptInputController();
   const attachments = getPromptInputAttachments();
 
-  const boundToController = $derived(!!controller);
+  const boundToController = $derived(isDefined(controller));
   const effectiveValue = $derived(
     boundToController ? controller!.textInput.value : value
   );
@@ -66,7 +67,7 @@
     ) {
       e.preventDefault();
       const lastAttachment = attachments.files.at(-1);
-      if (lastAttachment) {
+      if (isDefined(lastAttachment)) {
         attachments.remove(lastAttachment.id);
       }
     }
@@ -88,7 +89,7 @@
     for (const item of items) {
       if (item.kind === "file") {
         const file = item.getAsFile();
-        if (file) {
+        if (isDefined(file)) {
           files.push(file);
         }
       }

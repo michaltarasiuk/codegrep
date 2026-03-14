@@ -7,23 +7,23 @@
 
   let {
     message,
-    isLast,
     isStreaming,
+    isLast,
   }: {
     message: UIMessage;
-    isLast: boolean;
     isStreaming: boolean;
+    isLast: boolean;
   } = $props();
 
-  let reasoningParts = $derived(
+  const reasoningParts = $derived(
     message.parts.filter((part) => part.type === "reasoning")
   );
-  let reasoningText = $derived(
+  const reasoningText = $derived(
     reasoningParts.map((part) => part.text).join("\n\n")
   );
-  let hasReasoning = $derived(reasoningParts.length > 0);
-  let isReasoningStreaming = $derived(
-    isLast && isStreaming && message.parts.at(-1)?.type === "reasoning"
+  const hasReasoning = $derived(reasoningParts.length > 0);
+  const isReasoningStreaming = $derived(
+    isStreaming && isLast && message.parts.at(-1)?.type === "reasoning"
   );
 </script>
 
@@ -38,7 +38,7 @@
   {#if part.type === "text"}
     <Response
       content={part.text}
-      animation={{ enabled: isStreaming && isLastMessage }}
+      animation={{ enabled: isStreaming && isLast }}
     />
   {/if}
 {/each}

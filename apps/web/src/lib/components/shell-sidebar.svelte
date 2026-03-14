@@ -2,6 +2,9 @@
   import PlusIcon from "@lucide/svelte/icons/plus";
   import type { Snippet } from "svelte";
 
+  import { goto } from "$app/navigation";
+  import { resolve } from "$app/paths";
+  import { page } from "$app/state";
   import * as Sidebar from "$lib/components/ui/sidebar/index.js";
 
   import ThemeToggle from "./theme-toggle.svelte";
@@ -9,9 +12,13 @@
 
   interface Props {
     children: Snippet;
+    chatList?: {
+      id: string;
+      title: string;
+    }[];
   }
 
-  const { children }: Props = $props();
+  const { children, chatList }: Props = $props();
 </script>
 
 <Sidebar.Provider
@@ -21,14 +28,28 @@
     <Sidebar.Header>
       <Sidebar.Menu>
         <Sidebar.MenuItem>
-          <Sidebar.MenuButton>
+          <Sidebar.MenuButton onclick={() => goto(resolve("/chat"))}>
             <PlusIcon />
             New chat
           </Sidebar.MenuButton>
         </Sidebar.MenuItem>
       </Sidebar.Menu>
     </Sidebar.Header>
-    <Sidebar.Content />
+    <Sidebar.Content>
+      <Sidebar.Menu>
+        {#each chatList as chat (chat.id)}
+          <Sidebar.MenuItem>
+            <Sidebar.MenuButton
+              tooltipContent={chat.title}
+              isActive={page.params.id === chat.id}
+              onclick={() => goto(resolve(`/chat/${chat.id}`))}
+            >
+              <span class="truncate">{chat.title}</span>
+            </Sidebar.MenuButton>
+          </Sidebar.MenuItem>
+        {/each}
+      </Sidebar.Menu>
+    </Sidebar.Content>
     <Sidebar.Footer>
       <Sidebar.Menu>
         <UserAccountMenu />

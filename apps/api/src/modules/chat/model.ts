@@ -2,15 +2,25 @@ import { t, type UnwrapSchema } from "elysia";
 
 export const ChatModel = {
   chatParams: t.Object({
-    chatId: t.String({ minLength: 1 }),
+    id: t.String({ minLength: 1 }),
   }),
-  sendMessage: t.Object({
-    chatId: t.String({ minLength: 1 }),
+  listChatsResponse: t.Array(
+    t.Object({
+      id: t.String(),
+      title: t.String(),
+      updatedAt: t.Date(),
+    })
+  ),
+  createChatBody: t.Object({
+    title: t.String({ minLength: 1 }),
+  }),
+  createChatResponse: t.Object({
+    id: t.String(),
+  }),
+  sendMessageBody: t.Object({
+    id: t.String({ minLength: 1 }),
     model: t.String({ minLength: 1 }),
     messages: t.Array(t.Any()),
-  }),
-  createResponse: t.Object({
-    id: t.String(),
   }),
   errorMessage: t.String(),
 } as const;

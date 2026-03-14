@@ -1,9 +1,11 @@
 import type { FileUIPart, SourceDocumentUIPart } from "ai";
 import { getContext, setContext } from "svelte";
 
+import { isDefined } from "$lib/utils/is-defined.js";
+
 export interface PromptInputMessage {
   text: string;
-  files: FileUIPart[];
+  files?: FileUIPart[];
 }
 
 export interface PromptInputError {
@@ -65,7 +67,7 @@ export class AttachmentsState {
 
   remove = (id: string) => {
     const file = this.files.find((f) => f.id === id);
-    if (file) {
+    if (isDefined(file)) {
       URL.revokeObjectURL(file.url);
     }
     this.files = this.files.filter((f) => f.id !== id);
@@ -124,7 +126,7 @@ export function getProviderAttachments() {
   const value = getContext<AttachmentsState | undefined>(
     PROVIDER_ATTACHMENTS_KEY
   );
-  if (!value) {
+  if (!isDefined(value)) {
     throw new Error("Missing provider attachments context");
   }
   return value;
@@ -146,7 +148,7 @@ export function getPromptInputReferencedSources() {
   const value = getContext<ReferencedSourcesState | undefined>(
     REFERENCED_SOURCES_KEY
   );
-  if (!value) {
+  if (!isDefined(value)) {
     throw new Error("Missing prompt input referenced sources context");
   }
   return value;

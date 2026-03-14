@@ -5,7 +5,7 @@
 
   import * as Message from "$lib/components/message/index.js";
 
-  import { getChat } from "./chat-context";
+  import { getChat, getModel } from "./chat-context";
 
   let {
     message,
@@ -15,36 +15,36 @@
     isLast: boolean;
   } = $props();
 
-  const chat = getChat();
+  const chat = $derived(getChat());
+  const model = $derived(getModel());
 
-  let isStreaming = $derived(chat.status === "streaming");
-  let messageText = $derived(
+  const messageText = $derived(
     message.parts
       .filter((part) => part.type === "text")
       .map((part) => part.text)
       .join("\n\n")
   );
+  const isStreaming = $derived(chat.status === "streaming");
+
+  function handleRetry() {
+    chat.regenerate({ body: { model } });
+  }
+  function handleCopy() {
+    navigator.clipboard.writeText(messageText);
+  }
 </script>
 
 <Message.Root from={message.role}>
   <Message.Content>
-    <Message.Parts {message} {isLast} {isStreaming} />
+    <Message.Parts {message} {isStreaming} {isLast} />
   </Message.Content>
 
-  {#if message.role === "assistant" && isLast && !isStreaming}
+  {#if message.role === "assistant" && !isStreaming && isLast}
     <Message.Actions>
-      <Message.Action
-        label="Retry"
-        tooltip="Retry"
-        onclick={() => chat.regenerate()}
-      >
+      <Message.Action label="Retry" tooltip="Retry" onclick={handleRetry}>
         <RefreshCcwIcon class="size-3" />
       </Message.Action>
-      <Message.Action
-        label="Copy"
-        tooltip="Copy"
-        onclick={() => navigator.clipboard.writeText(messageText)}
-      >
+      <Message.Action label="Copy" tooltip="Copy" onclick={handleCopy}>
         <CopyIcon class="size-3" />
       </Message.Action>
     </Message.Actions>

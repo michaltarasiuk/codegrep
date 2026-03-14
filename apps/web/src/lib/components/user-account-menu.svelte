@@ -5,6 +5,8 @@
   import UserCircleIcon from "@tabler/icons-svelte/icons/user-circle";
   import { onMount } from "svelte";
 
+  import { goto, invalidate } from "$app/navigation";
+  import { resolve } from "$app/paths";
   import * as Avatar from "$lib/components/ui/avatar/index.js";
   import * as DropdownMenu from "$lib/components/ui/dropdown-menu/index.js";
   import * as Sidebar from "$lib/components/ui/sidebar/index.js";
@@ -28,6 +30,8 @@
 
   async function signOut() {
     await authClient.signOut();
+    await invalidate("app:chat-list");
+    await goto(resolve("/chat"));
   }
 </script>
 

@@ -1,18 +1,7 @@
 {
+  "extends": "./tsconfig.base.json",
   "$schema": "https://json.schemastore.org/tsconfig",
   "compilerOptions": {
-    "baseUrl": ".",
-    "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
-    "noEmit": true,
-    "noFallthroughCasesInSwitch": true,
-    "noUncheckedIndexedAccess": true,
-    "noUncheckedSideEffectImports": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "skipLibCheck": true,
-    "strict": true,
-    "strictNullChecks": true,
-    "verbatimModuleSyntax": true
+    "baseUrl": "."
   }
 }

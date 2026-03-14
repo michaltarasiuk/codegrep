@@ -5,15 +5,18 @@
   import * as Conversation from "$lib/components/conversation/index.js";
   import Spinner from "$lib/components/ui/spinner/spinner.svelte";
 
+  import { getChat } from "./chat-context";
+
   let {
-    messages,
-    isSubmitted,
     children,
   }: {
-    messages: UIMessage[];
-    isSubmitted: boolean;
     children: Snippet<[UIMessage, boolean]>;
   } = $props();
+
+  const chat = $derived(getChat());
+
+  const isSubmitted = $derived(chat.status === "submitted");
+  const messages = $derived(chat.messages ?? []);
 </script>
 
 <Conversation.Root class="min-h-0 flex-1 overflow-y-auto">

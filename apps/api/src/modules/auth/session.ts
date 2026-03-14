@@ -1,6 +1,7 @@
 import { Elysia, status } from "elysia";
 
 import { UnauthorizedError } from "$api/errors";
+import { isDefined } from "$api/is-defined";
 
 import { authService } from "./service";
 
@@ -10,7 +11,7 @@ export const sessionPlugin = new Elysia({ name: "auth/session" })
       headers,
     });
 
-    if (!session) {
+    if (!isDefined(session)) {
       return {
         user: null as never,
         session: null as never,

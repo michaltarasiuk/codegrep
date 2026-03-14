@@ -2,11 +2,20 @@
   import type { Chat } from "@ai-sdk/svelte";
   import type { Snippet } from "svelte";
 
-  import { setChatContext } from "./chat-context";
+  import { type Model, setChat, setModel } from "./chat-context";
 
-  let { chat, children }: { chat: Chat; children: Snippet } = $props();
+  let {
+    chat,
+    model,
+    children,
+  }: {
+    chat: Chat;
+    model: Model;
+    children: Snippet;
+  } = $props();
 
-  setChatContext(() => chat);
+  setChat(() => chat);
+  setModel(() => model);
 </script>
 
 <div class="flex size-full flex-col">

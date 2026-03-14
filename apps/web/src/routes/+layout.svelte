@@ -8,7 +8,7 @@
   import CommandPalette from "$lib/components/command-palette.svelte";
   import ShellSidebar from "$lib/components/shell-sidebar.svelte";
 
-  let { children } = $props();
+  let { children, data } = $props();
 
   onMount(() => {
     if (dev) {
@@ -18,7 +18,7 @@
 </script>
 
 <CommandPalette />
-<ShellSidebar>
+<ShellSidebar chatList={data.chatList}>
   {@render children()}
 </ShellSidebar>
 <ModeWatcher />
