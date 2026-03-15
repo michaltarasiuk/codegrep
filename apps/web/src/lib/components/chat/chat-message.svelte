@@ -1,4 +1,5 @@
 <script lang="ts">
+  import CheckIcon from "@lucide/svelte/icons/check";
   import CopyIcon from "@lucide/svelte/icons/copy";
   import RefreshCcwIcon from "@lucide/svelte/icons/refresh-ccw";
   import type { UIMessage } from "ai";
@@ -14,6 +15,8 @@
     message: UIMessage;
     isLast: boolean;
   } = $props();
+
+  let copied = $state(false);
 
   const chat = $derived(getChat());
   const model = $derived(getModel());
@@ -31,6 +34,10 @@
   }
   function handleCopy() {
     navigator.clipboard.writeText(messageText);
+    copied = true;
+    setTimeout(() => {
+      copied = false;
+    }, 2_000);
   }
 </script>
 
@@ -45,7 +52,11 @@
         <RefreshCcwIcon class="size-3" />
       </Message.Action>
       <Message.Action label="Copy" tooltip="Copy" onclick={handleCopy}>
-        <CopyIcon class="size-3" />
+        {#if copied}
+          <CheckIcon class="size-3" />
+        {:else}
+          <CopyIcon class="size-3" />
+        {/if}
       </Message.Action>
     </Message.Actions>
   {/if}
