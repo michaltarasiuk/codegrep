@@ -14,7 +14,7 @@ const groq = createGroq({
 
 export const chatPlugin = new Elysia({
   name: "chat",
-  prefix: "/api/chat",
+  prefix: "/chat",
 })
   .use(sessionPlugin)
   .get("/", async ({ user }) => {
