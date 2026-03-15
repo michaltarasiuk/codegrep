@@ -18,10 +18,9 @@ export const chatPlugin = new Elysia({
 })
   .use(sessionPlugin)
   .get("/", async ({ user }) => {
-    const result = ChatService.listByUser({
+    const result = await ChatService.listByUser({
       userId: user.id,
     });
-
     return result;
   })
   .get(
@@ -31,11 +30,9 @@ export const chatPlugin = new Elysia({
         chatId,
         userId: user.id,
       });
-
       if (result instanceof NotFoundError) {
         return status(404, result.message);
       }
-
       return result;
     },
     {
@@ -49,7 +46,6 @@ export const chatPlugin = new Elysia({
         model: groq(model),
         messages: await convertToModelMessages(messages),
       });
-
       return result.toUIMessageStreamResponse({
         originalMessages: messages,
         onFinish: async ({ messages: newMessages }) => {
@@ -58,7 +54,6 @@ export const chatPlugin = new Elysia({
             userId: user.id,
             messages: newMessages,
           });
-
           if (saved instanceof NotFoundError) {
             console.error("Failed to save messages:", saved.message);
           }
@@ -76,11 +71,9 @@ export const chatPlugin = new Elysia({
         title,
         userId: user.id,
       });
-
       if (result instanceof CreateFailedError) {
         return status(500, result.message);
       }
-
       return result;
     },
     {

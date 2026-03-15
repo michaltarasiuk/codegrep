@@ -22,9 +22,9 @@ export class PromptInputControllerState {
     this.attachments = new AttachmentsState();
   }
 
-  registerFileInput = (ref: HTMLInputElement | null, open: () => void) => {
+  registerFileInput(ref: HTMLInputElement | null, open: () => void) {
     this.attachments.setFileInput(ref, open);
-  };
+  }
 }
 
 export class TextInputState {
@@ -34,73 +34,73 @@ export class TextInputState {
     this.value = initialValue;
   }
 
-  setInput = (value: string) => {
+  setInput(value: string) {
     this.value = value;
-  };
+  }
 
-  clear = () => {
+  clear() {
     this.value = "";
-  };
+  }
 }
 
 export class AttachmentsState {
   files = $state<(FileUIPart & { id: string })[]>([]);
   fileInputRef = $state<HTMLInputElement | null>(null);
-  #open: () => void = () => {};
+  #open: () => void = function openNoop() {};
 
-  setFileInput = (ref: HTMLInputElement | null, open: () => void) => {
+  setFileInput(ref: HTMLInputElement | null, open: () => void) {
     this.fileInputRef = ref;
     this.#open = open;
-  };
+  }
 
-  openFileDialog = () => {
+  openFileDialog() {
     this.#open();
-  };
+  }
 
-  add = (files: File[] | FileList) => {
+  add(files: File[] | FileList) {
     const incoming = toFileUIParts(files);
     if (incoming.length === 0) {
       return;
     }
     this.files = [...this.files, ...incoming];
-  };
+  }
 
-  remove = (id: string) => {
+  remove(id: string) {
     const file = this.files.find((f) => f.id === id);
     if (isDefined(file)) {
       URL.revokeObjectURL(file.url);
     }
     this.files = this.files.filter((f) => f.id !== id);
-  };
+  }
 
-  clear = () => {
+  clear() {
     this.files.forEach((f) => f.url && URL.revokeObjectURL(f.url));
     this.files = [];
-  };
+  }
 
-  cleanup = () => {
+  cleanup() {
     this.clear();
-  };
+  }
 }
 
 export class ReferencedSourcesState {
   sources = $state<(SourceDocumentUIPart & { id: string })[]>([]);
 
-  add = (sources: SourceDocumentUIPart[] | SourceDocumentUIPart) => {
+  add(sources: SourceDocumentUIPart[] | SourceDocumentUIPart) {
     const incoming = Array.isArray(sources) ? sources : [sources];
     this.sources = [
       ...this.sources,
       ...incoming.map((s) => ({ ...s, id: createId() })),
     ];
-  };
+  }
 
-  remove = (id: string) => {
+  remove(id: string) {
     this.sources = this.sources.filter((s) => s.id !== id);
-  };
+  }
 
-  clear = () => {
+  clear() {
     this.sources = [];
-  };
+  }
 }
 
 const CONTROLLER_KEY = Symbol.for("scn-prompt-input-controller");

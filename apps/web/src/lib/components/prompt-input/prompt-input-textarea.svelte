@@ -34,7 +34,9 @@
 
   let isComposing = $state(false);
 
-  const handleKeyDown: KeyboardEventHandler<HTMLTextAreaElement> = (e) => {
+  function handleKeyDown(
+    e: Parameters<KeyboardEventHandler<HTMLTextAreaElement>>[0]
+  ) {
     // Call the external onkeydown handler first
     onkeydown?.(e);
     // If the external handler prevented default, don't run internal logic
@@ -71,9 +73,11 @@
         attachments.remove(lastAttachment.id);
       }
     }
-  };
+  }
 
-  const handleInput: FormEventHandler<HTMLTextAreaElement> = (e) => {
+  function handleInput(
+    e: Parameters<FormEventHandler<HTMLTextAreaElement>>[0]
+  ) {
     const newValue = e.currentTarget.value;
     if (boundToController) {
       controller!.textInput.setInput(newValue);
@@ -81,9 +85,11 @@
       value = newValue;
     }
     oninput?.(e);
-  };
+  }
 
-  const handlePaste: ClipboardEventHandler<HTMLTextAreaElement> = (e) => {
+  function handlePaste(
+    e: Parameters<ClipboardEventHandler<HTMLTextAreaElement>>[0]
+  ) {
     const items = e.clipboardData?.items ?? [];
     const files: File[] = [];
     for (const item of items) {
@@ -98,10 +104,15 @@
       e.preventDefault();
       attachments.add(files);
     }
-  };
+  }
 
-  const handleCompositionEnd = () => (isComposing = true);
-  const handleCompositionStart = () => (isComposing = false);
+  function handleCompositionEnd() {
+    isComposing = true;
+  }
+
+  function handleCompositionStart() {
+    isComposing = false;
+  }
 </script>
 
 <InputGroup.Textarea

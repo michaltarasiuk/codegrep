@@ -37,13 +37,13 @@
       : false
   );
 
-  const handleClick = (e: MouseEvent) => {
+  function handleClick(e: MouseEvent) {
     onclick?.(e);
     if (isGenerating) {
       e.preventDefault();
       onstop?.();
     }
-  };
+  }
 </script>
 
 <InputGroup.Button

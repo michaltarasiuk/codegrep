@@ -24,7 +24,10 @@ Write code that is **accessible, performant, type-safe, and maintainable**. Focu
 
 ### Modern JavaScript/TypeScript
 
-- Use arrow functions for callbacks and short functions
+- Prefer function declarations for standalone/local functions
+- In classes, prefer method declarations by default
+- In classes, use arrow functions only for members passed directly to Svelte as handlers/callbacks (to preserve lexical `this`)
+- Use arrow functions when a function must be used as an expression (e.g. callbacks, inline handlers, assigned function expressions)
 - Prefer `for...of` loops over `.forEach()` and indexed `for` loops
 - Use optional chaining (`?.`) and nullish coalescing (`??`) for safer property access
 - Prefer template literals over string concatenation

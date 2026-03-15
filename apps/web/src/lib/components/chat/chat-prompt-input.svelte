@@ -4,7 +4,7 @@
   import * as PromptInput from "$lib/components/prompt-input/index.js";
 
   import { getChat } from "./chat-context";
-  import ChatModelSelector from "./chat-model-selector.svelte";
+  import ModelSelector from "./chat-model-selector.svelte";
   import { MODELS } from "./consts";
 
   let {
@@ -28,7 +28,7 @@
     </PromptInput.Body>
     <PromptInput.Footer>
       <PromptInput.Tools>
-        <ChatModelSelector bind:selectedModel models={MODELS} />
+        <ModelSelector bind:selectedModel models={MODELS} />
       </PromptInput.Tools>
 
       <div class="flex items-center gap-2">

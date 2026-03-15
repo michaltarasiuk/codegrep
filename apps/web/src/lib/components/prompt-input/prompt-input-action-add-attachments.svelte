@@ -16,11 +16,11 @@
 
   const attachments = getPromptInputAttachments();
 
-  const handleSelect = (e: Event) => {
+  function handleSelect(e: Event) {
     e.preventDefault();
     attachments.openFileDialog();
     onSelect?.(e);
-  };
+  }
 </script>
 
 <DropdownMenu.Item onSelect={handleSelect} {...restProps}>

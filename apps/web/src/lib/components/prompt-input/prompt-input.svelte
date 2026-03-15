@@ -70,34 +70,38 @@
   let formRef = $state<HTMLFormElement | null>(null);
   const attachmentsCount = $derived(attachments.files.length);
 
-  const getAcceptPatterns = () =>
-    (accept ?? "")
+  function getAcceptPatterns() {
+    return (accept ?? "")
       .split(",")
       .map((part) => part.trim())
       .filter(Boolean);
+  }
 
-  const matchesPattern = (file: File, pattern: string) =>
-    pattern.endsWith("/*")
+  function matchesPattern(file: File, pattern: string) {
+    return pattern.endsWith("/*")
       ? file.type.startsWith(pattern.slice(0, -1))
       : file.type === pattern;
+  }
 
-  const matchesAccept = (file: File) => {
+  function matchesAccept(file: File) {
     const patterns = getAcceptPatterns();
     return (
       patterns.length === 0 ||
       patterns.some((pattern) => matchesPattern(file, pattern))
     );
-  };
+  }
 
-  const isWithinSizeLimit = (file: File) =>
-    typeof maxFileSize === "number" ? file.size <= maxFileSize : true;
+  function isWithinSizeLimit(file: File) {
+    return typeof maxFileSize === "number" ? file.size <= maxFileSize : true;
+  }
 
-  const getCapacity = () =>
-    typeof maxFiles === "number"
+  function getCapacity() {
+    return typeof maxFiles === "number"
       ? Math.max(0, maxFiles - attachments.files.length)
       : undefined;
+  }
 
-  const addWithValidation = (fileList: File[] | FileList) => {
+  function addWithValidation(fileList: File[] | FileList) {
     const incoming = [...fileList];
     const accepted = incoming.filter(matchesAccept);
     if (incoming.length > 0 && accepted.length === 0) {
@@ -127,40 +131,42 @@
     if (capped.length > 0) {
       attachments.add(capped);
     }
-  };
+  }
 
-  const clearAll = () => {
+  function clearAll() {
     attachments.clear();
     referencedSources.clear();
-  };
+  }
 
-  const clearAfterSuccessfulSubmit = () => {
+  function clearAfterSuccessfulSubmit() {
     clearAll();
     if (usingProvider) {
       controller.textInput.clear();
     }
-  };
+  }
 
-  const parseAttachment = async (
+  async function parseAttachment(
     attachment: (typeof attachments.files)[number]
-  ): Promise<FileUIPart> => {
+  ): Promise<FileUIPart> {
     const { id: _id, ...item } = attachment;
     let url = item.url;
     if (url.startsWith("blob:")) {
       url = (await blobUrlToDataUrl(item.url)) ?? url;
     }
     return { ...item, url };
-  };
+  }
 
-  const handleFileChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+  function handleFileChange(
+    e: Parameters<ChangeEventHandler<HTMLInputElement>>[0]
+  ) {
     const input = e.currentTarget;
     if (isDefined(input.files)) {
       addWithValidation(input.files);
     }
     input.value = "";
-  };
+  }
 
-  const handleSubmit: EventHandler<SubmitEvent> = async (e) => {
+  async function handleSubmit(e: Parameters<EventHandler<SubmitEvent>>[0]) {
     e.preventDefault();
     const form = e.currentTarget as HTMLFormElement;
     const text = usingProvider
@@ -176,7 +182,7 @@
     } catch {
       // Keep values to support retry.
     }
-  };
+  }
 
   $effect(() => {
     if (!usingProvider) {
@@ -198,7 +204,7 @@
     if (globalDrop || !isDefined(formRef)) {
       return;
     }
-    const onDrop = (e: DragEvent) => {
+    function onDrop(e: DragEvent) {
       const types = e.dataTransfer?.types ?? [];
       if (types.includes("Files")) {
         e.preventDefault();
@@ -207,13 +213,13 @@
       if (files.length > 0) {
         addWithValidation(files);
       }
-    };
-    const onDragOver = (e: DragEvent) => {
+    }
+    function onDragOver(e: DragEvent) {
       const types = e.dataTransfer?.types ?? [];
       if (types.includes("Files")) {
         e.preventDefault();
       }
-    };
+    }
     formRef.addEventListener("drop", onDrop);
     formRef.addEventListener("dragover", onDragOver);
     return () => {
@@ -226,7 +232,7 @@
     if (!globalDrop) {
       return;
     }
-    const onDrop = (e: DragEvent) => {
+    function onDrop(e: DragEvent) {
       const types = e.dataTransfer?.types ?? [];
       if (types.includes("Files")) {
         e.preventDefault();
@@ -235,13 +241,13 @@
       if (files.length > 0) {
         addWithValidation(files);
       }
-    };
-    const onDragOver = (e: DragEvent) => {
+    }
+    function onDragOver(e: DragEvent) {
       const types = e.dataTransfer?.types ?? [];
       if (types.includes("Files")) {
         e.preventDefault();
       }
-    };
+    }
     document.addEventListener("drop", onDrop);
     document.addEventListener("dragover", onDragOver);
     return () => {

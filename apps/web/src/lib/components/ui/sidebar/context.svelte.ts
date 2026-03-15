@@ -50,15 +50,15 @@ class SidebarState {
     }
   };
 
-  setOpenMobile = (value: boolean) => {
+  setOpenMobile(value: boolean) {
     this.openMobile = value;
-  };
+  }
 
-  toggle = () => {
+  toggle() {
     return this.#isMobile.current
       ? (this.openMobile = !this.openMobile)
       : this.setOpen(!this.open);
-  };
+  }
 }
 
 const SYMBOL_KEY = "scn-sidebar";

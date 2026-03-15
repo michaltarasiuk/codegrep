@@ -12,10 +12,14 @@
   } from "./constants.js";
   import { setSidebar } from "./context.svelte.js";
 
+  function noopOpenChange() {
+    return undefined;
+  }
+
   let {
     ref = $bindable(null),
     open = $bindable(true),
-    onopenchange = () => undefined,
+    onopenchange = noopOpenChange,
     children,
     class: className,
     style,
@@ -25,15 +29,21 @@
     onopenchange?: (open: boolean) => void;
   } = $props();
 
-  const sidebar = setSidebar({
-    open: () => open,
-    setOpen: (value: boolean) => {
-      open = value;
-      onopenchange(value);
+  function readOpen() {
+    return open;
+  }
 
-      // This sets the cookie to keep the sidebar state.
-      document.cookie = `${SIDEBAR_COOKIE_NAME}=${open}; path=/; max-age=${SIDEBAR_COOKIE_MAX_AGE}`;
-    },
+  function setOpen(value: boolean) {
+    open = value;
+    onopenchange(value);
+
+    // This sets the cookie to keep the sidebar state.
+    document.cookie = `${SIDEBAR_COOKIE_NAME}=${open}; path=/; max-age=${SIDEBAR_COOKIE_MAX_AGE}`;
+  }
+
+  const sidebar = setSidebar({
+    open: readOpen,
+    setOpen,
   });
 </script>
 
