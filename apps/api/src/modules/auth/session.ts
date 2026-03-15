@@ -1,7 +1,7 @@
 import { Elysia, status } from "elysia";
 
 import { UnauthorizedError } from "$api/errors";
-import { isDefined } from "$api/is-defined";
+import { isDefined } from "$api/utils/is-defined";
 
 import { authService } from "./service";
 

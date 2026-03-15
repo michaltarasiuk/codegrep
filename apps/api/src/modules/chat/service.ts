@@ -4,7 +4,7 @@ import { and, asc, desc, eq } from "drizzle-orm";
 import { db } from "$api/db";
 import { chat, message } from "$api/db/schema";
 import { CreateFailedError, NotFoundError } from "$api/errors";
-import { isDefined } from "$api/is-defined";
+import { isDefined } from "$api/utils/is-defined";
 
 export abstract class ChatService {
   static async getById({ chatId, userId }: { chatId: string; userId: string }) {

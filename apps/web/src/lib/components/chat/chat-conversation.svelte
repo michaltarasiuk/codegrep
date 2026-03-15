@@ -16,7 +16,7 @@
   const chat = $derived(getChat());
 
   const isSubmitted = $derived(chat.status === "submitted");
-  const messages = $derived(chat.messages ?? []);
+  const messages = $derived(chat.messages);
 </script>
 
 <Conversation.Root class="min-h-0 flex-1 overflow-y-auto">
