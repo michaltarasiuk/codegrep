@@ -13,6 +13,10 @@ export const app = new Elysia()
       allowedHeaders: ["Content-Type", "Authorization"],
     })
   )
+  .get("/health", () => ({
+    status: "ok",
+    timestamp: Date.now(),
+  }))
   .use(authPlugin)
   .use(chatPlugin);
 
