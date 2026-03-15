@@ -1,6 +1,7 @@
 <script lang="ts">
   import { Chat } from "@ai-sdk/svelte";
   import { DefaultChatTransport, type UIMessage } from "ai";
+  import { cn } from "tailwind-variants";
 
   import { invalidate, replaceState } from "$app/navigation";
   import { resolve } from "$app/paths";
@@ -55,20 +56,23 @@
   }
 </script>
 
-<ChatUI.Root {chat} {model}>
+<ChatUI.Root {chat} {model} className="pb-30">
   <ChatUI.Conversation>
     {#snippet children(message, isLast)}
       <ChatUI.Message {message} {isLast} />
     {/snippet}
   </ChatUI.Conversation>
 
-  <div class="shrink-0 pt-2">
+  <div
+    class={cn(
+      "absolute bottom-0 w-full pt-2",
+      !isDefined(chat.lastMessage) && "md:bottom-4/10 md:translate-y-1/2"
+    )}
+  >
     {#if !isDefined(chat.lastMessage)}
       <ChatUI.Suggestions onpick={handleSuggestionPick} />
     {/if}
-  </div>
 
-  <div class="shrink-0">
     <ChatUI.PromptInput bind:selectedModel={model} handleSubmit={sendMessage} />
   </div>
 </ChatUI.Root>
