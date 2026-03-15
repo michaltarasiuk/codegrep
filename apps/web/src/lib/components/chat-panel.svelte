@@ -66,7 +66,7 @@
   <div
     class={cn(
       "absolute bottom-0 w-full pt-2",
-      !isDefined(chat.lastMessage) && "md:bottom-4/10 md:translate-y-1/2"
+      !isDefined(chat.lastMessage) && "md:bottom-1/2 md:translate-y-1/2"
     )}
   >
     {#if !isDefined(chat.lastMessage)}
