@@ -34,7 +34,7 @@
   </Reasoning.Root>
 {/if}
 
-{#each message.parts as part, partIndex (partIndex)}
+{#each message.parts as part, partIndex (`${part.type}:${partIndex}`)}
   {#if part.type === "text"}
     <Response
       content={part.text}

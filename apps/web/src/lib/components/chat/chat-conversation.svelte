@@ -21,7 +21,7 @@
 
 <Conversation.Root class="min-h-0 flex-1 overflow-y-auto">
   <Conversation.Content class="flex min-h-full flex-col gap-3 p-4">
-    {#each messages as message, i (i)}
+    {#each messages as message, i (message.id)}
       {@render children(message, i === messages.length - 1)}
     {/each}
 
