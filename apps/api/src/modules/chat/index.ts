@@ -12,10 +12,7 @@ const groq = createGroq({
   apiKey: process.env.GROQ_API_KEY,
 });
 
-export const chatPlugin = new Elysia({
-  name: "chat",
-  prefix: "/chat",
-})
+export const chatPlugin = new Elysia({ name: "chat", prefix: "/chat" })
   .use(sessionPlugin)
   .get("/", async ({ user }) => {
     const result = await ChatService.listByUser({
