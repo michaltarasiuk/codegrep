@@ -26,7 +26,7 @@ class FileTreeState {
     return this.props.readSelectedPath();
   }
 
-  togglePath(path: string) {
+  togglePath = (path: string) => {
     const next = new SvelteSet(this.expandedPaths);
     if (next.has(path)) {
       next.delete(path);
@@ -35,19 +35,19 @@ class FileTreeState {
     }
     this.props.writeExpandedPaths(next);
     this.props.readOnExpandedChange()?.(next);
-  }
+  };
 
-  selectPath(path: string) {
+  selectPath = (path: string) => {
     this.props.readOnSelect()?.(path);
-  }
+  };
 
-  isExpanded(path: string) {
+  isExpanded = (path: string) => {
     return this.expandedPaths.has(path);
-  }
+  };
 
-  isSelected(path: string) {
+  isSelected = (path: string) => {
     return this.selectedPath === path;
-  }
+  };
 }
 
 const FILE_TREE_KEY = Symbol.for("scn-file-tree");
