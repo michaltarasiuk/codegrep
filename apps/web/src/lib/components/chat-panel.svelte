@@ -1,6 +1,6 @@
 <script lang="ts">
   import { Chat } from "@ai-sdk/svelte";
-  import { DefaultChatTransport, type UIMessage } from "ai";
+  import { type ChatStatus, DefaultChatTransport, type UIMessage } from "ai";
   import { cn } from "tailwind-variants";
 
   import { invalidate, replaceState } from "$app/navigation";
@@ -21,6 +21,7 @@
 
   let id = $state(page.params.id);
   let model = $state(MODELS[0].id);
+  let submitStatus = $state<ChatStatus>("ready");
 
   const chat = $derived(
     new Chat({
@@ -33,15 +34,26 @@
     })
   );
 
+  async function createChat(title: string) {
+    const createdChat = await client.api.chat.create.post({
+      title,
+    });
+    if (!createdChat.error) {
+      id = createdChat.data.id;
+      replaceState(resolve(`/chat/${id}`), page.state);
+      await invalidate("app:chat-list");
+    }
+  }
+
   async function sendMessage(message: PromptInput.PromptInputMessage) {
     if (!isDefined(id)) {
-      const createdChat = await client.api.chat.create.post({
-        title: message.text,
-      });
-      if (!createdChat.error) {
-        id = createdChat.data.id;
-        replaceState(resolve(`/chat/${id}`), page.state);
-        await invalidate("app:chat-list");
+      try {
+        submitStatus = "submitted";
+        await createChat(message.text);
+      } catch {
+        submitStatus = "error";
+      } finally {
+        submitStatus = "ready";
       }
     }
     await chat.sendMessage(message, {
@@ -73,6 +85,10 @@
       <ChatUI.Suggestions onpick={handleSuggestionPick} />
     {/if}
 
-    <ChatUI.PromptInput bind:selectedModel={model} handleSubmit={sendMessage} />
+    <ChatUI.PromptInput
+      bind:selectedModel={model}
+      {submitStatus}
+      handleSubmit={sendMessage}
+    />
   </div>
 </ChatUI.Root>
