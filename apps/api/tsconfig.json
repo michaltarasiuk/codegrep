@@ -2,7 +2,6 @@
   "extends": ["../../tsconfig.json"],
   "compilerOptions": {
     "baseUrl": ".",
-    "erasableSyntaxOnly": true,
     "module": "ES2022",
     "moduleDetection": "force",
     "moduleResolution": "node",

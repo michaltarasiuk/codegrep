@@ -64,6 +64,12 @@ const config = [
     },
   },
   {
+    files: ["**/api/**/model.ts"],
+    rules: {
+      "@typescript-eslint/no-namespace": "off",
+    },
+  },
+  {
     files: ["**/components/**/index.ts"],
     rules: {
       "simple-import-sort/exports": "off",

@@ -89,6 +89,41 @@ export abstract class ChatService {
     return created;
   }
 
+  static async editName({
+    title,
+    chatId,
+    userId,
+  }: {
+    title: string;
+    chatId: string;
+    userId: string;
+  }) {
+    const [updated = null] = await db
+      .update(chat)
+      .set({ title })
+      .where(and(eq(chat.id, chatId), eq(chat.userId, userId)))
+      .returning({ id: chat.id, title: chat.title });
+
+    if (!isDefined(updated)) {
+      return new NotFoundError({ resource: "chat", id: chatId });
+    }
+
+    return updated;
+  }
+
+  static async delete({ chatId, userId }: { chatId: string; userId: string }) {
+    const [deleted = null] = await db
+      .delete(chat)
+      .where(and(eq(chat.id, chatId), eq(chat.userId, userId)))
+      .returning({ id: chat.id });
+
+    if (!isDefined(deleted)) {
+      return new NotFoundError({ resource: "chat", id: chatId });
+    }
+
+    return deleted;
+  }
+
   static async saveMessages({
     chatId,
     userId,

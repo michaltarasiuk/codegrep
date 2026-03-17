@@ -1,30 +1,30 @@
-import { t, type UnwrapSchema } from "elysia";
+import { t } from "elysia";
 
-export const ChatModel = {
-  chatParams: t.Object({
-    id: t.String({ minLength: 1 }),
-  }),
-  listChatsResponse: t.Array(
+export namespace ChatModel {
+  const Id = t.String({ minLength: 1 });
+  const Title = t.String({ minLength: 1 });
+
+  export const Params = t.Object({ id: Id });
+
+  export const List = t.Array(
     t.Object({
       id: t.String(),
       title: t.String(),
       updatedAt: t.Date(),
     })
-  ),
-  createChatBody: t.Object({
-    title: t.String({ minLength: 1 }),
-  }),
-  createChatResponse: t.Object({
-    id: t.String(),
-  }),
-  sendMessageBody: t.Object({
-    id: t.String({ minLength: 1 }),
+  );
+
+  export const Create = t.Object({ title: Title });
+  export const Edit = t.Object({ title: Title });
+
+  export const IdResponse = t.Object({ id: t.String() });
+  export const EditResponse = t.Object({ id: t.String(), title: t.String() });
+
+  export const SendMessage = t.Object({
+    id: Id,
     model: t.String({ minLength: 1 }),
     messages: t.Array(t.Any()),
-  }),
-  errorMessage: t.String(),
-} as const;
+  });
 
-export type ChatModel = {
-  [K in keyof typeof ChatModel]: UnwrapSchema<(typeof ChatModel)[K]>;
-};
+  export const Error = t.String();
+}

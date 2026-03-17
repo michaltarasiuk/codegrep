@@ -33,7 +33,7 @@ export const chatPlugin = new Elysia({ name: "chat", prefix: "/chat" })
       return result;
     },
     {
-      params: ChatModel.chatParams,
+      params: ChatModel.Params,
     }
   )
   .post(
@@ -58,7 +58,7 @@ export const chatPlugin = new Elysia({ name: "chat", prefix: "/chat" })
       });
     },
     {
-      body: ChatModel.sendMessageBody,
+      body: ChatModel.SendMessage,
     }
   )
   .post(
@@ -74,10 +74,52 @@ export const chatPlugin = new Elysia({ name: "chat", prefix: "/chat" })
       return result;
     },
     {
-      body: ChatModel.createChatBody,
+      body: ChatModel.Create,
       response: {
-        200: ChatModel.createChatResponse,
-        500: ChatModel.errorMessage,
+        200: ChatModel.IdResponse,
+        500: ChatModel.Error,
+      },
+    }
+  )
+  .put(
+    "/:id",
+    async ({ params: { id: chatId }, body: { title }, user }) => {
+      const result = await ChatService.editName({
+        title,
+        chatId,
+        userId: user.id,
+      });
+      if (result instanceof NotFoundError) {
+        return status(404, result.message);
+      }
+      return result;
+    },
+    {
+      params: ChatModel.Params,
+      body: ChatModel.Edit,
+      response: {
+        200: ChatModel.EditResponse,
+        404: ChatModel.Error,
+      },
+    }
+  )
+  .delete(
+    "/:id",
+    async ({ params: { id: chatId }, user }) => {
+      const result = await ChatService.delete({
+        chatId,
+        userId: user.id,
+      });
+      if (result instanceof NotFoundError) {
+        return status(404, result.message);
+      }
+      return result;
+    },
+    {
+      params: ChatModel.Params,
+      response: {
+        200: ChatModel.IdResponse,
+        404: ChatModel.Error,
       },
     }
   );
