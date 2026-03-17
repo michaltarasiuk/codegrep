@@ -68,7 +68,11 @@
   }
 </script>
 
-<ChatUI.Root {chat} {model} className="pb-30">
+<ChatUI.Root
+  {chat}
+  {model}
+  className={cn(isDefined(chat.lastMessage) && "pb-30")}
+>
   <ChatUI.Conversation>
     {#snippet children(message, isLast)}
       <ChatUI.Message {message} {isLast} />
