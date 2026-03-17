@@ -8,8 +8,8 @@ export namespace ChatModel {
 
   export const List = t.Array(
     t.Object({
-      id: t.String(),
-      title: t.String(),
+      id: Id,
+      title: Title,
       updatedAt: t.Date(),
     })
   );
@@ -17,8 +17,8 @@ export namespace ChatModel {
   export const Create = t.Object({ title: Title });
   export const Edit = t.Object({ title: Title });
 
-  export const IdResponse = t.Object({ id: t.String() });
-  export const EditResponse = t.Object({ id: t.String(), title: t.String() });
+  export const IdResponse = t.Object({ id: Id });
+  export const EditResponse = t.Object({ id: Id, title: Title });
 
   export const SendMessage = t.Object({
     id: Id,
