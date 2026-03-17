@@ -7,7 +7,7 @@
   import UserCircleIcon from "@tabler/icons-svelte/icons/user-circle";
   import { mode, toggleMode } from "mode-watcher";
 
-  import { goto, invalidate } from "$app/navigation";
+  import { goto } from "$app/navigation";
   import { resolve } from "$app/paths";
   import * as Command from "$lib/components/ui/command/index.js";
   import { authClient } from "$lib/utils/client";
@@ -45,8 +45,7 @@
 
   async function signOut() {
     await authClient.signOut();
-    await invalidate("app:chat-list");
-    await goto(resolve("/chat"));
+    await goto(resolve("/chat"), { invalidateAll: true });
   }
 </script>
 
