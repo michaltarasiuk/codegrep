@@ -1,10 +1,14 @@
 <script lang="ts">
+  import MoreHorizontalIcon from "@lucide/svelte/icons/more-horizontal";
+  import PencilIcon from "@lucide/svelte/icons/pencil";
   import PlusIcon from "@lucide/svelte/icons/plus";
+  import TrashIcon from "@lucide/svelte/icons/trash-2";
   import type { Snippet } from "svelte";
 
   import { goto } from "$app/navigation";
   import { resolve } from "$app/paths";
   import { page } from "$app/state";
+  import * as DropdownMenu from "$lib/components/ui/dropdown-menu/index.js";
   import * as Sidebar from "$lib/components/ui/sidebar/index.js";
 
   import ThemeToggle from "./theme-toggle.svelte";
@@ -46,6 +50,25 @@
             >
               <span class="truncate">{chat.title}</span>
             </Sidebar.MenuButton>
+            <DropdownMenu.Root>
+              <DropdownMenu.Trigger>
+                {#snippet child({ props })}
+                  <Sidebar.MenuAction {...props} showOnHover>
+                    <MoreHorizontalIcon />
+                  </Sidebar.MenuAction>
+                {/snippet}
+              </DropdownMenu.Trigger>
+              <DropdownMenu.Content side="right" align="end" sideOffset={4}>
+                <DropdownMenu.Item>
+                  <PencilIcon />
+                  Rename
+                </DropdownMenu.Item>
+                <DropdownMenu.Item variant="destructive">
+                  <TrashIcon />
+                  Delete
+                </DropdownMenu.Item>
+              </DropdownMenu.Content>
+            </DropdownMenu.Root>
           </Sidebar.MenuItem>
         {/each}
       </Sidebar.Menu>
