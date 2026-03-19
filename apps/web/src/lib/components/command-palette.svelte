@@ -36,6 +36,10 @@
     isOpen = false;
   }
 
+  async function gotoChat() {
+    await goto(resolve("/chat"));
+  }
+
   async function signInWithGitHub() {
     await authClient.signIn.social({
       provider: "github",
@@ -45,7 +49,7 @@
 
   async function signOut() {
     await authClient.signOut();
-    await goto(resolve("/chat"), { invalidateAll: true });
+    await goto(resolve("/chat"));
   }
 </script>
 
@@ -59,7 +63,7 @@
       <Command.Item
         value="new-chat"
         keywords={["chat", "new"]}
-        onSelect={() => executeAndClose(() => void goto(resolve("/chat")))}
+        onSelect={() => executeAndClose(() => gotoChat())}
       >
         <PlusIcon />
         <span>New chat</span>

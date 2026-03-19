@@ -10,7 +10,10 @@
   import { page } from "$app/state";
   import * as DropdownMenu from "$lib/components/ui/dropdown-menu/index.js";
   import * as Sidebar from "$lib/components/ui/sidebar/index.js";
+  import { isDefined } from "$lib/utils/is-defined";
 
+  import ChatDeleteDialog from "./chat-delete-dialog.svelte";
+  import ChatTitleDialog from "./chat-title-dialog.svelte";
   import ThemeToggle from "./theme-toggle.svelte";
   import UserAccountMenu from "./user-account-menu.svelte";
 
@@ -23,6 +26,9 @@
   }
 
   const { children, chatList }: Props = $props();
+
+  let renamingChat = $state<{ id: string; title: string } | null>(null);
+  let deletingChat = $state<{ id: string } | null>(null);
 </script>
 
 <Sidebar.Provider
@@ -45,7 +51,7 @@
           <Sidebar.MenuItem>
             <Sidebar.MenuButton
               tooltipContent={chat.title}
-              isActive={page.params.id === chat.id}
+              isActive={page.url.pathname === resolve(`/chat/${chat.id}`)}
               onclick={() => goto(resolve(`/chat/${chat.id}`))}
             >
               <span class="truncate">{chat.title}</span>
@@ -59,11 +65,17 @@
                 {/snippet}
               </DropdownMenu.Trigger>
               <DropdownMenu.Content side="right" align="end" sideOffset={4}>
-                <DropdownMenu.Item>
+                <DropdownMenu.Item
+                  onSelect={() =>
+                    (renamingChat = { id: chat.id, title: chat.title })}
+                >
                   <PencilIcon />
                   Rename
                 </DropdownMenu.Item>
-                <DropdownMenu.Item variant="destructive">
+                <DropdownMenu.Item
+                  variant="destructive"
+                  onSelect={() => (deletingChat = { id: chat.id })}
+                >
                   <TrashIcon />
                   Delete
                 </DropdownMenu.Item>
@@ -93,3 +105,18 @@
     </div>
   </Sidebar.Inset>
 </Sidebar.Provider>
+
+{#if isDefined(renamingChat)}
+  <ChatTitleDialog
+    id={renamingChat.id}
+    title={renamingChat.title}
+    onClose={() => (renamingChat = null)}
+  />
+{/if}
+
+{#if isDefined(deletingChat)}
+  <ChatDeleteDialog
+    id={deletingChat.id}
+    onClose={() => (deletingChat = null)}
+  />
+{/if}

@@ -11,15 +11,18 @@
   import * as ChatUI from "$lib/components/chat/index.js";
   import * as PromptInput from "$lib/components/prompt-input/index.js";
   import { client } from "$lib/utils/client";
+  import { CHAT_LIST_KEY } from "$lib/utils/invalidation-keys";
   import { isDefined } from "$lib/utils/is-defined.js";
 
   let {
+    chatId,
     messages,
   }: {
+    chatId?: string;
     messages?: UIMessage[];
   } = $props();
 
-  let id = $state(page.params.id);
+  let id = $state(chatId);
   let model = $state(MODELS[0].id);
   let submitStatus = $state<ChatStatus>("ready");
 
@@ -41,7 +44,7 @@
     if (!createdChat.error) {
       id = createdChat.data.id;
       replaceState(resolve(`/chat/${id}`), page.state);
-      await invalidate("app:chat-list");
+      await invalidate(CHAT_LIST_KEY);
     }
   }
 

@@ -12,17 +12,17 @@ export async function load({ params, request }: PageServerLoadEvent) {
   const chat = client.api.chat({
     id: params.id,
   });
-  const persistedMessages = await chat.messages.get({
+  const messages = await chat.messages.get({
     headers: Object.fromEntries(request.headers),
   });
-  if (!persistedMessages.error) {
+  if (!messages.error) {
     return {
-      messages: persistedMessages.data,
+      messages: messages.data,
     };
   }
   let status = "Failed to load chat";
-  if (persistedMessages.error.status === 404) {
+  if (messages.error.status === 404) {
     status = "Chat not found";
   }
-  throw error(persistedMessages.error.status, status);
+  throw error(messages.error.status, status);
 }

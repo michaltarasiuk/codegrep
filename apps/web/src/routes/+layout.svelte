@@ -5,8 +5,8 @@
   import { onMount } from "svelte";
 
   import { dev } from "$app/environment";
+  import ChatShell from "$lib/components/chat-shell.svelte";
   import CommandPalette from "$lib/components/command-palette.svelte";
-  import ShellSidebar from "$lib/components/shell-sidebar.svelte";
 
   let { children, data } = $props();
 
@@ -18,7 +18,7 @@
 </script>
 
 <CommandPalette />
-<ShellSidebar chatList={data.chatList}>
+<ChatShell chatList={data.chatList}>
   {@render children()}
-</ShellSidebar>
+</ChatShell>
 <ModeWatcher />

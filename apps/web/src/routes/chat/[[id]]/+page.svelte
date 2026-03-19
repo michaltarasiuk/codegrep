@@ -6,7 +6,5 @@
 </script>
 
 <div class="mx-auto size-full max-w-3xl px-4 py-6">
-  {#key page.params.id}
-    <ChatPanel messages={data.messages} />
-  {/key}
+  <ChatPanel chatId={page.params.id} messages={data.messages} />
 </div>
