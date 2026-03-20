@@ -1,21 +1,32 @@
 <script lang="ts">
+  import type { Snippet } from "svelte";
   import type { HTMLAttributes } from "svelte/elements";
 
-  import { cn, type WithElementRef } from "$lib/utils/cn.js";
+  import {
+    StickToBottom,
+    type StickToBottomOptions,
+  } from "$lib/components/stick-to-bottom/index.js";
+  import { cn } from "$lib/utils/cn.js";
+
+  interface Props extends HTMLAttributes<HTMLDivElement>, StickToBottomOptions {
+    children: Snippet;
+  }
 
   let {
-    ref = $bindable(null),
     children,
+    initial = "smooth",
+    resize = "smooth",
     class: className,
     ...restProps
-  }: WithElementRef<HTMLAttributes<HTMLDivElement>> = $props();
+  }: Props = $props();
 </script>
 
-<div
-  bind:this={ref}
+<StickToBottom
   role="log"
+  {initial}
+  {resize}
   class={cn("relative flex-1 overflow-y-hidden", className)}
   {...restProps}
 >
-  {@render children?.()}
-</div>
+  {@render children()}
+</StickToBottom>
