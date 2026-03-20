@@ -15,14 +15,12 @@
   import { isDefined } from "$lib/utils/is-defined.js";
 
   let {
-    chatId,
     messages,
   }: {
-    chatId?: string;
     messages?: UIMessage[];
   } = $props();
 
-  let id = $state(chatId);
+  let id = $state(page.params.id);
   let model = $state(MODELS[0].id);
   let submitStatus = $state<ChatStatus>("ready");
 
