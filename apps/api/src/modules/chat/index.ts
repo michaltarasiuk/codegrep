@@ -1,16 +1,12 @@
-import { createGroq } from "@ai-sdk/groq";
 import { convertToModelMessages, streamText } from "ai";
 import { Elysia, status } from "elysia";
 
 import { CreateFailedError, NotFoundError } from "$api/errors";
 
 import { sessionPlugin } from "../auth/session";
+import { ai } from "./ai";
 import { ChatModel } from "./model";
 import { ChatService } from "./service";
-
-const groq = createGroq({
-  apiKey: process.env.GROQ_API_KEY,
-});
 
 export const chatPlugin = new Elysia({ name: "chat", prefix: "/chat" })
   .use(sessionPlugin)
@@ -40,7 +36,7 @@ export const chatPlugin = new Elysia({ name: "chat", prefix: "/chat" })
     "/",
     async ({ body: { id: chatId, model, messages }, user }) => {
       const result = streamText({
-        model: groq(model),
+        model: ai(model),
         messages: await convertToModelMessages(messages),
       });
       return result.toUIMessageStreamResponse({
