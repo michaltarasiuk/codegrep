@@ -38,7 +38,7 @@
   }
 </script>
 
-<AlertDialog.Root open={true} onOpenChange={(o) => !o && onClose()}>
+s<AlertDialog.Root open onOpenChange={(o) => !o && onClose()}>
   <AlertDialog.Content>
     <AlertDialog.Header>
       <AlertDialog.Title>Delete chat</AlertDialog.Title>
