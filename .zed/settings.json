@@ -2,6 +2,32 @@
   "formatter": "prettier",
   "format_on_save": "on",
   "code_actions_on_format": {},
+  "languages": {
+    "TypeScript": {
+      "show_completions_on_input": true,
+      "language_servers": [
+        "typescript-language-server",
+        "!vtsls",
+        "tailwindcss-language-server",
+        "..."
+      ]
+    },
+    "Svelte": {
+      "show_completions_on_input": true,
+      "language_servers": [
+        "svelte-language-server",
+        "tailwindcss-language-server",
+        "..."
+      ]
+    },
+    "CSS": {
+      "language_servers": [
+        "tailwindcss-intellisense-css",
+        "!vscode-css-language-server",
+        "..."
+      ]
+    }
+  },
   "lsp": {
     "typescript-language-server": {
       "settings": {
@@ -9,6 +35,23 @@
           "preferences": {
             "includePackageJsonAutoImports": "on"
           }
+        }
+      }
+    },
+    "tailwindcss-language-server": {
+      "settings": {
+        "classFunctions": ["cn", "cva", "cx", "clsx", "tv", "twMerge"],
+        "includeLanguages": {
+          "svelte": "html"
+        },
+        "experimental": {
+          "classRegex": [
+            "class=\"([^\"]*)\"",
+            "class='([^']*)'",
+            "class:\\s*([^\\s{]+)",
+            "\\{\\s*class:\\s*\"([^\"]*)\"",
+            "\\{\\s*class:\\s*'([^']*)'"
+          ]
         }
       }
     }
