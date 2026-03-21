@@ -5,7 +5,10 @@
 
   import { cn, type WithElementRef } from "$lib/utils/cn.js";
 
-  import { getContextState } from "./context-context.svelte.js";
+  import {
+    currencyFormatter,
+    getContextState,
+  } from "./context-context.svelte.js";
   import TokensWithCost from "./tokens-with-cost.svelte";
 
   type ContextReasoningUsageProps = WithElementRef<
@@ -32,10 +35,7 @@
       : undefined
   );
   const reasoningCostText = $derived(
-    new Intl.NumberFormat("en-US", {
-      currency: "USD",
-      style: "currency",
-    }).format(reasoningCost ?? 0)
+    currencyFormatter.format(reasoningCost ?? 0)
   );
 </script>
 

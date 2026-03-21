@@ -15,7 +15,7 @@ export interface ContextState {
 export function getContextState(): ContextState {
   const value = getContext<ContextState | undefined>(CONTEXT_KEY);
   if (!value) {
-    throw new Error("Context components must be used within Context");
+    throw new Error("Missing context context");
   }
   return value;
 }
@@ -23,3 +23,17 @@ export function getContextState(): ContextState {
 export function setContextState(value: ContextState) {
   return setContext(CONTEXT_KEY, value);
 }
+
+export const compactFormatter = new Intl.NumberFormat("en-US", {
+  notation: "compact",
+});
+
+export const currencyFormatter = new Intl.NumberFormat("en-US", {
+  currency: "USD",
+  style: "currency",
+});
+
+export const percentFormatter = new Intl.NumberFormat("en-US", {
+  maximumFractionDigits: 1,
+  style: "percent",
+});

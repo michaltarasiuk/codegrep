@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { compactFormatter } from "./context-context.svelte.js";
+
   let {
     tokens,
     costText,
@@ -8,9 +10,7 @@
   } = $props();
 
   const formatted = $derived(
-    tokens === undefined
-      ? "—"
-      : new Intl.NumberFormat("en-US", { notation: "compact" }).format(tokens)
+    tokens === undefined ? "—" : compactFormatter.format(tokens)
   );
 </script>
 

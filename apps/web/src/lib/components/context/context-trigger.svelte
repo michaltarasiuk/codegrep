@@ -4,7 +4,10 @@
   import { Button } from "$lib/components/ui/button/index.js";
   import * as HoverCard from "$lib/components/ui/hover-card/index.js";
 
-  import { getContextState } from "./context-context.svelte.js";
+  import {
+    getContextState,
+    percentFormatter,
+  } from "./context-context.svelte.js";
   import ContextIcon from "./context-icon.svelte";
 
   type ContextTriggerProps = ComponentProps<typeof Button> & {
@@ -15,12 +18,7 @@
 
   const context = getContextState();
   const usedPercent = $derived(context.usedTokens / context.maxTokens);
-  const renderedPercent = $derived(
-    new Intl.NumberFormat("en-US", {
-      maximumFractionDigits: 1,
-      style: "percent",
-    }).format(usedPercent)
-  );
+  const renderedPercent = $derived(percentFormatter.format(usedPercent));
 </script>
 
 <HoverCard.Trigger>

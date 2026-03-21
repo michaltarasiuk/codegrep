@@ -5,7 +5,10 @@
 
   import { cn, type WithElementRef } from "$lib/utils/cn.js";
 
-  import { getContextState } from "./context-context.svelte.js";
+  import {
+    currencyFormatter,
+    getContextState,
+  } from "./context-context.svelte.js";
   import TokensWithCost from "./tokens-with-cost.svelte";
 
   type ContextOutputUsageProps = WithElementRef<
@@ -31,12 +34,7 @@
         }).costUSD?.totalUSD
       : undefined
   );
-  const outputCostText = $derived(
-    new Intl.NumberFormat("en-US", {
-      currency: "USD",
-      style: "currency",
-    }).format(outputCost ?? 0)
-  );
+  const outputCostText = $derived(currencyFormatter.format(outputCost ?? 0));
 </script>
 
 {#if children}

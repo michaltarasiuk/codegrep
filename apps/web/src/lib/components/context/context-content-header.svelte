@@ -4,7 +4,11 @@
 
   import { cn, type WithElementRef } from "$lib/utils/cn.js";
 
-  import { getContextState } from "./context-context.svelte.js";
+  import {
+    compactFormatter,
+    getContextState,
+    percentFormatter,
+  } from "./context-context.svelte.js";
 
   const PERCENT_MAX = 100;
 
@@ -23,22 +27,9 @@
 
   const context = getContextState();
   const usedPercent = $derived(context.usedTokens / context.maxTokens);
-  const displayPct = $derived(
-    new Intl.NumberFormat("en-US", {
-      maximumFractionDigits: 1,
-      style: "percent",
-    }).format(usedPercent)
-  );
-  const used = $derived(
-    new Intl.NumberFormat("en-US", { notation: "compact" }).format(
-      context.usedTokens
-    )
-  );
-  const total = $derived(
-    new Intl.NumberFormat("en-US", { notation: "compact" }).format(
-      context.maxTokens
-    )
-  );
+  const displayPct = $derived(percentFormatter.format(usedPercent));
+  const used = $derived(compactFormatter.format(context.usedTokens));
+  const total = $derived(compactFormatter.format(context.maxTokens));
   const progressValue = $derived(usedPercent * PERCENT_MAX);
 </script>
 
