@@ -44,7 +44,7 @@
   bind:this={ref}
   data-slot="context-content-footer"
   class={cn(
-    "flex w-full items-center justify-between gap-3 bg-secondary p-3 text-xs",
+    "bg-secondary flex w-full items-center justify-between gap-3 p-3 text-xs",
     className
   )}
   {...restProps}

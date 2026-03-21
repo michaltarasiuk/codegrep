@@ -53,7 +53,7 @@
   {:else}
     <div class="flex items-center justify-between gap-3 text-xs">
       <p>{displayPct}</p>
-      <p class="font-mono text-muted-foreground">
+      <p class="text-muted-foreground font-mono">
         {used} / {total}
       </p>
     </div>
