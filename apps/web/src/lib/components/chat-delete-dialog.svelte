@@ -22,15 +22,14 @@
     try {
       const result = await client.api.chat({ id }).delete();
       if (!result.error) {
-        // Captured before onClose unmounts the component
         const isViewingChat =
           page.route.id === "/chat/[[id]]" && page.params.id === id;
-        onClose();
         if (isViewingChat) {
           await goto(resolve("/chat"), { invalidate: [CHAT_LIST_KEY] });
         } else {
           await invalidate(CHAT_LIST_KEY);
         }
+        onClose();
       }
     } finally {
       loading = false;
