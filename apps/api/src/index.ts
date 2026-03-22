@@ -1,6 +1,8 @@
 import { app } from "./app";
 
-app.listen(3000, ({ hostname, port }) => {
+const port = process.env.PORT ?? 3000;
+
+app.listen(port, ({ hostname, port }) => {
   console.info(`Server running at http://${hostname}:${port}`);
 });
 

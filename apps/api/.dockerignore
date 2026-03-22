@@ -1,0 +1,19 @@
+# Dependencies
+node_modules
+
+# Git
+.git
+.gitignore
+
+# Documentation
+*.md
+
+# Environment files
+.env
+.env.*
+
+# Database migrations
+drizzle
+
+# Build cache
+.turbo

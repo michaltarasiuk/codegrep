@@ -1,0 +1,20 @@
+FROM oven/bun:1.3.9-alpine
+
+WORKDIR /app
+
+# Copy root workspace files
+COPY package.json bun.lock ./
+COPY tsconfig.json tsconfig.base.json ./
+COPY apps/api/package.json ./apps/api/
+
+# Install dependencies
+RUN bun install --frozen-lockfile
+
+# Copy API source code
+COPY apps/api ./apps/api
+
+WORKDIR /app/apps/api
+
+EXPOSE 3000
+
+CMD ["bun", "run", "src/index.ts"]
