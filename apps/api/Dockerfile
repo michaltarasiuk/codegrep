@@ -8,8 +8,8 @@ COPY tsconfig.json tsconfig.base.json ./
 COPY apps/api/package.json ./apps/api/
 COPY apps/web/package.json ./apps/web/
 
-# Install dependencies
-RUN bun install --frozen-lockfile
+# Install dependencies (ignore prepare script which requires git for lefthook)
+RUN bun install --frozen-lockfile --ignore-scripts
 
 # Copy API source code
 COPY apps/api ./apps/api
