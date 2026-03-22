@@ -1,5 +1,6 @@
 declare namespace NodeJS {
   interface ProcessEnv {
+    API_URL: string;
     WEB_URL: string;
     DATABASE_URL: string;
     GROQ_API_KEY: string;
