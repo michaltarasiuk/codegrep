@@ -6,10 +6,15 @@ const ALLOWED_METHODS = new Set(["OPTIONS", "GET", "POST"]);
 
 export const authPlugin = new Elysia({ name: "auth" }).all(
   "/auth/*",
-  ({ request }) => {
+  async ({ request }) => {
     if (!ALLOWED_METHODS.has(request.method)) {
       return status(401);
     }
-    return authService.handler(request);
+    try {
+      return await authService.handler(request);
+    } catch (error) {
+      console.error("Auth error:", error);
+      throw error;
+    }
   }
 );
