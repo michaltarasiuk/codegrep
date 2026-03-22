@@ -10,6 +10,8 @@ services:
     envVars:
       - key: PORT
         value: 3000
+      - key: API_URL
+        sync: false
       - key: WEB_URL
         sync: false
       - key: DATABASE_URL
