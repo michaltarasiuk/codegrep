@@ -12,7 +12,8 @@ export const authService = betterAuth({
   trustedOrigins: [process.env.WEB_URL],
   advanced: {
     defaultCookieAttributes: {
-      domain: new URL(process.env.API_URL).hostname,
+      sameSite: "none",
+      secure: true,
     },
   },
   database: drizzleAdapter(db, {
