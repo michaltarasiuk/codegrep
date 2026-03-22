@@ -25,6 +25,8 @@ export const handle: Handle = async ({ event, resolve }) => {
     });
   }
 
+  console.debug("Cookie", setCookie);
+
   const response = await resolve(event);
   if (isDefined(setCookie)) {
     response.headers.append("set-cookie", setCookie);
