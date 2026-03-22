@@ -48,18 +48,20 @@
     <Sidebar.Content>
       <Sidebar.Menu>
         {#each chatList as chat (chat.id)}
+          {@const route = resolve(`/chat/${chat.id}`)}
+          {@const isActive = page.url.pathname === route}
           <Sidebar.MenuItem>
             <Sidebar.MenuButton
               tooltipContent={chat.title}
-              isActive={page.url.pathname === resolve(`/chat/${chat.id}`)}
-              onclick={() => goto(resolve(`/chat/${chat.id}`))}
+              {isActive}
+              onclick={() => goto(route)}
             >
               <span class="truncate">{chat.title}</span>
             </Sidebar.MenuButton>
             <DropdownMenu.Root>
               <DropdownMenu.Trigger>
                 {#snippet child({ props })}
-                  <Sidebar.MenuAction {...props} showOnHover>
+                  <Sidebar.MenuAction {...props} showOnHover={!isActive}>
                     <MoreHorizontalIcon />
                   </Sidebar.MenuAction>
                 {/snippet}
