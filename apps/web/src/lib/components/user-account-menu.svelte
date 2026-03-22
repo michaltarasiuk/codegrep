@@ -21,8 +21,8 @@
     hydrated = true;
   });
 
-  async function signInWithGithub() {
-    await authClient.signIn.social({
+  function signInWithGithub() {
+    authClient.signIn.social({
       provider: "github",
       callbackURL: window.location.href,
     });

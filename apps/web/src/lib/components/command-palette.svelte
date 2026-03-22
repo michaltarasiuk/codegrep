@@ -36,12 +36,12 @@
     isOpen = false;
   }
 
-  async function gotoChat() {
-    await goto(resolve("/chat"));
+  function gotoChat() {
+    goto(resolve("/chat"));
   }
 
-  async function signInWithGitHub() {
-    await authClient.signIn.social({
+  function signInWithGitHub() {
+    authClient.signIn.social({
       provider: "github",
       callbackURL: window.location.href,
     });
