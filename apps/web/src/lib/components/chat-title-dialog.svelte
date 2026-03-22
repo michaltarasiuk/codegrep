@@ -27,8 +27,8 @@
         title: value,
       });
       if (!result.error) {
-        onClose();
         await invalidate(CHAT_LIST_KEY);
+        onClose();
       }
     } finally {
       loading = false;
