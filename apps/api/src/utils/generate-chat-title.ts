@@ -8,7 +8,7 @@ import { isDefined } from "./is-defined";
 export async function generateChatTitle(model: string, messages: UIMessage[]) {
   const userMessage = messages.find((m) => m.role === "user");
   if (!isDefined(userMessage)) {
-    throw new NoUserMessageError();
+    return new NoUserMessageError();
   }
   const { text } = await generateText({
     model: ai(model),
