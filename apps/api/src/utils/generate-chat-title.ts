@@ -13,8 +13,9 @@ export async function generateChatTitle(model: string, messages: UIMessage[]) {
   const { text } = await generateText({
     model: ai(model),
     system:
-      "Generate a title (max 5 words) for this chat. " +
-      "Output only plain text, no quotes or formatting.",
+      "Generate a 1-5 word chat title. " +
+      "Use the user's exact words or names when possible. " +
+      "No quotes, no periods, no commentary. Plain text only.",
     prompt: getPrompt(userMessage),
   });
   return text;
