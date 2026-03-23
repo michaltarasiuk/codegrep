@@ -132,7 +132,7 @@ export abstract class ChatService {
     return chat;
   }
 
-  static async editName({
+  static async editTitle({
     title,
     chatId,
     userId,

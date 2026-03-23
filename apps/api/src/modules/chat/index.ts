@@ -79,7 +79,7 @@ export const chatPlugin = new Elysia({ name: "chat", prefix: "/chat" })
   .put(
     "/:id",
     async ({ params: { id: chatId }, body: { title }, user }) => {
-      const result = await ChatService.editName({
+      const result = await ChatService.editTitle({
         title,
         chatId,
         userId: user.id,
