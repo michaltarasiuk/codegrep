@@ -3,7 +3,11 @@ import { and, asc, desc, eq } from "drizzle-orm";
 
 import { db } from "$api/db";
 import { chat, message } from "$api/db/schema";
-import { CreateFailedError, NotFoundError } from "$api/errors";
+import {
+  CreateFailedError,
+  NotFoundError,
+  NoUserMessageError,
+} from "$api/errors";
 import { isDefined } from "$api/utils/is-defined";
 
 export abstract class ChatService {
@@ -51,8 +55,15 @@ export abstract class ChatService {
       .orderBy(asc(message.createdAt));
   }
 
-  static async create({ title, userId }: { title: string; userId: string }) {
-    const chatId = generateId();
+  static async create({
+    title,
+    chatId,
+    userId,
+  }: {
+    title: string;
+    chatId: string;
+    userId: string;
+  }) {
     const messageId = `${chatId}:${generateId()}`;
 
     const created = await db.transaction(async (tx) => {
@@ -87,6 +98,38 @@ export abstract class ChatService {
     }
 
     return created;
+  }
+
+  static async createIfNotExists({
+    generateTitle,
+    chatId,
+    userId,
+  }: {
+    generateTitle: () => Promise<string | NoUserMessageError>;
+    chatId: string;
+    userId: string;
+  }) {
+    let chat: { id: string } | null = await this.getById({
+      chatId,
+      userId,
+    });
+    if (!isDefined(chat)) {
+      const title = await generateTitle();
+      if (title instanceof NoUserMessageError) {
+        return title;
+      }
+      const created = await this.create({
+        title,
+        chatId,
+        userId,
+      });
+      if (created instanceof CreateFailedError) {
+        return created;
+      } else {
+        chat = created;
+      }
+    }
+    return chat;
   }
 
   static async editName({
@@ -125,13 +168,13 @@ export abstract class ChatService {
   }
 
   static async saveMessages({
+    messages,
     chatId,
     userId,
-    messages,
   }: {
+    messages: UIMessage[];
     chatId: string;
     userId: string;
-    messages: UIMessage[];
   }) {
     const found = await this.getById({
       chatId,

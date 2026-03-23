@@ -1,6 +1,5 @@
 <script lang="ts">
   import ImageIcon from "@lucide/svelte/icons/image";
-  import type { ChatStatus } from "ai";
 
   import * as PromptInput from "$lib/components/prompt-input/index.js";
 
@@ -10,11 +9,9 @@
 
   let {
     selectedModel = $bindable(MODELS[0].id),
-    submitStatus,
     handleSubmit,
   }: {
     selectedModel: string;
-    submitStatus: ChatStatus;
     handleSubmit: (message: PromptInput.PromptInputMessage) => void;
   } = $props();
 
@@ -44,7 +41,7 @@
           </PromptInput.ActionMenuContent>
         </PromptInput.ActionMenu>
         <PromptInput.Submit
-          status={submitStatus}
+          status={chat.status}
           size="icon-sm"
           onstop={() => chat.stop()}
         />

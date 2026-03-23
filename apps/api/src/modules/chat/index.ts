@@ -1,7 +1,12 @@
 import { convertToModelMessages, streamText } from "ai";
 import { Elysia, status } from "elysia";
 
-import { CreateFailedError, NotFoundError } from "$api/errors";
+import {
+  CreateFailedError,
+  NotFoundError,
+  NoUserMessageError,
+} from "$api/errors";
+import { generateChatTitle } from "$api/utils/generate-chat-title";
 
 import { sessionPlugin } from "../auth/session";
 import { ai } from "./ai";
@@ -35,20 +40,33 @@ export const chatPlugin = new Elysia({ name: "chat", prefix: "/chat" })
   .post(
     "/",
     async ({ body: { id: chatId, model, messages }, user }) => {
+      const chat = await ChatService.createIfNotExists({
+        generateTitle() {
+          return generateChatTitle(model, messages);
+        },
+        chatId,
+        userId: user.id,
+      });
+      if (
+        chat instanceof CreateFailedError ||
+        chat instanceof NoUserMessageError
+      ) {
+        return status(500, chat.message);
+      }
       const result = streamText({
         model: ai(model),
         messages: await convertToModelMessages(messages),
       });
       return result.toUIMessageStreamResponse({
         originalMessages: messages,
-        onFinish: async ({ messages: newMessages }) => {
+        onFinish: async ({ messages }) => {
           const saved = await ChatService.saveMessages({
+            messages,
             chatId,
             userId: user.id,
-            messages: newMessages,
           });
           if (saved instanceof NotFoundError) {
-            console.error("Failed to save messages:", saved.message);
+            console.error(saved.message);
           }
         },
       });
@@ -57,26 +75,7 @@ export const chatPlugin = new Elysia({ name: "chat", prefix: "/chat" })
       body: ChatModel.SendMessage,
     }
   )
-  .post(
-    "/create",
-    async ({ body: { title }, user }) => {
-      const result = await ChatService.create({
-        title,
-        userId: user.id,
-      });
-      if (result instanceof CreateFailedError) {
-        return status(500, result.message);
-      }
-      return result;
-    },
-    {
-      body: ChatModel.Create,
-      response: {
-        200: ChatModel.IdResponse,
-        500: ChatModel.Error,
-      },
-    }
-  )
+
   .put(
     "/:id",
     async ({ params: { id: chatId }, body: { title }, user }) => {

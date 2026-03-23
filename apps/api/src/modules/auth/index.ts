@@ -13,7 +13,7 @@ export const authPlugin = new Elysia({ name: "auth" }).all(
     try {
       return await authService.handler(request);
     } catch (error) {
-      console.error("Auth error:", error);
+      console.error(error);
       throw error;
     }
   }

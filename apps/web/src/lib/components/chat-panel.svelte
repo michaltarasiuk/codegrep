@@ -1,6 +1,6 @@
 <script lang="ts">
   import { Chat } from "@ai-sdk/svelte";
-  import { type ChatStatus, DefaultChatTransport, type UIMessage } from "ai";
+  import { DefaultChatTransport, type UIMessage } from "ai";
   import { cn } from "tailwind-variants";
 
   import { goto } from "$app/navigation";
@@ -10,7 +10,7 @@
   import { MODELS } from "$lib/components/chat/consts.js";
   import * as ChatUI from "$lib/components/chat/index.js";
   import * as PromptInput from "$lib/components/prompt-input/index.js";
-  import { client } from "$lib/utils/client";
+  import { CHAT_LIST_KEY } from "$lib/utils/invalidation-keys";
   import { isDefined } from "$lib/utils/is-defined.js";
 
   let {
@@ -21,7 +21,6 @@
 
   let id = $derived(page.params.id);
   let model = $state(MODELS[0].id);
-  let submitStatus = $state<ChatStatus>("ready");
 
   const chat = $derived(
     new Chat({
@@ -34,39 +33,18 @@
     })
   );
 
-  async function createChat(title: string) {
-    const createdChat = await client.api.chat.create.post({
-      title,
-    });
-    if (!createdChat.error) {
-      await goto(resolve(`/chat/${createdChat.data.id}`), {
-        replaceState: true,
-        invalidateAll: true,
-      });
-    }
-  }
-
   async function sendMessage(message: PromptInput.PromptInputMessage) {
-    const isNewChat = !isDefined(id);
-    if (isNewChat) {
-      try {
-        submitStatus = "submitted";
-        await createChat(message.text);
-      } catch {
-        submitStatus = "error";
-        return;
-      } finally {
-        submitStatus = "ready";
-      }
-    }
-    // For new chats, the user message is already persisted by createChat and
-    // loaded from the server after goto. Pass undefined to trigger the AI
-    // response without re-adding the user message.
-    await chat.sendMessage(isNewChat ? undefined : message, {
+    await chat.sendMessage(message, {
       body: {
         model,
       },
     });
+    if (!isDefined(id)) {
+      await goto(resolve(`/chat/${chat.id}`), {
+        replaceState: true,
+        invalidate: [CHAT_LIST_KEY],
+      });
+    }
   }
 
   function handleSuggestionPick(text: string) {
@@ -95,10 +73,6 @@
       <ChatUI.Suggestions onpick={handleSuggestionPick} />
     {/if}
 
-    <ChatUI.PromptInput
-      bind:selectedModel={model}
-      {submitStatus}
-      handleSubmit={sendMessage}
-    />
+    <ChatUI.PromptInput bind:selectedModel={model} handleSubmit={sendMessage} />
   </div>
 </ChatUI.Root>
