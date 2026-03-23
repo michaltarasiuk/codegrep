@@ -44,7 +44,7 @@
           </PromptInput.ActionMenuContent>
         </PromptInput.ActionMenu>
         <PromptInput.Submit
-          status={submitStatus === "ready" ? chat.status : submitStatus}
+          status={submitStatus}
           size="icon-sm"
           onstop={() => chat.stop()}
         />

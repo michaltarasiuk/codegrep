@@ -3,7 +3,7 @@
   import { type ChatStatus, DefaultChatTransport, type UIMessage } from "ai";
   import { cn } from "tailwind-variants";
 
-  import { invalidate, replaceState } from "$app/navigation";
+  import { goto } from "$app/navigation";
   import { resolve } from "$app/paths";
   import { page } from "$app/state";
   import { PUBLIC_API_URL } from "$env/static/public";
@@ -11,7 +11,6 @@
   import * as ChatUI from "$lib/components/chat/index.js";
   import * as PromptInput from "$lib/components/prompt-input/index.js";
   import { client } from "$lib/utils/client";
-  import { CHAT_LIST_KEY } from "$lib/utils/invalidation-keys";
   import { isDefined } from "$lib/utils/is-defined.js";
 
   let {
@@ -20,7 +19,7 @@
     messages?: UIMessage[];
   } = $props();
 
-  let id = $state(page.params.id);
+  let id = $derived(page.params.id);
   let model = $state(MODELS[0].id);
   let submitStatus = $state<ChatStatus>("ready");
 
@@ -40,24 +39,30 @@
       title,
     });
     if (!createdChat.error) {
-      id = createdChat.data.id;
-      replaceState(resolve(`/chat/${id}`), page.state);
-      await invalidate(CHAT_LIST_KEY);
+      await goto(resolve(`/chat/${createdChat.data.id}`), {
+        replaceState: true,
+        invalidateAll: true,
+      });
     }
   }
 
   async function sendMessage(message: PromptInput.PromptInputMessage) {
-    if (!isDefined(id)) {
+    const isNewChat = !isDefined(id);
+    if (isNewChat) {
       try {
         submitStatus = "submitted";
         await createChat(message.text);
       } catch {
         submitStatus = "error";
+        return;
       } finally {
         submitStatus = "ready";
       }
     }
-    await chat.sendMessage(message, {
+    // For new chats, the user message is already persisted by createChat and
+    // loaded from the server after goto. Pass undefined to trigger the AI
+    // response without re-adding the user message.
+    await chat.sendMessage(isNewChat ? undefined : message, {
       body: {
         model,
       },
