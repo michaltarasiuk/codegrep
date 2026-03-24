@@ -7,13 +7,7 @@ import { CreateFailedError, NotFoundError } from "$api/errors";
 import { isDefined } from "$api/utils/is-defined";
 
 export abstract class ChatService {
-  static async get({
-    chatId,
-    userId,
-  }: {
-    chatId: string;
-    userId: string;
-  }) {
+  static async get({ chatId, userId }: { chatId: string; userId: string }) {
     const [found = null] = await db
       .select()
       .from(chat)
@@ -197,13 +191,7 @@ export abstract class ChatService {
     });
   }
 
-  static async delete({
-    chatId,
-    userId,
-  }: {
-    chatId: string;
-    userId: string;
-  }) {
+  static async delete({ chatId, userId }: { chatId: string; userId: string }) {
     const [deleted = null] = await db
       .delete(chat)
       .where(and(eq(chat.id, chatId), eq(chat.userId, userId)))
