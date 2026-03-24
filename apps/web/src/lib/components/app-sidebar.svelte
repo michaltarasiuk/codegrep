@@ -7,8 +7,8 @@
   import * as Sidebar from "$lib/components/ui/sidebar/index.js";
   import { isDefined } from "$lib/utils/is-defined";
 
-  import AppSidebarItem from "./app-sidebar-item.svelte";
   import ChatDeleteDialog from "./chat-delete-dialog.svelte";
+  import ChatSidebarItem from "./chat-sidebar-item.svelte";
   import ChatTitleDialog from "./chat-title-dialog.svelte";
   import ThemeToggle from "./theme-toggle.svelte";
   import UserAccountMenu from "./user-account-menu.svelte";
@@ -44,7 +44,7 @@
     <Sidebar.Content>
       <Sidebar.Menu>
         {#each chatList as chat (chat.id)}
-          <AppSidebarItem
+          <ChatSidebarItem
             {chat}
             onRename={() => (renamingChat = chat)}
             onDelete={() => (deletingChat = chat)}

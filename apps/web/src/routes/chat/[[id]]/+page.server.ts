@@ -5,15 +5,16 @@ import { isDefined } from "$lib/utils/is-defined.js";
 
 import type { PageServerLoadEvent } from "./$types";
 
-export async function load({ params, request }: PageServerLoadEvent) {
-  if (!isDefined(params.id)) {
+export async function load({ params: { id }, request }: PageServerLoadEvent) {
+  if (!isDefined(id)) {
     return;
   }
+  const requestHeaders = Object.fromEntries(request.headers);
   const chat = client.api.chat({
-    id: params.id,
+    id,
   });
   const messages = await chat.messages.get({
-    headers: Object.fromEntries(request.headers),
+    headers: requestHeaders,
   });
   if (!messages.error) {
     return {
