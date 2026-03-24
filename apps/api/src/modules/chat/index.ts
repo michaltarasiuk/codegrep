@@ -1,12 +1,8 @@
 import { convertToModelMessages, streamText } from "ai";
 import { Elysia, status } from "elysia";
 
-import {
-  CreateFailedError,
-  NotFoundError,
-  NoUserMessageError,
-} from "$api/errors";
-import { generateChatTitle } from "$api/utils/generate-chat-title";
+import { CreateFailedError, NotFoundError } from "$api/errors";
+import { getChatTitle } from "$api/utils/get-chat-title";
 
 import { sessionPlugin } from "../auth/session";
 import { ai } from "./ai";
@@ -41,16 +37,11 @@ export const chatPlugin = new Elysia({ name: "chat", prefix: "/chat" })
     "/",
     async ({ body: { id: chatId, model, messages }, user }) => {
       const chat = await ChatService.createIfNotExists({
-        generateTitle() {
-          return generateChatTitle(model, messages);
-        },
+        title: getChatTitle(messages),
         chatId,
         userId: user.id,
       });
-      if (
-        chat instanceof CreateFailedError ||
-        chat instanceof NoUserMessageError
-      ) {
+      if (chat instanceof CreateFailedError) {
         return status(500, chat.message);
       }
       const result = streamText({

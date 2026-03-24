@@ -1,17 +1,13 @@
 <script lang="ts">
-  import MoreHorizontalIcon from "@lucide/svelte/icons/more-horizontal";
-  import PencilIcon from "@lucide/svelte/icons/pencil";
   import PlusIcon from "@lucide/svelte/icons/plus";
-  import TrashIcon from "@lucide/svelte/icons/trash-2";
   import type { Snippet } from "svelte";
 
   import { goto } from "$app/navigation";
   import { resolve } from "$app/paths";
-  import { page } from "$app/state";
-  import * as DropdownMenu from "$lib/components/ui/dropdown-menu/index.js";
   import * as Sidebar from "$lib/components/ui/sidebar/index.js";
   import { isDefined } from "$lib/utils/is-defined";
 
+  import AppSidebarItem from "./app-sidebar-item.svelte";
   import ChatDeleteDialog from "./chat-delete-dialog.svelte";
   import ChatTitleDialog from "./chat-title-dialog.svelte";
   import ThemeToggle from "./theme-toggle.svelte";
@@ -48,42 +44,11 @@
     <Sidebar.Content>
       <Sidebar.Menu>
         {#each chatList as chat (chat.id)}
-          {@const route = resolve(`/chat/${chat.id}`)}
-          {@const isActive = page.url.pathname === route}
-          <Sidebar.MenuItem>
-            <Sidebar.MenuButton
-              tooltipContent={chat.title}
-              {isActive}
-              onclick={() => goto(route)}
-            >
-              <span class="truncate">{chat.title}</span>
-            </Sidebar.MenuButton>
-            <DropdownMenu.Root>
-              <DropdownMenu.Trigger>
-                {#snippet child({ props })}
-                  <Sidebar.MenuAction {...props} showOnHover={!isActive}>
-                    <MoreHorizontalIcon />
-                  </Sidebar.MenuAction>
-                {/snippet}
-              </DropdownMenu.Trigger>
-              <DropdownMenu.Content side="right" align="end" sideOffset={4}>
-                <DropdownMenu.Item
-                  onSelect={() =>
-                    (renamingChat = { id: chat.id, title: chat.title })}
-                >
-                  <PencilIcon />
-                  Rename
-                </DropdownMenu.Item>
-                <DropdownMenu.Item
-                  variant="destructive"
-                  onSelect={() => (deletingChat = { id: chat.id })}
-                >
-                  <TrashIcon />
-                  Delete
-                </DropdownMenu.Item>
-              </DropdownMenu.Content>
-            </DropdownMenu.Root>
-          </Sidebar.MenuItem>
+          <AppSidebarItem
+            {chat}
+            onRename={() => (renamingChat = chat)}
+            onDelete={() => (deletingChat = chat)}
+          />
         {/each}
       </Sidebar.Menu>
     </Sidebar.Content>

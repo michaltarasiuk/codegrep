@@ -3,11 +3,7 @@ import { and, asc, desc, eq } from "drizzle-orm";
 
 import { db } from "$api/db";
 import { chat, message } from "$api/db/schema";
-import {
-  CreateFailedError,
-  NotFoundError,
-  NoUserMessageError,
-} from "$api/errors";
+import { CreateFailedError, NotFoundError } from "$api/errors";
 import { isDefined } from "$api/utils/is-defined";
 
 export abstract class ChatService {
@@ -101,11 +97,11 @@ export abstract class ChatService {
   }
 
   static async createIfNotExists({
-    generateTitle,
+    title,
     chatId,
     userId,
   }: {
-    generateTitle: () => Promise<string | NoUserMessageError>;
+    title: string;
     chatId: string;
     userId: string;
   }) {
@@ -114,10 +110,6 @@ export abstract class ChatService {
       userId,
     });
     if (!isDefined(chat)) {
-      const title = await generateTitle();
-      if (title instanceof NoUserMessageError) {
-        return title;
-      }
       const created = await this.create({
         title,
         chatId,

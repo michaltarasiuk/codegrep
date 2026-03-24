@@ -14,12 +14,13 @@
   import { isDefined } from "$lib/utils/is-defined.js";
 
   let {
+    id = page.params.id,
     messages,
   }: {
+    id?: string;
     messages?: UIMessage[];
   } = $props();
 
-  let id = $derived(page.params.id);
   let model = $state(MODELS[0].id);
 
   const chat = $derived(
