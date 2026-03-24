@@ -47,7 +47,7 @@
         <Input id="title" bind:value disabled={loading} />
       </div>
       <Dialog.Footer>
-        <Button variant="outline" onclick={onClose}>Cancel</Button>
+        <Button variant="outline" onclick={() => onClose()}>Cancel</Button>
         <Button type="submit" disabled={!value || loading}>Update</Button>
       </Dialog.Footer>
     </form>

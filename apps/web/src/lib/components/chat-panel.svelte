@@ -71,7 +71,7 @@
     )}
   >
     {#if !isDefined(chat.lastMessage)}
-      <ChatUI.Suggestions onpick={handleSuggestionPick} />
+      <ChatUI.Suggestions onPick={handleSuggestionPick} />
     {/if}
 
     <ChatUI.PromptInput bind:selectedModel={model} handleSubmit={sendMessage} />

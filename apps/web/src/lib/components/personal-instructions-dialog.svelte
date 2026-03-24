@@ -113,7 +113,7 @@
     </p>
 
     <Dialog.Footer>
-      <Button variant="outline">Cancel</Button>
+      <Button variant="outline" onclick={() => onClose()}>Cancel</Button>
       <Button>Save</Button>
     </Dialog.Footer>
   </Dialog.Content>

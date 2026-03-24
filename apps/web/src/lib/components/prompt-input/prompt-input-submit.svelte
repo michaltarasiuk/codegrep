@@ -15,13 +15,13 @@
     variant = "default",
     size = "icon-sm",
     status,
-    onstop,
+    onStop,
     onclick,
     children,
     ...restProps
   }: ComponentProps<typeof InputGroup.Button> & {
     status?: ChatStatus;
-    onstop?: () => void;
+    onStop?: () => void;
     onclick?: (e: MouseEvent) => void;
   } = $props();
 
@@ -41,13 +41,13 @@
     onclick?.(e);
     if (isGenerating) {
       e.preventDefault();
-      onstop?.();
+      onStop?.();
     }
   }
 </script>
 
 <InputGroup.Button
-  type={isGenerating && onstop ? "button" : "submit"}
+  type={isGenerating && onStop ? "button" : "submit"}
   aria-label={isGenerating ? "Stop" : "Submit"}
   {variant}
   {size}

@@ -43,7 +43,7 @@
         <PromptInput.Submit
           status={chat.status}
           size="icon-sm"
-          onstop={() => chat.stop()}
+          onStop={() => chat.stop()}
         />
       </div>
     </PromptInput.Footer>

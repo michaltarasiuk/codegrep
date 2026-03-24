@@ -8,13 +8,13 @@
     suggestion,
     variant = "outline",
     size = "sm",
-    onpick,
+    onPick,
     children,
     class: className,
     ...restProps
   }: ComponentProps<typeof Button> & {
     suggestion: string;
-    onpick?: (suggestion: string) => void;
+    onPick?: (suggestion: string) => void;
   } = $props();
 </script>
 
@@ -23,7 +23,7 @@
   {size}
   {variant}
   class={cn("cursor-pointer rounded-full px-4", className)}
-  onclick={() => onpick?.(suggestion)}
+  onclick={() => onPick?.(suggestion)}
   {...restProps}
 >
   {#if children}

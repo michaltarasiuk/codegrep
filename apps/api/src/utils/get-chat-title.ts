@@ -1,17 +1,18 @@
 import type { UIMessage } from "ai";
 
-import { isDefined } from "./is-defined";
-
 const DEFAULT_TITLE = "New Chat";
 
 export function getChatTitle(messages: UIMessage[]) {
-  const userMessage = messages.find((m) => m.role == "user");
-  if (!isDefined(userMessage)) {
-    return DEFAULT_TITLE;
+  let chatTitle = DEFAULT_TITLE;
+  for (const message of messages) {
+    if (message.role !== "user") {
+      continue;
+    }
+    for (const part of message.parts) {
+      if (part.type === "text") {
+        chatTitle = part.text;
+      }
+    }
   }
-  const textPart = userMessage.parts.find((p) => p.type === "text");
-  if (!isDefined(textPart)) {
-    return DEFAULT_TITLE;
-  }
-  return textPart.text;
+  return chatTitle;
 }
