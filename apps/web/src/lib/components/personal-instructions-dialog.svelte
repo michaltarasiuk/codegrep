@@ -8,7 +8,7 @@
   import * as Dialog from "$lib/components/ui/dialog/index.js";
   import { Textarea } from "$lib/components/ui/textarea/index.js";
 
-  const MAX_LENGTH = 4000;
+  const MAX_LENGTH = 4_000;
 
   const TEMPLATES: { key: string; label: string; text: string }[] = [
     {
