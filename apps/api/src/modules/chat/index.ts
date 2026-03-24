@@ -5,14 +5,14 @@ import { CreateFailedError, NotFoundError } from "$api/errors";
 import { getChatTitle } from "$api/utils/get-chat-title";
 
 import { sessionPlugin } from "../auth/session";
-import { ai } from "./ai";
 import { ChatModel } from "./model";
+import { groqProvider } from "./provider";
 import { ChatService } from "./service";
 
 export const chatPlugin = new Elysia({ name: "chat", prefix: "/chat" })
   .use(sessionPlugin)
   .get("/", async ({ user }) => {
-    const result = await ChatService.listByUser({
+    const result = await ChatService.list({
       userId: user.id,
     });
     return result;
@@ -36,7 +36,7 @@ export const chatPlugin = new Elysia({ name: "chat", prefix: "/chat" })
   .post(
     "/",
     async ({ body: { id: chatId, model, messages }, user }) => {
-      const chat = await ChatService.createIfNotExists({
+      const chat = await ChatService.getOrCreate({
         title: getChatTitle(messages),
         chatId,
         userId: user.id,
@@ -45,13 +45,13 @@ export const chatPlugin = new Elysia({ name: "chat", prefix: "/chat" })
         return status(500, chat.message);
       }
       const result = streamText({
-        model: ai(model),
+        model: groqProvider(model),
         messages: await convertToModelMessages(messages),
       });
       return result.toUIMessageStreamResponse({
         originalMessages: messages,
         onFinish: async ({ messages }) => {
-          const saved = await ChatService.saveMessages({
+          const saved = await ChatService.setMessages({
             messages,
             chatId,
             userId: user.id,
@@ -66,11 +66,10 @@ export const chatPlugin = new Elysia({ name: "chat", prefix: "/chat" })
       body: ChatModel.SendMessage,
     }
   )
-
   .put(
     "/:id",
     async ({ params: { id: chatId }, body: { title }, user }) => {
-      const result = await ChatService.editTitle({
+      const result = await ChatService.updateTitle({
         title,
         chatId,
         userId: user.id,
