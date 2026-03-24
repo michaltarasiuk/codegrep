@@ -17,14 +17,16 @@
 
   let loading = $state(false);
 
+  function isViewingChat() {
+    return page.route.id === "/chat/[[id]]" && page.params.id === id;
+  }
+
   async function handleDelete() {
     loading = true;
     try {
       const result = await client.api.chat({ id }).delete();
       if (!result.error) {
-        const isViewingChat =
-          page.route.id === "/chat/[[id]]" && page.params.id === id;
-        if (isViewingChat) {
+        if (isViewingChat()) {
           await goto(resolve("/chat"), { invalidate: [CHAT_LIST_KEY] });
         } else {
           await invalidate(CHAT_LIST_KEY);

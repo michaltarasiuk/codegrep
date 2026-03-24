@@ -5,6 +5,7 @@
   import { goto } from "$app/navigation";
   import { resolve } from "$app/paths";
   import * as Sidebar from "$lib/components/ui/sidebar/index.js";
+  import { groupChatsByPeriod } from "$lib/utils/group-chats-by-period";
   import { isDefined } from "$lib/utils/is-defined";
 
   import ChatDeleteDialog from "./chat-delete-dialog.svelte";
@@ -18,10 +19,13 @@
     chatList?: {
       id: string;
       title: string;
+      updatedAt: Date;
     }[];
   }
 
-  const { children, chatList }: Props = $props();
+  const { children, chatList = [] }: Props = $props();
+
+  const groupedChats = $derived(groupChatsByPeriod(chatList));
 
   let renamingChat = $state<{ id: string; title: string } | null>(null);
   let deletingChat = $state<{ id: string } | null>(null);
@@ -42,15 +46,22 @@
       </Sidebar.Menu>
     </Sidebar.Header>
     <Sidebar.Content>
-      <Sidebar.Menu>
-        {#each chatList as chat (chat.id)}
-          <ChatSidebarItem
-            {chat}
-            onRename={() => (renamingChat = chat)}
-            onDelete={() => (deletingChat = chat)}
-          />
-        {/each}
-      </Sidebar.Menu>
+      {#each groupedChats.filter((group) => !!group.chats.length) as group (group.period)}
+        <Sidebar.Group>
+          <Sidebar.GroupLabel>{group.period}</Sidebar.GroupLabel>
+          <Sidebar.GroupContent>
+            <Sidebar.Menu>
+              {#each group.chats as chat (chat.id)}
+                <ChatSidebarItem
+                  {chat}
+                  onRename={() => (renamingChat = chat)}
+                  onDelete={() => (deletingChat = chat)}
+                />
+              {/each}
+            </Sidebar.Menu>
+          </Sidebar.GroupContent>
+        </Sidebar.Group>
+      {/each}
     </Sidebar.Content>
     <Sidebar.Footer>
       <Sidebar.Menu>

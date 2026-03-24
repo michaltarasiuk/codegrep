@@ -22,6 +22,7 @@ export abstract class ChatService {
       .select({
         id: chat.id,
         title: chat.title,
+        updatedAt: chat.updatedAt,
       })
       .from(chat)
       .where(eq(chat.userId, userId))
