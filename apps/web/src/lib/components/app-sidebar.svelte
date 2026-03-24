@@ -46,21 +46,23 @@
       </Sidebar.Menu>
     </Sidebar.Header>
     <Sidebar.Content>
-      {#each groupedChats.filter((group) => !!group.chats.length) as group (group.period)}
-        <Sidebar.Group>
-          <Sidebar.GroupLabel>{group.period}</Sidebar.GroupLabel>
-          <Sidebar.GroupContent>
-            <Sidebar.Menu>
-              {#each group.chats as chat (chat.id)}
-                <ChatSidebarItem
-                  {chat}
-                  onRename={() => (renamingChat = chat)}
-                  onDelete={() => (deletingChat = chat)}
-                />
-              {/each}
-            </Sidebar.Menu>
-          </Sidebar.GroupContent>
-        </Sidebar.Group>
+      {#each groupedChats as group (group.period)}
+        {#if !!group.chats.length}
+          <Sidebar.Group>
+            <Sidebar.GroupLabel>{group.period}</Sidebar.GroupLabel>
+            <Sidebar.GroupContent>
+              <Sidebar.Menu>
+                {#each group.chats as chat (chat.id)}
+                  <ChatSidebarItem
+                    {chat}
+                    onRename={() => (renamingChat = chat)}
+                    onDelete={() => (deletingChat = chat)}
+                  />
+                {/each}
+              </Sidebar.Menu>
+            </Sidebar.GroupContent>
+          </Sidebar.Group>
+        {/if}
       {/each}
     </Sidebar.Content>
     <Sidebar.Footer>
