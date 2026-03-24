@@ -1,8 +1,8 @@
 <script lang="ts">
   import LogInIcon from "@lucide/svelte/icons/log-in";
+  import NotebookPenIcon from "@lucide/svelte/icons/notebook-pen";
   import DotsVerticalIcon from "@tabler/icons-svelte/icons/dots-vertical";
   import LogoutIcon from "@tabler/icons-svelte/icons/logout";
-  import UserCircleIcon from "@tabler/icons-svelte/icons/user-circle";
   import { onMount } from "svelte";
 
   import { goto } from "$app/navigation";
@@ -13,10 +13,14 @@
   import { Skeleton } from "$lib/components/ui/skeleton/index.js";
   import { authClient } from "$lib/utils/client";
 
+  import PersonalInstructionsDialog from "./personal-instructions-dialog.svelte";
+
   const session = authClient.useSession();
   const sidebar = Sidebar.useSidebar();
 
   let hydrated = $state(false);
+  let personalInstructionsOpen = $state(false);
+
   onMount(() => {
     hydrated = true;
   });
@@ -100,9 +104,9 @@
         </DropdownMenu.Label>
         <DropdownMenu.Separator />
         <DropdownMenu.Group>
-          <DropdownMenu.Item>
-            <UserCircleIcon />
-            Account
+          <DropdownMenu.Item onclick={() => (personalInstructionsOpen = true)}>
+            <NotebookPenIcon />
+            Personal instructions
           </DropdownMenu.Item>
         </DropdownMenu.Group>
         <DropdownMenu.Separator />
@@ -125,4 +129,8 @@
       </div>
     </Sidebar.MenuButton>
   </Sidebar.MenuItem>
+{/if}
+
+{#if personalInstructionsOpen}
+  <PersonalInstructionsDialog />
 {/if}
