@@ -42,6 +42,8 @@
     },
   ];
 
+  let { onClose }: { onClose: () => void } = $props();
+
   let value = $state("");
   let showTemplates = $state(false);
 
@@ -55,7 +57,7 @@
   }
 </script>
 
-<Dialog.Root open>
+<Dialog.Root open onOpenChange={(o) => !o && onClose()}>
   <Dialog.Content class="sm:max-w-lg">
     <Dialog.Header>
       <Dialog.Title>Personal instructions</Dialog.Title>

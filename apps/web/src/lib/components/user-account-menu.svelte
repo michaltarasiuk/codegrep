@@ -132,5 +132,7 @@
 {/if}
 
 {#if personalInstructionsOpen}
-  <PersonalInstructionsDialog />
+  <PersonalInstructionsDialog
+    onClose={() => (personalInstructionsOpen = false)}
+  />
 {/if}
