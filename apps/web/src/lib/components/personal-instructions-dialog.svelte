@@ -74,7 +74,7 @@
         maxlength={MAX_LENGTH}
         cols={30}
         rows={7}
-        class="h-52 pb-12"
+        class="h-52 resize-none pb-12"
       />
       <div class="absolute bottom-0 flex w-full items-center px-3 py-2">
         {#if showTemplates}
