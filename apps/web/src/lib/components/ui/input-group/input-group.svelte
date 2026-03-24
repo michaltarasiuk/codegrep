@@ -16,7 +16,7 @@
   data-slot="input-group"
   role="group"
   class={cn(
-    "group/input-group border-input dark:bg-input/30 relative flex w-full items-center rounded-md border shadow-xs transition-[color,box-shadow] outline-none",
+    "group/input-group border-input bg-background dark:bg-input-muted relative flex w-full items-center rounded-md border shadow-xs transition-[color,box-shadow] outline-none",
     "h-9 has-[>textarea]:h-auto",
     // Variants based on alignment.
     "has-[>[data-align=inline-start]]:[&>input]:ps-2",
