@@ -65,7 +65,7 @@
     try {
       loading = true;
       const result = await authClient.updateUser({
-        personalInstructions: value || null,
+        personalInstructions: value,
       });
       if (!isDefined(result.error)) {
         onClose();
