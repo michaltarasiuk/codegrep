@@ -7,6 +7,8 @@
   import Button from "$lib/components/ui/button/button.svelte";
   import * as Dialog from "$lib/components/ui/dialog/index.js";
   import { Textarea } from "$lib/components/ui/textarea/index.js";
+  import { authClient } from "$lib/utils/client";
+  import { isDefined } from "$lib/utils/is-defined";
 
   const MAX_LENGTH = 4_000;
 
@@ -44,8 +46,11 @@
 
   let { onClose }: { onClose: () => void } = $props();
 
-  let value = $state("");
+  const session = authClient.useSession();
+
+  let value = $state($session.data?.user.personalInstructions ?? "");
   let showTemplates = $state(false);
+  let loading = $state(false);
 
   const charCount = $derived(value.length);
 
@@ -55,66 +60,82 @@
     }
     value += text;
   }
+
+  async function handleSubmit() {
+    try {
+      loading = true;
+      const result = await authClient.updateUser({
+        personalInstructions: value || null,
+      });
+      if (!isDefined(result.error)) {
+        onClose();
+      }
+    } finally {
+      loading = false;
+    }
+  }
 </script>
 
 <Dialog.Root open onOpenChange={(o) => !o && onClose()}>
   <Dialog.Content class="sm:max-w-lg">
-    <Dialog.Header>
-      <Dialog.Title>Personal instructions</Dialog.Title>
-      <Dialog.Description>
-        Set up your assistant to align with your workflows and preferences.
-        These instructions will only impact your personal conversation.
-      </Dialog.Description>
-    </Dialog.Header>
+    <form class="space-y-4" onsubmit={handleSubmit}>
+      <Dialog.Header>
+        <Dialog.Title>Personal instructions</Dialog.Title>
+        <Dialog.Description>
+          Set up your assistant to align with your workflows and preferences.
+          These instructions will only impact your personal conversation.
+        </Dialog.Description>
+      </Dialog.Header>
 
-    <div class="relative">
-      <Textarea
-        bind:value
-        placeholder="Your instructions"
-        maxlength={MAX_LENGTH}
-        cols={30}
-        rows={7}
-        class="h-52 resize-none pb-12"
-      />
-      <div class="absolute bottom-0 flex w-full items-center px-3 py-2">
-        {#if showTemplates}
-          <div class="flex gap-1">
-            {#each TEMPLATES as template (template.key)}
-              <Button
-                variant="outline"
-                size="sm"
-                class="h-7 gap-1 px-2 text-xs"
-                onclick={() => appendTemplate(template.text)}
-              >
-                <PlusIcon class="size-3" />
-                {template.label}
-              </Button>
-            {/each}
-          </div>
-        {/if}
-
-        <Button
-          variant="ghost"
-          size="icon-sm"
-          class="ms-auto"
-          onclick={() => (showTemplates = !showTemplates)}
-        >
+      <div class="relative">
+        <Textarea
+          bind:value
+          placeholder="Your instructions"
+          maxlength={MAX_LENGTH}
+          cols={30}
+          rows={7}
+          class="h-52 resize-none pb-12"
+        />
+        <div class="absolute bottom-0 flex w-full items-center px-3 py-2">
           {#if showTemplates}
-            <XIcon class="size-3.5" />
-          {:else}
-            <LightbulbIcon class="size-3.5" />
+            <div class="flex gap-1">
+              {#each TEMPLATES as template (template.key)}
+                <Button
+                  variant="outline"
+                  size="sm"
+                  class="h-7 gap-1 px-2 text-xs"
+                  onclick={() => appendTemplate(template.text)}
+                >
+                  <PlusIcon class="size-3" />
+                  {template.label}
+                </Button>
+              {/each}
+            </div>
           {/if}
-        </Button>
+
+          <Button
+            variant="ghost"
+            size="icon-sm"
+            class="ms-auto"
+            onclick={() => (showTemplates = !showTemplates)}
+          >
+            {#if showTemplates}
+              <XIcon class="size-3.5" />
+            {:else}
+              <LightbulbIcon class="size-3.5" />
+            {/if}
+          </Button>
+        </div>
       </div>
-    </div>
 
-    <p class="text-muted-foreground text-xs">
-      {charCount} / {MAX_LENGTH} characters
-    </p>
+      <p class="text-muted-foreground text-xs">
+        {charCount} / {MAX_LENGTH} characters
+      </p>
 
-    <Dialog.Footer>
-      <Button variant="outline" onclick={() => onClose()}>Cancel</Button>
-      <Button>Save</Button>
-    </Dialog.Footer>
+      <Dialog.Footer>
+        <Button variant="outline" onclick={() => onClose()}>Cancel</Button>
+        <Button type="submit" disabled={loading}>Save</Button>
+      </Dialog.Footer>
+    </form>
   </Dialog.Content>
 </Dialog.Root>

@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { isDefined } from "$lib/utils/is-defined.js";
+
   import { compactFormatter } from "./context-context.svelte.js";
 
   let {
@@ -10,7 +12,7 @@
   } = $props();
 
   const formatted = $derived(
-    tokens === undefined ? "—" : compactFormatter.format(tokens)
+    isDefined(tokens) ? compactFormatter.format(tokens) : "—"
   );
 </script>
 

@@ -1,5 +1,7 @@
 import { getContext, setContext } from "svelte";
 
+import { isDefined } from "$lib/utils/is-defined.js";
+
 const CHAIN_OF_THOUGHT_KEY = Symbol.for("scn-chain-of-thought");
 
 export interface ChainOfThoughtState {
@@ -12,7 +14,7 @@ export function getChainOfThought(): ChainOfThoughtState {
   const value = getContext<ChainOfThoughtState | undefined>(
     CHAIN_OF_THOUGHT_KEY
   );
-  if (!value) {
+  if (!isDefined(value)) {
     throw new Error("Missing chain of thought context");
   }
   return value;

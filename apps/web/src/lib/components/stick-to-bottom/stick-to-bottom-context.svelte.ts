@@ -1,5 +1,7 @@
 import { getContext, setContext } from "svelte";
 
+import { isDefined } from "$lib/utils/is-defined.js";
+
 import type {
   GetTargetScrollTop,
   ScrollToBottom,
@@ -62,7 +64,7 @@ export function setStickToBottom(
 
 export function getStickToBottomContext(): StickToBottomContext {
   const context = getContext<StickToBottomContext | undefined>(CONTEXT_KEY);
-  if (!context) {
+  if (!isDefined(context)) {
     throw new Error("Missing stick to bottom context");
   }
   return context;

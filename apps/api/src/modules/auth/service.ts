@@ -19,6 +19,14 @@ export const authService = betterAuth({
       verification,
     },
   }),
+  user: {
+    additionalFields: {
+      personalInstructions: {
+        type: "string",
+        required: false,
+      },
+    },
+  },
   socialProviders: {
     github: {
       clientId: process.env.GITHUB_CLIENT_ID,

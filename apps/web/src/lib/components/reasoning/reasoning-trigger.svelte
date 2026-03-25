@@ -5,6 +5,7 @@
 
   import { CollapsibleTrigger } from "$lib/components/ui/collapsible/index.js";
   import { cn } from "$lib/utils/cn.js";
+  import { isDefined } from "$lib/utils/is-defined.js";
 
   let {
     isStreaming = false,
@@ -28,7 +29,7 @@
       <BrainIcon class="size-4" />
       {#if isStreaming || duration === 0}
         <p class="animate-pulse">Thinking...</p>
-      {:else if duration === undefined}
+      {:else if !isDefined(duration)}
         <p>Thought for a few seconds</p>
       {:else}
         <p>Thought for {duration} seconds</p>

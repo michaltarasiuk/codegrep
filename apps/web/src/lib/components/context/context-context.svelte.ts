@@ -1,6 +1,8 @@
 import type { LanguageModelUsage } from "ai";
 import { getContext, setContext } from "svelte";
 
+import { isDefined } from "$lib/utils/is-defined.js";
+
 const CONTEXT_KEY = Symbol.for("scn-context");
 
 type ModelId = string;
@@ -14,7 +16,7 @@ export interface ContextState {
 
 export function getContextState(): ContextState {
   const value = getContext<ContextState | undefined>(CONTEXT_KEY);
-  if (!value) {
+  if (!isDefined(value)) {
     throw new Error("Missing context context");
   }
   return value;
