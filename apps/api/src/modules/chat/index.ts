@@ -3,6 +3,7 @@ import { Elysia, status } from "elysia";
 
 import { CreateFailedError, NotFoundError } from "$api/errors";
 import { getChatTitle } from "$api/utils/get-chat-title";
+import { isDefined } from "$api/utils/is-defined";
 
 import { sessionPlugin } from "../auth/session";
 import { ChatModel } from "./model";
@@ -47,6 +48,9 @@ export const chatPlugin = new Elysia({ name: "chat", prefix: "/chat" })
       const result = streamText({
         model: groqProvider(model),
         messages: await convertToModelMessages(messages),
+        ...(isDefined(user.personalInstructions) && {
+          system: user.personalInstructions,
+        }),
       });
       return result.toUIMessageStreamResponse({
         originalMessages: messages,
