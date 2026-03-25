@@ -91,6 +91,7 @@
         <Textarea
           bind:value
           placeholder="Your instructions"
+          disabled={loading}
           maxlength={MAX_LENGTH}
           cols={30}
           rows={7}
