@@ -1,10 +1,10 @@
 <script lang="ts">
   import LogInIcon from "@lucide/svelte/icons/log-in";
   import MoonIcon from "@lucide/svelte/icons/moon";
+  import NotebookPenIcon from "@lucide/svelte/icons/notebook-pen";
   import PlusIcon from "@lucide/svelte/icons/plus";
   import SunIcon from "@lucide/svelte/icons/sun";
   import LogoutIcon from "@tabler/icons-svelte/icons/logout";
-  import UserCircleIcon from "@tabler/icons-svelte/icons/user-circle";
   import { mode, toggleMode } from "mode-watcher";
 
   import { goto } from "$app/navigation";
@@ -12,14 +12,17 @@
   import * as Command from "$lib/components/ui/command/index.js";
   import { authClient } from "$lib/utils/client";
 
+  import PersonalInstructionsDialog from "./personal-instructions-dialog.svelte";
+
   const session = authClient.useSession();
 
-  let isOpen = $state(false);
-  let isDarkMode = $state(false);
+  let open = $state(false);
+  let personalInstructionsOpen = $state(false);
+  let darkMode = $state(false);
 
   $effect(() => {
     const unsubscribe = mode.subscribe((value) => {
-      isDarkMode = value === "dark";
+      darkMode = value === "dark";
     });
     return unsubscribe;
   });
@@ -27,17 +30,21 @@
   function handleCommandShortcut(e: KeyboardEvent) {
     if (e.key === "k" && (e.metaKey || e.ctrlKey)) {
       e.preventDefault();
-      isOpen = !isOpen;
+      open = !open;
     }
   }
 
   function executeAndClose(command: () => void) {
     command();
-    isOpen = false;
+    open = false;
   }
 
   function gotoChat() {
     goto(resolve("/chat"));
+  }
+
+  function openPersonalInstructions() {
+    personalInstructionsOpen = true;
   }
 
   function signInWithGitHub() {
@@ -55,7 +62,7 @@
 
 <svelte:document onkeydown={handleCommandShortcut} />
 
-<Command.Dialog bind:open={isOpen}>
+<Command.Dialog bind:open>
   <Command.Input placeholder="Search commands..." />
   <Command.List>
     <Command.Empty>No results found.</Command.Empty>
@@ -75,10 +82,10 @@
         <Command.Item
           value="account"
           keywords={["account", "profile", "user"]}
-          onSelect={() => executeAndClose(() => {})}
+          onSelect={() => executeAndClose(() => openPersonalInstructions())}
         >
-          <UserCircleIcon />
-          <span>Account</span>
+          <NotebookPenIcon />
+          <span>Personal instructions </span>
         </Command.Item>
         <Command.Item
           value="log-out"
@@ -106,7 +113,7 @@
         keywords={["theme", "dark", "light", "mode"]}
         onSelect={() => executeAndClose(() => toggleMode())}
       >
-        {#if isDarkMode}
+        {#if darkMode}
           <SunIcon />
           <span>Switch to light mode</span>
         {:else}
@@ -117,3 +124,9 @@
     </Command.Group>
   </Command.List>
 </Command.Dialog>
+
+{#if personalInstructionsOpen}
+  <PersonalInstructionsDialog
+    onClose={() => (personalInstructionsOpen = false)}
+  />
+{/if}
