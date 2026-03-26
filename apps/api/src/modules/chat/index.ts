@@ -21,7 +21,7 @@ export const chatPlugin = new Elysia({ name: "chat", prefix: "/chat" })
   .get(
     "/:id/messages",
     async ({ params: { id: chatId }, user }) => {
-      const result = await ChatService.getMessages({
+      const result = await ChatService.listMessages({
         chatId,
         userId: user.id,
       });
@@ -37,7 +37,7 @@ export const chatPlugin = new Elysia({ name: "chat", prefix: "/chat" })
   .post(
     "/",
     async ({ body: { id: chatId, model, messages }, user }) => {
-      const chat = await ChatService.getOrCreate({
+      const chat = await ChatService.findOrCreate({
         title: getChatTitle(messages),
         chatId,
         userId: user.id,

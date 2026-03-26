@@ -7,7 +7,7 @@ import { CreateFailedError, NotFoundError } from "$api/errors";
 import { isDefined } from "$api/utils/is-defined";
 
 export abstract class ChatService {
-  static async get({ chatId, userId }: { chatId: string; userId: string }) {
+  static async find({ chatId, userId }: { chatId: string; userId: string }) {
     const [found = null] = await db
       .select()
       .from(chat)
@@ -29,14 +29,14 @@ export abstract class ChatService {
       .orderBy(desc(chat.updatedAt));
   }
 
-  static async getMessages({
+  static async listMessages({
     chatId,
     userId,
   }: {
     chatId: string;
     userId: string;
   }) {
-    const found = await this.get({
+    const found = await this.find({
       chatId,
       userId,
     });
@@ -97,7 +97,7 @@ export abstract class ChatService {
     return created;
   }
 
-  static async getOrCreate({
+  static async findOrCreate({
     title,
     chatId,
     userId,
@@ -106,7 +106,7 @@ export abstract class ChatService {
     chatId: string;
     userId: string;
   }) {
-    let chat: { id: string } | null = await this.get({
+    let chat: { id: string } | null = await this.find({
       chatId,
       userId,
     });
@@ -156,7 +156,7 @@ export abstract class ChatService {
     chatId: string;
     userId: string;
   }) {
-    const found = await this.get({
+    const found = await this.find({
       chatId,
       userId,
     });
