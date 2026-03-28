@@ -56,18 +56,16 @@
 
 <ChatUI.Root {chat} {model}>
   <ChatUI.Content>
-    {#if hasMessages}
-      <ChatUI.Conversation>
-        {#snippet children(message, isLast)}
-          <ChatUI.Message {message} {isLast} />
-        {/snippet}
-      </ChatUI.Conversation>
-    {/if}
+    <ChatUI.Conversation>
+      {#snippet children(message, isLast)}
+        <ChatUI.Message {message} {isLast} />
+      {/snippet}
+    </ChatUI.Conversation>
 
     <div
       class={cn(
-        "bg-background py-4",
-        hasMessages ? "sticky bottom-0" : "my-auto"
+        "bg-background sticky py-4",
+        hasMessages ? "bottom-0" : "bottom-1/2 translate-y-1/2"
       )}
     >
       {#if !hasMessages}
