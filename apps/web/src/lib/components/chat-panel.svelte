@@ -64,9 +64,9 @@
 
     <div
       class={cn(
-        "bg-background bottom-0 py-4",
+        "bg-background bottom-0",
         hasMessages
-          ? "sticky"
+          ? "sticky py-4"
           : "absolute w-full md:bottom-1/2 md:translate-y-1/2"
       )}
     >
