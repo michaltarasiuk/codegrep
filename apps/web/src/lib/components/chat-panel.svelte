@@ -14,18 +14,17 @@
   import { isDefined } from "$lib/utils/is-defined.js";
 
   let {
-    id = page.params.id,
     messages,
   }: {
-    id?: string;
     messages?: UIMessage[];
   } = $props();
 
   let model = $state(MODELS[0].id);
 
+  const chatId = $derived(page.params.id);
   const chat = $derived(
     new Chat({
-      id,
+      id: chatId,
       messages,
       transport: new DefaultChatTransport({
         api: PUBLIC_API_URL + "/api/chat",
@@ -33,7 +32,6 @@
       }),
     })
   );
-  const hasMessages = $derived(isDefined(chat.lastMessage));
 
   async function sendMessage(message: PromptInput.PromptInputMessage) {
     await chat.sendMessage(message, {
@@ -41,7 +39,7 @@
         model,
       },
     });
-    if (!isDefined(id)) {
+    if (!isDefined(chatId)) {
       await goto(resolve(`/chat/${chat.id}`), {
         replaceState: true,
         invalidate: [CHAT_LIST_KEY],
@@ -65,12 +63,12 @@
     <div
       class={cn(
         "bg-background bottom-0",
-        hasMessages
+        isDefined(chat.lastMessage)
           ? "sticky py-4"
           : "absolute w-full md:bottom-1/2 md:translate-y-1/2"
       )}
     >
-      {#if !hasMessages}
+      {#if !isDefined(chat.lastMessage)}
         <ChatUI.Suggestions onPick={handleSuggestionPick} />
       {/if}
 
