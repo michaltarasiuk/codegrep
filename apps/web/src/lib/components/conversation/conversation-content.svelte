@@ -13,7 +13,7 @@
 </script>
 
 <StickToBottomContent
-  class={cn("flex flex-col gap-8 p-4", className)}
+  class={cn("flex flex-1 flex-col gap-3 p-4", className)}
   {...restProps}
 >
   {@render children()}

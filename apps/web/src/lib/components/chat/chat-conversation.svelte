@@ -19,16 +19,14 @@
   const messages = $derived(chat.messages);
 </script>
 
-<Conversation.Root class="min-h-0 flex-1 overflow-y-auto">
-  <Conversation.Content class="flex min-h-full flex-col gap-3 p-4">
-    {#each messages as message, i (message.id)}
-      {@render children(message, i === messages.length - 1)}
-    {/each}
+<Conversation.Content>
+  {#each messages as message, i (message.id)}
+    {@render children(message, i === messages.length - 1)}
+  {/each}
 
-    {#if isSubmitted}
-      <div class="px-1">
-        <Spinner />
-      </div>
-    {/if}
-  </Conversation.Content>
-</Conversation.Root>
+  {#if isSubmitted}
+    <div class="px-1">
+      <Spinner />
+    </div>
+  {/if}
+</Conversation.Content>

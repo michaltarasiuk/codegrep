@@ -4,6 +4,10 @@
 
 @custom-variant dark (&:is(.dark *));
 
+body {
+  @apply overscroll-none;
+}
+
 :root {
   --radius: 1rem;
   --background: oklch(0.975 0.002 255);
@@ -128,5 +132,16 @@
 
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+@layer utilities {
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
   }
 }

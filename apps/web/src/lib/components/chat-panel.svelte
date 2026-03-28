@@ -33,6 +33,7 @@
       }),
     })
   );
+  const hasMessages = $derived(isDefined(chat.lastMessage));
 
   async function sendMessage(message: PromptInput.PromptInputMessage) {
     await chat.sendMessage(message, {
@@ -53,27 +54,30 @@
   }
 </script>
 
-<ChatUI.Root
-  {chat}
-  {model}
-  className={cn(isDefined(chat.lastMessage) && "pb-30")}
->
-  <ChatUI.Conversation>
-    {#snippet children(message, isLast)}
-      <ChatUI.Message {message} {isLast} />
-    {/snippet}
-  </ChatUI.Conversation>
-
-  <div
-    class={cn(
-      "absolute bottom-0 w-full pt-2",
-      !isDefined(chat.lastMessage) && "md:bottom-1/2 md:translate-y-1/2"
-    )}
-  >
-    {#if !isDefined(chat.lastMessage)}
-      <ChatUI.Suggestions onPick={handleSuggestionPick} />
+<ChatUI.Root {chat} {model}>
+  <ChatUI.Content>
+    {#if hasMessages}
+      <ChatUI.Conversation>
+        {#snippet children(message, isLast)}
+          <ChatUI.Message {message} {isLast} />
+        {/snippet}
+      </ChatUI.Conversation>
     {/if}
 
-    <ChatUI.PromptInput bind:selectedModel={model} handleSubmit={sendMessage} />
-  </div>
+    <div
+      class={cn(
+        "bg-background py-4",
+        hasMessages ? "sticky bottom-0" : "my-auto"
+      )}
+    >
+      {#if !hasMessages}
+        <ChatUI.Suggestions onPick={handleSuggestionPick} />
+      {/if}
+
+      <ChatUI.PromptInput
+        bind:selectedModel={model}
+        handleSubmit={sendMessage}
+      />
+    </div>
+  </ChatUI.Content>
 </ChatUI.Root>

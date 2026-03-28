@@ -1,26 +1,24 @@
 <script lang="ts">
   import type { Chat } from "@ai-sdk/svelte";
   import type { Snippet } from "svelte";
-  import { cn } from "tailwind-variants";
 
+  import StickToBottom from "../stick-to-bottom/stick-to-bottom.svelte";
   import { type Model, setChat, setModel } from "./chat-context";
 
   let {
     chat,
     model,
     children,
-    className,
   }: {
     chat: Chat;
     model: Model;
     children: Snippet;
-    className?: string;
   } = $props();
 
   setChat(() => chat);
   setModel(() => model);
 </script>
 
-<div class={cn("relative flex size-full flex-col", className)}>
+<StickToBottom class="scrollbar-hide flex flex-1 flex-col overscroll-none px-4">
   {@render children()}
-</div>
+</StickToBottom>
