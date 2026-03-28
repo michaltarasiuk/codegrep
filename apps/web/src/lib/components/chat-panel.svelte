@@ -64,8 +64,8 @@
 
     <div
       class={cn(
-        "bg-background sticky py-4",
-        hasMessages ? "bottom-0" : "bottom-1/2 translate-y-1/2"
+        "bg-background sticky bottom-0 py-4",
+        !hasMessages && "md:bottom-1/2 md:translate-y-1/2"
       )}
     >
       {#if !hasMessages}
