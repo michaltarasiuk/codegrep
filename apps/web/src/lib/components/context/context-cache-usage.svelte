@@ -25,7 +25,9 @@
   }: ContextCacheUsageProps = $props();
 
   const context = getContextState();
-  const cacheTokens = $derived(context.usage?.cachedInputTokens ?? 0);
+  const cacheTokens = $derived(
+    context.usage?.inputTokenDetails?.cacheReadTokens ?? 0
+  );
   const cacheCost = $derived(
     context.modelId
       ? getUsage({
