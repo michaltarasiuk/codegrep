@@ -30,7 +30,7 @@
         <ChatPromptAddFilesButton />
       </PromptInput.Tools>
 
-      <div class="flex shrink-0 items-center gap-2">
+      <div class="flex shrink-0 items-center gap-3">
         <ModelSelector bind:selectedModel models={MODELS} />
         <PromptInput.Submit
           status={chat.status}
