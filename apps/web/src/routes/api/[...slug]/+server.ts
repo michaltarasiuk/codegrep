@@ -21,9 +21,10 @@ function forwardHeaders(headers: Headers): Headers {
 }
 
 const handler: RequestHandler = async ({ request }) => {
-  const { pathname, search } = new URL(request.url);
+  const requestUrl = new URL(request.url);
+  const fetchUrl = new URL(requestUrl.pathname + requestUrl.search, API_URL);
 
-  const response = await fetch(new URL(pathname + search, API_URL), {
+  const response = await fetch(fetchUrl, {
     method: request.method,
     body: request.body,
     headers: forwardHeaders(request.headers),
