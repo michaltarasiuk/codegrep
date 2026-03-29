@@ -1,10 +1,9 @@
 <script lang="ts">
-  import ImageIcon from "@lucide/svelte/icons/image";
-
   import * as PromptInput from "$lib/components/prompt-input/index.js";
 
   import { getChat } from "./chat-context";
   import ModelSelector from "./chat-model-selector.svelte";
+  import ChatPromptAddFilesButton from "./chat-prompt-add-files-button.svelte";
   import { MODELS } from "./consts";
 
   let {
@@ -26,20 +25,13 @@
         class="max-h-72"
       />
     </PromptInput.Body>
-    <PromptInput.Footer>
+    <PromptInput.Footer class="pr-2">
       <PromptInput.Tools>
-        <ModelSelector bind:selectedModel models={MODELS} />
+        <ChatPromptAddFilesButton />
       </PromptInput.Tools>
 
-      <div class="flex items-center gap-2">
-        <PromptInput.ActionMenu>
-          <PromptInput.ActionMenuTrigger variant="ghost" size="icon-sm">
-            <ImageIcon size={16} class="text-muted-foreground" />
-          </PromptInput.ActionMenuTrigger>
-          <PromptInput.ActionMenuContent>
-            <PromptInput.ActionAddAttachments label="Add image or file" />
-          </PromptInput.ActionMenuContent>
-        </PromptInput.ActionMenu>
+      <div class="flex shrink-0 items-center gap-2">
+        <ModelSelector bind:selectedModel models={MODELS} />
         <PromptInput.Submit
           status={chat.status}
           size="icon-sm"
