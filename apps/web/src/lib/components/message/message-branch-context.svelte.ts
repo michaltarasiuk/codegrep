@@ -7,12 +7,12 @@ export class MessageBranchState {
 
   #readBranch: () => number;
   #writeBranch: (value: number) => void;
-  #readOnBranchChange: () => ((value: number) => void) | undefined;
+  #readOnBranchChange: () => ((value: number) => void) | null;
 
   constructor(
     readBranch: () => number,
     writeBranch: (value: number) => void,
-    readOnBranchChange: () => ((value: number) => void) | undefined
+    readOnBranchChange: () => ((value: number) => void) | null
   ) {
     this.#readBranch = readBranch;
     this.#writeBranch = writeBranch;
@@ -144,7 +144,7 @@ export class MessageBranchState {
 const MESSAGE_BRANCH_KEY = Symbol.for("scn-message-branch");
 
 export function getMessageBranch() {
-  const value = getContext<MessageBranchState | undefined>(MESSAGE_BRANCH_KEY);
+  const value = getContext<MessageBranchState | null>(MESSAGE_BRANCH_KEY);
   if (!isDefined(value)) {
     throw new Error("Missing message branch context");
   }
@@ -154,7 +154,7 @@ export function getMessageBranch() {
 export function setMessageBranch(
   currentBranch: () => number,
   setCurrentBranch: (value: number) => void,
-  readOnBranchChange: () => ((value: number) => void) | undefined
+  readOnBranchChange: () => ((value: number) => void) | null
 ) {
   setContext(
     MESSAGE_BRANCH_KEY,

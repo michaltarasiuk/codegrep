@@ -63,7 +63,7 @@ export function setStickToBottom(
 }
 
 export function getStickToBottomContext(): StickToBottomContext {
-  const context = getContext<StickToBottomContext | undefined>(CONTEXT_KEY);
+  const context = getContext<StickToBottomContext | null>(CONTEXT_KEY);
   if (!isDefined(context)) {
     throw new Error("Missing stick to bottom context");
   }

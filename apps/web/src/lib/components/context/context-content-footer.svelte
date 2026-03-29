@@ -33,7 +33,7 @@
             output: context.usage?.outputTokens ?? 0,
           },
         }).costUSD?.totalUSD
-      : undefined
+      : null
   );
   const totalCost = $derived(currencyFormatter.format(costUSD ?? 0));
 </script>

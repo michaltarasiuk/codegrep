@@ -20,7 +20,7 @@
 
   let {
     ref = $bindable(null),
-    href = undefined,
+    href = null,
     type = "button",
     variant = "default",
     size = "default",

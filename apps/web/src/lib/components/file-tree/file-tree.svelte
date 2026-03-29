@@ -34,9 +34,9 @@
     writeExpandedPaths: (value) => {
       expanded = value;
     },
-    readSelectedPath: () => selectedPath,
-    readOnSelect: () => onSelect,
-    readOnExpandedChange: () => onExpandedChange,
+    readSelectedPath: () => selectedPath ?? null,
+    readOnSelect: () => onSelect ?? null,
+    readOnExpandedChange: () => onExpandedChange ?? null,
   });
 </script>
 

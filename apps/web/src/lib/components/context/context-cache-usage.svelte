@@ -34,7 +34,7 @@
           modelId: context.modelId,
           usage: { cacheReads: cacheTokens, input: 0, output: 0 },
         }).costUSD?.totalUSD
-      : undefined
+      : null
   );
   const cacheCostText = $derived(currencyFormatter.format(cacheCost ?? 0));
 </script>

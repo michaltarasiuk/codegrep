@@ -9,19 +9,19 @@ import { untrack } from "svelte";
 
 export interface StickToBottomState {
   scrollTop: number;
-  lastScrollTop?: number;
-  ignoreScrollToTop?: number;
+  lastScrollTop: number | null;
+  ignoreScrollToTop: number | null;
   targetScrollTop: number;
   calculatedTargetScrollTop: number;
   scrollDifference: number;
   resizeDifference: number;
 
-  animation?: {
+  animation: {
     behavior: "instant" | Required<SpringAnimation>;
     ignoreEscapes: boolean;
     promise: Promise<boolean>;
-  };
-  lastTick?: number;
+  } | null;
+  lastTick: number | null;
   velocity: number;
   accumulated: number;
 
@@ -29,7 +29,7 @@ export interface StickToBottomState {
   isAtBottom: boolean;
   isNearBottom: boolean;
 
-  resizeObserver?: ResizeObserver;
+  resizeObserver: ResizeObserver | null;
 }
 
 const DEFAULT_SPRING_ANIMATION = {
@@ -174,9 +174,10 @@ export class UseStickToBottom {
     this.#getOptions = typeof options === "function" ? options : () => options;
     this.#isAtBottom = this.#options.initial !== false;
 
-    let lastCalculation:
-      | { targetScrollTop: number; calculatedScrollTop: number }
-      | undefined;
+    let lastCalculation: {
+      targetScrollTop: number;
+      calculatedScrollTop: number;
+    } | null = null;
 
     const getScrollEl = () => this.#scrollEl;
     const getContentEl = () => this.#contentEl;
@@ -185,9 +186,14 @@ export class UseStickToBottom {
     this.#state = {
       escapedFromLock: this.#escapedFromLock,
       isAtBottom: this.#isAtBottom,
+      lastScrollTop: null,
+      ignoreScrollToTop: null,
       resizeDifference: 0,
+      animation: null,
+      lastTick: null,
       accumulated: 0,
       velocity: 0,
+      resizeObserver: null,
 
       get scrollTop() {
         return getScrollEl()?.scrollTop ?? 0;
@@ -241,7 +247,7 @@ export class UseStickToBottom {
         lastCalculation = { targetScrollTop, calculatedScrollTop };
 
         requestAnimationFrame(() => {
-          lastCalculation = undefined;
+          lastCalculation = null;
         });
 
         return calculatedScrollTop;
@@ -315,7 +321,7 @@ export class UseStickToBottom {
         requestAnimationFrame(() => resolve())
       ).then(() => {
         if (!state.isAtBottom) {
-          state.animation = undefined;
+          state.animation = null;
           return false;
         }
 
@@ -366,7 +372,7 @@ export class UseStickToBottom {
           return next();
         }
 
-        state.animation = undefined;
+        state.animation = null;
 
         if (state.scrollTop < state.calculatedTargetScrollTop) {
           return this.scrollToBottom({
@@ -382,7 +388,7 @@ export class UseStickToBottom {
       return promise.then((isAtBottom) => {
         requestAnimationFrame(() => {
           if (!state.animation) {
-            state.lastTick = undefined;
+            state.lastTick = null;
             state.velocity = 0;
           }
         });
@@ -392,7 +398,7 @@ export class UseStickToBottom {
     };
 
     if (scrollOptions.wait !== true) {
-      state.animation = undefined;
+      state.animation = null;
     }
 
     if (state.animation?.behavior === behavior) {
@@ -415,10 +421,10 @@ export class UseStickToBottom {
 
     const state = this.#state;
     const { scrollTop, ignoreScrollToTop } = state;
-    let { lastScrollTop = scrollTop } = state;
+    let lastScrollTop = state.lastScrollTop ?? scrollTop;
 
     state.lastScrollTop = scrollTop;
-    state.ignoreScrollToTop = undefined;
+    state.ignoreScrollToTop = null;
 
     if (ignoreScrollToTop && ignoreScrollToTop > scrollTop) {
       lastScrollTop = ignoreScrollToTop;
@@ -500,7 +506,7 @@ export class UseStickToBottom {
 
     this.#contentEl = el;
 
-    let previousHeight: number | undefined;
+    let previousHeight: number | null = null;
 
     state.resizeObserver = new ResizeObserver((entries) => {
       const entry = entries[0];

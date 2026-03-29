@@ -15,9 +15,9 @@
     class: className,
     ...restProps
   }: WithoutChild<ScrollAreaPrimitive.RootProps> & {
-    orientation?: "vertical" | "horizontal" | "both" | undefined;
-    scrollbarXClasses?: string | undefined;
-    scrollbarYClasses?: string | undefined;
+    orientation?: "vertical" | "horizontal" | "both";
+    scrollbarXClasses?: string;
+    scrollbarYClasses?: string;
     viewportRef?: HTMLElement | null;
   } = $props();
 </script>

@@ -27,7 +27,7 @@
       branch = value;
     },
     function readOnBranchChange() {
-      return onBranchChange;
+      return onBranchChange ?? null;
     }
   );
 </script>

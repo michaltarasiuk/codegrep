@@ -11,9 +11,7 @@ export interface ChainOfThoughtState {
 }
 
 export function getChainOfThought(): ChainOfThoughtState {
-  const value = getContext<ChainOfThoughtState | undefined>(
-    CHAIN_OF_THOUGHT_KEY
-  );
+  const value = getContext<ChainOfThoughtState | null>(CHAIN_OF_THOUGHT_KEY);
   if (!isDefined(value)) {
     throw new Error("Missing chain of thought context");
   }

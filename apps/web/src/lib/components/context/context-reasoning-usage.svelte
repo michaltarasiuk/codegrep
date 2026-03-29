@@ -32,7 +32,7 @@
           modelId: context.modelId,
           usage: { reasoningTokens },
         }).costUSD?.totalUSD
-      : undefined
+      : null
   );
   const reasoningCostText = $derived(
     currencyFormatter.format(reasoningCost ?? 0)

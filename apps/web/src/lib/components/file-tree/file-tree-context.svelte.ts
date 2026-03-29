@@ -6,9 +6,9 @@ import { isDefined } from "$lib/utils/is-defined.js";
 interface FileTreeStateProps {
   readExpandedPaths: () => Set<string>;
   writeExpandedPaths: (value: Set<string>) => void;
-  readSelectedPath: () => string | undefined;
-  readOnSelect: () => ((path: string) => void) | undefined;
-  readOnExpandedChange: () => ((expanded: Set<string>) => void) | undefined;
+  readSelectedPath: () => string | null;
+  readOnSelect: () => ((path: string) => void) | null;
+  readOnExpandedChange: () => ((expanded: Set<string>) => void) | null;
 }
 
 class FileTreeState {
@@ -53,7 +53,7 @@ class FileTreeState {
 const FILE_TREE_KEY = Symbol.for("scn-file-tree");
 
 export function getFileTree() {
-  const value = getContext<FileTreeState | undefined>(FILE_TREE_KEY);
+  const value = getContext<FileTreeState | null>(FILE_TREE_KEY);
   if (!isDefined(value)) {
     throw new Error("Missing file tree context");
   }

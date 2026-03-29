@@ -15,7 +15,7 @@ export interface ContextState {
 }
 
 export function getContextState(): ContextState {
-  const value = getContext<ContextState | undefined>(CONTEXT_KEY);
+  const value = getContext<ContextState | null>(CONTEXT_KEY);
   if (!isDefined(value)) {
     throw new Error("Missing context context");
   }

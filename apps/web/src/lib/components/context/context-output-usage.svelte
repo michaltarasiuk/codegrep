@@ -32,7 +32,7 @@
           modelId: context.modelId,
           usage: { input: 0, output: outputTokens },
         }).costUSD?.totalUSD
-      : undefined
+      : null
   );
   const outputCostText = $derived(currencyFormatter.format(outputCost ?? 0));
 </script>

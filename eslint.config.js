@@ -55,6 +55,7 @@ const config = [
           caughtErrorsIgnorePattern: "^_",
         },
       ],
+      "no-undef-init": "error",
       "no-console": [
         "error",
         { allow: ["error", "warn", "info", "debug", "trace"] },

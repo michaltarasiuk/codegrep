@@ -98,7 +98,7 @@
   function getCapacity() {
     return typeof maxFiles === "number"
       ? Math.max(0, maxFiles - attachments.files.length)
-      : undefined;
+      : null;
   }
 
   function addWithValidation(fileList: File[] | FileList) {

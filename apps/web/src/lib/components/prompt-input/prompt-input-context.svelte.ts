@@ -113,7 +113,7 @@ const REFERENCED_SOURCES_KEY = Symbol.for(
 );
 
 export function getPromptInputAttachments() {
-  const local = getContext<AttachmentsState | undefined>(LOCAL_ATTACHMENTS_KEY);
+  const local = getContext<AttachmentsState | null>(LOCAL_ATTACHMENTS_KEY);
   const provider = getProviderAttachments();
   return local ?? provider;
 }
@@ -123,9 +123,7 @@ export function setLocalAttachments(value: AttachmentsState) {
 }
 
 export function getProviderAttachments() {
-  const value = getContext<AttachmentsState | undefined>(
-    PROVIDER_ATTACHMENTS_KEY
-  );
+  const value = getContext<AttachmentsState | null>(PROVIDER_ATTACHMENTS_KEY);
   if (!isDefined(value)) {
     throw new Error("Missing provider attachments context");
   }
@@ -137,7 +135,7 @@ export function setProviderAttachments(value: AttachmentsState) {
 }
 
 export function getPromptInputController() {
-  return getContext<PromptInputControllerState | undefined>(CONTROLLER_KEY);
+  return getContext<PromptInputControllerState | null>(CONTROLLER_KEY);
 }
 
 export function setPromptInputController(value: PromptInputControllerState) {
@@ -145,7 +143,7 @@ export function setPromptInputController(value: PromptInputControllerState) {
 }
 
 export function getPromptInputReferencedSources() {
-  const value = getContext<ReferencedSourcesState | undefined>(
+  const value = getContext<ReferencedSourcesState | null>(
     REFERENCED_SOURCES_KEY
   );
   if (!isDefined(value)) {
