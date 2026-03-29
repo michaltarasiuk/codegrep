@@ -6,7 +6,6 @@
   import { goto } from "$app/navigation";
   import { resolve } from "$app/paths";
   import { page } from "$app/state";
-  import { PUBLIC_API_URL } from "$env/static/public";
   import { MODELS } from "$lib/components/chat/consts.js";
   import * as ChatUI from "$lib/components/chat/index.js";
   import * as PromptInput from "$lib/components/prompt-input/index.js";
@@ -27,7 +26,7 @@
       id: chatId,
       messages,
       transport: new DefaultChatTransport({
-        api: PUBLIC_API_URL + "/api/chat",
+        api: "/api/chat",
         credentials: "include",
       }),
     })

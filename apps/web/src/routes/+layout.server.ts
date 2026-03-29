@@ -1,4 +1,4 @@
-import { client } from "$lib/utils/client";
+import { client } from "$lib/utils/client.server";
 import { CHAT_LIST_KEY } from "$lib/utils/invalidation-keys";
 
 import type { LayoutServerLoadEvent } from "./$types";

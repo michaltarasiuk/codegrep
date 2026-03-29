@@ -7,7 +7,7 @@ import { db } from "$api/db";
 import { account, chat, session, user, verification } from "$api/db/schema";
 
 export const authService = betterAuth({
-  baseURL: process.env.BETTER_AUTH_URL,
+  baseURL: process.env.BETTER_AUTH_BASE_URL,
   basePath: "/api/auth",
   trustedOrigins: [process.env.WEB_URL],
   database: drizzleAdapter(db, {

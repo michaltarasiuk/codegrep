@@ -1,6 +1,6 @@
 import type { Handle } from "@sveltejs/kit";
 
-import { authClient } from "$lib/utils/client";
+import { authClient } from "$lib/utils/client.server";
 import { isDefined } from "$lib/utils/is-defined.js";
 
 export const handle: Handle = async ({ event, resolve }) => {
@@ -18,7 +18,7 @@ export const handle: Handle = async ({ event, resolve }) => {
       fetchOptions: {
         fetch: event.fetch,
         headers: requestHeaders,
-        onSuccess(context: { response: Response }) {
+        onSuccess(context) {
           setCookie = context.response.headers.get("set-cookie");
         },
       },

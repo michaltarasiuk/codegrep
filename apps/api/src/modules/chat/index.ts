@@ -2,7 +2,7 @@ import { convertToModelMessages, streamText } from "ai";
 import { Elysia, status } from "elysia";
 
 import { CreateFailedError, NotFoundError } from "$api/errors";
-import { getChatTitle } from "$api/utils/get-chat-title";
+import { getFirstUserText } from "$api/utils/get-first-user-text";
 import { isDefined } from "$api/utils/is-defined";
 
 import { sessionPlugin } from "../auth/session";
@@ -38,7 +38,7 @@ export const chatPlugin = new Elysia({ name: "chat", prefix: "/chat" })
     "/",
     async ({ body: { id: chatId, model, messages }, user }) => {
       const chat = await ChatService.findOrCreate({
-        title: getChatTitle(messages),
+        title: getFirstUserText(messages),
         chatId,
         userId: user.id,
       });

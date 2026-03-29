@@ -10,8 +10,6 @@
   import { authClient } from "$lib/utils/client";
   import { isDefined } from "$lib/utils/is-defined";
 
-  const MAX_LENGTH = 4_000;
-
   const TEMPLATES: { key: string; label: string; text: string }[] = [
     {
       key: "role",
@@ -43,6 +41,8 @@
       `,
     },
   ];
+
+  const MAX_LENGTH = 4_000;
 
   let { onClose }: { onClose: () => void } = $props();
 

@@ -2,13 +2,13 @@ import { treaty } from "@elysiajs/eden";
 import { createAuthClient } from "better-auth/svelte";
 
 import type { App } from "$api/app";
-import { PUBLIC_WEB_URL } from "$env/static/public";
+import { API_URL } from "$env/static/private";
 
 import { authClientPlugins } from "./auth-client-plugins";
 
-export const client = treaty<App>(PUBLIC_WEB_URL);
+export const client = treaty<App>(API_URL);
 
 export const authClient = createAuthClient({
-  baseURL: PUBLIC_WEB_URL,
+  baseURL: API_URL,
   plugins: [...authClientPlugins],
 });
