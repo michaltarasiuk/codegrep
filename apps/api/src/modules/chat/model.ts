@@ -1,29 +1,39 @@
 import { t } from "elysia";
 
-export namespace ChatModel {
-  const Id = t.String({ minLength: 1 });
-  const Title = t.String({ minLength: 1 });
+import { table } from "$api/db/schema";
+import { spread } from "$api/db/utils";
 
-  export const Params = t.Object({ id: Id });
+const chatSelect = spread(table.chat, "select");
+const chatInsert = spread(table.chat, "insert");
+
+export namespace ChatModel {
+  export const Params = t.Object({
+    id: chatSelect.id,
+  });
+
+  export const MessageBody = t.Object({
+    id: chatSelect.id,
+    model: t.String({ minLength: 1 }),
+    messages: t.Array(t.Any()),
+  });
+  export const EditBody = t.Object({
+    title: chatInsert.title,
+  });
 
   export const List = t.Array(
     t.Object({
-      id: Id,
-      title: Title,
-      updatedAt: t.Date(),
+      id: chatSelect.id,
+      title: chatSelect.title,
+      updatedAt: chatSelect.updatedAt,
     })
   );
 
-  export const Create = t.Object({ title: Title });
-  export const Edit = t.Object({ title: Title });
-
-  export const IdResponse = t.Object({ id: Id });
-  export const EditResponse = t.Object({ id: Id, title: Title });
-
-  export const SendMessage = t.Object({
-    id: Id,
-    model: t.String({ minLength: 1 }),
-    messages: t.Array(t.Any()),
+  export const IdResponse = t.Object({
+    id: chatSelect.id,
+  });
+  export const EditResponse = t.Object({
+    id: chatSelect.id,
+    title: chatSelect.title,
   });
 
   export const Error = t.String();

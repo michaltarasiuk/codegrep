@@ -67,7 +67,7 @@ export const chatPlugin = new Elysia({ name: "chat", prefix: "/chat" })
       });
     },
     {
-      body: ChatModel.SendMessage,
+      body: ChatModel.MessageBody,
     }
   )
   .put(
@@ -85,7 +85,7 @@ export const chatPlugin = new Elysia({ name: "chat", prefix: "/chat" })
     },
     {
       params: ChatModel.Params,
-      body: ChatModel.Edit,
+      body: ChatModel.EditBody,
       response: {
         200: ChatModel.EditResponse,
         404: ChatModel.Error,

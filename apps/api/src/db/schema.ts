@@ -162,3 +162,14 @@ export const messageRelations = relations(message, ({ one }) => ({
     references: [chat.id],
   }),
 }));
+
+export const table = {
+  user,
+  session,
+  account,
+  verification,
+  chat,
+  message,
+} as const;
+
+export type Table = typeof table;
