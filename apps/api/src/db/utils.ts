@@ -1,3 +1,4 @@
+import { isDefined } from "$api/utils/is-defined";
 import { Kind, type TObject } from "@sinclair/typebox";
 import { type Table } from "drizzle-orm";
 import {
@@ -34,23 +35,20 @@ export const spread = <
 ) => {
   const newSchema: Record<string, unknown> = {};
   let table: TObject;
-  switch (mode) {
-    case "insert":
-    case "select":
-      if (Kind in schema) {
-        table = schema;
-        break;
-      }
+  if (isDefined(mode)) {
+    if (Kind in schema) {
+      table = schema;
+    } else {
       table =
         mode === "insert"
           ? createInsertSchema(schema)
           : createSelectSchema(schema);
-
-      break;
-
-    default:
-      if (!(Kind in schema)) throw new Error("Expect a schema");
-      table = schema;
+    }
+  } else {
+    if (!(Kind in schema)) {
+      throw new Error("Expect a schema");
+    }
+    table = schema;
   }
   for (const key of Object.keys(table.properties)) {
     newSchema[key] = table.properties[key];
