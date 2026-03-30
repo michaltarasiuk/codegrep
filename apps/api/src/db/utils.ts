@@ -1,4 +1,3 @@
-import { isDefined } from "$api/utils/is-defined";
 import { Kind, type TObject } from "@sinclair/typebox";
 import { type Table } from "drizzle-orm";
 import {
@@ -6,6 +5,8 @@ import {
   createInsertSchema,
   createSelectSchema,
 } from "drizzle-typebox";
+
+import { isDefined } from "$api/utils/is-defined";
 
 type Spread<
   T extends TObject | Table,
