@@ -33,8 +33,7 @@ export const spread = <
   mode?: Mode
 ) => {
   const newSchema: Record<string, unknown> = {};
-  let table;
-
+  let table: TObject;
   switch (mode) {
     case "insert":
     case "select":
@@ -42,7 +41,6 @@ export const spread = <
         table = schema;
         break;
       }
-
       table =
         mode === "insert"
           ? createInsertSchema(schema)
@@ -54,10 +52,9 @@ export const spread = <
       if (!(Kind in schema)) throw new Error("Expect a schema");
       table = schema;
   }
-
-  for (const key of Object.keys(table.properties))
+  for (const key of Object.keys(table.properties)) {
     newSchema[key] = table.properties[key];
-
+  }
   return newSchema as Spread<T, Mode>;
 };
 
@@ -76,9 +73,8 @@ export const spreads = <
   mode?: Mode
 ) => {
   const newSchema: Record<string, unknown> = {};
-  const keys = Object.keys(models);
-
-  for (const key of keys) newSchema[key] = spread(models[key]!, mode);
-
+  for (const key of Object.keys(models)) {
+    newSchema[key] = spread(models[key]!, mode);
+  }
   return newSchema as { [K in keyof T]: Spread<T[K], Mode> };
 };
