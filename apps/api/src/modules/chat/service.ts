@@ -56,14 +56,12 @@ export abstract class ChatService {
         userId,
       },
     });
-
     if (!isDefined(found)) {
       return new NotFoundError({
         resource: "chat",
         id: chatId,
       });
     }
-
     return db
       .select()
       .from(message)
@@ -85,11 +83,9 @@ export abstract class ChatService {
         .insert(chat)
         .values({ id: chatId, title, userId })
         .returning({ id: chat.id });
-
       if (!isDefined(createdChat)) {
         return null;
       }
-
       const [createdMessage] = await tx
         .insert(message)
         .values({
@@ -99,11 +95,9 @@ export abstract class ChatService {
           parts: [{ type: "text", text: title }],
         })
         .returning({ id: message.id });
-
       if (!isDefined(createdMessage)) {
         return null;
       }
-
       return createdChat;
     });
     if (!isDefined(created)) {
@@ -129,11 +123,9 @@ export abstract class ChatService {
         userId,
       },
     });
-
     if (isDefined(found)) {
       return found;
     }
-
     return this.create({
       title,
       chatId,
@@ -155,14 +147,12 @@ export abstract class ChatService {
       .set({ title })
       .where(and(eq(chat.id, chatId), eq(chat.userId, userId)))
       .returning({ id: chat.id, title: chat.title });
-
     if (!isDefined(updated)) {
       return new NotFoundError({
         resource: "chat",
         id: chatId,
       });
     }
-
     return updated;
   }
 
@@ -184,7 +174,6 @@ export abstract class ChatService {
     if (!isDefined(found)) {
       return new NotFoundError({ resource: "chat", id: chatId });
     }
-
     const seen = new Set<string>();
     const inserts: (typeof message.$inferInsert)[] = [];
     for (const message of messages) {
@@ -201,7 +190,6 @@ export abstract class ChatService {
         parts: message.parts,
       });
     }
-
     await db.transaction(async (tx) => {
       await tx.delete(message).where(eq(message.chatId, chatId));
       await tx.insert(message).values(inserts);
@@ -213,14 +201,12 @@ export abstract class ChatService {
       .delete(chat)
       .where(and(eq(chat.id, chatId), eq(chat.userId, userId)))
       .returning({ id: chat.id });
-
     if (!isDefined(deleted)) {
       return new NotFoundError({
         resource: "chat",
         id: chatId,
       });
     }
-
     return deleted;
   }
 }
