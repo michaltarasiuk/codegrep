@@ -5,6 +5,12 @@ const config = {
   trailingComma: "es5",
   overrides: [
     {
+      files: "*.svg",
+      options: {
+        parser: "html",
+      },
+    },
+    {
       files: "*.svelte",
       options: {
         parser: "svelte",
