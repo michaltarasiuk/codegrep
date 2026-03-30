@@ -168,8 +168,8 @@ export abstract class ChatService {
     const seen = new Set<string>();
     const inserts: (typeof message.$inferInsert)[] = [];
 
-    for (const m of messages) {
-      let id = `${chatId}:${m.id}`;
+    for (const message of messages) {
+      let id = `${chatId}:${message.id}`;
 
       while (seen.has(id)) {
         id = `${chatId}:${generateId()}`;
@@ -179,9 +179,9 @@ export abstract class ChatService {
       inserts.push({
         id,
         chatId,
-        role: m.role,
-        metadata: m.metadata,
-        parts: m.parts,
+        role: message.role,
+        metadata: message.metadata,
+        parts: message.parts,
       });
     }
 
