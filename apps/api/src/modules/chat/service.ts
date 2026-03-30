@@ -7,8 +7,15 @@ import { CreateFailedError, NotFoundError } from "$api/errors";
 import { isDefined } from "$api/utils/is-defined";
 
 export abstract class ChatService {
-  static async find({ chatId, userId }: { chatId: string; userId: string }) {
-    const [found = null] = await db
+  static async findFirst({
+    where: { chatId, userId },
+  }: {
+    where: {
+      chatId: string;
+      userId: string;
+    };
+  }) {
+    const [found] = await db
       .select()
       .from(chat)
       .where(and(eq(chat.id, chatId), eq(chat.userId, userId)))
@@ -17,7 +24,13 @@ export abstract class ChatService {
     return found;
   }
 
-  static async list({ userId }: { userId: string }) {
+  static async findMany({
+    where: { userId },
+  }: {
+    where: {
+      userId: string;
+    };
+  }) {
     return db
       .select({
         id: chat.id,
@@ -29,20 +42,26 @@ export abstract class ChatService {
       .orderBy(desc(chat.updatedAt));
   }
 
-  static async listMessages({
-    chatId,
-    userId,
+  static async findManyMessages({
+    where: { chatId, userId },
   }: {
-    chatId: string;
-    userId: string;
+    where: {
+      chatId: string;
+      userId: string;
+    };
   }) {
-    const found = await this.find({
-      chatId,
-      userId,
+    const found = await this.findFirst({
+      where: {
+        chatId,
+        userId,
+      },
     });
 
     if (!isDefined(found)) {
-      return new NotFoundError({ resource: "chat", id: chatId });
+      return new NotFoundError({
+        resource: "chat",
+        id: chatId,
+      });
     }
 
     return db
@@ -61,8 +80,6 @@ export abstract class ChatService {
     chatId: string;
     userId: string;
   }) {
-    const messageId = `${chatId}:${generateId()}`;
-
     const created = await db.transaction(async (tx) => {
       const [createdChat] = await tx
         .insert(chat)
@@ -76,7 +93,7 @@ export abstract class ChatService {
       const [createdMessage] = await tx
         .insert(message)
         .values({
-          id: messageId,
+          id: `${chatId}:${generateId()}`,
           chatId,
           role: "user",
           parts: [{ type: "text", text: title }],
@@ -89,11 +106,11 @@ export abstract class ChatService {
 
       return createdChat;
     });
-
     if (!isDefined(created)) {
-      return new CreateFailedError({ resource: "chat" });
+      return new CreateFailedError({
+        resource: "chat",
+      });
     }
-
     return created;
   }
 
@@ -106,23 +123,22 @@ export abstract class ChatService {
     chatId: string;
     userId: string;
   }) {
-    let chat: { id: string } | null = await this.find({
+    const found = await this.findFirst({
+      where: {
+        chatId,
+        userId,
+      },
+    });
+
+    if (isDefined(found)) {
+      return found;
+    }
+
+    return this.create({
+      title,
       chatId,
       userId,
     });
-    if (!isDefined(chat)) {
-      const created = await this.create({
-        title,
-        chatId,
-        userId,
-      });
-      if (created instanceof CreateFailedError) {
-        return created;
-      } else {
-        chat = created;
-      }
-    }
-    return chat;
   }
 
   static async updateTitle({
@@ -134,14 +150,17 @@ export abstract class ChatService {
     chatId: string;
     userId: string;
   }) {
-    const [updated = null] = await db
+    const [updated] = await db
       .update(chat)
       .set({ title })
       .where(and(eq(chat.id, chatId), eq(chat.userId, userId)))
       .returning({ id: chat.id, title: chat.title });
 
     if (!isDefined(updated)) {
-      return new NotFoundError({ resource: "chat", id: chatId });
+      return new NotFoundError({
+        resource: "chat",
+        id: chatId,
+      });
     }
 
     return updated;
@@ -156,26 +175,24 @@ export abstract class ChatService {
     chatId: string;
     userId: string;
   }) {
-    const found = await this.find({
-      chatId,
-      userId,
+    const found = await this.findFirst({
+      where: {
+        chatId,
+        userId,
+      },
     });
-
     if (!isDefined(found)) {
       return new NotFoundError({ resource: "chat", id: chatId });
     }
 
     const seen = new Set<string>();
     const inserts: (typeof message.$inferInsert)[] = [];
-
     for (const message of messages) {
       let id = `${chatId}:${message.id}`;
-
       while (seen.has(id)) {
         id = `${chatId}:${generateId()}`;
       }
       seen.add(id);
-
       inserts.push({
         id,
         chatId,
@@ -192,13 +209,16 @@ export abstract class ChatService {
   }
 
   static async delete({ chatId, userId }: { chatId: string; userId: string }) {
-    const [deleted = null] = await db
+    const [deleted] = await db
       .delete(chat)
       .where(and(eq(chat.id, chatId), eq(chat.userId, userId)))
       .returning({ id: chat.id });
 
     if (!isDefined(deleted)) {
-      return new NotFoundError({ resource: "chat", id: chatId });
+      return new NotFoundError({
+        resource: "chat",
+        id: chatId,
+      });
     }
 
     return deleted;
