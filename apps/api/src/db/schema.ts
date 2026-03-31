@@ -173,14 +173,4 @@ export const table = {
   message,
 } as const;
 
-/** Pass to `drizzle({ schema })` for `db.query.*` relational API. */
-export const drizzleSchema = {
-  ...table,
-  userRelations,
-  accountRelations,
-  sessionRelations,
-  chatRelations,
-  messageRelations,
-};
-
 export type Table = typeof table;
