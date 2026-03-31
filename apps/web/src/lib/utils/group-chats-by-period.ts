@@ -1,11 +1,5 @@
 import { differenceInCalendarDays, isToday, isYesterday } from "date-fns";
 
-interface Chat {
-  id: string;
-  title: string;
-  updatedAt: Date;
-}
-
 type TimePeriod =
   | "Today"
   | "Yesterday"
@@ -44,8 +38,8 @@ const PERIOD_ORDER: TimePeriod[] = [
   "Older",
 ];
 
-export function groupChatsByPeriod(chats: Chat[]) {
-  const groups = new Map<TimePeriod, Chat[]>();
+export function groupChatsByPeriod<T extends { updatedAt: Date }>(chats: T[]) {
+  const groups = new Map<TimePeriod, T[]>();
   for (const chat of chats) {
     const period = getTimePeriod(chat.updatedAt);
     groups.set(period, [...getGroup(period), chat]);

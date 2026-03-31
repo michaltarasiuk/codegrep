@@ -35,6 +35,7 @@ export abstract class ChatService {
       .select({
         id: chat.id,
         title: chat.title,
+        shareId: chat.shareId,
         updatedAt: chat.updatedAt,
       })
       .from(chat)
@@ -133,7 +134,7 @@ export abstract class ChatService {
     });
   }
 
-  static async updateTitle({
+  static async update({
     title,
     where: { chatId, userId },
   }: {

@@ -19,6 +19,7 @@
     chatList?: {
       id: string;
       title: string;
+      shareId: string | null;
       updatedAt: Date;
     }[];
   }
@@ -56,6 +57,7 @@
                   <ChatSidebarItem
                     {chat}
                     onRename={() => (renamingChat = chat)}
+                    onShare={() => {}}
                     onDelete={() => (deletingChat = chat)}
                   />
                 {/each}

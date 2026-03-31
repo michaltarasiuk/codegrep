@@ -15,12 +15,12 @@ export const chatPlugin = new Elysia({ name: "chat", prefix: "/chat" })
   .use(chatModel)
   .get(
     "/",
-    async ({ user }) => {
-      const result = await ChatService.findMany({
-        where: { userId: user.id },
-      });
-      return result;
-    },
+    async ({ user }) =>
+      await ChatService.findMany({
+        where: {
+          userId: user.id,
+        },
+      }),
     {
       response: "Chat.ListResponse",
     }
@@ -28,13 +28,18 @@ export const chatPlugin = new Elysia({ name: "chat", prefix: "/chat" })
   .get(
     "/:id/messages",
     async ({ params: { id: chatId }, user }) => {
-      const result = await ChatService.findManyMessages({
-        where: { chatId, userId: user.id },
+      const chatMessages = await ChatService.findManyMessages({
+        where: {
+          chatId,
+          userId: user.id,
+        },
       });
-      if (result instanceof NotFoundError) {
-        return status(404, { message: result.message });
+      if (chatMessages instanceof NotFoundError) {
+        return status(404, {
+          message: chatMessages.message,
+        });
       }
-      return result;
+      return chatMessages;
     },
     {
       params: "Chat.Params",
@@ -49,25 +54,27 @@ export const chatPlugin = new Elysia({ name: "chat", prefix: "/chat" })
         userId: user.id,
       });
       if (chat instanceof CreateFailedError) {
-        return status(500, { message: chat.message });
+        return status(500, {
+          message: chat.message,
+        });
       }
-      const result = streamText({
+      const stream = streamText({
         model: groqProvider(model),
         messages: await convertToModelMessages(messages),
         ...(isDefined(user.personalInstructions) && {
           system: user.personalInstructions,
         }),
       });
-      return result.toUIMessageStreamResponse({
+      return stream.toUIMessageStreamResponse({
         originalMessages: messages,
         onFinish: async ({ messages }) => {
-          const saved = await ChatService.setMessages({
+          const saveMessagesResult = await ChatService.setMessages({
             messages,
             chatId,
             userId: user.id,
           });
-          if (saved instanceof NotFoundError) {
-            console.error(saved.message);
+          if (saveMessagesResult instanceof NotFoundError) {
+            console.error(saveMessagesResult.message);
           }
         },
       });
@@ -79,17 +86,19 @@ export const chatPlugin = new Elysia({ name: "chat", prefix: "/chat" })
   .put(
     "/:id",
     async ({ params: { id: chatId }, body: { title }, user }) => {
-      const result = await ChatService.updateTitle({
+      const updatedChat = await ChatService.update({
         title,
         where: {
           chatId,
           userId: user.id,
         },
       });
-      if (result instanceof NotFoundError) {
-        return status(404, { message: result.message });
+      if (updatedChat instanceof NotFoundError) {
+        return status(404, {
+          message: updatedChat.message,
+        });
       }
-      return result;
+      return updatedChat;
     },
     {
       params: "Chat.Params",
@@ -103,16 +112,18 @@ export const chatPlugin = new Elysia({ name: "chat", prefix: "/chat" })
   .delete(
     "/:id",
     async ({ params: { id: chatId }, user }) => {
-      const result = await ChatService.delete({
+      const deletedChat = await ChatService.delete({
         where: {
           chatId,
           userId: user.id,
         },
       });
-      if (result instanceof NotFoundError) {
-        return status(404, { message: result.message });
+      if (deletedChat instanceof NotFoundError) {
+        return status(404, {
+          message: deletedChat.message,
+        });
       }
-      return result;
+      return deletedChat;
     },
     {
       params: "Chat.Params",
