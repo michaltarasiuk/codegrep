@@ -68,13 +68,13 @@ export const chatPlugin = new Elysia({ name: "chat", prefix: "/chat" })
       return stream.toUIMessageStreamResponse({
         originalMessages: messages,
         onFinish: async ({ messages }) => {
-          const saveMessagesResult = await ChatService.setMessages({
+          const chatMessages = await ChatService.setMessages({
             messages,
             chatId,
             userId: user.id,
           });
-          if (saveMessagesResult instanceof NotFoundError) {
-            console.error(saveMessagesResult.message);
+          if (chatMessages instanceof NotFoundError) {
+            console.error(chatMessages.message);
           }
         },
       });
