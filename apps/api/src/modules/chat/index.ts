@@ -52,7 +52,7 @@ export const chatPlugin = new Elysia({ name: "chat", prefix: "/chat" })
   .post(
     "/",
     async ({ body: { id: chatId, model, messages }, user }) => {
-      const chat = await ChatService.findOrCreate({
+      const chat = await ChatService.upsert({
         title: getFirstUserText(messages),
         chatId,
         userId: user.id,

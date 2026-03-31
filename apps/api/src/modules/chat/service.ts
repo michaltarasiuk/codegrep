@@ -108,7 +108,7 @@ export abstract class ChatService {
     return created;
   }
 
-  static async findOrCreate({
+  static async upsert({
     title,
     chatId,
     userId,
@@ -123,14 +123,7 @@ export abstract class ChatService {
         userId,
       },
     });
-    if (isDefined(found)) {
-      return found;
-    }
-    return this.create({
-      title,
-      chatId,
-      userId,
-    });
+    return found ?? (await this.create({ title, chatId, userId }));
   }
 
   static async update({
