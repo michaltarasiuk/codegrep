@@ -81,8 +81,10 @@ export const chatPlugin = new Elysia({ name: "chat", prefix: "/chat" })
     async ({ params: { id: chatId }, body: { title }, user }) => {
       const result = await ChatService.updateTitle({
         title,
-        chatId,
-        userId: user.id,
+        where: {
+          chatId,
+          userId: user.id,
+        },
       });
       if (result instanceof NotFoundError) {
         return status(404, { message: result.message });
@@ -102,8 +104,10 @@ export const chatPlugin = new Elysia({ name: "chat", prefix: "/chat" })
     "/:id",
     async ({ params: { id: chatId }, user }) => {
       const result = await ChatService.delete({
-        chatId,
-        userId: user.id,
+        where: {
+          chatId,
+          userId: user.id,
+        },
       });
       if (result instanceof NotFoundError) {
         return status(404, { message: result.message });

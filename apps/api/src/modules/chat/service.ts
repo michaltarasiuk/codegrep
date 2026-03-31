@@ -135,12 +135,13 @@ export abstract class ChatService {
 
   static async updateTitle({
     title,
-    chatId,
-    userId,
+    where: { chatId, userId },
   }: {
     title: string;
-    chatId: string;
-    userId: string;
+    where: {
+      chatId: string;
+      userId: string;
+    };
   }) {
     const [updated] = await db
       .update(chat)
@@ -196,7 +197,14 @@ export abstract class ChatService {
     });
   }
 
-  static async delete({ chatId, userId }: { chatId: string; userId: string }) {
+  static async delete({
+    where: { chatId, userId },
+  }: {
+    where: {
+      chatId: string;
+      userId: string;
+    };
+  }) {
     const [deleted] = await db
       .delete(chat)
       .where(and(eq(chat.id, chatId), eq(chat.userId, userId)))
