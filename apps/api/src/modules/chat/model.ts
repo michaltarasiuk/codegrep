@@ -15,20 +15,26 @@ const ChatMessageBody = t.Object({
   model: t.String({ minLength: 1 }),
   messages: t.Array(t.Any()),
 });
-const ChatUpdateTitleBody = t.Object({
+const ChatUpdateBody = t.Object({
   title: chatInsert.title,
 });
 
+const ChatMessagesResponse = t.Array(t.Any());
 const ChatListResponse = t.Array(
   t.Object({
     id: chatSelect.id,
     title: chatSelect.title,
+    shareId: chatSelect.shareId,
     updatedAt: chatSelect.updatedAt,
   })
 );
-const ChatTitleResponse = t.Object({
+const ChatUpdateResponse = t.Object({
   id: chatSelect.id,
   title: chatSelect.title,
+});
+const ChatShareResponse = t.Object({
+  id: chatSelect.id,
+  shareId: chatSelect.shareId,
 });
 const ChatIdResponse = t.Object({
   id: chatSelect.id,
@@ -40,10 +46,12 @@ const ChatError = t.Object({
 
 export const models = {
   "Chat.Params": ChatParams,
-  "Chat.SendMessage": ChatMessageBody,
-  "Chat.UpdateTitle": ChatUpdateTitleBody,
+  "Chat.MessageBody": ChatMessageBody,
+  "Chat.UpdateBody": ChatUpdateBody,
+  "Chat.MessagesResponse": ChatMessagesResponse,
   "Chat.ListResponse": ChatListResponse,
-  "Chat.TitleResponse": ChatTitleResponse,
+  "Chat.UpdateResponse": ChatUpdateResponse,
+  "Chat.ShareResponse": ChatShareResponse,
   "Chat.IdResponse": ChatIdResponse,
   "Chat.Error": ChatError,
 };

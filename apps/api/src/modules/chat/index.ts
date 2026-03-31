@@ -43,6 +43,10 @@ export const chatPlugin = new Elysia({ name: "chat", prefix: "/chat" })
     },
     {
       params: "Chat.Params",
+      response: {
+        200: "Chat.MessagesResponse",
+        404: "Chat.Error",
+      },
     }
   )
   .post(
@@ -80,7 +84,7 @@ export const chatPlugin = new Elysia({ name: "chat", prefix: "/chat" })
       });
     },
     {
-      body: "Chat.SendMessage",
+      body: "Chat.MessageBody",
     }
   )
   .put(
@@ -102,9 +106,57 @@ export const chatPlugin = new Elysia({ name: "chat", prefix: "/chat" })
     },
     {
       params: "Chat.Params",
-      body: "Chat.UpdateTitle",
+      body: "Chat.UpdateBody",
       response: {
-        200: "Chat.TitleResponse",
+        200: "Chat.UpdateResponse",
+        404: "Chat.Error",
+      },
+    }
+  )
+  .put(
+    "/:id/share",
+    async ({ params: { id: chatId }, user }) => {
+      const sharedChat = await ChatService.share({
+        where: {
+          chatId,
+          userId: user.id,
+        },
+      });
+      if (sharedChat instanceof NotFoundError) {
+        return status(404, {
+          message: sharedChat.message,
+        });
+      }
+      return sharedChat;
+    },
+    {
+      params: "Chat.Params",
+      response: {
+        200: "Chat.ShareResponse",
+        404: "Chat.Error",
+      },
+    }
+  )
+  .put(
+    "/:id/unshare",
+    async ({ params: { id: chatId }, user }) => {
+      const unsharedChat = await ChatService.unshare({
+        where: {
+          chatId,
+          userId: user.id,
+        },
+      });
+      if (unsharedChat instanceof NotFoundError) {
+        return status(404, {
+          message: unsharedChat.message,
+        });
+      }
+      return unsharedChat;
+    },
+    {
+      params: "Chat.Params",
+      response: {
+        200: "Chat.IdResponse",
         404: "Chat.Error",
       },
     }

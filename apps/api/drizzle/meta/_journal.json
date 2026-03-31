@@ -43,6 +43,13 @@
       "when": 1774936605518,
       "tag": "0005_elite_electro",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1774990524490,
+      "tag": "0006_special_eddie_brock",
+      "breakpoints": true
     }
   ]
 }

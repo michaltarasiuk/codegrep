@@ -1,5 +1,5 @@
 import { generateId, type UIMessage } from "ai";
-import { and, asc, desc, eq } from "drizzle-orm";
+import { and, asc, desc, eq, sql } from "drizzle-orm";
 
 import { db } from "$api/db";
 import { chat, message } from "$api/db/schema";
@@ -195,6 +195,51 @@ export abstract class ChatService {
       await tx.delete(message).where(eq(message.chatId, chatId));
       await tx.insert(message).values(inserts);
     });
+    return { id: chatId };
+  }
+
+  static async share({
+    where: { chatId, userId },
+  }: {
+    where: {
+      chatId: string;
+      userId: string;
+    };
+  }) {
+    const [shared] = await db
+      .update(chat)
+      .set({ shareId: sql`coalesce(${chat.shareId}, ${generateId()})` })
+      .where(and(eq(chat.id, chatId), eq(chat.userId, userId)))
+      .returning({ id: chat.id, shareId: chat.shareId });
+    if (!isDefined(shared)) {
+      return new NotFoundError({
+        resource: "chat",
+        id: chatId,
+      });
+    }
+    return shared;
+  }
+
+  static async unshare({
+    where: { chatId, userId },
+  }: {
+    where: {
+      chatId: string;
+      userId: string;
+    };
+  }) {
+    const [unshared] = await db
+      .update(chat)
+      .set({ shareId: null })
+      .where(and(eq(chat.id, chatId), eq(chat.userId, userId)))
+      .returning({ id: chat.id });
+    if (!isDefined(unshared)) {
+      return new NotFoundError({
+        resource: "chat",
+        id: chatId,
+      });
+    }
+    return unshared;
   }
 
   static async delete({

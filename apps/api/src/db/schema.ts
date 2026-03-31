@@ -91,7 +91,7 @@ export const chat = pgTable(
   {
     id: text("id").primaryKey(),
     title: text("title").notNull(),
-    shareId: text("share_id"),
+    shareId: text("share_id").unique(),
     userId: text("user_id")
       .notNull()
       .references(() => user.id, { onDelete: "cascade" }),
