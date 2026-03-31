@@ -20,7 +20,6 @@ export abstract class ChatService {
       .from(chat)
       .where(and(eq(chat.id, chatId), eq(chat.userId, userId)))
       .limit(1);
-
     return found;
   }
 
