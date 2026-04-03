@@ -46,11 +46,11 @@
 
   let { onClose }: { onClose: () => void } = $props();
 
-  const session = authClient.useSession();
+  let value = $state("");
+  let textarea = $state<HTMLTextAreaElement | null>(null);
 
-  let value = $state($session.data?.user.personalInstructions ?? "");
-  let showTemplates = $state(false);
   let loading = $state(false);
+  let showTemplates = $state(false);
 
   const charCount = $derived(value.length);
 
@@ -89,6 +89,7 @@
 
       <div class="relative">
         <Textarea
+          bind:ref={textarea}
           bind:value
           placeholder="Your instructions"
           disabled={loading}
@@ -131,7 +132,7 @@
         </div>
       </div>
 
-      <p class="text-muted-foreground text-xs">
+      <p class="text-muted-foreground text-xs tabular-nums">
         {charCount} / {MAX_LENGTH} characters
       </p>
 
