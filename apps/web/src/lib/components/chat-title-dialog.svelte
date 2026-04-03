@@ -8,24 +8,31 @@
   import { CHAT_LIST_KEY } from "$lib/utils/invalidation-keys";
 
   let {
-    id,
-    title,
+    chat,
+    open,
     onClose,
   }: {
-    id: string;
-    title: string;
+    chat: {
+      id: string;
+      title: string;
+    };
+    open: boolean;
     onClose: () => void;
   } = $props();
 
-  let value = $derived(title);
+  let value = $derived(chat.title);
   let loading = $state(false);
 
   async function handleSubmit() {
     loading = true;
     try {
-      const result = await client.api.chat({ id }).put({
-        title: value,
-      });
+      const result = await client.api
+        .chat({
+          id: chat.id,
+        })
+        .put({
+          title: value,
+        });
       if (!result.error) {
         await invalidate(CHAT_LIST_KEY);
         onClose();
@@ -36,18 +43,33 @@
   }
 </script>
 
-<Dialog.Root open onOpenChange={(o) => !o && onClose()}>
+<Dialog.Root
+  {open}
+  onOpenChange={(open) => {
+    if (!open) {
+      onClose();
+    }
+  }}
+  onOpenChangeComplete={(open) => {
+    if (!open) {
+      value = chat.title;
+      loading = false;
+    }
+  }}
+>
   <Dialog.Content>
     <form onsubmit={handleSubmit}>
       <Dialog.Header>
         <Dialog.Title>Chat title</Dialog.Title>
       </Dialog.Header>
       <div class="py-4">
-        <Label for="title" class="sr-only">Title</Label>
-        <Input id="title" bind:value disabled={loading} />
+        <Label for="chat-title-{chat.id}" class="sr-only">Title</Label>
+        <Input id="chat-title-{chat.id}" bind:value disabled={loading} />
       </div>
       <Dialog.Footer>
-        <Button variant="outline" onclick={() => onClose()}>Cancel</Button>
+        <Button variant="outline" type="button" onclick={() => onClose()}>
+          Cancel
+        </Button>
         <Button type="submit" disabled={!value || loading}>Update</Button>
       </Dialog.Footer>
     </form>

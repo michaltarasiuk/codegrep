@@ -125,8 +125,7 @@
   </Command.List>
 </Command.Dialog>
 
-{#if personalInstructionsOpen}
-  <PersonalInstructionsDialog
-    onClose={() => (personalInstructionsOpen = false)}
-  />
-{/if}
+<PersonalInstructionsDialog
+  open={personalInstructionsOpen}
+  onClose={() => (personalInstructionsOpen = false)}
+/>

@@ -131,8 +131,7 @@
   </Sidebar.MenuItem>
 {/if}
 
-{#if personalInstructionsOpen}
-  <PersonalInstructionsDialog
-    onClose={() => (personalInstructionsOpen = false)}
-  />
-{/if}
+<PersonalInstructionsDialog
+  open={personalInstructionsOpen}
+  onClose={() => (personalInstructionsOpen = false)}
+/>

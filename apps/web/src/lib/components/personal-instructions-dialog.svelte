@@ -44,9 +44,12 @@
 
   const MAX_LENGTH = 4_000;
 
-  let { onClose }: { onClose: () => void } = $props();
+  let { open, onClose }: { open: boolean; onClose: () => void } = $props();
 
-  let value = $state("");
+  const session = authClient.useSession();
+  const initialValue = $session.data?.user.personalInstructions ?? "";
+
+  let value = $state(initialValue);
   let textarea = $state<HTMLTextAreaElement | null>(null);
 
   let loading = $state(false);
@@ -55,9 +58,6 @@
   const charCount = $derived(value.length);
 
   function appendTemplate(text: string) {
-    if (!!value.length && !value.endsWith("\n")) {
-      value += "\n\n";
-    }
     value += text;
   }
 
@@ -76,7 +76,21 @@
   }
 </script>
 
-<Dialog.Root open onOpenChange={(o) => !o && onClose()}>
+<Dialog.Root
+  {open}
+  onOpenChange={(open) => {
+    if (!open) {
+      onClose();
+    }
+  }}
+  onOpenChangeComplete={(open) => {
+    if (!open) {
+      value = initialValue;
+      showTemplates = false;
+      loading = false;
+    }
+  }}
+>
   <Dialog.Content class="sm:max-w-lg">
     <form class="space-y-4" onsubmit={handleSubmit}>
       <Dialog.Header>

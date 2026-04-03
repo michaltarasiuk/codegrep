@@ -8,23 +8,31 @@
   import { CHAT_LIST_KEY } from "$lib/utils/invalidation-keys";
 
   let {
-    id,
+    chat,
+    open,
     onClose,
   }: {
-    id: string;
+    chat: {
+      id: string;
+    };
+    open: boolean;
     onClose: () => void;
   } = $props();
 
   let loading = $state(false);
 
   function isViewingChat() {
-    return page.route.id === "/chat/[[id]]" && page.params.id === id;
+    return page.route.id === "/chat/[[id]]" && page.params.id === chat.id;
   }
 
   async function handleDelete() {
     loading = true;
     try {
-      const result = await client.api.chat({ id }).delete();
+      const result = await client.api
+        .chat({
+          id: chat.id,
+        })
+        .delete();
       if (!result.error) {
         if (isViewingChat()) {
           await goto(resolve("/chat"), { invalidate: [CHAT_LIST_KEY] });
@@ -39,7 +47,19 @@
   }
 </script>
 
-<AlertDialog.Root open onOpenChange={(o) => !o && onClose()}>
+<AlertDialog.Root
+  {open}
+  onOpenChange={(open) => {
+    if (!open) {
+      onClose();
+    }
+  }}
+  onOpenChangeComplete={(open) => {
+    if (!open) {
+      loading = false;
+    }
+  }}
+>
   <AlertDialog.Content>
     <AlertDialog.Header>
       <AlertDialog.Title>Delete chat</AlertDialog.Title>

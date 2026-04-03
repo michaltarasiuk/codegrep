@@ -12,18 +12,21 @@
   import * as Sidebar from "$lib/components/ui/sidebar/index.js";
   import { isDefined } from "$lib/utils/is-defined";
 
+  import ChatDeleteDialog from "./chat-delete-dialog.svelte";
+  import ChatTitleDialog from "./chat-title-dialog.svelte";
+
   interface Props {
     chat: {
       id: string;
       title: string;
       shareId: string | null;
     };
-    onRename: () => void;
-    onShare: () => void;
-    onDelete: () => void;
   }
 
-  const { chat, onRename, onShare, onDelete }: Props = $props();
+  const { chat }: Props = $props();
+
+  let chatTitleDialogOpen = $state(false);
+  let chatDeleteDialogOpen = $state(false);
 
   const route = $derived(`/chat/${chat.id}` as const);
   const isActive = $derived(page.url.pathname === route);
@@ -46,11 +49,11 @@
       {/snippet}
     </DropdownMenu.Trigger>
     <DropdownMenu.Content side="right" align="end" sideOffset={4}>
-      <DropdownMenu.Item onSelect={() => onRename()}>
+      <DropdownMenu.Item onclick={() => (chatTitleDialogOpen = true)}>
         <PencilIcon />
         Rename
       </DropdownMenu.Item>
-      <DropdownMenu.Item onSelect={() => onShare()}>
+      <DropdownMenu.Item>
         {#if isDefined(chat.shareId)}
           <LockOpenIcon />
         {:else}
@@ -58,10 +61,25 @@
         {/if}
         Share
       </DropdownMenu.Item>
-      <DropdownMenu.Item variant="destructive" onSelect={() => onDelete()}>
+      <DropdownMenu.Item
+        variant="destructive"
+        onclick={() => (chatDeleteDialogOpen = true)}
+      >
         <TrashIcon />
         Delete
       </DropdownMenu.Item>
     </DropdownMenu.Content>
   </DropdownMenu.Root>
 </Sidebar.MenuItem>
+
+<ChatTitleDialog
+  {chat}
+  open={chatTitleDialogOpen}
+  onClose={() => (chatTitleDialogOpen = false)}
+/>
+
+<ChatDeleteDialog
+  {chat}
+  open={chatDeleteDialogOpen}
+  onClose={() => (chatDeleteDialogOpen = false)}
+/>
