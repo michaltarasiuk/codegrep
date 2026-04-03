@@ -42,6 +42,7 @@ export function createFetchProxy(
 
     const proxyInit: RequestInit = {
       ...init,
+      method: request.method,
       headers: proxyHeaders,
     };
 
