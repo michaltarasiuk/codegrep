@@ -47,15 +47,18 @@
   let { open, onClose }: { open: boolean; onClose: () => void } = $props();
 
   const session = authClient.useSession();
-  const initialValue = $session.data?.user.personalInstructions ?? "";
 
-  let value = $state(initialValue);
+  let value = $derived(getInitialValue());
   let textarea = $state<HTMLTextAreaElement | null>(null);
 
   let loading = $state(false);
   let showTemplates = $state(false);
 
   const charCount = $derived(value.length);
+
+  function getInitialValue() {
+    return $session.data?.user.personalInstructions ?? "";
+  }
 
   function appendTemplate(text: string) {
     value += text;
@@ -85,7 +88,7 @@
   }}
   onOpenChangeComplete={(open) => {
     if (!open) {
-      value = initialValue;
+      value = getInitialValue();
       showTemplates = false;
       loading = false;
     }
