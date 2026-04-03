@@ -1,12 +1,11 @@
 export { default as StickToBottom } from "./stick-to-bottom.svelte";
 export { default as StickToBottomContent } from "./stick-to-bottom-content.svelte";
 export {
-  setStickToBottom,
   getStickToBottomContext,
+  setStickToBottom,
   type StickToBottomContext,
 } from "./stick-to-bottom-context.svelte.js";
 export {
-  UseStickToBottom,
   type Animation,
   type GetTargetScrollTop,
   type ScrollElements,
@@ -17,4 +16,5 @@ export {
   type StickToBottomOptions,
   type StickToBottomState,
   type StopScroll,
+  UseStickToBottom,
 } from "./use-stick-to-bottom.svelte.js";
