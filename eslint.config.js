@@ -36,9 +36,6 @@ const config = [
         extraFileExtensions: [".svelte"],
       },
     },
-    rules: {
-      "no-undef": "off",
-    },
   },
   {
     files: ["**/*.{js,mjs,cjs,ts,mts,cts,svelte}"],
@@ -62,12 +59,6 @@ const config = [
       ],
       "simple-import-sort/imports": "warn",
       "simple-import-sort/exports": "warn",
-    },
-  },
-  {
-    files: ["**/api/**/model.ts"],
-    rules: {
-      "@typescript-eslint/no-namespace": "off",
     },
   },
   {
