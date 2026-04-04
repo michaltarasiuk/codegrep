@@ -8,7 +8,6 @@
   import Label from "$lib/components/ui/label/label.svelte";
   import { Spinner } from "$lib/components/ui/spinner/index.js";
   import { client } from "$lib/utils/client";
-  import { cn } from "$lib/utils/cn";
   import { CHAT_LIST_KEY } from "$lib/utils/invalidation-keys";
   import { isDefined } from "$lib/utils/is-defined";
 
@@ -106,10 +105,7 @@
       </Dialog.Description>
     </Dialog.Header>
     <Dialog.Footer
-      class={cn(
-        "flex-col gap-3",
-        "sm:flex-row sm:items-center sm:justify-between"
-      )}
+      class="flex-col gap-3 sm:flex-row sm:items-center sm:justify-between"
     >
       {#if isDefined(loadingMessage)}
         <div class="text-muted-foreground flex items-center gap-2 text-sm">
