@@ -8,6 +8,7 @@
   import Label from "$lib/components/ui/label/label.svelte";
   import { Spinner } from "$lib/components/ui/spinner/index.js";
   import { client } from "$lib/utils/client";
+  import { cn } from "$lib/utils/cn";
   import { CHAT_LIST_KEY } from "$lib/utils/invalidation-keys";
   import { isDefined } from "$lib/utils/is-defined";
 
@@ -105,9 +106,12 @@
       </Dialog.Description>
     </Dialog.Header>
     <Dialog.Footer
-      class="flex-col gap-3 sm:flex-row sm:items-center sm:justify-between"
+      class={cn(
+        "flex-col gap-3",
+        "sm:flex-row sm:items-center sm:justify-between"
+      )}
     >
-      {#if loadingMessage}
+      {#if isDefined(loadingMessage)}
         <div class="text-muted-foreground flex items-center gap-2 text-sm">
           <Spinner variant="arcs" class="size-4 shrink-0" />
           <span>{loadingMessage}</span>
@@ -157,9 +161,12 @@
     </div>
 
     <Dialog.Footer
-      class="flex-col gap-3 sm:flex-row sm:items-center sm:justify-between"
+      class={cn(
+        "flex-col gap-3",
+        "sm:flex-row sm:items-center sm:justify-between"
+      )}
     >
-      {#if loadingMessage}
+      {#if isDefined(loadingMessage)}
         <div class="text-muted-foreground flex items-center gap-2 text-sm">
           <Spinner variant="arcs" class="size-4 shrink-0" />
           <span>{loadingMessage}</span>
@@ -173,14 +180,10 @@
         </div>
       {/if}
 
-      <div class="flex w-full flex-col gap-2 sm:w-auto sm:flex-row">
-        {#if confirmingUnshare}
-          <Button
-            variant="outline"
-            disabled={unsharing}
-            onclick={cancelUnshare}
-          >
-            Cancel
+      <div class={cn("flex flex-col gap-2", "sm:flex-row-reverse")}>
+        {#if !confirmingUnshare}
+          <Button disabled={sharing || unsharing} onclick={copyLink}>
+            Copy link
           </Button>
         {/if}
         <Button
@@ -196,9 +199,13 @@
         >
           Unshare
         </Button>
-        {#if !confirmingUnshare}
-          <Button disabled={sharing || unsharing} onclick={copyLink}>
-            Copy link
+        {#if confirmingUnshare}
+          <Button
+            variant="outline"
+            disabled={unsharing}
+            onclick={cancelUnshare}
+          >
+            Cancel
           </Button>
         {/if}
       </div>
