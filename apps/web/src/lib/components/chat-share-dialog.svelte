@@ -40,14 +40,6 @@
     sharing ? "Sharing chat..." : unsharing ? "Unsharing chat..." : null
   );
 
-  async function copyLink() {
-    await navigator.clipboard.writeText(shareLink);
-  }
-
-  function cancelUnshare() {
-    confirmingUnshare = false;
-  }
-
   async function share() {
     try {
       sharing = true;
@@ -79,6 +71,14 @@
     } finally {
       unsharing = false;
     }
+  }
+
+  async function copyLink() {
+    await navigator.clipboard.writeText(shareLink);
+  }
+
+  function cancelUnshare() {
+    confirmingUnshare = false;
   }
 </script>
 
@@ -157,14 +157,12 @@
         value={shareLink}
         class="mt-2"
         readonly
+        tabindex={-1}
       />
     </div>
 
     <Dialog.Footer
-      class={cn(
-        "flex-col gap-3",
-        "sm:flex-row sm:items-center sm:justify-between"
-      )}
+      class="flex-col gap-3 sm:flex-row sm:items-center sm:justify-between"
     >
       {#if isDefined(loadingMessage)}
         <div class="text-muted-foreground flex items-center gap-2 text-sm">
@@ -180,7 +178,7 @@
         </div>
       {/if}
 
-      <div class={cn("flex flex-col gap-2", "sm:flex-row-reverse")}>
+      <div class="flex flex-col gap-2 sm:flex-row-reverse">
         {#if !confirmingUnshare}
           <Button disabled={sharing || unsharing} onclick={copyLink}>
             Copy link

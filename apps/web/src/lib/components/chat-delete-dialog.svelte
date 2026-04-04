@@ -27,8 +27,8 @@
   }
 
   async function handleDelete() {
-    loading = true;
     try {
+      loading = true;
       const result = await client.api
         .chat({
           id: chat.id,

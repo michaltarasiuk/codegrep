@@ -24,9 +24,10 @@
   let value = $derived(chat.title);
   let loading = $state(false);
 
-  async function handleSubmit() {
-    loading = true;
+  async function handleSubmit(e: SubmitEvent) {
+    e.preventDefault();
     try {
+      loading = true;
       const result = await client.api
         .chat({
           id: chat.id,
