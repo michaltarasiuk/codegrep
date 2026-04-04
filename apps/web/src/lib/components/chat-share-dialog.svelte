@@ -196,9 +196,11 @@
         >
           Unshare
         </Button>
-        <Button disabled={sharing || unsharing} onclick={copyLink}>
-          Copy link
-        </Button>
+        {#if !confirmingUnshare}
+          <Button disabled={sharing || unsharing} onclick={copyLink}>
+            Copy link
+          </Button>
+        {/if}
       </div>
     </Dialog.Footer>
   </Dialog.Content>
