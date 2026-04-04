@@ -6,6 +6,7 @@
   import { buttonVariants } from "$lib/components/ui/button/index.js";
   import { client } from "$lib/utils/client";
   import { CHAT_LIST_KEY } from "$lib/utils/invalidation-keys";
+  import { isDefined } from "$lib/utils/is-defined";
 
   let {
     chat,
@@ -33,7 +34,7 @@
           id: chat.id,
         })
         .delete();
-      if (!result.error) {
+      if (!isDefined(result.error)) {
         if (isViewingChat()) {
           await goto(resolve("/chat"), { invalidate: [CHAT_LIST_KEY] });
         } else {

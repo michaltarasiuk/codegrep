@@ -13,6 +13,7 @@
   import { isDefined } from "$lib/utils/is-defined";
 
   import ChatDeleteDialog from "./chat-delete-dialog.svelte";
+  import ChatShareDialog from "./chat-share-dialog.svelte";
   import ChatTitleDialog from "./chat-title-dialog.svelte";
 
   interface Props {
@@ -26,6 +27,7 @@
   const { chat }: Props = $props();
 
   let chatTitleDialogOpen = $state(false);
+  let chatShareDialogOpen = $state(false);
   let chatDeleteDialogOpen = $state(false);
 
   const route = $derived(`/chat/${chat.id}` as const);
@@ -53,7 +55,7 @@
         <PencilIcon />
         Rename
       </DropdownMenu.Item>
-      <DropdownMenu.Item>
+      <DropdownMenu.Item onclick={() => (chatShareDialogOpen = true)}>
         {#if isDefined(chat.shareId)}
           <LockOpenIcon />
         {:else}
@@ -76,6 +78,12 @@
   {chat}
   open={chatTitleDialogOpen}
   onClose={() => (chatTitleDialogOpen = false)}
+/>
+
+<ChatShareDialog
+  {chat}
+  open={chatShareDialogOpen}
+  onClose={() => (chatShareDialogOpen = false)}
 />
 
 <ChatDeleteDialog

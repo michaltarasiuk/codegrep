@@ -94,8 +94,8 @@
     }
   }}
 >
-  <Dialog.Content class="sm:max-w-lg">
-    <form class="space-y-4" onsubmit={handleSubmit}>
+  <Dialog.Content>
+    <form onsubmit={handleSubmit}>
       <Dialog.Header>
         <Dialog.Title>Personal instructions</Dialog.Title>
         <Dialog.Description>
@@ -104,54 +104,56 @@
         </Dialog.Description>
       </Dialog.Header>
 
-      <div class="relative">
-        <Textarea
-          bind:ref={textarea}
-          bind:value
-          placeholder="Your instructions"
-          disabled={loading}
-          maxlength={MAX_LENGTH}
-          cols={30}
-          rows={7}
-          class="h-52 resize-none pb-12"
-        />
-        <div class="absolute bottom-0 flex w-full items-center px-3 py-2">
-          {#if showTemplates}
-            <div class="flex gap-1">
-              {#each TEMPLATES as template (template.key)}
-                <Button
-                  variant="outline"
-                  size="sm"
-                  disabled={loading}
-                  class="h-7 gap-1 px-2 text-xs"
-                  onclick={() => appendTemplate(template.text)}
-                >
-                  <PlusIcon class="size-3" />
-                  {template.label}
-                </Button>
-              {/each}
-            </div>
-          {/if}
-
-          <Button
-            variant="ghost"
-            size="icon-sm"
+      <div class="space-y-2 py-4">
+        <div class="relative">
+          <Textarea
+            bind:ref={textarea}
+            bind:value
+            placeholder="Your instructions"
             disabled={loading}
-            class="ms-auto"
-            onclick={() => (showTemplates = !showTemplates)}
-          >
+            maxlength={MAX_LENGTH}
+            cols={30}
+            rows={7}
+            class="h-52 resize-none pb-12"
+          />
+          <div class="absolute bottom-0 flex w-full items-center px-3 py-2">
             {#if showTemplates}
-              <XIcon class="size-3.5" />
-            {:else}
-              <LightbulbIcon class="size-3.5" />
+              <div class="flex gap-1">
+                {#each TEMPLATES as template (template.key)}
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    disabled={loading}
+                    class="h-7 gap-1 px-2 text-xs"
+                    onclick={() => appendTemplate(template.text)}
+                  >
+                    <PlusIcon class="size-4" />
+                    {template.label}
+                  </Button>
+                {/each}
+              </div>
             {/if}
-          </Button>
-        </div>
-      </div>
 
-      <p class="text-muted-foreground text-xs tabular-nums">
-        {charCount} / {MAX_LENGTH} characters
-      </p>
+            <Button
+              variant="ghost"
+              size="icon-sm"
+              disabled={loading}
+              class="ms-auto"
+              onclick={() => (showTemplates = !showTemplates)}
+            >
+              {#if showTemplates}
+                <XIcon class="size-4" />
+              {:else}
+                <LightbulbIcon class="size-4" />
+              {/if}
+            </Button>
+          </div>
+        </div>
+
+        <p class="text-muted-foreground text-xs tabular-nums">
+          {charCount} / {MAX_LENGTH} characters
+        </p>
+      </div>
 
       <Dialog.Footer>
         <Button variant="outline" onclick={() => onClose()}>Cancel</Button>

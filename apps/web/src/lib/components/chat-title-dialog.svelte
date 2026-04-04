@@ -6,6 +6,7 @@
   import Label from "$lib/components/ui/label/label.svelte";
   import { client } from "$lib/utils/client";
   import { CHAT_LIST_KEY } from "$lib/utils/invalidation-keys";
+  import { isDefined } from "$lib/utils/is-defined";
 
   let {
     chat,
@@ -33,7 +34,7 @@
         .put({
           title: value,
         });
-      if (!result.error) {
+      if (!isDefined(result.error)) {
         await invalidate(CHAT_LIST_KEY);
         onClose();
       }
@@ -62,10 +63,12 @@
       <Dialog.Header>
         <Dialog.Title>Chat title</Dialog.Title>
       </Dialog.Header>
+
       <div class="py-4">
         <Label for="chat-title-{chat.id}" class="sr-only">Title</Label>
         <Input id="chat-title-{chat.id}" bind:value disabled={loading} />
       </div>
+
       <Dialog.Footer>
         <Button variant="outline" type="button" onclick={() => onClose()}>
           Cancel
