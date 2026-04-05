@@ -17,8 +17,9 @@
   });
 </script>
 
-<AppCommand />
 <AppSidebar chatList={data.chatList}>
   {@render children()}
 </AppSidebar>
+<AppCommand />
+
 <ModeWatcher />
