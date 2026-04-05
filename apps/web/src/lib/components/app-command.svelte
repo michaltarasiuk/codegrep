@@ -56,7 +56,7 @@
 
   async function signOut() {
     await authClient.signOut();
-    await goto(resolve("/chat"));
+    await goto(resolve("/chat"), { invalidateAll: true });
   }
 </script>
 
