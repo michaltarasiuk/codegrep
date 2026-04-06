@@ -159,36 +159,37 @@ export abstract class ChatService {
     chatId: string;
     userId: string;
   }) {
-    const found = await this.findFirst({
-      where: {
-        chatId,
-        userId,
-      },
-    });
-    if (!isDefined(found)) {
-      return new NotFoundError({ resource: "chat", id: chatId });
-    }
-    const seen = new Set<string>();
-    const inserts: (typeof message.$inferInsert)[] = [];
-    for (const message of messages) {
-      let id = `${chatId}:${message.id}`;
-      while (seen.has(id)) {
-        id = `${chatId}:${generateId()}`;
-      }
-      seen.add(id);
-      inserts.push({
-        id,
-        chatId,
-        role: message.role,
-        metadata: message.metadata,
-        parts: message.parts,
+    return await db.transaction(async (tx) => {
+      const found = this.findFirst({
+        where: {
+          chatId,
+          userId,
+        },
       });
-    }
-    await db.transaction(async (tx) => {
-      await tx.delete(message).where(eq(message.chatId, chatId));
-      await tx.insert(message).values(inserts);
+      if (!found) {
+        return new NotFoundError({ resource: "chat", id: chatId });
+      }
+      const inserts = messages.map((m) => ({
+        id: `${chatId}:${m.id}`,
+        chatId,
+        role: m.role,
+        metadata: m.metadata,
+        parts: m.parts,
+      }));
+      await tx
+        .insert(message)
+        .values(inserts)
+        .onConflictDoUpdate({
+          target: message.id,
+          set: {
+            role: sql`excluded.role`,
+            metadata: sql`excluded.metadata`,
+            parts: sql`excluded.parts`,
+          },
+        });
+
+      return { id: chatId };
     });
-    return { id: chatId };
   }
 
   static async share({
