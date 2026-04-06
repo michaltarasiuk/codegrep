@@ -30,7 +30,7 @@ export abstract class ChatService {
       userId: string;
     };
   }) {
-    return db
+    return await db
       .select({
         id: chat.id,
         title: chat.title,
@@ -50,23 +50,24 @@ export abstract class ChatService {
       userId: string;
     };
   }) {
-    const found = await this.findFirst({
-      where: {
-        chatId,
-        userId,
-      },
-    });
-    if (!isDefined(found)) {
+    const messages = await db
+      .select({
+        id: message.id,
+        role: message.role,
+        parts: message.parts,
+        createdAt: message.createdAt,
+      })
+      .from(message)
+      .innerJoin(chat, eq(message.chatId, chat.id))
+      .where(and(eq(message.chatId, chatId), eq(chat.userId, userId)))
+      .orderBy(asc(message.createdAt));
+    if (!messages.length) {
       return new NotFoundError({
         resource: "chat",
         id: chatId,
       });
     }
-    return db
-      .select()
-      .from(message)
-      .where(eq(message.chatId, chatId))
-      .orderBy(asc(message.createdAt));
+    return messages;
   }
 
   static async create({
@@ -167,7 +168,10 @@ export abstract class ChatService {
         },
       });
       if (!found) {
-        return new NotFoundError({ resource: "chat", id: chatId });
+        return new NotFoundError({
+          resource: "chat",
+          id: chatId,
+        });
       }
       const inserts = messages.map((m) => ({
         id: `${chatId}:${m.id}`,
