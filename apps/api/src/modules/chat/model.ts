@@ -10,7 +10,19 @@ const select = chatSelect.properties;
 
 const Chat = t.Pick(chatSelect, ["id", "title", "shareId", "updatedAt"]);
 const ChatModel = t.String({ minLength: 1 });
-const ChatMessage = t.Any();
+const ChatMessage = t.Object(
+  {
+    id: t.String(),
+    role: t.Union([
+      t.Literal("system"),
+      t.Literal("user"),
+      t.Literal("assistant"),
+    ]),
+    metadata: t.Optional(t.Any()),
+    parts: t.Array(t.Any()),
+  },
+  { additionalProperties: true }
+);
 
 export const chatModel = new Elysia({ name: "model.chat" }).model({
   "chat.list.response": t.Array(Chat),
