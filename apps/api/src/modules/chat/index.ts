@@ -22,13 +22,13 @@ export const chatPlugin = new Elysia({ name: "chat", prefix: "/chat" })
         },
       }),
     {
-      response: "Chat.ListResponse",
+      response: "chat.list.response",
     }
   )
   .get(
     "/:id/messages",
     async ({ params: { id: chatId }, user }) => {
-      const chatMessages = await ChatService.findManyMessages({
+      const chatMessages = await ChatService.findMessages({
         where: {
           chatId,
           userId: user.id,
@@ -42,10 +42,10 @@ export const chatPlugin = new Elysia({ name: "chat", prefix: "/chat" })
       return chatMessages;
     },
     {
-      params: "Chat.Params",
+      params: "chat.messages.params",
       response: {
-        200: "Chat.MessagesResponse",
-        404: "Chat.Error",
+        200: "chat.messages.response",
+        404: "chat.error",
       },
     }
   )
@@ -84,7 +84,7 @@ export const chatPlugin = new Elysia({ name: "chat", prefix: "/chat" })
       });
     },
     {
-      body: "Chat.MessageBody",
+      body: "chat.message.body",
     }
   )
   .put(
@@ -105,11 +105,11 @@ export const chatPlugin = new Elysia({ name: "chat", prefix: "/chat" })
       return updatedChat;
     },
     {
-      params: "Chat.Params",
-      body: "Chat.UpdateBody",
+      params: "chat.update.params",
+      body: "chat.update.body",
       response: {
-        200: "Chat.UpdateResponse",
-        404: "Chat.Error",
+        200: "chat.update.response",
+        404: "chat.error",
       },
     }
   )
@@ -130,10 +130,10 @@ export const chatPlugin = new Elysia({ name: "chat", prefix: "/chat" })
       return sharedChat;
     },
     {
-      params: "Chat.Params",
+      params: "chat.share.params",
       response: {
-        200: "Chat.ShareResponse",
-        404: "Chat.Error",
+        200: "chat.share.response",
+        404: "chat.error",
       },
     }
   )
@@ -154,11 +154,23 @@ export const chatPlugin = new Elysia({ name: "chat", prefix: "/chat" })
       return unsharedChat;
     },
     {
-      params: "Chat.Params",
+      params: "chat.unshare.params",
       response: {
-        200: "Chat.IdResponse",
-        404: "Chat.Error",
+        200: "chat.unshare.response",
+        404: "chat.error",
       },
+    }
+  )
+  .put(
+    "/unshare-all",
+    async ({ user }) =>
+      await ChatService.unshareAll({
+        where: {
+          userId: user.id,
+        },
+      }),
+    {
+      response: "chat.unshare-all.response",
     }
   )
   .delete(
@@ -178,10 +190,10 @@ export const chatPlugin = new Elysia({ name: "chat", prefix: "/chat" })
       return deletedChat;
     },
     {
-      params: "Chat.Params",
+      params: "chat.delete.params",
       response: {
-        200: "Chat.IdResponse",
-        404: "Chat.Error",
+        200: "chat.delete.response",
+        404: "chat.error",
       },
     }
   );

@@ -1,59 +1,47 @@
+import { createInsertSchema, createSelectSchema } from "drizzle-typebox";
 import { Elysia, t } from "elysia";
 
 import { table } from "$api/db/schema";
-import { spread } from "$api/db/utils";
 
-const chatSelect = spread(table.chat, "select");
-const chatInsert = spread(table.chat, "insert");
+const chatSelect = createSelectSchema(table.chat);
+const chatInsert = createInsertSchema(table.chat);
 
-const ChatParams = t.Object({
-  id: chatSelect.id,
-});
+const select = chatSelect.properties;
 
-const ChatMessageBody = t.Object({
-  id: chatSelect.id,
-  model: t.String({ minLength: 1 }),
-  messages: t.Array(t.Any()),
-});
-const ChatUpdateBody = t.Object({
-  title: chatInsert.title,
-});
+const Chat = t.Pick(chatSelect, ["id", "title", "shareId", "updatedAt"]);
+const ChatModel = t.String({ minLength: 1 });
+const ChatMessage = t.Any();
 
-const ChatMessagesResponse = t.Array(t.Any());
-const ChatListResponse = t.Array(
-  t.Object({
-    id: chatSelect.id,
-    title: chatSelect.title,
-    shareId: chatSelect.shareId,
-    updatedAt: chatSelect.updatedAt,
-  })
-);
-const ChatUpdateResponse = t.Object({
-  id: chatSelect.id,
-  title: chatSelect.title,
-});
-const ChatShareResponse = t.Object({
-  id: chatSelect.id,
-  shareId: chatSelect.shareId,
-});
-const ChatIdResponse = t.Object({
-  id: chatSelect.id,
-});
+export const chatModel = new Elysia({ name: "model.chat" }).model({
+  "chat.list.response": t.Array(Chat),
 
-const ChatError = t.Object({
-  message: t.String(),
+  "chat.messages.params": t.Pick(chatSelect, ["id"]),
+  "chat.messages.response": t.Array(ChatMessage),
+
+  "chat.message.body": t.Object({
+    id: select.id,
+    model: ChatModel,
+    messages: t.Array(ChatMessage),
+  }),
+
+  "chat.update.params": t.Pick(chatSelect, ["id"]),
+  "chat.update.body": t.Pick(chatInsert, ["title"]),
+  "chat.update.response": t.Pick(chatInsert, ["id", "title"]),
+
+  "chat.share.params": t.Pick(chatInsert, ["id"]),
+  "chat.share.response": t.Pick(chatInsert, ["id", "shareId"]),
+
+  "chat.unshare.params": t.Pick(chatInsert, ["id"]),
+  "chat.unshare.response": t.Pick(chatInsert, ["id", "shareId"]),
+
+  "chat.unshare-all.response": t.Object({
+    count: t.Integer(),
+  }),
+
+  "chat.delete.params": t.Pick(chatSelect, ["id"]),
+  "chat.delete.response": t.Pick(chatSelect, ["id"]),
+
+  "chat.error": t.Object({
+    message: t.String(),
+  }),
 });
-
-export const models = {
-  "Chat.Params": ChatParams,
-  "Chat.MessageBody": ChatMessageBody,
-  "Chat.UpdateBody": ChatUpdateBody,
-  "Chat.MessagesResponse": ChatMessagesResponse,
-  "Chat.ListResponse": ChatListResponse,
-  "Chat.UpdateResponse": ChatUpdateResponse,
-  "Chat.ShareResponse": ChatShareResponse,
-  "Chat.IdResponse": ChatIdResponse,
-  "Chat.Error": ChatError,
-};
-
-export const chatModel = new Elysia({ name: "model.chat" }).model(models);

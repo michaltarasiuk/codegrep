@@ -1,5 +1,5 @@
 import { generateId, type UIMessage } from "ai";
-import { and, asc, desc, eq, sql } from "drizzle-orm";
+import { and, asc, desc, eq, isNull, not, sql } from "drizzle-orm";
 
 import { db } from "$api/db";
 import { chat, message } from "$api/db/schema";
@@ -42,7 +42,7 @@ export abstract class ChatService {
       .orderBy(desc(chat.updatedAt));
   }
 
-  static async findManyMessages({
+  static async findMessages({
     where: { chatId, userId },
   }: {
     where: {
@@ -233,6 +233,19 @@ export abstract class ChatService {
       });
     }
     return unshared;
+  }
+
+  static async unshareAll({
+    where: { userId },
+  }: {
+    where: { userId: string };
+  }) {
+    const unshared = await db
+      .update(chat)
+      .set({ shareId: null })
+      .where(and(eq(chat.userId, userId), not(isNull(chat.shareId))))
+      .returning({ id: chat.id });
+    return { count: unshared.length };
   }
 
   static async delete({

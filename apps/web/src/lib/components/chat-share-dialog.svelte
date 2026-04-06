@@ -75,10 +75,6 @@
   async function copyLink() {
     await navigator.clipboard.writeText(shareLink);
   }
-
-  function cancelUnshare() {
-    confirmingUnshare = false;
-  }
 </script>
 
 <Dialog.Root
@@ -197,7 +193,7 @@
           <Button
             variant="outline"
             disabled={unsharing}
-            onclick={cancelUnshare}
+            onclick={() => (confirmingUnshare = false)}
           >
             Cancel
           </Button>
