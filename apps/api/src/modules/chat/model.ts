@@ -30,6 +30,11 @@ export const chatModel = new Elysia({ name: "model.chat" }).model({
   "chat.messages.params": t.Pick(chatSelect, ["id"]),
   "chat.messages.response": t.Array(ChatMessage),
 
+  "chat.shared.messages.params": t.Object({
+    id: t.Exclude(select.shareId, t.Null()),
+  }),
+  "chat.shared.messages.response": t.Array(ChatMessage),
+
   "chat.message.body": t.Object({
     id: select.id,
     model: ChatModel,

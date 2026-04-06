@@ -45,6 +45,27 @@ export const chatPlugin = new Elysia({ name: "chat", prefix: "/chat" })
       },
     }
   )
+  .get(
+    "/shared/:id/messages",
+    async ({ params: { id: shareId } }) => {
+      const chatMessages = await ChatService.findSharedMessages({
+        shareId,
+      });
+      if (chatMessages instanceof NotFoundError) {
+        return status(404, {
+          message: chatMessages.message,
+        });
+      }
+      return chatMessages;
+    },
+    {
+      params: "chat.shared.messages.params",
+      response: {
+        200: "chat.shared.messages.response",
+        404: "chat.error",
+      },
+    }
+  )
   .post(
     "/",
     async ({ body: { id: chatId, model, messages }, user }) => {

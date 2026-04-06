@@ -5,7 +5,6 @@
 
   import { goto } from "$app/navigation";
   import { resolve } from "$app/paths";
-  import { page } from "$app/state";
   import { MODELS } from "$lib/components/chat/consts.js";
   import * as ChatUI from "$lib/components/chat/index.js";
   import * as PromptInput from "$lib/components/prompt-input/index.js";
@@ -13,14 +12,18 @@
   import { isDefined } from "$lib/utils/is-defined.js";
 
   let {
-    messages,
+    id,
+    messages = [],
+    shared = false,
   }: {
+    id?: string;
     messages?: UIMessage[];
+    shared?: boolean;
   } = $props();
 
   let model = $state(MODELS[0].id);
 
-  const chatId = $derived(page.params.id);
+  const chatId = $derived(id);
   const chat = $derived(
     new Chat({
       id: chatId,
@@ -33,6 +36,8 @@
   );
 
   async function sendMessage(message: PromptInput.PromptInputMessage) {
+    // Any new prompt from a shared chat starts a private fork, so hide the shared-only checkpoint UI
+    shared &&= false;
     await chat.sendMessage(message, {
       body: {
         model,
@@ -56,6 +61,10 @@
     <ChatUI.Conversation>
       {#snippet children(message, isLast)}
         <ChatUI.Message {message} {isLast} />
+
+        {#if shared && isLast}
+          <ChatUI.PrivateChatCheckpoint />
+        {/if}
       {/snippet}
     </ChatUI.Conversation>
 

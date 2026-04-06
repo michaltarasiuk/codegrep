@@ -23,6 +23,7 @@
       <PromptInput.Textarea
         placeholder="Ask about the codebase..."
         class="max-h-72"
+        autofocus
       />
     </PromptInput.Body>
     <PromptInput.Footer class="pr-2">

@@ -62,6 +62,26 @@ export abstract class ChatService {
     return messages;
   }
 
+  static async findSharedMessages({ shareId }: { shareId: string }) {
+    const messages = await db
+      .select({
+        id: message.id,
+        role: message.role,
+        parts: message.parts,
+        createdAt: message.createdAt,
+      })
+      .from(message)
+      .innerJoin(chat, eq(message.chatId, chat.id))
+      .where(eq(chat.shareId, shareId));
+    if (!messages.length) {
+      return new NotFoundError({
+        resource: "chat",
+        id: shareId,
+      });
+    }
+    return messages;
+  }
+
   static async upsert({
     title,
     chatId,

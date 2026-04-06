@@ -1,8 +1,7 @@
 <script lang="ts">
-  import { page } from "$app/state";
   import ChatPanel from "$lib/components/chat-panel.svelte";
 
   let { data } = $props();
 </script>
 
-<ChatPanel id={page.params.id} messages={data.messages} />
+<ChatPanel shared messages={data.messages} />

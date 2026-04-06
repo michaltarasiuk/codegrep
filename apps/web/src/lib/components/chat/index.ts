@@ -2,6 +2,7 @@ import Content from "./chat-content.svelte";
 import Conversation from "./chat-conversation.svelte";
 import Message from "./chat-message.svelte";
 import ModelSelector from "./chat-model-selector.svelte";
+import PrivateChatCheckpoint from "./chat-private-chat-checkpoint.svelte";
 import PromptInput from "./chat-prompt-input.svelte";
 import Root from "./chat-root.svelte";
 import Suggestions from "./chat-suggestions.svelte";
@@ -12,6 +13,7 @@ export {
   Conversation,
   Message,
   Suggestions,
+  PrivateChatCheckpoint,
   PromptInput,
   ModelSelector,
   //
@@ -20,6 +22,7 @@ export {
   Conversation as ChatConversation,
   Message as ChatMessage,
   Suggestions as ChatSuggestions,
+  PrivateChatCheckpoint as ChatPrivateChatCheckpoint,
   PromptInput as ChatPromptInput,
   ModelSelector as ChatModelSelector,
 };

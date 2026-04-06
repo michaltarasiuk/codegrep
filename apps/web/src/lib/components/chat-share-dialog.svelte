@@ -27,9 +27,7 @@
   } = $props();
 
   let shareId = $derived(chat.shareId);
-  let shareLink = $derived(
-    `${PUBLIC_WEB_URL}/chat/${chat.id}/shared/${shareId}`
-  );
+  let shareLink = $derived(`${PUBLIC_WEB_URL}/chat/share/${shareId}`);
 
   let sharing = $state(false);
   let unsharing = $state(false);
