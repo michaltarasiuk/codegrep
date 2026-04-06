@@ -3,17 +3,16 @@ import { and, asc, desc, eq, isNull, not, sql } from "drizzle-orm";
 
 import { db } from "$api/db";
 import { chat, message } from "$api/db/schema";
-import { CreateFailedError, NotFoundError } from "$api/errors";
+import { NotFoundError, UpsertFailedError } from "$api/errors";
 import { isDefined } from "$api/utils/is-defined";
 
 export abstract class ChatService {
   static async findFirst({
-    where: { chatId, userId },
+    chatId,
+    userId,
   }: {
-    where: {
-      chatId: string;
-      userId: string;
-    };
+    chatId: string;
+    userId: string;
   }) {
     const [found] = await db
       .select()
@@ -23,13 +22,7 @@ export abstract class ChatService {
     return found;
   }
 
-  static async findMany({
-    where: { userId },
-  }: {
-    where: {
-      userId: string;
-    };
-  }) {
+  static async findMany({ userId }: { userId: string }) {
     return await db
       .select({
         id: chat.id,
@@ -43,12 +36,11 @@ export abstract class ChatService {
   }
 
   static async findMessages({
-    where: { chatId, userId },
+    chatId,
+    userId,
   }: {
-    where: {
-      chatId: string;
-      userId: string;
-    };
+    chatId: string;
+    userId: string;
   }) {
     const messages = await db
       .select({
@@ -70,45 +62,6 @@ export abstract class ChatService {
     return messages;
   }
 
-  static async create({
-    title,
-    chatId,
-    userId,
-  }: {
-    title: string;
-    chatId: string;
-    userId: string;
-  }) {
-    const created = await db.transaction(async (tx) => {
-      const [createdChat] = await tx
-        .insert(chat)
-        .values({ id: chatId, title, userId })
-        .returning({ id: chat.id });
-      if (!isDefined(createdChat)) {
-        return null;
-      }
-      const [createdMessage] = await tx
-        .insert(message)
-        .values({
-          id: `${chatId}:${generateId()}`,
-          chatId,
-          role: "user",
-          parts: [{ type: "text", text: title }],
-        })
-        .returning({ id: message.id });
-      if (!isDefined(createdMessage)) {
-        return null;
-      }
-      return createdChat;
-    });
-    if (!isDefined(created)) {
-      return new CreateFailedError({
-        resource: "chat",
-      });
-    }
-    return created;
-  }
-
   static async upsert({
     title,
     chatId,
@@ -118,24 +71,30 @@ export abstract class ChatService {
     chatId: string;
     userId: string;
   }) {
-    const found = await this.findFirst({
-      where: {
-        chatId,
-        userId,
-      },
-    });
-    return found ?? (await this.create({ title, chatId, userId }));
+    const [upserted] = await db
+      .insert(chat)
+      .values({ id: chatId, title, userId })
+      .onConflictDoUpdate({
+        target: chat.id,
+        set: { title },
+      })
+      .returning();
+    if (!isDefined(upserted)) {
+      return new UpsertFailedError({
+        resource: "chat",
+      });
+    }
+    return upserted;
   }
 
   static async update({
     title,
-    where: { chatId, userId },
+    chatId,
+    userId,
   }: {
     title: string;
-    where: {
-      chatId: string;
-      userId: string;
-    };
+    chatId: string;
+    userId: string;
   }) {
     const [updated] = await db
       .update(chat)
@@ -162,10 +121,8 @@ export abstract class ChatService {
   }) {
     return await db.transaction(async (tx) => {
       const found = this.findFirst({
-        where: {
-          chatId,
-          userId,
-        },
+        chatId,
+        userId,
       });
       if (!found) {
         return new NotFoundError({

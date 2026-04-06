@@ -1,7 +1,7 @@
 import { convertToModelMessages, streamText } from "ai";
 import { Elysia, status } from "elysia";
 
-import { CreateFailedError, NotFoundError } from "$api/errors";
+import { NotFoundError, UpsertFailedError } from "$api/errors";
 import { getFirstUserText } from "$api/utils/get-first-user-text";
 import { isDefined } from "$api/utils/is-defined";
 
@@ -17,9 +17,7 @@ export const chatPlugin = new Elysia({ name: "chat", prefix: "/chat" })
     "/",
     async ({ user }) =>
       await ChatService.findMany({
-        where: {
-          userId: user.id,
-        },
+        userId: user.id,
       }),
     {
       response: "chat.list.response",
@@ -29,10 +27,8 @@ export const chatPlugin = new Elysia({ name: "chat", prefix: "/chat" })
     "/:id/messages",
     async ({ params: { id: chatId }, user }) => {
       const chatMessages = await ChatService.findMessages({
-        where: {
-          chatId,
-          userId: user.id,
-        },
+        chatId,
+        userId: user.id,
       });
       if (chatMessages instanceof NotFoundError) {
         return status(404, {
@@ -57,7 +53,7 @@ export const chatPlugin = new Elysia({ name: "chat", prefix: "/chat" })
         chatId,
         userId: user.id,
       });
-      if (chat instanceof CreateFailedError) {
+      if (chat instanceof UpsertFailedError) {
         return status(500, {
           message: chat.message,
         });
@@ -92,10 +88,8 @@ export const chatPlugin = new Elysia({ name: "chat", prefix: "/chat" })
     async ({ params: { id: chatId }, body: { title }, user }) => {
       const updatedChat = await ChatService.update({
         title,
-        where: {
-          chatId,
-          userId: user.id,
-        },
+        chatId,
+        userId: user.id,
       });
       if (updatedChat instanceof NotFoundError) {
         return status(404, {
