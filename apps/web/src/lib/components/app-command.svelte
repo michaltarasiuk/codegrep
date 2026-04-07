@@ -85,7 +85,7 @@
           onSelect={() => executeAndClose(() => openPersonalInstructions())}
         >
           <NotebookPenIcon />
-          <span>Personal instructions </span>
+          <span>Personal instructions</span>
         </Command.Item>
         <Command.Item
           value="log-out"
