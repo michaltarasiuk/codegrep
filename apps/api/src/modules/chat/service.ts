@@ -140,11 +140,11 @@ export abstract class ChatService {
     userId: string;
   }) {
     return await db.transaction(async (tx) => {
-      const found = this.findFirst({
+      const found = await this.findFirst({
         chatId,
         userId,
       });
-      if (!found) {
+      if (!isDefined(found)) {
         return new NotFoundError({
           resource: "chat",
           id: chatId,
@@ -168,7 +168,6 @@ export abstract class ChatService {
             parts: sql`excluded.parts`,
           },
         });
-
       return { id: chatId };
     });
   }
