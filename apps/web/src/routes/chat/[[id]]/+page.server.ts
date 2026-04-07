@@ -9,13 +9,13 @@ export async function load({ params: { id }, request }: PageServerLoadEvent) {
   if (!isDefined(id)) {
     return;
   }
-  const requestHeaders = Object.fromEntries(request.headers);
+  const headers = Object.fromEntries(request.headers);
   const messages = await client.api
     .chat({
       id,
     })
     .messages.get({
-      headers: requestHeaders,
+      headers,
     });
   if (!messages.error) {
     return {

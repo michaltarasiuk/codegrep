@@ -1,14 +1,10 @@
 import { error } from "@sveltejs/kit";
 
 import { client } from "$lib/utils/client.server";
-import { isDefined } from "$lib/utils/is-defined.js";
 
 import type { PageServerLoadEvent } from "./$types";
 
 export async function load({ params: { id }, request }: PageServerLoadEvent) {
-  if (!isDefined(id)) {
-    return;
-  }
   const headers = Object.fromEntries(request.headers);
   const messages = await client.api.chat
     .shared({

@@ -132,10 +132,8 @@ export const chatPlugin = new Elysia({ name: "chat", prefix: "/chat" })
     "/:id/share",
     async ({ params: { id: chatId }, user }) => {
       const sharedChat = await ChatService.share({
-        where: {
-          chatId,
-          userId: user.id,
-        },
+        chatId,
+        userId: user.id,
       });
       if (sharedChat instanceof NotFoundError) {
         return status(404, {
@@ -156,10 +154,8 @@ export const chatPlugin = new Elysia({ name: "chat", prefix: "/chat" })
     "/:id/unshare",
     async ({ params: { id: chatId }, user }) => {
       const unsharedChat = await ChatService.unshare({
-        where: {
-          chatId,
-          userId: user.id,
-        },
+        chatId,
+        userId: user.id,
       });
       if (unsharedChat instanceof NotFoundError) {
         return status(404, {
@@ -180,9 +176,7 @@ export const chatPlugin = new Elysia({ name: "chat", prefix: "/chat" })
     "/unshare-all",
     async ({ user }) =>
       await ChatService.unshareAll({
-        where: {
-          userId: user.id,
-        },
+        userId: user.id,
       }),
     {
       response: "chat.unshare-all.response",
@@ -192,10 +186,8 @@ export const chatPlugin = new Elysia({ name: "chat", prefix: "/chat" })
     "/:id",
     async ({ params: { id: chatId }, user }) => {
       const deletedChat = await ChatService.delete({
-        where: {
-          chatId,
-          userId: user.id,
-        },
+        chatId,
+        userId: user.id,
       });
       if (deletedChat instanceof NotFoundError) {
         return status(404, {

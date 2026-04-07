@@ -173,14 +173,7 @@ export abstract class ChatService {
     });
   }
 
-  static async share({
-    where: { chatId, userId },
-  }: {
-    where: {
-      chatId: string;
-      userId: string;
-    };
-  }) {
+  static async share({ chatId, userId }: { chatId: string; userId: string }) {
     const [shared] = await db
       .update(chat)
       .set({ shareId: sql`coalesce(${chat.shareId}, ${generateId()})` })
@@ -195,14 +188,7 @@ export abstract class ChatService {
     return shared;
   }
 
-  static async unshare({
-    where: { chatId, userId },
-  }: {
-    where: {
-      chatId: string;
-      userId: string;
-    };
-  }) {
+  static async unshare({ chatId, userId }: { chatId: string; userId: string }) {
     const [unshared] = await db
       .update(chat)
       .set({ shareId: null })
@@ -217,11 +203,7 @@ export abstract class ChatService {
     return unshared;
   }
 
-  static async unshareAll({
-    where: { userId },
-  }: {
-    where: { userId: string };
-  }) {
+  static async unshareAll({ userId }: { userId: string }) {
     const unshared = await db
       .update(chat)
       .set({ shareId: null })
@@ -230,14 +212,7 @@ export abstract class ChatService {
     return { count: unshared.length };
   }
 
-  static async delete({
-    where: { chatId, userId },
-  }: {
-    where: {
-      chatId: string;
-      userId: string;
-    };
-  }) {
+  static async delete({ chatId, userId }: { chatId: string; userId: string }) {
     const [deleted] = await db
       .delete(chat)
       .where(and(eq(chat.id, chatId), eq(chat.userId, userId)))
