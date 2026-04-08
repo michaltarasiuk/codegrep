@@ -2,8 +2,8 @@
   import type { Snippet } from "svelte";
   import type { HTMLAttributes } from "svelte/elements";
 
+  import { StickToBottomContent } from "$lib/components/stick-to-bottom/index.js";
   import { cn } from "$lib/utils/cn.js";
-  import { StickToBottomContent } from "$lib/vendor/stick-to-bottom/index.js";
 
   interface Props extends HTMLAttributes<HTMLDivElement> {
     children: Snippet;

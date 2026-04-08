@@ -1,5 +1,5 @@
 import { API_URL } from "$env/static/private";
-import { createFetchProxy } from "$lib/vendor/fetch-proxy";
+import { createFetchProxy } from "$lib/utils/fetch-proxy";
 
 import type { RequestHandler } from "./$types";
 

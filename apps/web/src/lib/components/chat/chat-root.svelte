@@ -2,7 +2,7 @@
   import type { Chat } from "@ai-sdk/svelte";
   import type { Snippet } from "svelte";
 
-  import StickToBottom from "$lib/vendor/stick-to-bottom/stick-to-bottom.svelte";
+  import StickToBottom from "$lib/components/stick-to-bottom/stick-to-bottom.svelte";
 
   import { type Model, setChat, setModel } from "./chat-context";
 
