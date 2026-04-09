@@ -1,4 +1,4 @@
-<script lang="ts" module>
+<script lang="ts">
   import type {
     HTMLAnchorAttributes,
     HTMLButtonAttributes,
@@ -7,16 +7,13 @@
   import { cn, type WithElementRef } from "$lib/utils/cn.js";
 
   import type { ButtonSize, ButtonVariant } from "./button.variants.js";
+  import { buttonVariants } from "./button.variants.js";
 
   type ButtonProps = WithElementRef<HTMLButtonAttributes> &
     WithElementRef<HTMLAnchorAttributes> & {
       variant?: ButtonVariant;
       size?: ButtonSize;
     };
-</script>
-
-<script lang="ts">
-  import { buttonVariants } from "./button.variants.js";
 
   let {
     ref = $bindable(null),
