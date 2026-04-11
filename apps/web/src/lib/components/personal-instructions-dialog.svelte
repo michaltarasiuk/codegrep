@@ -2,6 +2,7 @@
   import LightbulbIcon from "@lucide/svelte/icons/lightbulb";
   import PlusIcon from "@lucide/svelte/icons/plus";
   import XIcon from "@lucide/svelte/icons/x";
+  import { useId } from "bits-ui";
   import dedent from "dedent";
   import { cn } from "tailwind-variants";
 
@@ -49,16 +50,17 @@
 
   let { open, onClose }: { open: boolean; onClose: () => void } = $props();
 
-  const session = authClient.useSession();
-
-  let value = $derived(getInitialValue());
   let textarea = $state<HTMLTextAreaElement | null>(null);
+  let value = $derived(getInitialValue());
 
   let loading = $state(false);
   let showTemplates = $state(false);
 
   const charCount = $derived(value.length);
   const invalid = $derived(charCount > MAX_LENGTH);
+
+  const session = authClient.useSession();
+  const instructionsId = useId("personal-instructions");
 
   function getInitialValue() {
     return $session.data?.user.personalInstructions ?? "";
@@ -120,13 +122,16 @@
       </Dialog.Header>
 
       <Field.Field class="py-4">
+        <Field.Label for={instructionsId} class="sr-only">
+          Instructions
+        </Field.Label>
+
         <div class="relative">
           <Textarea
             bind:ref={textarea}
             bind:value
+            id={instructionsId}
             placeholder="Your instructions"
-            aria-invalid={invalid}
-            disabled={loading}
             cols={30}
             rows={7}
             class="scrollbar-hide h-52 resize-none pb-12"
