@@ -10,7 +10,7 @@
   import { goto } from "$app/navigation";
   import { resolve } from "$app/paths";
   import * as Command from "$lib/components/ui/command/index.js";
-  import { authClient } from "$lib/utils/client";
+  import { authClient } from "$lib/utils/client.js";
 
   import PersonalInstructionsDialog from "./personal-instructions-dialog.svelte";
 

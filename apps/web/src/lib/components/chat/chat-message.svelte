@@ -6,7 +6,7 @@
 
   import * as Message from "$lib/components/message/index.js";
 
-  import { getChat, getModel } from "./chat-context";
+  import { getChat, getModel } from "./chat-context.js";
 
   let {
     message,

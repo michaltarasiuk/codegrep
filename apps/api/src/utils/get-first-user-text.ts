@@ -1,6 +1,6 @@
 import type { UIMessage } from "ai";
 
-import { isDefined } from "./is-defined";
+import { isDefined } from "./is-defined.js";
 
 const DEFAULT_TITLE = "New Chat";
 

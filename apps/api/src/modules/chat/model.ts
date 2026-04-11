@@ -1,7 +1,7 @@
 import { createInsertSchema, createSelectSchema } from "drizzle-typebox";
 import { Elysia, t } from "elysia";
 
-import { chat } from "$api/db/schema";
+import { chat } from "$api/db/schema.js";
 
 const chatSelect = createSelectSchema(chat);
 const chatInsert = createInsertSchema(chat);

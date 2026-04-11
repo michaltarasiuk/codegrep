@@ -1,10 +1,10 @@
 <script lang="ts">
   import * as PromptInput from "$lib/components/prompt-input/index.js";
 
-  import { getChat } from "./chat-context";
+  import { getChat } from "./chat-context.js";
   import ModelSelector from "./chat-model-selector.svelte";
   import ChatPromptAddFilesButton from "./chat-prompt-add-files-button.svelte";
-  import { MODELS } from "./consts";
+  import { MODELS } from "./consts.js";
 
   let {
     selectedModel = $bindable(MODELS[0].id),

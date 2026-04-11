@@ -4,7 +4,7 @@
 
   import StickToBottom from "$lib/components/stick-to-bottom/stick-to-bottom.svelte";
 
-  import { type Model, setChat, setModel } from "./chat-context";
+  import { type Model, setChat, setModel } from "./chat-context.js";
 
   let {
     chat,

@@ -7,9 +7,9 @@
 
   import * as InputGroup from "$lib/components/ui/input-group/index.js";
   import { Spinner } from "$lib/components/ui/spinner/index.js";
-  import { isDefined } from "$lib/utils/is-defined";
+  import { isDefined } from "$lib/utils/is-defined.js";
 
-  import { getPromptInputController } from "./prompt-input-context.svelte";
+  import { getPromptInputController } from "./prompt-input-context.svelte.js";
 
   let {
     variant = "default",

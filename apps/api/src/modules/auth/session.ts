@@ -1,9 +1,9 @@
 import { Elysia, status } from "elysia";
 
-import { UnauthorizedError } from "$api/errors";
-import { isDefined } from "$api/utils/is-defined";
+import { UnauthorizedError } from "$api/errors.js";
+import { isDefined } from "$api/utils/is-defined.js";
 
-import { authService } from "./service";
+import { authService } from "./service.js";
 
 export const sessionPlugin = new Elysia({ name: "auth/session" })
   .derive({ as: "scoped" }, async ({ request: { headers } }) => {

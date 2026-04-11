@@ -8,9 +8,9 @@
   import Button from "$lib/components/ui/button/button.svelte";
   import * as Dialog from "$lib/components/ui/dialog/index.js";
   import { Textarea } from "$lib/components/ui/textarea/index.js";
-  import { authClient } from "$lib/utils/client";
-  import { ensureTrailingNewlines } from "$lib/utils/ensure-trailing-newlines";
-  import { isDefined } from "$lib/utils/is-defined";
+  import { authClient } from "$lib/utils/client.js";
+  import { ensureTrailingNewlines } from "$lib/utils/ensure-trailing-newlines.js";
+  import { isDefined } from "$lib/utils/is-defined.js";
 
   const TEMPLATES: { key: string; label: string; text: string }[] = [
     {

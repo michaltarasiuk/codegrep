@@ -1,14 +1,14 @@
 import { convertToModelMessages, streamText } from "ai";
 import { Elysia, status } from "elysia";
 
-import { NotFoundError, UpsertFailedError } from "$api/errors";
-import { getFirstUserText } from "$api/utils/get-first-user-text";
-import { isDefined } from "$api/utils/is-defined";
+import { NotFoundError, UpsertFailedError } from "$api/errors.js";
+import { getFirstUserText } from "$api/utils/get-first-user-text.js";
+import { isDefined } from "$api/utils/is-defined.js";
 
-import { sessionPlugin } from "../auth/session";
-import { chatModel } from "./model";
-import { groqProvider } from "./provider";
-import { ChatService } from "./service";
+import { sessionPlugin } from "../auth/session.js";
+import { chatModel } from "./model.js";
+import { groqProvider } from "./provider.js";
+import { ChatService } from "./service.js";
 
 export const chatPlugin = new Elysia({ name: "chat", prefix: "/chat" })
   .use(sessionPlugin)

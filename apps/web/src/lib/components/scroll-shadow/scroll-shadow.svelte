@@ -42,12 +42,12 @@
   import { serializeStyles } from "@emotion/serialize";
   import type { HTMLAttributes } from "svelte/elements";
 
-  import { cn, type WithElementRef } from "$lib/utils/cn";
+  import { cn, type WithElementRef } from "$lib/utils/cn.js";
 
   import {
     type ScrollShadowVisibility,
     useScrollShadow,
-  } from "./use-scroll-shadow.svelte";
+  } from "./use-scroll-shadow.svelte.js";
 
   interface ScrollShadowRootProps
     extends

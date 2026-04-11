@@ -7,9 +7,9 @@
   import Input from "$lib/components/ui/input/input.svelte";
   import Label from "$lib/components/ui/label/label.svelte";
   import { Spinner } from "$lib/components/ui/spinner/index.js";
-  import { client } from "$lib/utils/client";
-  import { CHAT_LIST_KEY } from "$lib/utils/invalidation-keys";
-  import { isDefined } from "$lib/utils/is-defined";
+  import { client } from "$lib/utils/client.js";
+  import { CHAT_LIST_KEY } from "$lib/utils/invalidation-keys.js";
+  import { isDefined } from "$lib/utils/is-defined.js";
 
   import Button from "./ui/button/button.svelte";
 

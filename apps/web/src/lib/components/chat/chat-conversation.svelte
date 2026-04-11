@@ -5,7 +5,7 @@
   import * as Conversation from "$lib/components/conversation/index.js";
   import Spinner from "$lib/components/ui/spinner/spinner.svelte";
 
-  import { getChat } from "./chat-context";
+  import { getChat } from "./chat-context.js";
 
   let {
     children,

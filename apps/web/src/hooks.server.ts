@@ -1,6 +1,6 @@
 import type { Handle } from "@sveltejs/kit";
 
-import { authClient } from "$lib/utils/client.server";
+import { authClient } from "$lib/utils/client.server.js";
 import { isDefined } from "$lib/utils/is-defined.js";
 
 export const handle: Handle = async ({ event, resolve }) => {

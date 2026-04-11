@@ -3,8 +3,8 @@ import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { anonymous } from "better-auth/plugins";
 import { eq } from "drizzle-orm";
 
-import { db } from "$api/db";
-import { account, chat, session, user, verification } from "$api/db/schema";
+import { db } from "$api/db/index.js";
+import { account, chat, session, user, verification } from "$api/db/schema.js";
 
 export const authService = betterAuth({
   baseURL: process.env.BETTER_AUTH_BASE_URL,

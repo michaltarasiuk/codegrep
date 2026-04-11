@@ -1,10 +1,10 @@
 import { generateId, type UIMessage } from "ai";
 import { and, asc, desc, eq, isNull, not, sql } from "drizzle-orm";
 
-import { db } from "$api/db";
-import { chat, message } from "$api/db/schema";
-import { NotFoundError, UpsertFailedError } from "$api/errors";
-import { isDefined } from "$api/utils/is-defined";
+import { db } from "$api/db/index.js";
+import { chat, message } from "$api/db/schema.js";
+import { NotFoundError, UpsertFailedError } from "$api/errors.js";
+import { isDefined } from "$api/utils/is-defined.js";
 
 export abstract class ChatService {
   static async findFirst({

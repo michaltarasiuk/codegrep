@@ -1,6 +1,6 @@
 import { Elysia, status } from "elysia";
 
-import { authService } from "./service";
+import { authService } from "./service.js";
 
 const ALLOWED_METHODS = new Set(["OPTIONS", "GET", "POST"]);
 

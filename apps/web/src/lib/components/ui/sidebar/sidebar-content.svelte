@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { HTMLAttributes } from "svelte/elements";
 
-  import { ScrollShadow } from "$lib/components/scroll-shadow";
+  import { ScrollShadow } from "$lib/components/scroll-shadow/index.js";
   import { cn, type WithElementRef } from "$lib/utils/cn.js";
 
   let {

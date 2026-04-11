@@ -5,7 +5,7 @@
   import { goto } from "$app/navigation";
   import { resolve } from "$app/paths";
   import * as Sidebar from "$lib/components/ui/sidebar/index.js";
-  import { groupChatsByPeriod } from "$lib/utils/group-chats-by-period";
+  import { groupChatsByPeriod } from "$lib/utils/group-chats-by-period.js";
 
   import ChatSidebarItem from "./chat-sidebar-item.svelte";
   import ThemeToggle from "./theme-toggle.svelte";

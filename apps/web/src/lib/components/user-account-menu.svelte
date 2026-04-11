@@ -11,7 +11,7 @@
   import * as DropdownMenu from "$lib/components/ui/dropdown-menu/index.js";
   import * as Sidebar from "$lib/components/ui/sidebar/index.js";
   import { Skeleton } from "$lib/components/ui/skeleton/index.js";
-  import { authClient } from "$lib/utils/client";
+  import { authClient } from "$lib/utils/client.js";
 
   import PersonalInstructionsDialog from "./personal-instructions-dialog.svelte";
 

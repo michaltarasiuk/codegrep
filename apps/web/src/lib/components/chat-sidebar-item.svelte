@@ -10,7 +10,7 @@
   import { page } from "$app/state";
   import * as DropdownMenu from "$lib/components/ui/dropdown-menu/index.js";
   import * as Sidebar from "$lib/components/ui/sidebar/index.js";
-  import { isDefined } from "$lib/utils/is-defined";
+  import { isDefined } from "$lib/utils/is-defined.js";
 
   import ChatDeleteDialog from "./chat-delete-dialog.svelte";
   import ChatShareDialog from "./chat-share-dialog.svelte";
