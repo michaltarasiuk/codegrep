@@ -61,7 +61,15 @@
   }
 
   function appendTemplate(text: string) {
-    value += text;
+    value = value.replace(/\n*$/, "") + (value ? "\n\n" : "") + text;
+
+    requestAnimationFrame(() => {
+      if (isDefined(textarea)) {
+        textarea.focus();
+        textarea.setSelectionRange(value.length, value.length);
+        textarea.scrollTop = textarea.scrollHeight;
+      }
+    });
   }
 
   async function handleSubmit() {
@@ -114,7 +122,7 @@
             maxlength={MAX_LENGTH}
             cols={30}
             rows={7}
-            class="h-52 resize-none pb-12"
+            class="scrollbar-hide h-52 resize-none pb-12"
           />
           <div class="absolute bottom-0 flex w-full items-center px-3 py-2">
             {#if showTemplates}

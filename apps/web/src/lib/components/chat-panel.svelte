@@ -70,10 +70,10 @@
 
     <div
       class={cn(
-        "bg-background bottom-0 w-full py-4",
+        "bg-background w-full py-4",
         isDefined(chat.lastMessage)
-          ? "sticky"
-          : "absolute md:bottom-1/2 md:translate-y-1/2 md:py-0"
+          ? "sticky bottom-0"
+          : "absolute bottom-0 md:bottom-1/2 md:translate-y-1/2"
       )}
     >
       {#if !isDefined(chat.lastMessage)}
