@@ -7,6 +7,7 @@
 
   import Button from "$lib/components/ui/button/button.svelte";
   import * as Dialog from "$lib/components/ui/dialog/index.js";
+  import * as Field from "$lib/components/ui/field/index.js";
   import { Textarea } from "$lib/components/ui/textarea/index.js";
   import { authClient } from "$lib/utils/client.js";
   import { ensureTrailingNewlines } from "$lib/utils/ensure-trailing-newlines.js";
@@ -118,7 +119,7 @@
         </Dialog.Description>
       </Dialog.Header>
 
-      <div class="space-y-2 py-4">
+      <Field.Field class="py-4">
         <div class="relative">
           <Textarea
             bind:ref={textarea}
@@ -171,7 +172,7 @@
         >
           {charCount} / {MAX_LENGTH} characters
         </p>
-      </div>
+      </Field.Field>
 
       <Dialog.Footer>
         <Button variant="outline" onclick={() => onClose()}>Cancel</Button>
