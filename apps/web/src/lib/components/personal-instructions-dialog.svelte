@@ -8,6 +8,7 @@
   import * as Dialog from "$lib/components/ui/dialog/index.js";
   import { Textarea } from "$lib/components/ui/textarea/index.js";
   import { authClient } from "$lib/utils/client";
+  import { ensureTrailingNewlines } from "$lib/utils/ensure-trailing-newlines";
   import { isDefined } from "$lib/utils/is-defined";
 
   const TEMPLATES: { key: string; label: string; text: string }[] = [
@@ -61,7 +62,10 @@
   }
 
   function appendTemplate(text: string) {
-    value = value.replace(/\n*$/, "") + (value ? "\n\n" : "") + text;
+    if (value.length > 0) {
+      value += ensureTrailingNewlines(value);
+    }
+    value += text;
 
     requestAnimationFrame(() => {
       if (isDefined(textarea)) {
