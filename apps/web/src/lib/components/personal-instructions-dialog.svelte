@@ -121,63 +121,65 @@
         </Dialog.Description>
       </Dialog.Header>
 
-      <Field.Field class="py-4">
-        <Field.Label for={instructionsId} class="sr-only">
-          Instructions
-        </Field.Label>
+      <div class="py-4">
+        <Field.Field>
+          <Field.Label for={instructionsId} class="sr-only">
+            Instructions
+          </Field.Label>
 
-        <div class="relative">
-          <Textarea
-            bind:ref={textarea}
-            bind:value
-            id={instructionsId}
-            placeholder="Your instructions"
-            cols={30}
-            rows={7}
-            class="scrollbar-hide h-52 resize-none pb-12"
-          />
-          <div class="absolute bottom-0 flex w-full items-center px-3 py-2">
-            {#if showTemplates}
-              <div class="flex gap-1">
-                {#each TEMPLATES as template (template.key)}
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    disabled={loading}
-                    class="h-7 gap-1 px-2 text-xs"
-                    onclick={() => appendTemplate(template.text)}
-                  >
-                    <PlusIcon class="size-4" />
-                    {template.label}
-                  </Button>
-                {/each}
-              </div>
-            {/if}
-
-            <Button
-              variant="ghost"
-              size="icon-sm"
-              disabled={loading}
-              class="ms-auto"
-              onclick={() => (showTemplates = !showTemplates)}
-            >
+          <div class="relative">
+            <Textarea
+              bind:ref={textarea}
+              bind:value
+              id={instructionsId}
+              placeholder="Your instructions"
+              cols={30}
+              rows={7}
+              class="scrollbar-hide h-52 resize-none pb-12"
+            />
+            <div class="absolute bottom-0 flex w-full items-center px-3 py-2">
               {#if showTemplates}
-                <XIcon class="size-4" />
-              {:else}
-                <LightbulbIcon class="size-4" />
+                <div class="flex gap-1">
+                  {#each TEMPLATES as template (template.key)}
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      disabled={loading}
+                      class="h-7 gap-1 px-2 text-xs"
+                      onclick={() => appendTemplate(template.text)}
+                    >
+                      <PlusIcon class="size-4" />
+                      {template.label}
+                    </Button>
+                  {/each}
+                </div>
               {/if}
-            </Button>
-          </div>
-        </div>
 
-        <p
-          class={cn("text-muted-foreground text-xs tabular-nums", {
-            "text-destructive": invalid,
-          })}
-        >
-          {charCount} / {MAX_LENGTH} characters
-        </p>
-      </Field.Field>
+              <Button
+                variant="ghost"
+                size="icon-sm"
+                disabled={loading}
+                class="ms-auto"
+                onclick={() => (showTemplates = !showTemplates)}
+              >
+                {#if showTemplates}
+                  <XIcon class="size-4" />
+                {:else}
+                  <LightbulbIcon class="size-4" />
+                {/if}
+              </Button>
+            </div>
+          </div>
+
+          <p
+            class={cn("text-muted-foreground text-xs tabular-nums", {
+              "text-destructive": invalid,
+            })}
+          >
+            {charCount} / {MAX_LENGTH} characters
+          </p>
+        </Field.Field>
+      </div>
 
       <Dialog.Footer>
         <Button variant="outline" onclick={() => onClose()}>Cancel</Button>
