@@ -15,10 +15,12 @@
 
   let contentEl = $state<HTMLElement | null>(null);
 
-  $effect(() => {
+  $effect(function bindStickToBottomContentElement() {
     const el = contentEl;
     untrack(() => context.contentRef(el));
-    return () => untrack(() => context.contentRef(null));
+    return function unbindStickToBottomContentElement() {
+      untrack(() => context.contentRef(null));
+    };
   });
 </script>
 

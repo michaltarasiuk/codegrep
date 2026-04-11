@@ -184,7 +184,7 @@
     }
   }
 
-  $effect(() => {
+  $effect(function registerPromptInputFileInputWithController() {
     if (!usingProvider) {
       return;
     }
@@ -193,14 +193,14 @@
     });
   });
 
-  $effect(() => {
+  $effect(function clearSyncedHiddenFileInputWhenEmpty() {
     if (!syncHiddenInput || !isDefined(fileInputRef) || !!attachmentsCount) {
       return;
     }
     fileInputRef.value = "";
   });
 
-  $effect(() => {
+  $effect(function attachLocalFormDragAndDropHandlers() {
     if (globalDrop || !isDefined(formRef)) {
       return;
     }
@@ -222,13 +222,13 @@
     }
     formRef.addEventListener("drop", onDrop);
     formRef.addEventListener("dragover", onDragOver);
-    return () => {
+    return function detachLocalFormDragAndDropHandlers() {
       formRef?.removeEventListener("drop", onDrop);
       formRef?.removeEventListener("dragover", onDragOver);
     };
   });
 
-  $effect(() => {
+  $effect(function attachGlobalDocumentDragAndDropHandlers() {
     if (!globalDrop) {
       return;
     }
@@ -250,13 +250,13 @@
     }
     document.addEventListener("drop", onDrop);
     document.addEventListener("dragover", onDragOver);
-    return () => {
+    return function detachGlobalDocumentDragAndDropHandlers() {
       document.removeEventListener("drop", onDrop);
       document.removeEventListener("dragover", onDragOver);
     };
   });
 
-  onDestroy(() => {
+  onDestroy(function cleanupLocalPromptInputAttachments() {
     if (!usingProvider) {
       attachments.cleanup();
     }

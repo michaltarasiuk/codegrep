@@ -107,7 +107,7 @@ export function useScrollShadow(getProps: () => UseScrollShadowProps) {
     });
   };
 
-  $effect(() => {
+  $effect(function observeScrollShadowOverflow() {
     const el = containerEl;
     const { visibility, isEnabled } = getProps();
 
@@ -125,7 +125,7 @@ export function useScrollShadow(getProps: () => UseScrollShadowProps) {
     const resizeObserver = new ResizeObserver(checkOverflow);
     resizeObserver.observe(el);
 
-    return () => {
+    return function teardownScrollShadowOverflowObservers() {
       el.removeEventListener("scroll", checkOverflow);
       resizeObserver.disconnect();
 

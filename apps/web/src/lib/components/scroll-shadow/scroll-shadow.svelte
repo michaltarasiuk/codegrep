@@ -111,7 +111,7 @@
     })
   );
 
-  $effect(() => {
+  $effect(function applyControlledScrollShadowVisibility() {
     const el = ref;
     if (!el || visibility === "auto") return;
 

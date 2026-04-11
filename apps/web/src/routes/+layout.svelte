@@ -10,7 +10,7 @@
 
   let { children, data } = $props();
 
-  onMount(() => {
+  onMount(function loadReactGrabInDev() {
     if (dev) {
       void import("react-grab");
     }

@@ -45,7 +45,7 @@
 
   let scrollEl = $state<HTMLElement | null>(null);
 
-  $effect(() => {
+  $effect(function ensureStickToBottomScrollOverflow() {
     if (scrollEl) {
       if (getComputedStyle(scrollEl).overflow === "visible") {
         scrollEl.style.overflow = "auto";
@@ -53,11 +53,13 @@
     }
   });
 
-  $effect(() => {
+  $effect(function bindStickToBottomScrollElement() {
     const el = scrollEl;
     const inst = active;
     untrack(() => inst.scrollRef(el));
-    return () => untrack(() => inst.scrollRef(null));
+    return function unbindStickToBottomScrollElement() {
+      untrack(() => inst.scrollRef(null));
+    };
   });
 </script>
 

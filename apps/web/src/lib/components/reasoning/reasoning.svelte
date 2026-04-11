@@ -19,20 +19,22 @@
 
   let hasAutoClosed = $state(false);
 
-  $effect(() => {
+  $effect(function openReasoningCollapsibleWhileStreaming() {
     if (isStreaming && !open) {
       open = true;
     }
   });
 
-  $effect(() => {
+  $effect(function scheduleReasoningAutoCloseAfterStreamEnds() {
     if (!isStreaming && open && !hasAutoClosed) {
       const timer = setTimeout(() => {
         open = false;
         hasAutoClosed = true;
       }, AUTO_CLOSE_DELAY);
 
-      return () => clearTimeout(timer);
+      return function clearReasoningAutoCloseTimer() {
+        clearTimeout(timer);
+      };
     }
   });
 </script>
