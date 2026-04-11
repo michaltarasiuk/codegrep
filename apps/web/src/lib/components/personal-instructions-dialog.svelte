@@ -3,6 +3,7 @@
   import PlusIcon from "@lucide/svelte/icons/plus";
   import XIcon from "@lucide/svelte/icons/x";
   import dedent from "dedent";
+  import { cn } from "tailwind-variants";
 
   import Button from "$lib/components/ui/button/button.svelte";
   import * as Dialog from "$lib/components/ui/dialog/index.js";
@@ -56,6 +57,7 @@
   let showTemplates = $state(false);
 
   const charCount = $derived(value.length);
+  const invalid = $derived(charCount > MAX_LENGTH);
 
   function getInitialValue() {
     return $session.data?.user.personalInstructions ?? "";
@@ -63,7 +65,7 @@
 
   function appendTemplate(text: string) {
     if (value.length > 0) {
-      value += ensureTrailingNewlines(value);
+      value = ensureTrailingNewlines(value);
     }
     value += text;
 
@@ -122,8 +124,8 @@
             bind:ref={textarea}
             bind:value
             placeholder="Your instructions"
+            aria-invalid={invalid}
             disabled={loading}
-            maxlength={MAX_LENGTH}
             cols={30}
             rows={7}
             class="scrollbar-hide h-52 resize-none pb-12"
@@ -162,14 +164,18 @@
           </div>
         </div>
 
-        <p class="text-muted-foreground text-xs tabular-nums">
+        <p
+          class={cn("text-muted-foreground text-xs tabular-nums", {
+            "text-destructive": invalid,
+          })}
+        >
           {charCount} / {MAX_LENGTH} characters
         </p>
       </div>
 
       <Dialog.Footer>
         <Button variant="outline" onclick={() => onClose()}>Cancel</Button>
-        <Button type="submit" disabled={loading}>Save</Button>
+        <Button type="submit" disabled={loading || invalid}>Save</Button>
       </Dialog.Footer>
     </form>
   </Dialog.Content>
