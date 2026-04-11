@@ -20,11 +20,11 @@
   let personalInstructionsOpen = $state(false);
   let darkMode = $state(false);
 
-  $effect(function subscribeCommandPaletteThemeMode() {
+  $effect(function subscribeThemeMode() {
     const unsubscribe = mode.subscribe((value) => {
       darkMode = value === "dark";
     });
-    return function unsubscribeCommandPaletteThemeMode() {
+    return function unsubscribeThemeMode() {
       unsubscribe();
     };
   });

@@ -10,9 +10,9 @@
 
   import * as InputGroup from "$lib/components/ui/input-group/index.js";
   import * as Tooltip from "$lib/components/ui/tooltip/index.js";
+  import { blobUrlToDataUrl } from "$lib/utils/blob-url-to-data-url.js";
   import { cn } from "$lib/utils/cn.js";
   import { isDefined } from "$lib/utils/is-defined.js";
-  import { blobUrlToDataUrl } from "$lib/utils/url.js";
 
   import {
     AttachmentsState,
