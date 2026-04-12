@@ -25,8 +25,8 @@
   }: ContextReasoningUsageProps = $props();
 
   const context = getContextState();
-  const reasoningTokens = $derived(context.usage?.reasoningTokens ?? 0);
-  const reasoningCost = $derived(
+  let reasoningTokens = $derived(context.usage?.reasoningTokens ?? 0);
+  let reasoningCost = $derived(
     context.modelId
       ? getUsage({
           modelId: context.modelId,
@@ -34,7 +34,7 @@
         }).costUSD?.totalUSD
       : null
   );
-  const reasoningCostText = $derived(
+  let reasoningCostText = $derived(
     currencyFormatter.format(reasoningCost ?? 0)
   );
 </script>

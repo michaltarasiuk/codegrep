@@ -24,7 +24,7 @@
   }: ContextContentFooterProps = $props();
 
   const context = getContextState();
-  const costUSD = $derived(
+  let costUSD = $derived(
     context.modelId
       ? getUsage({
           modelId: context.modelId,
@@ -35,7 +35,7 @@
         }).costUSD?.totalUSD
       : null
   );
-  const totalCost = $derived(currencyFormatter.format(costUSD ?? 0));
+  let totalCost = $derived(currencyFormatter.format(costUSD ?? 0));
 </script>
 
 <div

@@ -40,7 +40,7 @@
     },
   }));
 
-  const active = $derived(instance ?? defaultInstance);
+  let active = $derived(instance ?? defaultInstance);
   const context = setStickToBottom(() => active);
 
   let scrollEl = $state<HTMLElement | null>(null);

@@ -25,10 +25,10 @@
   }: ContextCacheUsageProps = $props();
 
   const context = getContextState();
-  const cacheTokens = $derived(
+  let cacheTokens = $derived(
     context.usage?.inputTokenDetails?.cacheReadTokens ?? 0
   );
-  const cacheCost = $derived(
+  let cacheCost = $derived(
     context.modelId
       ? getUsage({
           modelId: context.modelId,
@@ -36,7 +36,7 @@
         }).costUSD?.totalUSD
       : null
   );
-  const cacheCostText = $derived(currencyFormatter.format(cacheCost ?? 0));
+  let cacheCostText = $derived(currencyFormatter.format(cacheCost ?? 0));
 </script>
 
 {#if children}

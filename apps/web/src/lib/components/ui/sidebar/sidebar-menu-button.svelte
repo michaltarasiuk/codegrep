@@ -67,7 +67,7 @@
 
   const sidebar = useSidebar();
 
-  const buttonProps = $derived({
+  let buttonProps = $derived({
     class: cn(sidebarMenuButtonVariants({ variant, size }), className),
     "data-slot": "sidebar-menu-button",
     "data-sidebar": "menu-button",

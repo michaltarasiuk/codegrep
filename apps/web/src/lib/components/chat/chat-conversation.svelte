@@ -13,10 +13,10 @@
     children: Snippet<[UIMessage, boolean]>;
   } = $props();
 
-  const chat = $derived(getChat());
+  let chat = $derived(getChat());
 
-  const isSubmitted = $derived(chat.status === "submitted");
-  const messages = $derived(chat.messages);
+  let isSubmitted = $derived(chat.status === "submitted");
+  let messages = $derived(chat.messages);
 </script>
 
 <Conversation.Content>

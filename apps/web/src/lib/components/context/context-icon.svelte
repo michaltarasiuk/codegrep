@@ -8,8 +8,8 @@
 
   const context = getContextState();
   const circumference = 2 * Math.PI * ICON_RADIUS;
-  const usedPercent = $derived(context.usedTokens / context.maxTokens);
-  const dashOffset = $derived(circumference * (1 - usedPercent));
+  let usedPercent = $derived(context.usedTokens / context.maxTokens);
+  let dashOffset = $derived(circumference * (1 - usedPercent));
 </script>
 
 <svg

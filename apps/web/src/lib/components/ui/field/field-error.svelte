@@ -15,7 +15,7 @@
     errors?: { message?: string }[];
   } = $props();
 
-  const hasContent = $derived.by(() => {
+  let hasContent = $derived.by(() => {
     // has slotted error
     if (children) return true;
 
@@ -30,8 +30,8 @@
     return true;
   });
 
-  const isMultipleErrors = $derived(errors && errors.length > 1);
-  const singleErrorMessage = $derived(
+  let isMultipleErrors = $derived(errors && errors.length > 1);
+  let singleErrorMessage = $derived(
     errors && errors.length === 1 && errors[0]?.message
   );
 </script>

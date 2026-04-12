@@ -30,8 +30,8 @@
   let chatShareDialogOpen = $state(false);
   let chatDeleteDialogOpen = $state(false);
 
-  const route = $derived(`/chat/${chat.id}` as const);
-  const isActive = $derived(page.url.pathname === route);
+  let route = $derived(`/chat/${chat.id}` as const);
+  let isActive = $derived(page.url.pathname === route);
 </script>
 
 <Sidebar.MenuItem>

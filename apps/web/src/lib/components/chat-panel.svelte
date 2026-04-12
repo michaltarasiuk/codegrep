@@ -23,8 +23,8 @@
 
   let model = $state(MODELS[0].id);
 
-  const chatId = $derived(id);
-  const chat = $derived(
+  let chatId = $derived(id);
+  let chat = $derived(
     new Chat({
       id: chatId,
       messages,

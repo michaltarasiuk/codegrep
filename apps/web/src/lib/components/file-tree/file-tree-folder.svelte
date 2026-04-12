@@ -33,8 +33,8 @@
   }: FileTreeFolderProps = $props();
 
   const fileTree = getFileTree();
-  const isExpanded = $derived(fileTree.isExpanded(path));
-  const isSelected = $derived(fileTree.isSelected(path));
+  let isExpanded = $derived(fileTree.isExpanded(path));
+  let isSelected = $derived(fileTree.isSelected(path));
 
   function handleOpenChange() {
     fileTree.togglePath(path);

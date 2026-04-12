@@ -16,7 +16,7 @@
     showOnHover?: boolean;
   } = $props();
 
-  const mergedProps = $derived({
+  let mergedProps = $derived({
     class: cn(
       "text-sidebar-foreground ring-sidebar-ring hover:bg-sidebar-accent hover:text-sidebar-accent-foreground peer-hover/menu-button:text-sidebar-accent-foreground absolute end-1 top-1.5 flex aspect-square w-5 items-center justify-center rounded-md p-0 outline-hidden transition-transform focus-visible:ring-2 [&>svg]:size-4 [&>svg]:shrink-0",
       // Increases the hit area of the button on mobile.

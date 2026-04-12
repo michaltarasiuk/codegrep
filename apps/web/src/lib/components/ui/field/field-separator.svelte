@@ -14,7 +14,7 @@
     children?: Snippet;
   } = $props();
 
-  const hasContent = $derived(!!children);
+  let hasContent = $derived(!!children);
 </script>
 
 <div

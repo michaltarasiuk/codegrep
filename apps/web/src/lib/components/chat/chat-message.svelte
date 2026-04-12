@@ -18,16 +18,16 @@
 
   let copied = $state(false);
 
-  const chat = $derived(getChat());
-  const model = $derived(getModel());
+  let chat = $derived(getChat());
+  let model = $derived(getModel());
 
-  const messageText = $derived(
+  let messageText = $derived(
     message.parts
       .filter((part) => part.type === "text")
       .map((part) => part.text)
       .join("\n\n")
   );
-  const isStreaming = $derived(chat.status === "streaming");
+  let isStreaming = $derived(chat.status === "streaming");
 
   function handleRetry() {
     chat.regenerate({ body: { model } });

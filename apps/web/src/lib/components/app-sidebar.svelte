@@ -23,7 +23,7 @@
 
   const { children, chatList = [] }: Props = $props();
 
-  const groupedChats = $derived(groupChatsByPeriod(chatList));
+  let groupedChats = $derived(groupChatsByPeriod(chatList));
 </script>
 
 <Sidebar.Provider

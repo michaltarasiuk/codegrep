@@ -12,7 +12,7 @@
     ...restProps
   }: ComponentProps<typeof Button> = $props();
 
-  const { isAtBottom, scrollToBottom } = $derived(getStickToBottomContext());
+  let { isAtBottom, scrollToBottom } = $derived(getStickToBottomContext());
 
   function handleScrollToBottom() {
     scrollToBottom();

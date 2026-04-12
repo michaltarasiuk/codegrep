@@ -14,7 +14,7 @@
     handleSubmit: (message: PromptInput.PromptInputMessage) => void;
   } = $props();
 
-  const chat = $derived(getChat());
+  let chat = $derived(getChat());
 </script>
 
 <PromptInput.Provider>

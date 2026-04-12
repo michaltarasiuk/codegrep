@@ -26,11 +26,11 @@
   }: ContextContentHeaderProps = $props();
 
   const context = getContextState();
-  const usedPercent = $derived(context.usedTokens / context.maxTokens);
-  const displayPct = $derived(percentFormatter.format(usedPercent));
-  const used = $derived(compactFormatter.format(context.usedTokens));
-  const total = $derived(compactFormatter.format(context.maxTokens));
-  const progressValue = $derived(usedPercent * PERCENT_MAX);
+  let usedPercent = $derived(context.usedTokens / context.maxTokens);
+  let displayPct = $derived(percentFormatter.format(usedPercent));
+  let used = $derived(compactFormatter.format(context.usedTokens));
+  let total = $derived(compactFormatter.format(context.maxTokens));
+  let progressValue = $derived(usedPercent * PERCENT_MAX);
 </script>
 
 <div

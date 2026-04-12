@@ -16,10 +16,10 @@
     modelSelectorOpen?: boolean;
   } = $props();
 
-  const selectedModelData = $derived(
+  let selectedModelData = $derived(
     models.find((model) => model.id === selectedModel) ?? models[0]!
   );
-  const chefs = $derived([...new Set(models.map((model) => model.chef))]);
+  let chefs = $derived([...new Set(models.map((model) => model.chef))]);
 
   function selectModel(id: string) {
     selectedModel = id;

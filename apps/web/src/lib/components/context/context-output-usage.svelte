@@ -25,8 +25,8 @@
   }: ContextOutputUsageProps = $props();
 
   const context = getContextState();
-  const outputTokens = $derived(context.usage?.outputTokens ?? 0);
-  const outputCost = $derived(
+  let outputTokens = $derived(context.usage?.outputTokens ?? 0);
+  let outputCost = $derived(
     context.modelId
       ? getUsage({
           modelId: context.modelId,
@@ -34,7 +34,7 @@
         }).costUSD?.totalUSD
       : null
   );
-  const outputCostText = $derived(currencyFormatter.format(outputCost ?? 0));
+  let outputCostText = $derived(currencyFormatter.format(outputCost ?? 0));
 </script>
 
 {#if children}

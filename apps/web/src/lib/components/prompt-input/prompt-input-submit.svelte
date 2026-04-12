@@ -27,10 +27,8 @@
 
   const controller = getPromptInputController();
 
-  const isGenerating = $derived(
-    status === "submitted" || status === "streaming"
-  );
-  const isDisabled = $derived(
+  let isGenerating = $derived(status === "submitted" || status === "streaming");
+  let isDisabled = $derived(
     isDefined(controller)
       ? !controller.textInput.value.trim().length &&
           !controller.attachments.files.length

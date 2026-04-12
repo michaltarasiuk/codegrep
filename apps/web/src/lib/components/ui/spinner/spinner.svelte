@@ -15,7 +15,7 @@
     variant?: SpinnerVariant;
   } = $props();
 
-  const Icon = $derived(variant === "arcs" ? Loader2Icon : LoaderIcon);
+  let Icon = $derived(variant === "arcs" ? Loader2Icon : LoaderIcon);
 </script>
 
 <Icon

@@ -15,14 +15,14 @@
     isLast: boolean;
   } = $props();
 
-  const reasoningParts = $derived(
+  let reasoningParts = $derived(
     message.parts.filter((part) => part.type === "reasoning")
   );
-  const reasoningText = $derived(
+  let reasoningText = $derived(
     reasoningParts.map((part) => part.text).join("\n\n")
   );
-  const hasReasoning = $derived(reasoningParts.length > 0);
-  const isReasoningStreaming = $derived(
+  let hasReasoning = $derived(reasoningParts.length > 0);
+  let isReasoningStreaming = $derived(
     isStreaming && isLast && message.parts.at(-1)?.type === "reasoning"
   );
 </script>

@@ -27,8 +27,8 @@
   const controller = getPromptInputController();
   const attachments = getPromptInputAttachments();
 
-  const boundToController = $derived(isDefined(controller));
-  const effectiveValue = $derived(
+  let boundToController = $derived(isDefined(controller));
+  let effectiveValue = $derived(
     boundToController ? controller!.textInput.value : value
   );
 

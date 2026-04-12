@@ -11,7 +11,7 @@
     costText?: string;
   } = $props();
 
-  const formatted = $derived(
+  let formatted = $derived(
     isDefined(tokens) ? compactFormatter.format(tokens) : "—"
   );
 </script>

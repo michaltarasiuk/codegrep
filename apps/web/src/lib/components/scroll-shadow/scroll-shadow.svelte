@@ -103,7 +103,7 @@
     onVisibilityChange,
   }));
 
-  const slots = $derived.by(() =>
+  let slots = $derived.by(() =>
     scrollShadowVariants({
       hideScrollBar,
       orientation,

@@ -56,8 +56,8 @@
   let loading = $state(false);
   let showTemplates = $state(false);
 
-  const charCount = $derived(value.length);
-  const invalid = $derived(charCount > MAX_LENGTH);
+  let charCount = $derived(value.length);
+  let invalid = $derived(charCount > MAX_LENGTH);
 
   const session = authClient.useSession();
   const instructionsId = useId("personal-instructions");
