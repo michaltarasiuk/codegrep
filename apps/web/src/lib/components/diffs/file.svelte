@@ -1,4 +1,5 @@
 <script lang="ts" generics="LAnnotation">
+  import { serializeStyles } from "@emotion/serialize";
   import {
     CUSTOM_HEADER_SLOT_ID,
     DIFFS_TAG_NAME,
@@ -9,6 +10,7 @@
 
   import { isDefined } from "$lib/utils/is-defined.js";
 
+  import { GUTTER_UTILITY_SLOT_STYLES } from "./constants.js";
   import type { FileProps } from "./types.js";
   import { useFileInstance } from "./utils/use-file-instance.svelte.js";
 
@@ -43,8 +45,6 @@
     disableWorkerPool,
   }));
 
-  const gutterUtilitySlotStyles =
-    "position: absolute; top: 0; bottom: 0; text-align: center;";
   const gutterUtility = $derived(renderGutterUtility ?? renderHoverUtility);
 </script>
 
@@ -80,7 +80,10 @@
   {/if}
 
   {#if isDefined(gutterUtility)}
-    <template data-slot="gutter-utility" style={gutterUtilitySlotStyles}>
+    <template
+      data-slot="gutter-utility"
+      style={serializeStyles([GUTTER_UTILITY_SLOT_STYLES]).styles}
+    >
       {@render gutterUtility(getHoveredLine)}
     </template>
   {/if}
