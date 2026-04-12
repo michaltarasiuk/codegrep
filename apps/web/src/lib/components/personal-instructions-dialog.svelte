@@ -6,7 +6,7 @@
   import dedent from "dedent";
   import { cn } from "tailwind-variants";
 
-  import Button from "$lib/components/ui/button/button.svelte";
+  import { Button } from "$lib/components/ui/button/index.js";
   import * as Dialog from "$lib/components/ui/dialog/index.js";
   import * as Field from "$lib/components/ui/field/index.js";
   import { Textarea } from "$lib/components/ui/textarea/index.js";

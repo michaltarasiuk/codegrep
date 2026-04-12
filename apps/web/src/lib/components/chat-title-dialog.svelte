@@ -2,10 +2,10 @@
   import { useId } from "bits-ui";
 
   import { invalidate } from "$app/navigation";
-  import Button from "$lib/components/ui/button/button.svelte";
+  import { Button } from "$lib/components/ui/button/index.js";
   import * as Dialog from "$lib/components/ui/dialog/index.js";
   import * as Field from "$lib/components/ui/field/index.js";
-  import Input from "$lib/components/ui/input/input.svelte";
+  import { Input } from "$lib/components/ui/input/index.js";
   import { client } from "$lib/utils/client.js";
   import { CHAT_LIST_KEY } from "$lib/utils/invalidation-keys.js";
   import { isDefined } from "$lib/utils/is-defined.js";
