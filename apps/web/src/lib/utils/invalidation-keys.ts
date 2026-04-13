@@ -1,1 +1,1 @@
-export const CHAT_LIST_KEY = "app:chat-list";
+export const CHAT_LIST_KEY = "chat-list";

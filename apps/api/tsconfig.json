@@ -2,13 +2,13 @@
   "extends": ["../../tsconfig.json"],
   "compilerOptions": {
     "baseUrl": ".",
-    "module": "ES2022",
+    "target": "ESNext",
+    "module": "ESNext",
     "moduleDetection": "force",
     "moduleResolution": "node",
     "paths": {
       "$api/*": ["./src/*"]
     },
-    "target": "ES2021",
     "types": ["bun-types"]
   }
 }

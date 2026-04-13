@@ -11,7 +11,6 @@
   import * as Field from "$lib/components/ui/field/index.js";
   import { Textarea } from "$lib/components/ui/textarea/index.js";
   import { authClient } from "$lib/utils/client.js";
-  import { ensureTrailingNewlines } from "$lib/utils/ensure-trailing-newlines.js";
   import { isDefined } from "$lib/utils/is-defined.js";
 
   const TEMPLATES: { key: string; label: string; text: string }[] = [
@@ -64,7 +63,12 @@
 
   function appendTemplate(text: string) {
     if (value.length > 0) {
-      value = ensureTrailingNewlines(value);
+      if (!value.endsWith("\n")) {
+        value += "\n";
+      }
+      if (!value.endsWith("\n\n")) {
+        value += "\n";
+      }
     }
     value += text;
 
