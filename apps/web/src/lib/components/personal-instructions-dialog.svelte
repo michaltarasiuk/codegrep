@@ -86,7 +86,6 @@
         personalInstructions: value,
       });
       if (!isDefined(result.error)) {
-        initialValue = value;
         onClose();
       }
     } finally {
