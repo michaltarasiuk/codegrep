@@ -2,7 +2,7 @@
   "$schema": "https://json.schemastore.org/tsconfig",
   "compilerOptions": {
     "target": "ESNext",
-    "module": "ESNext",
+    "module": "nodenext",
     "moduleResolution": "nodenext",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
