@@ -2,8 +2,6 @@
   "extends": ["../../tsconfig.json"],
   "compilerOptions": {
     "baseUrl": ".",
-    "target": "ESNext",
-    "module": "ESNext",
     "moduleDetection": "force",
     "moduleResolution": "node",
     "paths": {

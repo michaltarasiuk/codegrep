@@ -8,7 +8,7 @@
   import { MODELS } from "$lib/components/chat/consts.js";
   import * as ChatUI from "$lib/components/chat/index.js";
   import * as PromptInput from "$lib/components/prompt-input/index.js";
-  import { CHAT_LIST_KEY } from "$lib/utils/invalidation-keys.js";
+  import { CHAT_LIST_KEY } from "$lib/utils/invalidation.js";
   import { isDefined } from "$lib/utils/is-defined.js";
 
   let {

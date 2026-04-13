@@ -5,7 +5,7 @@
   import * as AlertDialog from "$lib/components/ui/alert-dialog/index.js";
   import { buttonVariants } from "$lib/components/ui/button/index.js";
   import { client } from "$lib/utils/client.js";
-  import { CHAT_LIST_KEY } from "$lib/utils/invalidation-keys.js";
+  import { CHAT_LIST_KEY } from "$lib/utils/invalidation.js";
   import { isDefined } from "$lib/utils/is-defined.js";
 
   let {

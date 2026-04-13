@@ -1,5 +1,6 @@
+import { createFetchProxy } from "@workspace/fetch-proxy";
+
 import { API_URL } from "$env/static/private";
-import { createFetchProxy } from "$lib/utils/fetch-proxy.js";
 
 import type { RequestHandler } from "./$types";
 

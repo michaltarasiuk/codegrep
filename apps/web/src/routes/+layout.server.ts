@@ -1,5 +1,5 @@
 import { client } from "$lib/utils/client.server.js";
-import { CHAT_LIST_KEY } from "$lib/utils/invalidation-keys.js";
+import { CHAT_LIST_KEY } from "$lib/utils/invalidation.js";
 
 import type { LayoutServerLoadEvent } from "./$types";
 

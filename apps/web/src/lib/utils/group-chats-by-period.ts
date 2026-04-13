@@ -1,5 +1,29 @@
 import { differenceInCalendarDays, isToday, isYesterday } from "date-fns";
 
+const PERIOD_ORDER: TimePeriod[] = [
+  "Today",
+  "Yesterday",
+  "Last 7 days",
+  "Last 30 days",
+  "Last year",
+  "Older",
+];
+
+export function groupChatsByPeriod<T extends { updatedAt: Date }>(chats: T[]) {
+  const groups = new Map<TimePeriod, T[]>();
+  for (const chat of chats) {
+    const period = getTimePeriod(chat.updatedAt);
+    groups.set(period, [...getGroup(period), chat]);
+  }
+  return PERIOD_ORDER.map((period) => ({
+    period,
+    chats: getGroup(period),
+  }));
+  function getGroup(period: TimePeriod) {
+    return groups.get(period) ?? [];
+  }
+}
+
 type TimePeriod =
   | "Today"
   | "Yesterday"
@@ -27,28 +51,4 @@ function getTimePeriod(date: Date): TimePeriod {
     return "Last year";
   }
   return "Older";
-}
-
-const PERIOD_ORDER: TimePeriod[] = [
-  "Today",
-  "Yesterday",
-  "Last 7 days",
-  "Last 30 days",
-  "Last year",
-  "Older",
-];
-
-export function groupChatsByPeriod<T extends { updatedAt: Date }>(chats: T[]) {
-  const groups = new Map<TimePeriod, T[]>();
-  for (const chat of chats) {
-    const period = getTimePeriod(chat.updatedAt);
-    groups.set(period, [...getGroup(period), chat]);
-  }
-  return PERIOD_ORDER.map((period) => ({
-    period,
-    chats: getGroup(period),
-  }));
-  function getGroup(period: TimePeriod) {
-    return groups.get(period) ?? [];
-  }
 }

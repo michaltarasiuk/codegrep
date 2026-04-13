@@ -38,7 +38,8 @@
   "packageManager": "bun@1.3.12",
   "workspaces": {
     "packages": [
-      "apps/*"
+      "apps/*",
+      "packages/*"
     ],
     "catalog": {
       "ai": "^6.0.97",

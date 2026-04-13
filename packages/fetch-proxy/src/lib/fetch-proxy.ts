@@ -1,19 +1,29 @@
-/*!---------------------------------------------------------------------------------------------
- * Copyright (c) 2023 Michael Jackson. All rights reserved.
- * Licensed under the MIT License. See License.txt in the project root for license information.
- *
- * Ported from https://github.com/mjackson/remix-the-web/tree/main/packages/fetch-proxy
- *--------------------------------------------------------------------------------------------*/
-
 export interface FetchProxyOptions {
+  /**
+   * The `fetch` function to use for the actual fetch. Defaults to the global `fetch` function.
+   */
   fetch?: typeof globalThis.fetch;
+  /**
+   * Set `true` to add `X-Forwarded-Proto` and `X-Forwarded-Host` headers to the proxied request.
+   * Defaults to `false`.
+   */
   xForwardedHeaders?: boolean;
 }
 
+/**
+ * A [`fetch` function](https://developer.mozilla.org/en-US/docs/Web/API/Window/fetch)
+ * that forwards requests to another server.
+ */
 export interface FetchProxy {
   (input: URL | RequestInfo, init?: RequestInit): Promise<Response>;
 }
 
+/**
+ * Creates a `fetch` function that forwards requests to another server.
+ * @param target The URL of the server to proxy requests to
+ * @param options Options to customize the behavior of the proxy
+ * @returns A fetch function that forwards requests to the target server
+ */
 export function createFetchProxy(
   target: string | URL,
   options?: FetchProxyOptions
@@ -49,11 +59,13 @@ export function createFetchProxy(
       method: request.method,
       headers: proxyHeaders,
     };
-
     if (request.method !== "GET" && request.method !== "HEAD") {
       proxyInit.body = request.body;
-      // @ts-expect-error -- required for streaming request bodies per fetch spec
-      proxyInit.duplex = "half";
+      // init.duplex = 'half' must be set when body is a ReadableStream, and Node follows the spec.
+      // However, this property is not defined in the TypeScript types for RequestInit, so we have
+      // to cast it here in order to set it without a type error.
+      // See https://fetch.spec.whatwg.org/#dom-requestinit-duplex
+      (proxyInit as { duplex: "half" }).duplex = "half";
     }
 
     const response = await localFetch(proxyUrl, proxyInit);

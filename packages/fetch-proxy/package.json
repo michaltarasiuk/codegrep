@@ -1,0 +1,7 @@
+{
+  "name": "@workspace/fetch-proxy",
+  "type": "module",
+  "exports": {
+    ".": "./src/lib/fetch-proxy.ts"
+  }
+}

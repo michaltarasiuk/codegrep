@@ -7,7 +7,7 @@
   import * as Field from "$lib/components/ui/field/index.js";
   import { Input } from "$lib/components/ui/input/index.js";
   import { client } from "$lib/utils/client.js";
-  import { CHAT_LIST_KEY } from "$lib/utils/invalidation-keys.js";
+  import { CHAT_LIST_KEY } from "$lib/utils/invalidation.js";
   import { isDefined } from "$lib/utils/is-defined.js";
 
   let {
