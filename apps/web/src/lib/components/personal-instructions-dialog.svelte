@@ -78,7 +78,8 @@
     });
   }
 
-  async function handleSubmit() {
+  async function handleSubmit(e: SubmitEvent) {
+    e.preventDefault();
     try {
       loading = true;
       const result = await authClient.updateUser({
