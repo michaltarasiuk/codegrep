@@ -30,6 +30,7 @@
   }: FileTreeFileProps = $props();
 
   const fileTree = getFileTree();
+
   let isSelected = $derived(fileTree.isSelected(path));
 
   function handleClick() {

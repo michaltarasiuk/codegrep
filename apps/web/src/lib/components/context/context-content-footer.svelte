@@ -24,6 +24,7 @@
   }: ContextContentFooterProps = $props();
 
   const context = getContextState();
+
   let costUSD = $derived(
     context.modelId
       ? getUsage({

@@ -25,6 +25,7 @@
   }: ContextReasoningUsageProps = $props();
 
   const context = getContextState();
+
   let reasoningTokens = $derived(context.usage?.reasoningTokens ?? 0);
   let reasoningCost = $derived(
     context.modelId

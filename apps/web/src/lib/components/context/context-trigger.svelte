@@ -17,6 +17,7 @@
   let { children, ...restProps }: ContextTriggerProps = $props();
 
   const context = getContextState();
+
   let usedPercent = $derived(context.usedTokens / context.maxTokens);
   let renderedPercent = $derived(percentFormatter.format(usedPercent));
 </script>

@@ -27,12 +27,12 @@
   const controller = getPromptInputController();
   const attachments = getPromptInputAttachments();
 
+  let isComposing = $state(false);
+
   let boundToController = $derived(isDefined(controller));
   let effectiveValue = $derived(
     boundToController ? controller!.textInput.value : value
   );
-
-  let isComposing = $state(false);
 
   function handleKeyDown(
     e: Parameters<KeyboardEventHandler<HTMLTextAreaElement>>[0]

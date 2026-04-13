@@ -26,6 +26,7 @@
   }: ContextContentHeaderProps = $props();
 
   const context = getContextState();
+
   let usedPercent = $derived(context.usedTokens / context.maxTokens);
   let displayPct = $derived(percentFormatter.format(usedPercent));
   let used = $derived(compactFormatter.format(context.usedTokens));

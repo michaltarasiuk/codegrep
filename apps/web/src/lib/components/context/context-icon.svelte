@@ -5,9 +5,10 @@
   const ICON_VIEWBOX = 24;
   const ICON_CENTER = 12;
   const ICON_STROKE_WIDTH = 2;
+  const circumference = 2 * Math.PI * ICON_RADIUS;
 
   const context = getContextState();
-  const circumference = 2 * Math.PI * ICON_RADIUS;
+
   let usedPercent = $derived(context.usedTokens / context.maxTokens);
   let dashOffset = $derived(circumference * (1 - usedPercent));
 </script>

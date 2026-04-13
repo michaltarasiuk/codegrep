@@ -25,6 +25,7 @@
   }: ContextOutputUsageProps = $props();
 
   const context = getContextState();
+
   let outputTokens = $derived(context.usage?.outputTokens ?? 0);
   let outputCost = $derived(
     context.modelId

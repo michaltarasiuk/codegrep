@@ -25,8 +25,9 @@
 
   const titleFieldId = useId();
 
-  let value = $derived(chat.title);
   let loading = $state(false);
+
+  let value = $derived(chat.title);
 
   async function handleSubmit(e: SubmitEvent) {
     e.preventDefault();

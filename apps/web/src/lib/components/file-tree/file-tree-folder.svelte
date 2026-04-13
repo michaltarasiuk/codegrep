@@ -33,6 +33,7 @@
   }: FileTreeFolderProps = $props();
 
   const fileTree = getFileTree();
+
   let isExpanded = $derived(fileTree.isExpanded(path));
   let isSelected = $derived(fileTree.isSelected(path));
 

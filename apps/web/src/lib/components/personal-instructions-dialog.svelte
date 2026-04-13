@@ -54,14 +54,13 @@
   const instructionsFieldId = useId();
 
   let textarea = $state<HTMLTextAreaElement | null>(null);
-  let initialValue = $derived($session.data?.user.personalInstructions ?? "");
-  let value = $derived(initialValue);
-
-  let charCount = $derived(value.length);
-  let invalid = $derived(charCount > MAX_LENGTH);
-
   let loading = $state(false);
   let showTemplates = $state(false);
+
+  let initialValue = $derived($session.data?.user.personalInstructions ?? "");
+  let value = $derived(initialValue);
+  let charCount = $derived(value.length);
+  let invalid = $derived(charCount > MAX_LENGTH);
 
   function appendTemplate(text: string) {
     if (value.length > 0) {

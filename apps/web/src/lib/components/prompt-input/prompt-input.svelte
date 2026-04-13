@@ -68,6 +68,7 @@
 
   let fileInputRef = $state<HTMLInputElement | null>(null);
   let formRef = $state<HTMLFormElement | null>(null);
+
   let attachmentsCount = $derived(attachments.files.length);
 
   function getAcceptPatterns() {
