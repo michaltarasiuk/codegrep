@@ -23,10 +23,10 @@
     onClose: () => void;
   } = $props();
 
+  const titleFieldId = useId();
+
   let value = $derived(chat.title);
   let loading = $state(false);
-
-  const titleId = useId("chat-title");
 
   async function handleSubmit(e: SubmitEvent) {
     e.preventDefault();
@@ -71,8 +71,8 @@
 
       <div class="py-4">
         <Field.Field>
-          <Field.Label for={titleId} class="sr-only">Title</Field.Label>
-          <Input id={titleId} bind:value disabled={loading} />
+          <Field.Label for={titleFieldId} class="sr-only">Title</Field.Label>
+          <Input id={titleFieldId} bind:value disabled={loading} />
         </Field.Field>
       </div>
 

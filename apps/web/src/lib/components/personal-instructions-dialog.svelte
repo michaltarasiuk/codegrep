@@ -50,21 +50,18 @@
 
   let { open, onClose }: { open: boolean; onClose: () => void } = $props();
 
-  let textarea = $state<HTMLTextAreaElement | null>(null);
-  let value = $derived(getInitialValue());
+  const session = authClient.useSession();
+  const instructionsFieldId = useId();
 
-  let loading = $state(false);
-  let showTemplates = $state(false);
+  let textarea = $state<HTMLTextAreaElement | null>(null);
+  let initialValue = $derived($session.data?.user.personalInstructions ?? "");
+  let value = $derived(initialValue);
 
   let charCount = $derived(value.length);
   let invalid = $derived(charCount > MAX_LENGTH);
 
-  const session = authClient.useSession();
-  const instructionsId = useId("personal-instructions");
-
-  function getInitialValue() {
-    return $session.data?.user.personalInstructions ?? "";
-  }
+  let loading = $state(false);
+  let showTemplates = $state(false);
 
   function appendTemplate(text: string) {
     if (value.length > 0) {
@@ -88,6 +85,7 @@
         personalInstructions: value,
       });
       if (!isDefined(result.error)) {
+        initialValue = value;
         onClose();
       }
     } finally {
@@ -105,7 +103,7 @@
   }}
   onOpenChangeComplete={(open) => {
     if (!open) {
-      value = getInitialValue();
+      value = initialValue;
       showTemplates = false;
       loading = false;
     }
@@ -123,7 +121,7 @@
 
       <div class="py-4">
         <Field.Field>
-          <Field.Label for={instructionsId} class="sr-only">
+          <Field.Label for={instructionsFieldId} class="sr-only">
             Instructions
           </Field.Label>
 
@@ -131,7 +129,7 @@
             <Textarea
               bind:ref={textarea}
               bind:value
-              id={instructionsId}
+              id={instructionsFieldId}
               placeholder="Your instructions"
               cols={30}
               rows={7}

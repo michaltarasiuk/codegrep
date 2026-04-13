@@ -1,12 +1,13 @@
 <script lang="ts">
   import LockOpenIcon from "@lucide/svelte/icons/lock-open";
+  import { useId } from "bits-ui";
 
   import { invalidate } from "$app/navigation";
   import { PUBLIC_WEB_URL } from "$env/static/public";
   import { Button } from "$lib/components/ui/button/index.js";
   import * as Dialog from "$lib/components/ui/dialog/index.js";
+  import * as Field from "$lib/components/ui/field/index.js";
   import { Input } from "$lib/components/ui/input/index.js";
-  import { Label } from "$lib/components/ui/label/index.js";
   import { Spinner } from "$lib/components/ui/spinner/index.js";
   import { client } from "$lib/utils/client.js";
   import { CHAT_LIST_KEY } from "$lib/utils/invalidation-keys.js";
@@ -24,6 +25,8 @@
     open: boolean;
     onClose: () => void;
   } = $props();
+
+  const shareLinkFieldId = useId();
 
   let shareId = $derived(chat.shareId);
   let shareLink = $derived(`${PUBLIC_WEB_URL}/chat/share/${shareId}`);
@@ -140,14 +143,10 @@
     </Dialog.Header>
 
     <div class="py-4">
-      <Label for="share-link-{chat.id}">Share link</Label>
-      <Input
-        id="share-link-{chat.id}"
-        value={shareLink}
-        class="mt-2"
-        readonly
-        tabindex={-1}
-      />
+      <Field.Field>
+        <Field.Label for={shareLinkFieldId}>Share link</Field.Label>
+        <Input id={shareLinkFieldId} value={shareLink} readonly tabindex={-1} />
+      </Field.Field>
     </div>
 
     <Dialog.Footer
