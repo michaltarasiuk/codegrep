@@ -11,7 +11,6 @@ COPY apps/web/package.json ./apps/web/
 # Install dependencies (ignore prepare script which requires git for lefthook)
 RUN bun install --frozen-lockfile --ignore-scripts
 
-# Copy API source code
 COPY apps/api ./apps/api
 
 WORKDIR /app/apps/api

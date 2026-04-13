@@ -5,7 +5,9 @@ import adapter from "@sveltejs/adapter-vercel";
 /** @type {import("@sveltejs/kit").Config} */
 const config = {
   kit: {
-    adapter: adapter(),
+    adapter: adapter({
+      runtime: "experimental_bun1.x",
+    }),
     alias: {
       $api: path.resolve("./../api/src"),
       $styles: path.resolve("./src/styles"),
