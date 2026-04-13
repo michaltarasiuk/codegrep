@@ -9,4 +9,4 @@ export {
   createFetchProxy,
   type FetchProxy,
   type FetchProxyOptions,
-} from "./lib/fetch-proxy";
+} from "./lib/fetch-proxy.js";
