@@ -72,7 +72,7 @@
       <div class="py-4">
         <Field.Field>
           <Field.Label for={titleFieldId} class="sr-only">Title</Field.Label>
-          <Input id={titleFieldId} bind:value disabled={loading} />
+          <Input id={titleFieldId} bind:value />
         </Field.Field>
       </div>
 

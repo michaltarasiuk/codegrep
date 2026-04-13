@@ -142,7 +142,6 @@
                     <Button
                       variant="outline"
                       size="sm"
-                      disabled={loading}
                       class="h-7 gap-1 px-2 text-xs"
                       onclick={() => appendTemplate(template.text)}
                     >
