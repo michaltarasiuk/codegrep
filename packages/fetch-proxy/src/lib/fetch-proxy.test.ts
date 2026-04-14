@@ -29,39 +29,40 @@ describe("fetch proxy", () => {
     const { request: request1 } = await testProxy(
       "http://example.com",
       undefined,
-      "https://proxy.example.test/rsc"
+      "https://proxy.example.test/upstream"
     );
 
-    expect(request1.url).toBe("https://proxy.example.test/rsc");
+    expect(request1.url).toBe("https://proxy.example.test/upstream");
 
     const { request: request2 } = await testProxy(
-      "http://example.com/?q=remix",
+      "http://example.com/?q=test",
       undefined,
-      "https://proxy.example.test/rsc"
+      "https://proxy.example.test/upstream"
     );
 
-    expect(request2.url).toBe("https://proxy.example.test/rsc?q=remix");
+    expect(request2.url).toBe("https://proxy.example.test/upstream?q=test");
 
     const { request: request3 } = await testProxy(
-      "http://example.com/search?q=remix",
+      "http://example.com/search?q=test",
       undefined,
       "https://proxy.example.test/"
     );
 
-    expect(request3.url).toBe("https://proxy.example.test/search?q=remix");
-
+    expect(request3.url).toBe("https://proxy.example.test/search?q=test");
     const { request: request4 } = await testProxy(
-      "http://example.com/search?q=remix",
+      "http://example.com/search?q=test",
       undefined,
-      "https://proxy.example.test/rsc"
+      "https://proxy.example.test/upstream"
     );
 
-    expect(request4.url).toBe("https://proxy.example.test/rsc/search?q=remix");
+    expect(request4.url).toBe(
+      "https://proxy.example.test/upstream/search?q=test"
+    );
   });
 
   it("forwards request method, headers, and body", async () => {
     const { request } = await testProxy(
-      "http://example.com/search?q=remix",
+      "http://example.com/search?q=test",
       {
         method: "POST",
         headers: {
@@ -69,7 +70,7 @@ describe("fetch proxy", () => {
         },
         body: "hello",
       },
-      "https://proxy.example.test/rsc"
+      "https://proxy.example.test/upstream"
     );
 
     expect(request.method).toBe("POST");
@@ -79,11 +80,11 @@ describe("fetch proxy", () => {
 
   it("forwards an empty request body", async () => {
     const { request } = await testProxy(
-      "http://example.com/search?q=remix",
+      "http://example.com/search?q=test",
       {
         method: "POST",
       },
-      "https://proxy.example.test/rsc"
+      "https://proxy.example.test/upstream"
     );
 
     expect(request.method).toBe("POST");
@@ -93,9 +94,9 @@ describe("fetch proxy", () => {
 
   it("does not append X-Forwarded-Proto and X-Forwarded-Host headers by default", async () => {
     const { request } = await testProxy(
-      "http://example.com:8081/search?q=remix",
+      "http://example.com:8081/search?q=test",
       undefined,
-      "https://proxy.example.test/rsc"
+      "https://proxy.example.test/upstream"
     );
 
     expect(request.headers.get("X-Forwarded-Proto")).toBeNull();
@@ -104,9 +105,9 @@ describe("fetch proxy", () => {
 
   it("appends X-Forwarded-Proto and X-Forwarded-Host headers when desired", async () => {
     const { request } = await testProxy(
-      "http://example.com:8081/search?q=remix",
+      "http://example.com:8081/search?q=test",
       undefined,
-      "https://proxy.example.test/rsc",
+      "https://proxy.example.test/upstream",
       {
         xForwardedHeaders: true,
       }
@@ -118,13 +119,13 @@ describe("fetch proxy", () => {
 
   it("forwards additional request init options", async () => {
     const { request } = await testProxy(
-      "http://example.com/search?q=remix",
+      "http://example.com/search?q=test",
       {
         cache: "no-cache",
         credentials: "include",
         redirect: "manual",
       },
-      "https://proxy.example.test/rsc"
+      "https://proxy.example.test/upstream"
     );
 
     expect(request.cache).toBe("no-cache");
