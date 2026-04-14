@@ -11,7 +11,8 @@
     "lint:fix": "eslint . --fix",
     "type:check": "turbo run type:check",
     "test": "vitest",
-    "check": "bun run format:check && bun run lint && bun run type:check && bun run test",
+    "test:run": "vitest run",
+    "check": "bun run format:check && bun run lint && bun run type:check && bun run test:run",
     "fix": "bun run format && bun run lint:fix"
   },
   "devDependencies": {
