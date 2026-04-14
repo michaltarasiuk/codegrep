@@ -53,6 +53,7 @@ const config = [
         },
       ],
       "no-undef-init": "error",
+      "prefer-const": "off",
       "no-console": [
         "error",
         { allow: ["error", "warn", "info", "debug", "trace"] },

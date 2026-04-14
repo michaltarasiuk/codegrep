@@ -3,6 +3,7 @@
   "compilerOptions": {
     "baseUrl": ".",
     "moduleDetection": "force",
+    "moduleResolution": "node",
     "paths": {
       "$api/*": ["./src/*"]
     },

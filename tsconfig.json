@@ -2,6 +2,7 @@
   "extends": "./tsconfig.base.json",
   "$schema": "https://json.schemastore.org/tsconfig",
   "compilerOptions": {
-    "baseUrl": "."
+    "baseUrl": ".",
+    "moduleResolution": "nodenext"
   }
 }
