@@ -1,9 +1,11 @@
 {
-  "extends": ["../../tsconfig.json"],
+  "extends": ["../../tsconfig.base.json"],
   "compilerOptions": {
     "baseUrl": ".",
+    "module": "NodeNext",
     "moduleDetection": "force",
-    "moduleResolution": "node",
+    "moduleResolution": "nodenext",
+    "verbatimModuleSyntax": false,
     "paths": {
       "$api/*": ["./src/*"]
     },
