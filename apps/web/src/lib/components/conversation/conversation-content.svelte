@@ -1,8 +1,8 @@
 <script lang="ts">
+  import { StickToBottomContent } from "@workspace/stick-to-bottom";
   import type { Snippet } from "svelte";
   import type { HTMLAttributes } from "svelte/elements";
 
-  import { StickToBottomContent } from "$lib/components/stick-to-bottom/index.js";
   import { cn } from "$lib/utils/cn.js";
 
   interface Props extends HTMLAttributes<HTMLDivElement> {

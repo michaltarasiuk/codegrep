@@ -1,0 +1,13 @@
+{
+  "name": "@workspace/stick-to-bottom",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "dependencies": {
+    "@workspace/shared": "workspace:*"
+  },
+  "peerDependencies": {
+    "svelte": "^5.0.0"
+  }
+}

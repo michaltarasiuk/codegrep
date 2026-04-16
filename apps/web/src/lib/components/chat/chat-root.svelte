@@ -1,8 +1,7 @@
 <script lang="ts">
   import type { Chat } from "@ai-sdk/svelte";
+  import { StickToBottom } from "@workspace/stick-to-bottom";
   import type { Snippet } from "svelte";
-
-  import { StickToBottom } from "$lib/components/stick-to-bottom/index.js";
 
   import { type Model, setChat, setModel } from "./chat-context.js";
 

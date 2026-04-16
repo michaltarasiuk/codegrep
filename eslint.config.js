@@ -23,7 +23,12 @@ const config = [
   ...tseslint.configs.recommended,
   ...svelte.configs["flat/recommended"],
   {
-    files: ["apps/web/**/*.svelte", "apps/web/**/*.svelte.{js,ts}"],
+    files: [
+      "apps/**/*.svelte",
+      "apps/**/*.svelte.{js,ts}",
+      "packages/**/*.svelte",
+      "packages/**/*.svelte.{js,ts}",
+    ],
     languageOptions: {
       globals: {
         ...globals.browser,
@@ -58,8 +63,8 @@ const config = [
         "error",
         { allow: ["error", "warn", "info", "debug", "trace"] },
       ],
-      "simple-import-sort/imports": "warn",
-      "simple-import-sort/exports": "warn",
+      "simple-import-sort/imports": "error",
+      "simple-import-sort/exports": "error",
     },
   },
   {

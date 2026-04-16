@@ -15,6 +15,7 @@
     "@tailwindcss/vite": "^4.1.18",
     "@workspace/fetch-proxy": "workspace:*",
     "@workspace/shared": "workspace:*",
+    "@workspace/stick-to-bottom": "workspace:*",
     "better-auth": "catalog:",
     "date-fns": "^4.1.0",
     "dedent": "^1.7.2",
