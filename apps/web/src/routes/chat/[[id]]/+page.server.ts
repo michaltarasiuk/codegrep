@@ -1,7 +1,7 @@
 import { error } from "@sveltejs/kit";
+import { isDefined } from "@workspace/shared/is-defined.js";
 
 import { client } from "$lib/utils/client.server.js";
-import { isDefined } from "$lib/utils/is-defined.js";
 
 import type { PageServerLoadEvent } from "./$types";
 

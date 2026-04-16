@@ -2,6 +2,7 @@
   import LightbulbIcon from "@lucide/svelte/icons/lightbulb";
   import PlusIcon from "@lucide/svelte/icons/plus";
   import XIcon from "@lucide/svelte/icons/x";
+  import { isDefined } from "@workspace/shared/is-defined.js";
   import { useId } from "bits-ui";
   import dedent from "dedent";
   import { cn } from "tailwind-variants";
@@ -11,7 +12,6 @@
   import * as Field from "$lib/components/ui/field/index.js";
   import { Textarea } from "$lib/components/ui/textarea/index.js";
   import { authClient } from "$lib/utils/client.js";
-  import { isDefined } from "$lib/utils/is-defined.js";
 
   const TEMPLATES: { key: string; label: string; text: string }[] = [
     {

@@ -1,11 +1,11 @@
 <script lang="ts">
   import BrainIcon from "@lucide/svelte/icons/brain";
   import ChevronDownIcon from "@lucide/svelte/icons/chevron-down";
+  import { isDefined } from "@workspace/shared/is-defined.js";
   import type { ComponentProps } from "svelte";
 
   import { CollapsibleTrigger } from "$lib/components/ui/collapsible/index.js";
   import { cn } from "$lib/utils/cn.js";
-  import { isDefined } from "$lib/utils/is-defined.js";
 
   let {
     isStreaming = false,

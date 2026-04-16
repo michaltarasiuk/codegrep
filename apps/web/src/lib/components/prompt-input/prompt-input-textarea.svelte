@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { isDefined } from "@workspace/shared/is-defined.js";
   import type { ComponentProps } from "svelte";
   import type {
     ClipboardEventHandler,
@@ -8,7 +9,6 @@
 
   import * as InputGroup from "$lib/components/ui/input-group/index.js";
   import { cn } from "$lib/utils/cn.js";
-  import { isDefined } from "$lib/utils/is-defined.js";
 
   import {
     getPromptInputAttachments,

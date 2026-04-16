@@ -1,6 +1,5 @@
+import { isDefined } from "@workspace/shared/is-defined.js";
 import { getContext, setContext } from "svelte";
-
-import { isDefined } from "$lib/utils/is-defined.js";
 
 export class MessageBranchState {
   registeredBranchIndexes = $state<number[]>([]);

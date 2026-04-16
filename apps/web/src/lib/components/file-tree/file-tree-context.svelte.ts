@@ -1,7 +1,6 @@
+import { isDefined } from "@workspace/shared/is-defined.js";
 import { getContext, setContext } from "svelte";
 import { SvelteSet } from "svelte/reactivity";
-
-import { isDefined } from "$lib/utils/is-defined.js";
 
 interface FileTreeStateProps {
   readExpandedPaths: () => Set<string>;

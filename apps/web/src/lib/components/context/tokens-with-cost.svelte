@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { isDefined } from "$lib/utils/is-defined.js";
+  import { isDefined } from "@workspace/shared/is-defined.js";
 
   import { compactFormatter } from "./context-context.svelte.js";
 

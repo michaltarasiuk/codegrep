@@ -1,7 +1,6 @@
+import { isDefined } from "@workspace/shared/is-defined.js";
 import type { FileUIPart, SourceDocumentUIPart } from "ai";
 import { getContext, setContext } from "svelte";
-
-import { isDefined } from "$lib/utils/is-defined.js";
 
 export interface PromptInputMessage {
   text: string;

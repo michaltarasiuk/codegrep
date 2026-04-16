@@ -2,12 +2,12 @@
   import CornerDownLeftIcon from "@lucide/svelte/icons/corner-down-left";
   import SquareIcon from "@lucide/svelte/icons/square";
   import XIcon from "@lucide/svelte/icons/x";
+  import { isDefined } from "@workspace/shared/is-defined.js";
   import type { ChatStatus } from "ai";
   import type { ComponentProps } from "svelte";
 
   import * as InputGroup from "$lib/components/ui/input-group/index.js";
   import { Spinner } from "$lib/components/ui/spinner/index.js";
-  import { isDefined } from "$lib/utils/is-defined.js";
 
   import { getPromptInputController } from "./prompt-input-context.svelte.js";
 

@@ -1,7 +1,7 @@
 import type { Handle } from "@sveltejs/kit";
+import { isDefined } from "@workspace/shared/is-defined.js";
 
 import { authClient } from "$lib/utils/client.server.js";
-import { isDefined } from "$lib/utils/is-defined.js";
 
 export const handle: Handle = async ({ event, resolve }) => {
   const requestHeaders = Object.fromEntries(event.request.headers);

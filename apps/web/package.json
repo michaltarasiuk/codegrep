@@ -14,6 +14,7 @@
     "@emotion/serialize": "^1.3.3",
     "@tailwindcss/vite": "^4.1.18",
     "@workspace/fetch-proxy": "workspace:*",
+    "@workspace/shared": "workspace:*",
     "better-auth": "catalog:",
     "date-fns": "^4.1.0",
     "dedent": "^1.7.2",

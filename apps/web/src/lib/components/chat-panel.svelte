@@ -1,5 +1,6 @@
 <script lang="ts">
   import { Chat } from "@ai-sdk/svelte";
+  import { isDefined } from "@workspace/shared/is-defined.js";
   import { DefaultChatTransport, type UIMessage } from "ai";
   import { cn } from "tailwind-variants";
 
@@ -9,7 +10,6 @@
   import * as ChatUI from "$lib/components/chat/index.js";
   import * as PromptInput from "$lib/components/prompt-input/index.js";
   import { CHAT_LIST_KEY } from "$lib/utils/invalidation.js";
-  import { isDefined } from "$lib/utils/is-defined.js";
 
   let {
     id,

@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { isDefined } from "@workspace/shared/is-defined.js";
+
   import { goto, invalidate } from "$app/navigation";
   import { resolve } from "$app/paths";
   import { page } from "$app/state";
@@ -6,7 +8,6 @@
   import { buttonVariants } from "$lib/components/ui/button/index.js";
   import { client } from "$lib/utils/client.js";
   import { CHAT_LIST_KEY } from "$lib/utils/invalidation.js";
-  import { isDefined } from "$lib/utils/is-defined.js";
 
   let {
     chat,

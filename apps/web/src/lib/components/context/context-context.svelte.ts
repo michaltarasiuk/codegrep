@@ -1,7 +1,6 @@
+import { isDefined } from "@workspace/shared/is-defined.js";
 import type { LanguageModelUsage } from "ai";
 import { getContext, setContext } from "svelte";
-
-import { isDefined } from "$lib/utils/is-defined.js";
 
 const CONTEXT_KEY = Symbol.for("scn-context");
 

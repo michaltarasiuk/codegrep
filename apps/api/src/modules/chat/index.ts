@@ -1,9 +1,9 @@
+import { isDefined } from "@workspace/shared/is-defined.js";
 import { convertToModelMessages, streamText } from "ai";
 import { Elysia, status } from "elysia";
 
 import { NotFoundError, UpsertFailedError } from "$api/errors.js";
 import { getFirstUserText } from "$api/utils/get-first-user-text.js";
-import { isDefined } from "$api/utils/is-defined.js";
 
 import { sessionPlugin } from "../auth/session.js";
 import { chatModel } from "./model.js";

@@ -1,5 +1,6 @@
 <script lang="ts">
   import LockOpenIcon from "@lucide/svelte/icons/lock-open";
+  import { isDefined } from "@workspace/shared/is-defined.js";
   import { useId } from "bits-ui";
 
   import { invalidate } from "$app/navigation";
@@ -11,7 +12,6 @@
   import { Spinner } from "$lib/components/ui/spinner/index.js";
   import { client } from "$lib/utils/client.js";
   import { CHAT_LIST_KEY } from "$lib/utils/invalidation.js";
-  import { isDefined } from "$lib/utils/is-defined.js";
 
   let {
     chat,

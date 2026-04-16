@@ -1,7 +1,7 @@
+import { isDefined } from "@workspace/shared/is-defined.js";
 import { Elysia, status } from "elysia";
 
 import { UnauthorizedError } from "$api/errors.js";
-import { isDefined } from "$api/utils/is-defined.js";
 
 import { authService } from "./service.js";
 

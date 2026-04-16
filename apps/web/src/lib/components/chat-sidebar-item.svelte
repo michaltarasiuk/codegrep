@@ -4,13 +4,13 @@
   import MoreHorizontalIcon from "@lucide/svelte/icons/more-horizontal";
   import PencilIcon from "@lucide/svelte/icons/pencil";
   import TrashIcon from "@lucide/svelte/icons/trash-2";
+  import { isDefined } from "@workspace/shared/is-defined.js";
 
   import { goto } from "$app/navigation";
   import { resolve } from "$app/paths";
   import { page } from "$app/state";
   import * as DropdownMenu from "$lib/components/ui/dropdown-menu/index.js";
   import * as Sidebar from "$lib/components/ui/sidebar/index.js";
-  import { isDefined } from "$lib/utils/is-defined.js";
 
   import ChatDeleteDialog from "./chat-delete-dialog.svelte";
   import ChatShareDialog from "./chat-share-dialog.svelte";

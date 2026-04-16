@@ -1,6 +1,5 @@
+import { isDefined } from "@workspace/shared/is-defined.js";
 import { getContext, setContext } from "svelte";
-
-import { isDefined } from "$lib/utils/is-defined.js";
 
 const CHAIN_OF_THOUGHT_KEY = Symbol.for("scn-chain-of-thought");
 

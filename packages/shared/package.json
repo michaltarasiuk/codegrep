@@ -1,0 +1,7 @@
+{
+  "name": "@workspace/shared",
+  "type": "module",
+  "exports": {
+    "./*": "./src/*"
+  }
+}
