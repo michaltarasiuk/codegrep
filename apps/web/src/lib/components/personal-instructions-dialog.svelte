@@ -158,7 +158,6 @@
               <Button
                 variant="ghost"
                 size="icon-sm"
-                disabled={loading}
                 class="ms-auto"
                 onclick={() => (showTemplates = !showTemplates)}
               >
