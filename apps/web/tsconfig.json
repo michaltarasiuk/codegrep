@@ -1,8 +1,8 @@
 {
   "extends": ["./.svelte-kit/tsconfig.json", "../../tsconfig.base.json"],
   "compilerOptions": {
-    "rewriteRelativeImportExtensions": true,
-    "moduleResolution": "bundler"
+    "moduleResolution": "bundler",
+    "rewriteRelativeImportExtensions": true
   }
   // Path aliases are handled by https://svelte.dev/docs/kit/configuration#alias
   // except $lib which is handled by https://svelte.dev/docs/kit/configuration#files
