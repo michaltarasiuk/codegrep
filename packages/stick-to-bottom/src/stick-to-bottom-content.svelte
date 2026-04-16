@@ -11,14 +11,13 @@
 
   let { children, ...restProps }: Props = $props();
 
-  const context = getStickToBottomContext();
-
   let contentEl = $state<HTMLElement | null>(null);
 
-  $effect(function bindStickToBottomContentElement() {
-    const el = contentEl;
-    untrack(() => context.contentRef(el));
-    return function unbindStickToBottomContentElement() {
+  const context = getStickToBottomContext();
+
+  $effect(function bindContent() {
+    untrack(() => context.contentRef(contentEl));
+    return function unbindContent() {
       untrack(() => context.contentRef(null));
     };
   });

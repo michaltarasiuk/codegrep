@@ -9,7 +9,7 @@ export { default as StickToBottom } from "./stick-to-bottom.svelte";
 export { default as StickToBottomContent } from "./stick-to-bottom-content.svelte";
 export {
   getStickToBottomContext,
-  setStickToBottom,
+  setStickToBottomContext,
   type StickToBottomContext,
 } from "./stick-to-bottom-context.svelte.js";
 export {

@@ -17,9 +17,9 @@
 
   const branch = getMessageBranch();
 
-  $effect(function registerMessageBranchWithContext() {
+  $effect(function registerBranch() {
     const unregister = branch.registerBranch(index);
-    return function unregisterMessageBranchFromContext() {
+    return function unregisterBranch() {
       unregister();
     };
   });

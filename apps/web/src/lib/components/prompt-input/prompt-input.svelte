@@ -185,7 +185,7 @@
     }
   }
 
-  $effect(function registerPromptInputFileInputWithController() {
+  $effect(function registerFileInput() {
     if (!usingProvider) {
       return;
     }
@@ -194,14 +194,14 @@
     });
   });
 
-  $effect(function clearSyncedHiddenFileInputWhenEmpty() {
+  $effect(function resetEmptyFileInput() {
     if (!syncHiddenInput || !isDefined(fileInputRef) || !!attachmentsCount) {
       return;
     }
     fileInputRef.value = "";
   });
 
-  $effect(function attachLocalFormDragAndDropHandlers() {
+  $effect(function bindFormDrop() {
     if (globalDrop || !isDefined(formRef)) {
       return;
     }
@@ -223,13 +223,13 @@
     }
     formRef.addEventListener("drop", onDrop);
     formRef.addEventListener("dragover", onDragOver);
-    return function detachLocalFormDragAndDropHandlers() {
+    return function unbindFormDrop() {
       formRef?.removeEventListener("drop", onDrop);
       formRef?.removeEventListener("dragover", onDragOver);
     };
   });
 
-  $effect(function attachGlobalDocumentDragAndDropHandlers() {
+  $effect(function bindDocumentDrop() {
     if (!globalDrop) {
       return;
     }
@@ -251,7 +251,7 @@
     }
     document.addEventListener("drop", onDrop);
     document.addEventListener("dragover", onDragOver);
-    return function detachGlobalDocumentDragAndDropHandlers() {
+    return function unbindDocumentDrop() {
       document.removeEventListener("drop", onDrop);
       document.removeEventListener("dragover", onDragOver);
     };
