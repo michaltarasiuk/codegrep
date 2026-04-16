@@ -2,6 +2,6 @@
   "name": "@workspace/shared",
   "type": "module",
   "exports": {
-    "./*": "./src/*"
+    "./*.js": "./src/*.ts"
   }
 }

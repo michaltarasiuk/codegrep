@@ -1,4 +1,4 @@
-import { uppercaseFirst } from "$lib/utils/uppercase-first.js";
+import { uppercaseFirst } from "@workspace/shared/uppercase-first.js";
 
 export interface ConversationMessage {
   role: "user" | "assistant" | "system" | "data" | "tool";

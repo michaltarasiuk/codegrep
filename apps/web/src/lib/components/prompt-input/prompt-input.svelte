@@ -1,5 +1,6 @@
 <script lang="ts">
   import { isDefined } from "@workspace/shared/is-defined.js";
+  import { blobUrlToDataUrl } from "@workspace/shared/url.js";
   import type { FileUIPart } from "ai";
   import type { Snippet } from "svelte";
   import { onDestroy } from "svelte";
@@ -12,7 +13,6 @@
   import * as InputGroup from "$lib/components/ui/input-group/index.js";
   import * as Tooltip from "$lib/components/ui/tooltip/index.js";
   import { cn } from "$lib/utils/cn.js";
-  import { blobUrlToDataUrl } from "$lib/utils/url.js";
 
   import {
     AttachmentsState,
