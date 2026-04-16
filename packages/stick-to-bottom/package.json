@@ -8,6 +8,6 @@
     "@workspace/shared": "workspace:*"
   },
   "peerDependencies": {
-    "svelte": "^5.0.0"
+    "svelte": "catalog:"
   }
 }
