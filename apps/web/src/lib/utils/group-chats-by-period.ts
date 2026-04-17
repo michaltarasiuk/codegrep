@@ -1,29 +1,5 @@
 import { differenceInCalendarDays, isToday, isYesterday } from "date-fns";
 
-const PERIOD_ORDER: TimePeriod[] = [
-  "Today",
-  "Yesterday",
-  "Last 7 days",
-  "Last 30 days",
-  "Last year",
-  "Older",
-];
-
-export function groupChatsByPeriod<T extends { updatedAt: Date }>(chats: T[]) {
-  const groups = new Map<TimePeriod, T[]>();
-  for (const chat of chats) {
-    const period = getTimePeriod(chat.updatedAt);
-    groups.set(period, [...getGroup(period), chat]);
-  }
-  return PERIOD_ORDER.map((period) => ({
-    period,
-    chats: getGroup(period),
-  }));
-  function getGroup(period: TimePeriod) {
-    return groups.get(period) ?? [];
-  }
-}
-
 type TimePeriod =
   | "Today"
   | "Yesterday"
@@ -40,15 +16,36 @@ function getTimePeriod(date: Date): TimePeriod {
     return "Yesterday";
   }
   const now = new Date();
-  const daysDiff = differenceInCalendarDays(now, date);
-  if (daysDiff <= 7) {
+  const diff = differenceInCalendarDays(now, date);
+  if (diff <= 7) {
     return "Last 7 days";
   }
-  if (daysDiff <= 30) {
+  if (diff <= 30) {
     return "Last 30 days";
   }
-  if (daysDiff <= 365) {
+  if (diff <= 365) {
     return "Last year";
   }
   return "Older";
+}
+
+const PERIOD_ORDER: TimePeriod[] = [
+  "Today",
+  "Yesterday",
+  "Last 7 days",
+  "Last 30 days",
+  "Last year",
+  "Older",
+];
+
+export function groupChatsByPeriod<T extends { updatedAt: Date }>(chats: T[]) {
+  const groups = new Map<TimePeriod, T[]>();
+  for (const chat of chats) {
+    const period = getTimePeriod(chat.updatedAt);
+    groups.set(period, [...(groups.get(period) ?? []), chat]);
+  }
+  return PERIOD_ORDER.map((period) => ({
+    period,
+    chats: groups.get(period) ?? [],
+  }));
 }

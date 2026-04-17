@@ -22,9 +22,5 @@ export async function load({ params: { id }, request }: PageServerLoadEvent) {
       messages: messages.data,
     };
   }
-  let status = "Failed to load chat";
-  if (messages.error.status === 404) {
-    status = "Chat not found";
-  }
-  throw error(messages.error.status, status);
+  throw error(messages.error.status);
 }

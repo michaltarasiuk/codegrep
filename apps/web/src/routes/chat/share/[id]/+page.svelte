@@ -4,4 +4,4 @@
   let { data } = $props();
 </script>
 
-<ChatPanel shared messages={data.messages} />
+<ChatPanel messages={data.messages} shared />

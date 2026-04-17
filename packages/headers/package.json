@@ -1,0 +1,7 @@
+{
+  "name": "@workspace/headers",
+  "type": "module",
+  "exports": {
+    ".": "./src/headers.ts"
+  }
+}
