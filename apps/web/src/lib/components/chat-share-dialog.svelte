@@ -26,7 +26,7 @@
     onClose: () => void;
   } = $props();
 
-  const shareLinkFieldId = useId();
+  let shareLinkFieldId = useId();
 
   let shareId = $derived(chat.shareId);
   let shareLink = $derived(`${PUBLIC_WEB_URL}/chat/share/${shareId}`);
@@ -42,7 +42,7 @@
   async function share() {
     try {
       sharing = true;
-      const result = await client.api
+      let result = await client.api
         .chat({
           id: chat.id,
         })
@@ -58,7 +58,7 @@
   async function unshare() {
     try {
       unsharing = true;
-      const result = await client.api
+      let result = await client.api
         .chat({
           id: chat.id,
         })

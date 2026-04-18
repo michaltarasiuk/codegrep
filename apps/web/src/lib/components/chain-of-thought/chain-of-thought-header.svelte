@@ -20,7 +20,7 @@
     children?: Snippet;
   } = $props();
 
-  const context = getChainOfThought();
+  let context = getChainOfThought();
 </script>
 
 <Collapsible

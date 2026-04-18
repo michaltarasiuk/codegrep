@@ -24,8 +24,8 @@
     ...restProps
   }: ComponentProps<typeof InputGroup.Textarea> = $props();
 
-  const controller = getPromptInputController();
-  const attachments = getPromptInputAttachments();
+  let controller = getPromptInputController();
+  let attachments = getPromptInputAttachments();
 
   let isComposing = $state(false);
 
@@ -52,8 +52,8 @@
       }
       e.preventDefault();
       // Check if the submit button is disabled before submitting
-      const { form } = e.currentTarget;
-      const submitButton = form?.querySelector(
+      let { form } = e.currentTarget;
+      let submitButton = form?.querySelector(
         'button[type="submit"]'
       ) as HTMLButtonElement | null;
       if (submitButton?.disabled) {
@@ -68,7 +68,7 @@
       attachments.files.length > 0
     ) {
       e.preventDefault();
-      const lastAttachment = attachments.files.at(-1);
+      let lastAttachment = attachments.files.at(-1);
       if (isDefined(lastAttachment)) {
         attachments.remove(lastAttachment.id);
       }
@@ -78,7 +78,7 @@
   function handleInput(
     e: Parameters<FormEventHandler<HTMLTextAreaElement>>[0]
   ) {
-    const newValue = e.currentTarget.value;
+    let newValue = e.currentTarget.value;
     if (boundToController) {
       controller!.textInput.setInput(newValue);
     } else {
@@ -90,11 +90,11 @@
   function handlePaste(
     e: Parameters<ClipboardEventHandler<HTMLTextAreaElement>>[0]
   ) {
-    const items = e.clipboardData?.items ?? [];
-    const files: File[] = [];
-    for (const item of items) {
+    let items = e.clipboardData?.items ?? [];
+    let files: File[] = [];
+    for (let item of items) {
       if (item.kind === "file") {
-        const file = item.getAsFile();
+        let file = item.getAsFile();
         if (isDefined(file)) {
           files.push(file);
         }

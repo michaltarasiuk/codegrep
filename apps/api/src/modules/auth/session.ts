@@ -5,9 +5,9 @@ import { UnauthorizedError } from "$api/errors.js";
 
 import { authService } from "./service.js";
 
-export const sessionPlugin = new Elysia({ name: "auth/session" })
+export let sessionPlugin = new Elysia({ name: "auth/session" })
   .derive({ as: "scoped" }, async ({ request: { headers } }) => {
-    const session = await authService.api.getSession({
+    let session = await authService.api.getSession({
       headers,
     });
 

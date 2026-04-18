@@ -6,7 +6,7 @@
 
   import { cn, type WithElementRef } from "$lib/utils/cn.js";
 
-  const stepVariants = tv({
+  let stepVariants = tv({
     base: "fade-in-0 slide-in-from-top-2 animate-in flex gap-2 text-sm",
     variants: {
       status: {

@@ -25,7 +25,7 @@
     onOpenChange?: (open: boolean) => void;
   } = $props();
 
-  const sidebar = setSidebar({
+  let sidebar = setSidebar({
     open: () => open,
     setOpen: (value) => {
       open = value;

@@ -3,7 +3,7 @@ import {
   inferAdditionalFields,
 } from "better-auth/client/plugins";
 
-export const authPlugins = [
+export let authPlugins = [
   anonymousClient(),
   inferAdditionalFields({
     user: {

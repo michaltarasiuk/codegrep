@@ -10,7 +10,7 @@
     percentFormatter,
   } from "./context-context.svelte.js";
 
-  const PERCENT_MAX = 100;
+  let PERCENT_MAX = 100;
 
   type ContextContentHeaderProps = WithElementRef<
     HTMLAttributes<HTMLDivElement>
@@ -25,7 +25,7 @@
     ...restProps
   }: ContextContentHeaderProps = $props();
 
-  const context = getContextState();
+  let context = getContextState();
 
   let usedPercent = $derived(context.usedTokens / context.maxTokens);
   let displayPct = $derived(percentFormatter.format(usedPercent));

@@ -10,7 +10,7 @@ import {
   timestamp,
 } from "drizzle-orm/pg-core";
 
-export const user = pgTable("user", {
+export let user = pgTable("user", {
   id: text("id").primaryKey(),
   email: text("email").notNull().unique(),
   name: text("name").notNull(),
@@ -25,7 +25,7 @@ export const user = pgTable("user", {
     .notNull(),
 });
 
-export const session = pgTable(
+export let session = pgTable(
   "session",
   {
     id: text("id").primaryKey(),
@@ -45,7 +45,7 @@ export const session = pgTable(
   (table) => [index("session_userId_idx").on(table.userId)]
 );
 
-export const account = pgTable(
+export let account = pgTable(
   "account",
   {
     id: text("id").primaryKey(),
@@ -70,7 +70,7 @@ export const account = pgTable(
   (table) => [index("account_userId_idx").on(table.userId)]
 );
 
-export const verification = pgTable(
+export let verification = pgTable(
   "verification",
   {
     id: text("id").primaryKey(),
@@ -86,7 +86,7 @@ export const verification = pgTable(
   (table) => [index("verification_identifier_idx").on(table.identifier)]
 );
 
-export const chat = pgTable(
+export let chat = pgTable(
   "chat",
   {
     id: text("id").primaryKey(),
@@ -104,13 +104,13 @@ export const chat = pgTable(
   (table) => [index("chat_id_idx").on(table.id)]
 );
 
-export const messageRole = pgEnum("message_role", [
+export let messageRole = pgEnum("message_role", [
   "system",
   "user",
   "assistant",
 ]);
 
-export const message = pgTable(
+export let message = pgTable(
   "message",
   {
     id: text("id").primaryKey(),
@@ -129,27 +129,27 @@ export const message = pgTable(
   (table) => [index("message_chatId_idx").on(table.chatId)]
 );
 
-export const userRelations = relations(user, ({ many }) => ({
+export let userRelations = relations(user, ({ many }) => ({
   accounts: many(account),
   sessions: many(session),
   chats: many(chat),
 }));
 
-export const accountRelations = relations(account, ({ one }) => ({
+export let accountRelations = relations(account, ({ one }) => ({
   user: one(user, {
     fields: [account.userId],
     references: [user.id],
   }),
 }));
 
-export const sessionRelations = relations(session, ({ one }) => ({
+export let sessionRelations = relations(session, ({ one }) => ({
   user: one(user, {
     fields: [session.userId],
     references: [user.id],
   }),
 }));
 
-export const chatRelations = relations(chat, ({ one, many }) => ({
+export let chatRelations = relations(chat, ({ one, many }) => ({
   messages: many(message),
   user: one(user, {
     fields: [chat.userId],
@@ -157,7 +157,7 @@ export const chatRelations = relations(chat, ({ one, many }) => ({
   }),
 }));
 
-export const messageRelations = relations(message, ({ one }) => ({
+export let messageRelations = relations(message, ({ one }) => ({
   chat: one(chat, {
     fields: [message.chatId],
     references: [chat.id],

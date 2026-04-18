@@ -21,7 +21,7 @@ export function defaultFormatMessage({
   role,
   content = "_No content_",
 }: ConversationMessage) {
-  const roleLabel = uppercaseFirst(role);
-  const normalizedContent = content.replaceAll("\r\n", "\n").trim();
+  let roleLabel = uppercaseFirst(role);
+  let normalizedContent = content.replaceAll("\r\n", "\n").trim();
   return `**${roleLabel}**\n\n${normalizedContent}`;
 }

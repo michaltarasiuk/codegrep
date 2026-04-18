@@ -24,7 +24,7 @@
     ...restProps
   }: ContextCacheUsageProps = $props();
 
-  const context = getContextState();
+  let context = getContextState();
 
   let cacheTokens = $derived(
     context.usage?.inputTokenDetails?.cacheReadTokens ?? 0

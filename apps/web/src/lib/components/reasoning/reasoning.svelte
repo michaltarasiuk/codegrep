@@ -4,7 +4,7 @@
   import { Collapsible } from "$lib/components/ui/collapsible/index.js";
   import { cn } from "$lib/utils/cn.js";
 
-  const AUTO_CLOSE_DELAY = 1000;
+  let AUTO_CLOSE_DELAY = 1000;
 
   let {
     isStreaming = false,
@@ -27,7 +27,7 @@
 
   $effect(function scheduleAutoClose() {
     if (!isStreaming && open && !hasAutoClosed) {
-      const timer = setTimeout(() => {
+      let timer = setTimeout(() => {
         open = false;
         hasAutoClosed = true;
       }, AUTO_CLOSE_DELAY);

@@ -12,7 +12,7 @@
     ...restProps
   }: WithElementRef<HTMLAttributes<HTMLDivElement>> = $props();
 
-  const branch = getMessageBranch();
+  let branch = getMessageBranch();
 </script>
 
 {#if branch.totalBranches > 1}

@@ -21,7 +21,7 @@
     }[];
   }
 
-  const { children, chatList = [] }: Props = $props();
+  let { children, chatList = [] }: Props = $props();
 
   let groupedChats = $derived(groupChatsByPeriod(chatList));
 </script>

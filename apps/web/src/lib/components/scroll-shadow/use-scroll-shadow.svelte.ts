@@ -27,18 +27,18 @@ export function useScrollShadow(getProps: () => UseScrollShadowProps) {
   // Track pending RAF to avoid multiple scheduled updates
   let rafId: number | null = null;
 
-  const checkOverflow = () => {
-    const el = containerEl;
+  let checkOverflow = () => {
+    let el = containerEl;
     if (!el) return;
 
-    const { orientation, offset, onVisibilityChange } = getProps();
-    const isVertical = orientation === "vertical";
-    const scrollStart = isVertical ? el.scrollTop : el.scrollLeft;
-    const scrollSize = isVertical ? el.scrollHeight : el.scrollWidth;
-    const clientSize = isVertical ? el.clientHeight : el.clientWidth;
+    let { orientation, offset, onVisibilityChange } = getProps();
+    let isVertical = orientation === "vertical";
+    let scrollStart = isVertical ? el.scrollTop : el.scrollLeft;
+    let scrollSize = isVertical ? el.scrollHeight : el.scrollWidth;
+    let clientSize = isVertical ? el.clientHeight : el.clientWidth;
 
-    const hasScrollBefore = scrollStart > offset;
-    const hasScrollAfter = scrollStart + clientSize + offset < scrollSize;
+    let hasScrollBefore = scrollStart > offset;
+    let hasScrollAfter = scrollStart + clientSize + offset < scrollSize;
 
     // Skip DOM updates if state hasn't changed
     if (
@@ -108,8 +108,8 @@ export function useScrollShadow(getProps: () => UseScrollShadowProps) {
   };
 
   $effect(function observeOverflow() {
-    const el = containerEl;
-    const { visibility, isEnabled } = getProps();
+    let el = containerEl;
+    let { visibility, isEnabled } = getProps();
 
     if (!el || !isEnabled || visibility !== "auto") {
       return;
@@ -122,7 +122,7 @@ export function useScrollShadow(getProps: () => UseScrollShadowProps) {
     el.addEventListener("scroll", checkOverflow, { passive: true });
 
     // Monitor size changes
-    const resizeObserver = new ResizeObserver(checkOverflow);
+    let resizeObserver = new ResizeObserver(checkOverflow);
     resizeObserver.observe(el);
 
     return function disconnectOverflow() {

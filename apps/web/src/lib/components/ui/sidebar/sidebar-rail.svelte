@@ -15,7 +15,7 @@
     HTMLButtonElement
   > = $props();
 
-  const sidebar = useSidebar();
+  let sidebar = useSidebar();
 </script>
 
 <button

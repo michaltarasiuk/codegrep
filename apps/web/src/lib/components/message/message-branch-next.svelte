@@ -14,7 +14,7 @@
     onclick?: (e: MouseEvent) => void;
   } = $props();
 
-  const branch = getMessageBranch();
+  let branch = getMessageBranch();
 </script>
 
 <Button

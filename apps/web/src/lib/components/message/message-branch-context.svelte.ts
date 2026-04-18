@@ -39,8 +39,8 @@ export class MessageBranchState {
       return 0;
     }
 
-    const normalizedCurrentBranch = this.normalizedCurrentBranch;
-    const position = this.registeredBranchIndexes.indexOf(
+    let normalizedCurrentBranch = this.normalizedCurrentBranch;
+    let position = this.registeredBranchIndexes.indexOf(
       normalizedCurrentBranch
     );
     return Math.max(0, position);
@@ -59,7 +59,7 @@ export class MessageBranchState {
       return value;
     }
 
-    const nextBranch =
+    let nextBranch =
       this.registeredBranchIndexes.find((index) => index >= value) ??
       this.registeredBranchIndexes.at(-1);
 
@@ -75,7 +75,7 @@ export class MessageBranchState {
       return 0;
     }
 
-    const nextPosition = (this.currentBranchPosition + 1) % this.totalBranches;
+    let nextPosition = (this.currentBranchPosition + 1) % this.totalBranches;
     return this.registeredBranchIndexes[nextPosition] ?? 0;
   };
 
@@ -84,15 +84,15 @@ export class MessageBranchState {
       return 0;
     }
 
-    const previousPosition =
+    let previousPosition =
       (this.currentBranchPosition - 1 + this.totalBranches) %
       this.totalBranches;
     return this.registeredBranchIndexes[previousPosition] ?? 0;
   };
 
   setBranch = (value: number) => {
-    const next = this.normalizeBranch(value);
-    const previous = this.currentBranch;
+    let next = this.normalizeBranch(value);
+    let previous = this.currentBranch;
 
     if (next === previous) {
       return;
@@ -140,10 +140,10 @@ export class MessageBranchState {
   };
 }
 
-const MESSAGE_BRANCH_KEY = Symbol.for("scn-message-branch");
+let MESSAGE_BRANCH_KEY = Symbol.for("scn-message-branch");
 
 export function getMessageBranch() {
-  const value = getContext<MessageBranchState | null>(MESSAGE_BRANCH_KEY);
+  let value = getContext<MessageBranchState | null>(MESSAGE_BRANCH_KEY);
   if (!isDefined(value)) {
     throw new Error("Missing message branch context");
   }

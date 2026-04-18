@@ -14,7 +14,7 @@ export abstract class ChatService {
     chatId: string;
     userId: string;
   }) {
-    const [found] = await db
+    let [found] = await db
       .select()
       .from(chat)
       .where(and(eq(chat.id, chatId), eq(chat.userId, userId)))
@@ -42,7 +42,7 @@ export abstract class ChatService {
     chatId: string;
     userId: string;
   }) {
-    const messages = await db
+    let messages = await db
       .select({
         id: message.id,
         role: message.role,
@@ -63,7 +63,7 @@ export abstract class ChatService {
   }
 
   static async findSharedMessages({ shareId }: { shareId: string }) {
-    const messages = await db
+    let messages = await db
       .select({
         id: message.id,
         role: message.role,
@@ -91,7 +91,7 @@ export abstract class ChatService {
     chatId: string;
     userId: string;
   }) {
-    const [upserted] = await db
+    let [upserted] = await db
       .insert(chat)
       .values({ id: chatId, title, userId })
       .onConflictDoUpdate({
@@ -116,7 +116,7 @@ export abstract class ChatService {
     chatId: string;
     userId: string;
   }) {
-    const [updated] = await db
+    let [updated] = await db
       .update(chat)
       .set({ title })
       .where(and(eq(chat.id, chatId), eq(chat.userId, userId)))
@@ -140,7 +140,7 @@ export abstract class ChatService {
     userId: string;
   }) {
     return await db.transaction(async (tx) => {
-      const found = await this.findFirst({
+      let found = await this.findFirst({
         chatId,
         userId,
       });
@@ -150,7 +150,7 @@ export abstract class ChatService {
           id: chatId,
         });
       }
-      const inserts = messages.map((m) => ({
+      let inserts = messages.map((m) => ({
         id: `${chatId}:${m.id}`,
         chatId,
         role: m.role,
@@ -173,7 +173,7 @@ export abstract class ChatService {
   }
 
   static async share({ chatId, userId }: { chatId: string; userId: string }) {
-    const [shared] = await db
+    let [shared] = await db
       .update(chat)
       .set({ shareId: sql`coalesce(${chat.shareId}, ${generateId()})` })
       .where(and(eq(chat.id, chatId), eq(chat.userId, userId)))
@@ -188,7 +188,7 @@ export abstract class ChatService {
   }
 
   static async unshare({ chatId, userId }: { chatId: string; userId: string }) {
-    const [unshared] = await db
+    let [unshared] = await db
       .update(chat)
       .set({ shareId: null })
       .where(and(eq(chat.id, chatId), eq(chat.userId, userId)))
@@ -203,7 +203,7 @@ export abstract class ChatService {
   }
 
   static async unshareAll({ userId }: { userId: string }) {
-    const unshared = await db
+    let unshared = await db
       .update(chat)
       .set({ shareId: null })
       .where(and(eq(chat.userId, userId), not(isNull(chat.shareId))))
@@ -212,7 +212,7 @@ export abstract class ChatService {
   }
 
   static async delete({ chatId, userId }: { chatId: string; userId: string }) {
-    const [deleted] = await db
+    let [deleted] = await db
       .delete(chat)
       .where(and(eq(chat.id, chatId), eq(chat.userId, userId)))
       .returning({ id: chat.id });

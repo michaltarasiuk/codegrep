@@ -16,7 +16,7 @@
     onclick?: (e: MouseEvent) => void;
   } = $props();
 
-  const sidebar = useSidebar();
+  let sidebar = useSidebar();
 </script>
 
 <Button

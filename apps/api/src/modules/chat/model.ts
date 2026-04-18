@@ -3,14 +3,14 @@ import { Elysia, t } from "elysia";
 
 import { chat } from "$api/db/schema.js";
 
-const chatSelect = createSelectSchema(chat);
-const chatInsert = createInsertSchema(chat);
+let chatSelect = createSelectSchema(chat);
+let chatInsert = createInsertSchema(chat);
 
-const select = chatSelect.properties;
+let select = chatSelect.properties;
 
-const Chat = t.Pick(chatSelect, ["id", "title", "shareId", "updatedAt"]);
-const ChatModel = t.String({ minLength: 1 });
-const ChatMessage = t.Object(
+let Chat = t.Pick(chatSelect, ["id", "title", "shareId", "updatedAt"]);
+let ChatModel = t.String({ minLength: 1 });
+let ChatMessage = t.Object(
   {
     id: t.String(),
     role: t.Union([
@@ -24,7 +24,7 @@ const ChatMessage = t.Object(
   { additionalProperties: true }
 );
 
-export const chatModel = new Elysia({ name: "model.chat" }).model({
+export let chatModel = new Elysia({ name: "model.chat" }).model({
   "chat.list.response": t.Array(Chat),
 
   "chat.messages.params": t.Pick(chatSelect, ["id"]),

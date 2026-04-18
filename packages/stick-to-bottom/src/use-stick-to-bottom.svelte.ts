@@ -25,7 +25,7 @@ export interface StickToBottomState {
   resizeObserver: ResizeObserver | null;
 }
 
-const DEFAULT_SPRING_ANIMATION = {
+let DEFAULT_SPRING_ANIMATION = {
   damping: 0.7,
   stiffness: 0.05,
   mass: 1.25,
@@ -66,9 +66,9 @@ export type ScrollToBottom = (
 ) => Promise<boolean> | boolean;
 export type StopScroll = () => void;
 
-const STICK_TO_BOTTOM_OFFSET_PX = 70;
-const SIXTY_FPS_INTERVAL_MS = 1000 / 60;
-const RETAIN_ANIMATION_DURATION_MS = 350;
+let STICK_TO_BOTTOM_OFFSET_PX = 70;
+let SIXTY_FPS_INTERVAL_MS = 1000 / 60;
+let RETAIN_ANIMATION_DURATION_MS = 350;
 
 let mouseDown = false;
 
@@ -98,13 +98,13 @@ export interface StickToBottomInstance {
 }
 
 // eslint-disable-next-line svelte/prefer-svelte-reactivity -- module-level cache, not reactive state
-const animationCache = new Map<string, Required<SpringAnimation>>();
+let animationCache = new Map<string, Required<SpringAnimation>>();
 
 function mergeAnimations(...animations: (Animation | boolean | undefined)[]) {
-  const result = { ...DEFAULT_SPRING_ANIMATION };
+  let result = { ...DEFAULT_SPRING_ANIMATION };
   let instant = false;
 
-  for (const animation of animations) {
+  for (let animation of animations) {
     if (animation === "instant") {
       instant = true;
       continue;
@@ -121,7 +121,7 @@ function mergeAnimations(...animations: (Animation | boolean | undefined)[]) {
     result.mass = animation.mass ?? result.mass;
   }
 
-  const key = JSON.stringify(result);
+  let key = JSON.stringify(result);
 
   if (!animationCache.has(key)) {
     animationCache.set(key, Object.freeze(result) as Required<SpringAnimation>);
@@ -172,9 +172,9 @@ export class UseStickToBottom {
       calculatedScrollTop: number;
     } | null = null;
 
-    const getScrollEl = () => this.#scrollEl;
-    const getContentEl = () => this.#contentEl;
-    const getOptions = () => this.#options;
+    let getScrollEl = () => this.#scrollEl;
+    let getContentEl = () => this.#contentEl;
+    let getOptions = () => this.#options;
 
     this.#state = {
       escapedFromLock: this.#escapedFromLock,
@@ -192,7 +192,7 @@ export class UseStickToBottom {
         return getScrollEl()?.scrollTop ?? 0;
       },
       set scrollTop(scrollTop: number) {
-        const el = getScrollEl();
+        let el = getScrollEl();
         if (el) {
           el.scrollTop = scrollTop;
           this.ignoreScrollToTop = el.scrollTop;
@@ -200,8 +200,8 @@ export class UseStickToBottom {
       },
 
       get targetScrollTop() {
-        const scrollEl = getScrollEl();
-        const contentEl = getContentEl();
+        let scrollEl = getScrollEl();
+        let contentEl = getContentEl();
         if (!scrollEl || !contentEl) {
           return 0;
         }
@@ -209,14 +209,14 @@ export class UseStickToBottom {
       },
 
       get calculatedTargetScrollTop() {
-        const scrollEl = getScrollEl();
-        const contentEl = getContentEl();
+        let scrollEl = getScrollEl();
+        let contentEl = getContentEl();
         if (!scrollEl || !contentEl) {
           return 0;
         }
 
-        const { targetScrollTop } = this;
-        const opts = getOptions();
+        let { targetScrollTop } = this;
+        let opts = getOptions();
 
         if (!opts.targetScrollTop) {
           return targetScrollTop;
@@ -226,7 +226,7 @@ export class UseStickToBottom {
           return lastCalculation.calculatedScrollTop;
         }
 
-        const calculatedScrollTop = Math.max(
+        let calculatedScrollTop = Math.max(
           Math.min(
             opts.targetScrollTop(targetScrollTop, {
               scrollElement: scrollEl,
@@ -271,12 +271,12 @@ export class UseStickToBottom {
       return false;
     }
 
-    const selection = window.getSelection();
+    let selection = window.getSelection();
     if (!selection || !selection.rangeCount) {
       return false;
     }
 
-    const range = selection.getRangeAt(0);
+    let range = selection.getRangeAt(0);
     return (
       range.commonAncestorContainer.contains(this.#scrollEl) ||
       this.#scrollEl?.contains(range.commonAncestorContainer) === true
@@ -292,9 +292,9 @@ export class UseStickToBottom {
       this.#setIsAtBottom(true);
     }
 
-    const waitElapsed = Date.now() + (Number(scrollOptions.wait) || 0);
-    const behavior = mergeAnimations(this.#options, scrollOptions.animation);
-    const { ignoreEscapes = false } = scrollOptions;
+    let waitElapsed = Date.now() + (Number(scrollOptions.wait) || 0);
+    let behavior = mergeAnimations(this.#options, scrollOptions.animation);
+    let { ignoreEscapes = false } = scrollOptions;
 
     let durationElapsed: number;
     let startTarget = this.#state.calculatedTargetScrollTop;
@@ -307,10 +307,10 @@ export class UseStickToBottom {
       durationElapsed = waitElapsed + (scrollOptions.duration ?? 0);
     }
 
-    const state = this.#state;
+    let state = this.#state;
 
-    const next = async (): Promise<boolean> => {
-      const promise = new Promise<void>((resolve) =>
+    let next = async (): Promise<boolean> => {
+      let promise = new Promise<void>((resolve) =>
         requestAnimationFrame(() => resolve())
       ).then(() => {
         if (!state.isAtBottom) {
@@ -318,9 +318,9 @@ export class UseStickToBottom {
           return false;
         }
 
-        const { scrollTop } = state;
-        const tick = performance.now();
-        const tickDelta =
+        let { scrollTop } = state;
+        let tick = performance.now();
+        let tickDelta =
           (tick - (state.lastTick ?? tick)) / SIXTY_FPS_INTERVAL_MS;
         state.animation ||= { behavior, promise: resultPromise, ignoreEscapes };
 
@@ -398,7 +398,7 @@ export class UseStickToBottom {
       return state.animation.promise;
     }
 
-    const resultPromise = next();
+    let resultPromise = next();
     return resultPromise;
   };
 
@@ -412,8 +412,8 @@ export class UseStickToBottom {
       return;
     }
 
-    const state = this.#state;
-    const { scrollTop, ignoreScrollToTop } = state;
+    let state = this.#state;
+    let { scrollTop, ignoreScrollToTop } = state;
     let lastScrollTop = state.lastScrollTop ?? scrollTop;
 
     state.lastScrollTop = scrollTop;
@@ -436,8 +436,8 @@ export class UseStickToBottom {
         return;
       }
 
-      const isScrollingDown = scrollTop > lastScrollTop;
-      const isScrollingUp = scrollTop < lastScrollTop;
+      let isScrollingDown = scrollTop > lastScrollTop;
+      let isScrollingUp = scrollTop < lastScrollTop;
 
       if (state.animation?.ignoreEscapes) {
         state.scrollTop = lastScrollTop;
@@ -489,7 +489,7 @@ export class UseStickToBottom {
   };
 
   contentRef = (el: HTMLElement | null) => {
-    const state = this.#state;
+    let state = this.#state;
     state.resizeObserver?.disconnect();
 
     if (!el) {
@@ -502,10 +502,10 @@ export class UseStickToBottom {
     let previousHeight: number | null = null;
 
     state.resizeObserver = new ResizeObserver((entries) => {
-      const entry = entries[0];
+      let entry = entries[0];
       if (!entry) return;
-      const { height } = entry.contentRect;
-      const difference = height - (previousHeight ?? height);
+      let { height } = entry.contentRect;
+      let difference = height - (previousHeight ?? height);
 
       state.resizeDifference = difference;
 
@@ -518,7 +518,7 @@ export class UseStickToBottom {
       });
 
       if (difference >= 0) {
-        const animation = mergeAnimations(
+        let animation = mergeAnimations(
           this.#options,
           previousHeight ? this.#options.resize : this.#options.initial
         );

@@ -3,7 +3,7 @@ import path from "node:path";
 import adapter from "@sveltejs/adapter-vercel";
 
 /** @type {import("@sveltejs/kit").Config} */
-const config = {
+let config = {
   kit: {
     adapter: adapter({
       runtime: "experimental_bun1.x",

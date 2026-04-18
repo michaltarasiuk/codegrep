@@ -14,14 +14,14 @@
 
   import PersonalInstructionsDialog from "./personal-instructions-dialog.svelte";
 
-  const session = authClient.useSession();
+  let session = authClient.useSession();
 
   let open = $state(false);
   let personalInstructionsOpen = $state(false);
   let darkMode = $state(false);
 
   $effect(function watchTheme() {
-    const unsubscribe = mode.subscribe((value) => {
+    let unsubscribe = mode.subscribe((value) => {
       darkMode = value === "dark";
     });
     return function unwatchTheme() {

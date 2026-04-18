@@ -9,12 +9,12 @@ import tseslint from "typescript-eslint";
 
 import svelteConfig from "./apps/web/svelte.config.js";
 
-const ignoreFilePath = fileURLToPath(
+let ignoreFilePath = fileURLToPath(
   new globalThis.URL("./.gitignore", import.meta.url)
 );
 
 /** @type {import("eslint").Linter.Config[]} */
-const config = [
+let config = [
   includeIgnoreFile(ignoreFilePath),
   {
     ignores: [".agent/**", ".agents/**"],
@@ -48,6 +48,19 @@ const config = [
       "simple-import-sort": simpleImportSort,
     },
     rules: {
+      "no-console": [
+        "error",
+        { allow: ["error", "warn", "info", "debug", "trace"] },
+      ],
+      "no-restricted-syntax": [
+        "error",
+        {
+          selector: "VariableDeclaration[kind='const']",
+          message: "Use 'let' instead of 'const'.",
+        },
+      ],
+      "no-undef-init": "error",
+      "prefer-const": "off",
       "@typescript-eslint/consistent-type-definitions": ["error", "interface"],
       "@typescript-eslint/no-unused-vars": [
         "warn",
@@ -57,14 +70,8 @@ const config = [
           caughtErrorsIgnorePattern: "^_",
         },
       ],
-      "no-undef-init": "error",
-      "prefer-const": "off",
-      "no-console": [
-        "error",
-        { allow: ["error", "warn", "info", "debug", "trace"] },
-      ],
-      "simple-import-sort/imports": "error",
       "simple-import-sort/exports": "error",
+      "simple-import-sort/imports": "error",
     },
   },
   {
@@ -74,4 +81,5 @@ const config = [
     },
   },
 ];
+
 export default config;

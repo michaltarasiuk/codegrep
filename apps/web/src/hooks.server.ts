@@ -3,9 +3,9 @@ import { isDefined } from "@workspace/shared/is-defined.js";
 
 import { authClient } from "$lib/utils/client.server.js";
 
-export const handle: Handle = async ({ event, resolve }) => {
-  const requestHeaders = Object.fromEntries(event.request.headers);
-  const session = await authClient.getSession({
+export let handle: Handle = async ({ event, resolve }) => {
+  let requestHeaders = Object.fromEntries(event.request.headers);
+  let session = await authClient.getSession({
     fetchOptions: {
       fetch: event.fetch,
       headers: requestHeaders,
@@ -25,7 +25,7 @@ export const handle: Handle = async ({ event, resolve }) => {
     });
   }
 
-  const response = await resolve(event);
+  let response = await resolve(event);
   if (isDefined(setCookie)) {
     response.headers.append("set-cookie", setCookie);
   }

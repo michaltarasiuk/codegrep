@@ -2,9 +2,9 @@ import { Elysia, status } from "elysia";
 
 import { authService } from "./service.js";
 
-const ALLOWED_METHODS = new Set(["OPTIONS", "GET", "POST"]);
+let ALLOWED_METHODS = new Set(["OPTIONS", "GET", "POST"]);
 
-export const authPlugin = new Elysia({ name: "auth" }).all(
+export let authPlugin = new Elysia({ name: "auth" }).all(
   "/auth/*",
   async ({ request }) => {
     if (!ALLOWED_METHODS.has(request.method)) {

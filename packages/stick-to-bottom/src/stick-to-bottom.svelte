@@ -29,14 +29,14 @@
     ...restProps
   }: Props = $props();
 
-  const defaultInstance = new UseStickToBottom(() => ({
+  let defaultInstance = new UseStickToBottom(() => ({
     mass,
     damping,
     stiffness,
     resize,
     initial,
     targetScrollTop: (target, elements) => {
-      const get = context?.targetScrollTop ?? currentTargetScrollTop;
+      let get = context?.targetScrollTop ?? currentTargetScrollTop;
       return get?.(target, elements) ?? target;
     },
   }));
@@ -44,7 +44,7 @@
   let scrollEl = $state<HTMLElement | null>(null);
   let active = $derived(instance ?? defaultInstance);
 
-  const context = setStickToBottomContext(() => active);
+  let context = setStickToBottomContext(() => active);
 
   $effect(function ensureAutoOverflow() {
     if (isDefined(scrollEl)) {

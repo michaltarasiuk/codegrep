@@ -238,7 +238,7 @@ describe("ContentDisposition", () => {
     });
 
     it("falls back gracefully with a warning for unknown charsets", () => {
-      const warnSpy = vi.spyOn(console, "warn").mockImplementation(() => {});
+      let warnSpy = vi.spyOn(console, "warn").mockImplementation(() => {});
 
       let header = new ContentDisposition(
         "attachment; filename*=unknown-charset''file%FF.txt"

@@ -13,7 +13,7 @@
 
   let contentEl = $state<HTMLElement | null>(null);
 
-  const context = getStickToBottomContext();
+  let context = getStickToBottomContext();
 
   $effect(function bindContent() {
     untrack(() => context.contentRef(contentEl));

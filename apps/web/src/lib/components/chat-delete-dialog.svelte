@@ -30,7 +30,7 @@
   async function handleDelete() {
     try {
       loading = true;
-      const result = await client.api
+      let result = await client.api
         .chat({
           id: chat.id,
         })

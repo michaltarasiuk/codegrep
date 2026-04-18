@@ -1,7 +1,7 @@
 <script lang="ts" module>
   import { tv, type VariantProps } from "tailwind-variants";
 
-  const scrollShadowVariants = tv({
+  let scrollShadowVariants = tv({
     defaultVariants: {
       hideScrollBar: false,
       orientation: "vertical",
@@ -95,7 +95,7 @@
     ...restProps
   }: ScrollShadowRootProps = $props();
 
-  const { containerRef } = useScrollShadow(() => ({
+  let { containerRef } = useScrollShadow(() => ({
     offset,
     visibility,
     isEnabled,
@@ -112,7 +112,7 @@
   );
 
   $effect(function syncControlledVisibility() {
-    const el = ref;
+    let el = ref;
     if (!el || visibility === "auto") return;
 
     delete el.dataset["topScroll"];

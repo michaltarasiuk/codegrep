@@ -14,7 +14,7 @@
     HTMLSpanElement
   > = $props();
 
-  const branch = getMessageBranch();
+  let branch = getMessageBranch();
 </script>
 
 <span

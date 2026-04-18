@@ -26,7 +26,7 @@ class FileTreeState {
   }
 
   togglePath = (path: string) => {
-    const next = new SvelteSet(this.expandedPaths);
+    let next = new SvelteSet(this.expandedPaths);
     if (next.has(path)) {
       next.delete(path);
     } else {
@@ -49,10 +49,10 @@ class FileTreeState {
   };
 }
 
-const FILE_TREE_KEY = Symbol.for("scn-file-tree");
+let FILE_TREE_KEY = Symbol.for("scn-file-tree");
 
 export function getFileTree() {
-  const value = getContext<FileTreeState | null>(FILE_TREE_KEY);
+  let value = getContext<FileTreeState | null>(FILE_TREE_KEY);
   if (!isDefined(value)) {
     throw new Error("Missing file tree context");
   }

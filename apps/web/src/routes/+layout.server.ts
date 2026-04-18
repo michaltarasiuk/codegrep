@@ -5,8 +5,8 @@ import type { LayoutServerLoadEvent } from "./$types";
 
 export async function load({ request, depends }: LayoutServerLoadEvent) {
   depends(CHAT_LIST_KEY);
-  const headers = Object.fromEntries(request.headers);
-  const chatList = await client.api.chat.get({
+  let headers = Object.fromEntries(request.headers);
+  let chatList = await client.api.chat.get({
     headers,
   });
   return {

@@ -21,7 +21,7 @@
     collapsible?: "offcanvas" | "icon" | "none";
   } = $props();
 
-  const sidebar = useSidebar();
+  let sidebar = useSidebar();
 </script>
 
 {#if !sidebar}

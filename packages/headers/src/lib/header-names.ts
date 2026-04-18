@@ -1,4 +1,4 @@
-const HeaderWordCasingExceptions: Record<string, string> = {
+let HeaderWordCasingExceptions: Record<string, string> = {
   ct: "CT",
   etag: "ETag",
   te: "TE",

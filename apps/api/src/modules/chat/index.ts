@@ -10,7 +10,7 @@ import { chatModel } from "./model.js";
 import { groqProvider } from "./provider.js";
 import { ChatService } from "./service.js";
 
-export const chatPlugin = new Elysia({ name: "chat", prefix: "/chat" })
+export let chatPlugin = new Elysia({ name: "chat", prefix: "/chat" })
   .use(sessionPlugin)
   .use(chatModel)
   .get(
@@ -26,7 +26,7 @@ export const chatPlugin = new Elysia({ name: "chat", prefix: "/chat" })
   .get(
     "/:id/messages",
     async ({ params: { id: chatId }, user }) => {
-      const chatMessages = await ChatService.findMessages({
+      let chatMessages = await ChatService.findMessages({
         chatId,
         userId: user.id,
       });
@@ -48,7 +48,7 @@ export const chatPlugin = new Elysia({ name: "chat", prefix: "/chat" })
   .get(
     "/shared/:id/messages",
     async ({ params: { id: shareId } }) => {
-      const chatMessages = await ChatService.findSharedMessages({
+      let chatMessages = await ChatService.findSharedMessages({
         shareId,
       });
       if (chatMessages instanceof NotFoundError) {
@@ -69,7 +69,7 @@ export const chatPlugin = new Elysia({ name: "chat", prefix: "/chat" })
   .post(
     "/",
     async ({ body: { id: chatId, model, messages }, user }) => {
-      const chat = await ChatService.upsert({
+      let chat = await ChatService.upsert({
         title: getFirstUserText(messages),
         chatId,
         userId: user.id,
@@ -79,7 +79,7 @@ export const chatPlugin = new Elysia({ name: "chat", prefix: "/chat" })
           message: chat.message,
         });
       }
-      const stream = streamText({
+      let stream = streamText({
         model: groqProvider(model),
         messages: await convertToModelMessages(messages),
         ...(isDefined(user.personalInstructions) && {
@@ -89,7 +89,7 @@ export const chatPlugin = new Elysia({ name: "chat", prefix: "/chat" })
       return stream.toUIMessageStreamResponse({
         originalMessages: messages,
         onFinish: async ({ messages }) => {
-          const chatMessages = await ChatService.setMessages({
+          let chatMessages = await ChatService.setMessages({
             messages,
             chatId,
             userId: user.id,
@@ -107,7 +107,7 @@ export const chatPlugin = new Elysia({ name: "chat", prefix: "/chat" })
   .put(
     "/:id",
     async ({ params: { id: chatId }, body: { title }, user }) => {
-      const updatedChat = await ChatService.update({
+      let updatedChat = await ChatService.update({
         title,
         chatId,
         userId: user.id,
@@ -131,7 +131,7 @@ export const chatPlugin = new Elysia({ name: "chat", prefix: "/chat" })
   .put(
     "/:id/share",
     async ({ params: { id: chatId }, user }) => {
-      const sharedChat = await ChatService.share({
+      let sharedChat = await ChatService.share({
         chatId,
         userId: user.id,
       });
@@ -153,7 +153,7 @@ export const chatPlugin = new Elysia({ name: "chat", prefix: "/chat" })
   .put(
     "/:id/unshare",
     async ({ params: { id: chatId }, user }) => {
-      const unsharedChat = await ChatService.unshare({
+      let unsharedChat = await ChatService.unshare({
         chatId,
         userId: user.id,
       });
@@ -185,7 +185,7 @@ export const chatPlugin = new Elysia({ name: "chat", prefix: "/chat" })
   .delete(
     "/:id",
     async ({ params: { id: chatId }, user }) => {
-      const deletedChat = await ChatService.delete({
+      let deletedChat = await ChatService.delete({
         chatId,
         userId: user.id,
       });

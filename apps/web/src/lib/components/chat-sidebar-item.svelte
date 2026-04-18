@@ -24,7 +24,7 @@
     };
   }
 
-  const { chat }: Props = $props();
+  let { chat }: Props = $props();
 
   let chatTitleDialogOpen = $state(false);
   let chatShareDialogOpen = $state(false);

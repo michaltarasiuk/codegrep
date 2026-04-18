@@ -2,7 +2,7 @@ import { isDefined } from "@workspace/shared/is-defined.js";
 import type { LanguageModelUsage } from "ai";
 import { getContext, setContext } from "svelte";
 
-const CONTEXT_KEY = Symbol.for("scn-context");
+let CONTEXT_KEY = Symbol.for("scn-context");
 
 type ModelId = string;
 
@@ -14,7 +14,7 @@ export interface ContextState {
 }
 
 export function getContextState(): ContextState {
-  const value = getContext<ContextState | null>(CONTEXT_KEY);
+  let value = getContext<ContextState | null>(CONTEXT_KEY);
   if (!isDefined(value)) {
     throw new Error("Missing context context");
   }
@@ -25,16 +25,16 @@ export function setContextState(value: ContextState) {
   return setContext(CONTEXT_KEY, value);
 }
 
-export const compactFormatter = new Intl.NumberFormat("en-US", {
+export let compactFormatter = new Intl.NumberFormat("en-US", {
   notation: "compact",
 });
 
-export const currencyFormatter = new Intl.NumberFormat("en-US", {
+export let currencyFormatter = new Intl.NumberFormat("en-US", {
   currency: "USD",
   style: "currency",
 });
 
-export const percentFormatter = new Intl.NumberFormat("en-US", {
+export let percentFormatter = new Intl.NumberFormat("en-US", {
   maximumFractionDigits: 1,
   style: "percent",
 });

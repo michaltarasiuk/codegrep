@@ -16,9 +16,7 @@
     children?: Snippet;
   } = $props();
 
-  const controller = new PromptInputControllerState(
-    untrack(() => initialInput)
-  );
+  let controller = new PromptInputControllerState(untrack(() => initialInput));
   setPromptInputController(controller);
   setProviderAttachments(controller.attachments);
 

@@ -23,7 +23,7 @@
     ...restProps
   }: ContextContentFooterProps = $props();
 
-  const context = getContextState();
+  let context = getContextState();
 
   let costUSD = $derived(
     context.modelId

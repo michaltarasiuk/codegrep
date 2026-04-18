@@ -13,7 +13,7 @@
   import { Textarea } from "$lib/components/ui/textarea/index.js";
   import { authClient } from "$lib/utils/client.js";
 
-  const TEMPLATES: { key: string; label: string; text: string }[] = [
+  let TEMPLATES: { key: string; label: string; text: string }[] = [
     {
       key: "role",
       label: "Role",
@@ -45,12 +45,12 @@
     },
   ];
 
-  const MAX_LENGTH = 4_000;
+  let MAX_LENGTH = 4_000;
 
   let { open, onClose }: { open: boolean; onClose: () => void } = $props();
 
-  const session = authClient.useSession();
-  const instructionsFieldId = useId();
+  let session = authClient.useSession();
+  let instructionsFieldId = useId();
 
   let textarea = $state<HTMLTextAreaElement | null>(null);
   let loading = $state(false);
@@ -85,7 +85,7 @@
     e.preventDefault();
     try {
       loading = true;
-      const result = await authClient.updateUser({
+      let result = await authClient.updateUser({
         personalInstructions: value,
       });
       if (!isDefined(result.error)) {

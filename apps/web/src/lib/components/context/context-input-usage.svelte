@@ -24,7 +24,7 @@
     ...restProps
   }: ContextInputUsageProps = $props();
 
-  const context = getContextState();
+  let context = getContextState();
 
   let inputTokens = $derived(context.usage?.inputTokens ?? 0);
   let inputCost = $derived(

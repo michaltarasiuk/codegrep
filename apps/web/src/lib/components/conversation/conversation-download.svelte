@@ -25,10 +25,10 @@
   } = $props();
 
   function handleDownload() {
-    const markdown = messagesToMarkdown(messages, formatMessage);
-    const blob = new Blob([markdown], { type: "text/markdown" });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement("a");
+    let markdown = messagesToMarkdown(messages, formatMessage);
+    let blob = new Blob([markdown], { type: "text/markdown" });
+    let url = URL.createObjectURL(blob);
+    let link = document.createElement("a");
     link.href = url;
     link.download = filename;
     document.body.append(link);

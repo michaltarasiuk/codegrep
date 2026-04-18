@@ -9,8 +9,8 @@ export async function load({ params: { id }, request }: PageServerLoadEvent) {
   if (!isDefined(id)) {
     return;
   }
-  const headers = Object.fromEntries(request.headers);
-  const messages = await client.api
+  let headers = Object.fromEntries(request.headers);
+  let messages = await client.api
     .chat({
       id,
     })

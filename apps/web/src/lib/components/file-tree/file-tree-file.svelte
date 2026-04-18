@@ -29,7 +29,7 @@
     ...restProps
   }: FileTreeFileProps = $props();
 
-  const fileTree = getFileTree();
+  let fileTree = getFileTree();
 
   let isSelected = $derived(fileTree.isSelected(path));
 

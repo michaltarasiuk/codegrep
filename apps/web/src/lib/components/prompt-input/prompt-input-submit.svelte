@@ -25,7 +25,7 @@
     onclick?: (e: MouseEvent) => void;
   } = $props();
 
-  const controller = getPromptInputController();
+  let controller = getPromptInputController();
 
   let isGenerating = $derived(status === "submitted" || status === "streaming");
   let isDisabled = $derived(

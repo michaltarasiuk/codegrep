@@ -14,7 +14,7 @@
     ...restProps
   }: ComponentProps<typeof CollapsibleContent> = $props();
 
-  const context = getChainOfThought();
+  let context = getChainOfThought();
 </script>
 
 <Collapsible open={context.open}>

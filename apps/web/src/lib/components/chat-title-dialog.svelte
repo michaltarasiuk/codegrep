@@ -23,7 +23,7 @@
     onClose: () => void;
   } = $props();
 
-  const titleFieldId = useId();
+  let titleFieldId = useId();
 
   let loading = $state(false);
 
@@ -33,7 +33,7 @@
     e.preventDefault();
     try {
       loading = true;
-      const result = await client.api
+      let result = await client.api
         .chat({
           id: chat.id,
         })

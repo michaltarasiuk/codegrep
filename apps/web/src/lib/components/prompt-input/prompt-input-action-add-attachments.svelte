@@ -14,7 +14,7 @@
     label?: string;
   } = $props();
 
-  const attachments = getPromptInputAttachments();
+  let attachments = getPromptInputAttachments();
 
   function handleSelect(e: Event) {
     e.preventDefault();

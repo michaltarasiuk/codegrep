@@ -6,7 +6,7 @@ import { eq } from "drizzle-orm";
 import { db } from "$api/db/index.js";
 import { account, chat, session, user, verification } from "$api/db/schema.js";
 
-export const authService = betterAuth({
+export let authService = betterAuth({
   baseURL: process.env.BETTER_AUTH_BASE_URL,
   basePath: "/api/auth",
   trustedOrigins: [process.env.WEB_URL],

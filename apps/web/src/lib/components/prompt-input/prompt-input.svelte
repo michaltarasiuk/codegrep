@@ -56,12 +56,12 @@
     ...restProps
   }: PromptInputProps = $props();
 
-  const controller = getPromptInputController();
-  const usingProvider = isDefined(controller);
+  let controller = getPromptInputController();
+  let usingProvider = isDefined(controller);
 
-  const localAttachments = new AttachmentsState();
-  const attachments = usingProvider ? controller.attachments : localAttachments;
-  const referencedSources = new ReferencedSourcesState();
+  let localAttachments = new AttachmentsState();
+  let attachments = usingProvider ? controller.attachments : localAttachments;
+  let referencedSources = new ReferencedSourcesState();
 
   setLocalAttachments(attachments);
   setReferencedSourcesState(referencedSources);
@@ -85,7 +85,7 @@
   }
 
   function matchesAccept(file: File) {
-    const patterns = getAcceptPatterns();
+    let patterns = getAcceptPatterns();
     return (
       patterns.length === 0 ||
       patterns.some((pattern) => matchesPattern(file, pattern))
@@ -103,8 +103,8 @@
   }
 
   function addWithValidation(fileList: File[] | FileList) {
-    const incoming = [...fileList];
-    const accepted = incoming.filter(matchesAccept);
+    let incoming = [...fileList];
+    let accepted = incoming.filter(matchesAccept);
     if (incoming.length > 0 && accepted.length === 0) {
       onerror?.({
         code: "accept",
@@ -112,7 +112,7 @@
       });
       return;
     }
-    const sized = accepted.filter(isWithinSizeLimit);
+    let sized = accepted.filter(isWithinSizeLimit);
     if (accepted.length > 0 && sized.length === 0) {
       onerror?.({
         code: "max_file_size",
@@ -120,8 +120,8 @@
       });
       return;
     }
-    const capacity = getCapacity();
-    const capped =
+    let capacity = getCapacity();
+    let capped =
       typeof capacity === "number" ? sized.slice(0, capacity) : sized;
     if (typeof capacity === "number" && sized.length > capacity) {
       onerror?.({
@@ -149,7 +149,7 @@
   async function parseAttachment(
     attachment: (typeof attachments.files)[number]
   ): Promise<FileUIPart> {
-    const { id: _id, ...item } = attachment;
+    let { id: _id, ...item } = attachment;
     let url = item.url;
     if (url.startsWith("blob:")) {
       url = (await blobUrlToDataUrl(item.url)) ?? url;
@@ -160,7 +160,7 @@
   function handleFileChange(
     e: Parameters<ChangeEventHandler<HTMLInputElement>>[0]
   ) {
-    const input = e.currentTarget;
+    let input = e.currentTarget;
     if (isDefined(input.files)) {
       addWithValidation(input.files);
     }
@@ -169,15 +169,15 @@
 
   async function handleSubmit(e: Parameters<EventHandler<SubmitEvent>>[0]) {
     e.preventDefault();
-    const form = e.currentTarget as HTMLFormElement;
-    const text = usingProvider
+    let form = e.currentTarget as HTMLFormElement;
+    let text = usingProvider
       ? controller.textInput.value
       : ((new FormData(form).get("message") as string) ?? "");
     if (!usingProvider) {
       form.reset();
     }
     try {
-      const files = await Promise.all(attachments.files.map(parseAttachment));
+      let files = await Promise.all(attachments.files.map(parseAttachment));
       await onsubmit({ text, files }, e);
       clearAfterSuccessfulSubmit();
     } catch {
@@ -206,17 +206,17 @@
       return;
     }
     function onDrop(e: DragEvent) {
-      const types = e.dataTransfer?.types ?? [];
+      let types = e.dataTransfer?.types ?? [];
       if (types.includes("Files")) {
         e.preventDefault();
       }
-      const files = e.dataTransfer?.files ?? [];
+      let files = e.dataTransfer?.files ?? [];
       if (files.length > 0) {
         addWithValidation(files);
       }
     }
     function onDragOver(e: DragEvent) {
-      const types = e.dataTransfer?.types ?? [];
+      let types = e.dataTransfer?.types ?? [];
       if (types.includes("Files")) {
         e.preventDefault();
       }
@@ -234,17 +234,17 @@
       return;
     }
     function onDrop(e: DragEvent) {
-      const types = e.dataTransfer?.types ?? [];
+      let types = e.dataTransfer?.types ?? [];
       if (types.includes("Files")) {
         e.preventDefault();
       }
-      const files = e.dataTransfer?.files ?? [];
+      let files = e.dataTransfer?.files ?? [];
       if (files.length > 0) {
         addWithValidation(files);
       }
     }
     function onDragOver(e: DragEvent) {
-      const types = e.dataTransfer?.types ?? [];
+      let types = e.dataTransfer?.types ?? [];
       if (types.includes("Files")) {
         e.preventDefault();
       }

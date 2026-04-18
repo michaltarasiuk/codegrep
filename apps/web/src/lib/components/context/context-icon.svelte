@@ -1,13 +1,13 @@
 <script lang="ts">
   import { getContextState } from "./context-context.svelte.js";
 
-  const ICON_RADIUS = 10;
-  const ICON_VIEWBOX = 24;
-  const ICON_CENTER = 12;
-  const ICON_STROKE_WIDTH = 2;
-  const circumference = 2 * Math.PI * ICON_RADIUS;
+  let ICON_RADIUS = 10;
+  let ICON_VIEWBOX = 24;
+  let ICON_CENTER = 12;
+  let ICON_STROKE_WIDTH = 2;
+  let circumference = 2 * Math.PI * ICON_RADIUS;
 
-  const context = getContextState();
+  let context = getContextState();
 
   let usedPercent = $derived(context.usedTokens / context.maxTokens);
   let dashOffset = $derived(circumference * (1 - usedPercent));

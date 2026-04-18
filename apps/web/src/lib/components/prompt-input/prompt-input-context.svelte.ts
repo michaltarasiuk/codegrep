@@ -57,7 +57,7 @@ export class AttachmentsState {
   };
 
   add = (files: File[] | FileList) => {
-    const incoming = toFileUIParts(files);
+    let incoming = toFileUIParts(files);
     if (incoming.length === 0) {
       return;
     }
@@ -65,7 +65,7 @@ export class AttachmentsState {
   };
 
   remove = (id: string) => {
-    const file = this.files.find((f) => f.id === id);
+    let file = this.files.find((f) => f.id === id);
     if (isDefined(file)) {
       URL.revokeObjectURL(file.url);
     }
@@ -86,7 +86,7 @@ export class ReferencedSourcesState {
   sources = $state<(SourceDocumentUIPart & { id: string })[]>([]);
 
   add = (sources: SourceDocumentUIPart[] | SourceDocumentUIPart) => {
-    const incoming = Array.isArray(sources) ? sources : [sources];
+    let incoming = Array.isArray(sources) ? sources : [sources];
     this.sources = [
       ...this.sources,
       ...incoming.map((s) => ({ ...s, id: createId() })),
@@ -102,18 +102,16 @@ export class ReferencedSourcesState {
   };
 }
 
-const CONTROLLER_KEY = Symbol.for("scn-prompt-input-controller");
-const PROVIDER_ATTACHMENTS_KEY = Symbol.for(
+let CONTROLLER_KEY = Symbol.for("scn-prompt-input-controller");
+let PROVIDER_ATTACHMENTS_KEY = Symbol.for(
   "scn-prompt-input-provider-attachments"
 );
-const LOCAL_ATTACHMENTS_KEY = Symbol.for("scn-prompt-input-local-attachments");
-const REFERENCED_SOURCES_KEY = Symbol.for(
-  "scn-prompt-input-referenced-sources"
-);
+let LOCAL_ATTACHMENTS_KEY = Symbol.for("scn-prompt-input-local-attachments");
+let REFERENCED_SOURCES_KEY = Symbol.for("scn-prompt-input-referenced-sources");
 
 export function getPromptInputAttachments() {
-  const local = getContext<AttachmentsState | null>(LOCAL_ATTACHMENTS_KEY);
-  const provider = getProviderAttachments();
+  let local = getContext<AttachmentsState | null>(LOCAL_ATTACHMENTS_KEY);
+  let provider = getProviderAttachments();
   return local ?? provider;
 }
 
@@ -122,7 +120,7 @@ export function setLocalAttachments(value: AttachmentsState) {
 }
 
 export function getProviderAttachments() {
-  const value = getContext<AttachmentsState | null>(PROVIDER_ATTACHMENTS_KEY);
+  let value = getContext<AttachmentsState | null>(PROVIDER_ATTACHMENTS_KEY);
   if (!isDefined(value)) {
     throw new Error("Missing provider attachments context");
   }
@@ -142,9 +140,7 @@ export function setPromptInputController(value: PromptInputControllerState) {
 }
 
 export function getPromptInputReferencedSources() {
-  const value = getContext<ReferencedSourcesState | null>(
-    REFERENCED_SOURCES_KEY
-  );
+  let value = getContext<ReferencedSourcesState | null>(REFERENCED_SOURCES_KEY);
   if (!isDefined(value)) {
     throw new Error("Missing prompt input referenced sources context");
   }

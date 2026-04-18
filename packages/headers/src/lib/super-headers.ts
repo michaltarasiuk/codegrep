@@ -119,32 +119,32 @@ export type SuperHeadersInit =
   | Iterable<[string, string]>
   | (SuperHeadersPropertyInit & Record<string, string | HeaderValue>);
 
-const CRLF = "\r\n";
+let CRLF = "\r\n";
 
-const AcceptKey = "accept";
-const AcceptEncodingKey = "accept-encoding";
-const AcceptLanguageKey = "accept-language";
-const AcceptRangesKey = "accept-ranges";
-const AgeKey = "age";
-const CacheControlKey = "cache-control";
-const ConnectionKey = "connection";
-const ContentDispositionKey = "content-disposition";
-const ContentEncodingKey = "content-encoding";
-const ContentLanguageKey = "content-language";
-const ContentLengthKey = "content-length";
-const ContentTypeKey = "content-type";
-const CookieKey = "cookie";
-const DateKey = "date";
-const ETagKey = "etag";
-const ExpiresKey = "expires";
-const HostKey = "host";
-const IfModifiedSinceKey = "if-modified-since";
-const IfNoneMatchKey = "if-none-match";
-const IfUnmodifiedSinceKey = "if-unmodified-since";
-const LastModifiedKey = "last-modified";
-const LocationKey = "location";
-const RefererKey = "referer";
-const SetCookieKey = "set-cookie";
+let AcceptKey = "accept";
+let AcceptEncodingKey = "accept-encoding";
+let AcceptLanguageKey = "accept-language";
+let AcceptRangesKey = "accept-ranges";
+let AgeKey = "age";
+let CacheControlKey = "cache-control";
+let ConnectionKey = "connection";
+let ContentDispositionKey = "content-disposition";
+let ContentEncodingKey = "content-encoding";
+let ContentLanguageKey = "content-language";
+let ContentLengthKey = "content-length";
+let ContentTypeKey = "content-type";
+let CookieKey = "cookie";
+let DateKey = "date";
+let ETagKey = "etag";
+let ExpiresKey = "expires";
+let HostKey = "host";
+let IfModifiedSinceKey = "if-modified-since";
+let IfNoneMatchKey = "if-none-match";
+let IfUnmodifiedSinceKey = "if-unmodified-since";
+let LastModifiedKey = "last-modified";
+let LocationKey = "location";
+let RefererKey = "referer";
+let SetCookieKey = "set-cookie";
 
 /**
  * An enhanced JavaScript `Headers` interface with type-safe access.

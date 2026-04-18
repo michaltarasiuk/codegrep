@@ -15,10 +15,10 @@
     index: number;
   } = $props();
 
-  const branch = getMessageBranch();
+  let branch = getMessageBranch();
 
   $effect(function registerBranch() {
-    const unregister = branch.registerBranch(index);
+    let unregister = branch.registerBranch(index);
     return function unregisterBranch() {
       unregister();
     };

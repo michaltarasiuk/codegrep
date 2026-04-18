@@ -61,7 +61,7 @@ class SidebarState {
   };
 }
 
-const SYMBOL_KEY = "scn-sidebar";
+let SYMBOL_KEY = "scn-sidebar";
 
 /**
  * Instantiates a new `SidebarState` instance and sets it in the context.

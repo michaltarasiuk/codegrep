@@ -6,9 +6,9 @@ import { API_URL } from "$env/static/private";
 
 import { authPlugins } from "./auth.js";
 
-export const client = treaty<App>(API_URL);
+export let client = treaty<App>(API_URL);
 
-export const authClient = createAuthClient({
+export let authClient = createAuthClient({
   baseURL: API_URL,
   plugins: [...authPlugins],
 });

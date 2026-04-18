@@ -15,8 +15,8 @@ function getTimePeriod(date: Date): TimePeriod {
   if (isYesterday(date)) {
     return "Yesterday";
   }
-  const now = new Date();
-  const diff = differenceInCalendarDays(now, date);
+  let now = new Date();
+  let diff = differenceInCalendarDays(now, date);
   if (diff <= 7) {
     return "Last 7 days";
   }
@@ -29,7 +29,7 @@ function getTimePeriod(date: Date): TimePeriod {
   return "Older";
 }
 
-const PERIOD_ORDER: TimePeriod[] = [
+let PERIOD_ORDER: TimePeriod[] = [
   "Today",
   "Yesterday",
   "Last 7 days",
@@ -39,9 +39,9 @@ const PERIOD_ORDER: TimePeriod[] = [
 ];
 
 export function groupChatsByPeriod<T extends { updatedAt: Date }>(chats: T[]) {
-  const groups = new Map<TimePeriod, T[]>();
-  for (const chat of chats) {
-    const period = getTimePeriod(chat.updatedAt);
+  let groups = new Map<TimePeriod, T[]>();
+  for (let chat of chats) {
+    let period = getTimePeriod(chat.updatedAt);
     groups.set(period, [...(groups.get(period) ?? []), chat]);
   }
   return PERIOD_ORDER.map((period) => ({

@@ -5,8 +5,8 @@ import { client } from "$lib/utils/client.server.js";
 import type { PageServerLoadEvent } from "./$types";
 
 export async function load({ params: { id }, request }: PageServerLoadEvent) {
-  const headers = Object.fromEntries(request.headers);
-  const messages = await client.api.chat
+  let headers = Object.fromEntries(request.headers);
+  let messages = await client.api.chat
     .shared({
       id,
     })
