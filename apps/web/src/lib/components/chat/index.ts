@@ -1,5 +1,5 @@
-import Content from "./chat-content.svelte";
 import Conversation from "./chat-conversation.svelte";
+import Footer from "./chat-footer.svelte";
 import Message from "./chat-message.svelte";
 import ModelSelector from "./chat-model-selector.svelte";
 import PrivateChatCheckpoint from "./chat-private-chat-checkpoint.svelte";
@@ -9,8 +9,8 @@ import Suggestions from "./chat-suggestions.svelte";
 
 export {
   Root,
-  Content,
   Conversation,
+  Footer,
   Message,
   Suggestions,
   PrivateChatCheckpoint,
@@ -18,8 +18,8 @@ export {
   ModelSelector,
   //
   Root as ChatRoot,
-  Content as ChatContent,
   Conversation as ChatConversation,
+  Footer as ChatFooter,
   Message as ChatMessage,
   Suggestions as ChatSuggestions,
   PrivateChatCheckpoint as ChatPrivateChatCheckpoint,

@@ -1,8 +1,8 @@
 <script lang="ts">
   import { page } from "$app/state";
-  import ChatPanel from "$lib/components/chat-panel.svelte";
+  import ChatView from "$lib/components/chat-view.svelte";
 
   let { data } = $props();
 </script>
 
-<ChatPanel id={page.params.id} messages={data.messages} />
+<ChatView id={page.params.id} messages={data.messages} />

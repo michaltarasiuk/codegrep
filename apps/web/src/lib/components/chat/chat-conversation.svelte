@@ -4,7 +4,7 @@
   import type { UIMessage } from "ai";
   import type { Snippet } from "svelte";
 
-  import { getChat } from "./chat-context.js";
+  import { getChatState } from "./chat-context.svelte.js";
 
   let {
     children,
@@ -12,18 +12,15 @@
     children: Snippet<[UIMessage, boolean]>;
   } = $props();
 
-  let chat = $derived(getChat());
-
-  let isSubmitted = $derived(chat.status === "submitted");
-  let messages = $derived(chat.messages);
+  let chatState = getChatState();
 </script>
 
 <Conversation.Content>
-  {#each messages as message, i (message.id)}
-    {@render children(message, i === messages.length - 1)}
+  {#each chatState.messages as message, i (message.id)}
+    {@render children(message, i === chatState.messages.length - 1)}
   {/each}
 
-  {#if isSubmitted}
+  {#if chatState.isSubmitted}
     <div class="px-1">
       <Spinner variant="classic" />
     </div>

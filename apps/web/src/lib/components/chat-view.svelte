@@ -2,7 +2,6 @@
   import { Chat } from "@ai-sdk/svelte";
   import * as PromptInput from "@workspace/ai-elements/prompt-input/index.js";
   import { isDefined } from "@workspace/shared/is-defined.js";
-  import { cn } from "@workspace/ui/cn.js";
   import { DefaultChatTransport, type UIMessage } from "ai";
 
   import { goto } from "$app/navigation";
@@ -34,9 +33,9 @@
   );
 
   let model = $state(MODELS[0].id);
+  let hasMessages = $derived(isDefined(chat.lastMessage));
 
   async function sendMessage(message: PromptInput.PromptInputMessage) {
-    // Any new prompt from a shared chat starts a private fork, so hide the shared-only checkpoint UI
     shared &&= false;
     await chat.sendMessage(message, {
       body: {
@@ -52,40 +51,26 @@
   }
 
   function handleSuggestionPick(text: string) {
-    sendMessage({
-      text,
-    });
+    sendMessage({ text });
   }
 </script>
 
 <ChatUI.Root {chat} {model}>
-  <ChatUI.Content>
-    <ChatUI.Conversation>
-      {#snippet children(message, isLast)}
-        <ChatUI.Message {message} {isLast} />
+  <ChatUI.Conversation>
+    {#snippet children(message, isLast)}
+      <ChatUI.Message {message} {isLast} />
 
-        {#if shared && isLast}
-          <ChatUI.PrivateChatCheckpoint />
-        {/if}
-      {/snippet}
-    </ChatUI.Conversation>
-
-    <div
-      class={cn(
-        "bg-background w-full py-4",
-        isDefined(chat.lastMessage)
-          ? "sticky bottom-0"
-          : "absolute bottom-0 md:bottom-1/2 md:translate-y-1/2"
-      )}
-    >
-      {#if !isDefined(chat.lastMessage)}
-        <ChatUI.Suggestions onPick={handleSuggestionPick} />
+      {#if shared && isLast}
+        <ChatUI.PrivateChatCheckpoint />
       {/if}
+    {/snippet}
+  </ChatUI.Conversation>
 
-      <ChatUI.PromptInput
-        bind:selectedModel={model}
-        handleSubmit={sendMessage}
-      />
-    </div>
-  </ChatUI.Content>
+  <ChatUI.Footer>
+    {#if !hasMessages}
+      <ChatUI.Suggestions onPick={handleSuggestionPick} />
+    {/if}
+
+    <ChatUI.PromptInput bind:selectedModel={model} handleSubmit={sendMessage} />
+  </ChatUI.Footer>
 </ChatUI.Root>

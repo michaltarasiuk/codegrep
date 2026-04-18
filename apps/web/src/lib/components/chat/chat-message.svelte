@@ -5,7 +5,7 @@
   import * as Message from "@workspace/ai-elements/message/index.js";
   import type { UIMessage } from "ai";
 
-  import { getChat, getModel } from "./chat-context.js";
+  import { getChatState } from "./chat-context.svelte.js";
 
   let {
     message,
@@ -17,8 +17,7 @@
 
   let copied = $state(false);
 
-  let chat = $derived(getChat());
-  let model = $derived(getModel());
+  let chatState = getChatState();
 
   let messageText = $derived(
     message.parts
@@ -26,10 +25,9 @@
       .map((part) => part.text)
       .join("\n\n")
   );
-  let isStreaming = $derived(chat.status === "streaming");
 
   function handleRetry() {
-    chat.regenerate({ body: { model } });
+    chatState.chat.regenerate({ body: { model: chatState.model } });
   }
   function handleCopy() {
     navigator.clipboard.writeText(messageText);
@@ -42,10 +40,10 @@
 
 <Message.Root from={message.role}>
   <Message.Content>
-    <Message.Parts {message} {isStreaming} {isLast} />
+    <Message.Parts {message} isStreaming={chatState.isStreaming} {isLast} />
   </Message.Content>
 
-  {#if message.role === "assistant" && !isStreaming && isLast}
+  {#if message.role === "assistant" && !chatState.isStreaming && isLast}
     <Message.Actions>
       <Message.Action label="Retry" tooltip="Retry" onclick={handleRetry}>
         <RefreshCcwIcon class="size-3" />
