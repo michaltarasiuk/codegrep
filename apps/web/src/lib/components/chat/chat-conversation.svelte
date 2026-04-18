@@ -26,7 +26,7 @@
 
   {#if isSubmitted}
     <div class="px-1">
-      <Spinner />
+      <Spinner variant="classic" />
     </div>
   {/if}
 </Conversation.Content>
