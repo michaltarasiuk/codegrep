@@ -77,6 +77,7 @@ let config = [
   {
     files: [
       "./apps/web/src/lib/components/**/index.ts",
+      "./packages/ai-elements/**/index.ts",
       "./packages/ui/**/index.ts",
     ],
     rules: {
