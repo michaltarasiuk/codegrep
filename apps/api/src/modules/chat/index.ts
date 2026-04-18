@@ -3,7 +3,7 @@ import { convertToModelMessages, streamText } from "ai";
 import { Elysia, status } from "elysia";
 
 import { NotFoundError, UpsertFailedError } from "$api/errors.js";
-import { getFirstUserText } from "$api/utils/get-first-user-text.js";
+import { getChatTitle } from "$api/utils/get-chat-title.js";
 
 import { sessionPlugin } from "../auth/session.js";
 import { chatModel } from "./model.js";
@@ -70,7 +70,7 @@ export let chatPlugin = new Elysia({ name: "chat", prefix: "/chat" })
     "/",
     async ({ body: { id: chatId, model, messages }, user }) => {
       let chat = await ChatService.upsert({
-        title: getFirstUserText(messages),
+        title: getChatTitle(messages),
         chatId,
         userId: user.id,
       });
