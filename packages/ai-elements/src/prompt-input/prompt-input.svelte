@@ -59,7 +59,7 @@
   let usingProvider = isDefined(controller);
 
   let localAttachments = new AttachmentsState();
-  let attachments = usingProvider ? controller.attachments : localAttachments;
+  let attachments = usingProvider ? controller!.attachments : localAttachments;
   let referencedSources = new ReferencedSourcesState();
 
   setLocalAttachments(attachments);
@@ -141,7 +141,7 @@
   function clearAfterSuccessfulSubmit() {
     clearAll();
     if (usingProvider) {
-      controller.textInput.clear();
+      controller!.textInput.clear();
     }
   }
 
@@ -170,7 +170,7 @@
     e.preventDefault();
     let form = e.currentTarget as HTMLFormElement;
     let text = usingProvider
-      ? controller.textInput.value
+      ? controller!.textInput.value
       : ((new FormData(form).get("message") as string) ?? "");
     if (!usingProvider) {
       form.reset();
@@ -188,7 +188,7 @@
     if (!usingProvider) {
       return;
     }
-    controller.registerFileInput(fileInputRef, () => {
+    controller!.registerFileInput(fileInputRef, () => {
       fileInputRef?.click();
     });
   });
