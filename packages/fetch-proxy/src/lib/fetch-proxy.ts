@@ -70,6 +70,7 @@ export function createFetchProxy(
 
     let proxyInit: RequestInit = {
       ...init,
+      method: request.method,
       headers: proxyHeaders,
     };
     if (request.method !== "GET" && request.method !== "HEAD") {

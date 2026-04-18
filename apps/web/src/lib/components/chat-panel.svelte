@@ -21,8 +21,6 @@
     shared?: boolean;
   } = $props();
 
-  let model = $state(MODELS[0].id);
-
   let chatId = $derived(id);
   let chat = $derived(
     new Chat({
@@ -34,6 +32,8 @@
       }),
     })
   );
+
+  let model = $state(MODELS[0].id);
 
   async function sendMessage(message: PromptInput.PromptInputMessage) {
     // Any new prompt from a shared chat starts a private fork, so hide the shared-only checkpoint UI
@@ -52,7 +52,9 @@
   }
 
   function handleSuggestionPick(text: string) {
-    sendMessage({ text });
+    sendMessage({
+      text,
+    });
   }
 </script>
 
