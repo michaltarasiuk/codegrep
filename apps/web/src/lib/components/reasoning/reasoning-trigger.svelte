@@ -2,10 +2,9 @@
   import BrainIcon from "@lucide/svelte/icons/brain";
   import ChevronDownIcon from "@lucide/svelte/icons/chevron-down";
   import { isDefined } from "@workspace/shared/is-defined.js";
+  import { cn } from "@workspace/ui/cn.js";
+  import { CollapsibleTrigger } from "@workspace/ui/collapsible/index.js";
   import type { ComponentProps } from "svelte";
-
-  import { CollapsibleTrigger } from "$lib/components/ui/collapsible/index.js";
-  import { cn } from "$lib/utils/cn.js";
 
   let {
     isStreaming = false,

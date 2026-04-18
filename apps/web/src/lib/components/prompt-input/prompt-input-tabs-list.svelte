@@ -1,7 +1,6 @@
 <script lang="ts">
+  import { type WithElementRef } from "@workspace/ui/cn.js";
   import type { HTMLAttributes } from "svelte/elements";
-
-  import { type WithElementRef } from "$lib/utils/cn.js";
 
   let {
     ref = $bindable(null),

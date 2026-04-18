@@ -1,7 +1,6 @@
 <script lang="ts">
+  import { Collapsible } from "@workspace/ui/collapsible/index.js";
   import type { ComponentProps } from "svelte";
-
-  import { Collapsible } from "$lib/components/ui/collapsible/index.js";
 
   let {
     defaultOpen = true,

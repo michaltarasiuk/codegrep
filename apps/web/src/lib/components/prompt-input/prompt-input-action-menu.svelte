@@ -1,7 +1,6 @@
 <script lang="ts">
+  import * as DropdownMenu from "@workspace/ui/dropdown-menu/index.js";
   import type { ComponentProps } from "svelte";
-
-  import * as DropdownMenu from "$lib/components/ui/dropdown-menu/index.js";
 
   let props: ComponentProps<typeof DropdownMenu.Root> = $props();
 </script>

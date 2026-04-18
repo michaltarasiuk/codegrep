@@ -1,12 +1,12 @@
 <script lang="ts">
   import { isDefined } from "@workspace/shared/is-defined.js";
+  import { Button } from "@workspace/ui/button/index.js";
+  import * as Dialog from "@workspace/ui/dialog/index.js";
+  import * as Field from "@workspace/ui/field/index.js";
+  import { Input } from "@workspace/ui/input/index.js";
   import { useId } from "bits-ui";
 
   import { invalidate } from "$app/navigation";
-  import { Button } from "$lib/components/ui/button/index.js";
-  import * as Dialog from "$lib/components/ui/dialog/index.js";
-  import * as Field from "$lib/components/ui/field/index.js";
-  import { Input } from "$lib/components/ui/input/index.js";
   import { client } from "$lib/utils/client.js";
   import { CHAT_LIST_KEY } from "$lib/utils/invalidation.js";
 

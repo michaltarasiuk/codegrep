@@ -1,8 +1,7 @@
 <script lang="ts">
+  import { cn } from "@workspace/ui/cn.js";
+  import * as Select from "@workspace/ui/select/index.js";
   import type { ComponentProps } from "svelte";
-
-  import * as Select from "$lib/components/ui/select/index.js";
-  import { cn } from "$lib/utils/cn.js";
 
   let {
     class: className,

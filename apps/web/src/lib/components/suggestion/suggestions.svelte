@@ -1,8 +1,7 @@
 <script lang="ts">
+  import { cn } from "@workspace/ui/cn.js";
+  import * as ScrollArea from "@workspace/ui/scroll-area/index.js";
   import type { ComponentProps } from "svelte";
-
-  import * as ScrollArea from "$lib/components/ui/scroll-area/index.js";
-  import { cn } from "$lib/utils/cn.js";
 
   let {
     children,

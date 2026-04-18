@@ -3,11 +3,10 @@
   import SquareIcon from "@lucide/svelte/icons/square";
   import XIcon from "@lucide/svelte/icons/x";
   import { isDefined } from "@workspace/shared/is-defined.js";
+  import * as InputGroup from "@workspace/ui/input-group/index.js";
+  import { Spinner } from "@workspace/ui/spinner/index.js";
   import type { ChatStatus } from "ai";
   import type { ComponentProps } from "svelte";
-
-  import * as InputGroup from "$lib/components/ui/input-group/index.js";
-  import { Spinner } from "$lib/components/ui/spinner/index.js";
 
   import { getPromptInputController } from "./prompt-input-context.svelte.js";
 

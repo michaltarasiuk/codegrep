@@ -2,14 +2,13 @@
   import ChevronRightIcon from "@lucide/svelte/icons/chevron-right";
   import FolderIcon from "@lucide/svelte/icons/folder";
   import FolderOpenIcon from "@lucide/svelte/icons/folder-open";
-  import type { HTMLAttributes } from "svelte/elements";
-
+  import { cn, type WithElementRef } from "@workspace/ui/cn.js";
   import {
     Collapsible,
     CollapsibleContent,
     CollapsibleTrigger,
-  } from "$lib/components/ui/collapsible/index.js";
-  import { cn, type WithElementRef } from "$lib/utils/cn.js";
+  } from "@workspace/ui/collapsible/index.js";
+  import type { HTMLAttributes } from "svelte/elements";
 
   import { getFileTree } from "./file-tree-context.svelte.js";
   import FileTreeIcon from "./file-tree-icon.svelte";

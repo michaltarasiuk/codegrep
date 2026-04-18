@@ -1,10 +1,10 @@
 <script lang="ts">
   import PlusIcon from "@lucide/svelte/icons/plus";
+  import * as Sidebar from "@workspace/ui/sidebar/index.js";
   import type { Snippet } from "svelte";
 
   import { goto } from "$app/navigation";
   import { resolve } from "$app/paths";
-  import * as Sidebar from "$lib/components/ui/sidebar/index.js";
   import { groupChatsByPeriod } from "$lib/utils/group-chats-by-period.js";
 
   import ChatSidebarItem from "./chat-sidebar-item.svelte";

@@ -1,9 +1,8 @@
 <script lang="ts">
   import FileIcon from "@lucide/svelte/icons/file";
+  import { cn, type WithElementRef } from "@workspace/ui/cn.js";
   import type { Snippet } from "svelte";
   import type { HTMLAttributes } from "svelte/elements";
-
-  import { cn, type WithElementRef } from "$lib/utils/cn.js";
 
   import { getFileTree } from "./file-tree-context.svelte.js";
   import FileTreeIcon from "./file-tree-icon.svelte";

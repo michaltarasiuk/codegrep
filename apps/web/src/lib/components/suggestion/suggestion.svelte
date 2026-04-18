@@ -1,8 +1,7 @@
 <script lang="ts">
+  import { Button } from "@workspace/ui/button/index.js";
+  import { cn } from "@workspace/ui/cn.js";
   import type { ComponentProps } from "svelte";
-
-  import { Button } from "$lib/components/ui/button/index.js";
-  import { cn } from "$lib/utils/cn.js";
 
   let {
     suggestion,

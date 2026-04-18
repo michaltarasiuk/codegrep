@@ -1,11 +1,11 @@
 <script lang="ts">
   import { isDefined } from "@workspace/shared/is-defined.js";
+  import * as AlertDialog from "@workspace/ui/alert-dialog/index.js";
+  import { buttonVariants } from "@workspace/ui/button/index.js";
 
   import { goto, invalidate } from "$app/navigation";
   import { resolve } from "$app/paths";
   import { page } from "$app/state";
-  import * as AlertDialog from "$lib/components/ui/alert-dialog/index.js";
-  import { buttonVariants } from "$lib/components/ui/button/index.js";
   import { client } from "$lib/utils/client.js";
   import { CHAT_LIST_KEY } from "$lib/utils/invalidation.js";
 

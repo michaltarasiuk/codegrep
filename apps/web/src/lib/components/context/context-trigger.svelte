@@ -1,8 +1,7 @@
 <script lang="ts">
+  import { Button } from "@workspace/ui/button/index.js";
+  import * as HoverCard from "@workspace/ui/hover-card/index.js";
   import type { ComponentProps, Snippet } from "svelte";
-
-  import { Button } from "$lib/components/ui/button/index.js";
-  import * as HoverCard from "$lib/components/ui/hover-card/index.js";
 
   import {
     getContextState,

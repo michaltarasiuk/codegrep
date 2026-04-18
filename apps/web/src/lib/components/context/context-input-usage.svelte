@@ -1,9 +1,8 @@
 <script lang="ts">
+  import { cn, type WithElementRef } from "@workspace/ui/cn.js";
   import type { Snippet } from "svelte";
   import type { HTMLAttributes } from "svelte/elements";
   import { getUsage } from "tokenlens";
-
-  import { cn, type WithElementRef } from "$lib/utils/cn.js";
 
   import {
     currencyFormatter,

@@ -1,8 +1,7 @@
 <script lang="ts">
+  import * as InputGroup from "@workspace/ui/input-group/index.js";
+  import * as Tooltip from "@workspace/ui/tooltip/index.js";
   import type { ComponentProps } from "svelte";
-
-  import * as InputGroup from "$lib/components/ui/input-group/index.js";
-  import * as Tooltip from "$lib/components/ui/tooltip/index.js";
 
   type PromptInputButtonTooltip =
     | string

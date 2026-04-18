@@ -1,10 +1,9 @@
 <script lang="ts">
   import ArrowDownIcon from "@lucide/svelte/icons/arrow-down";
   import { getStickToBottomContext } from "@workspace/stick-to-bottom";
+  import { Button } from "@workspace/ui/button/index.js";
+  import { cn } from "@workspace/ui/cn.js";
   import type { ComponentProps } from "svelte";
-
-  import { Button } from "$lib/components/ui/button/index.js";
-  import { cn } from "$lib/utils/cn.js";
 
   let {
     children,

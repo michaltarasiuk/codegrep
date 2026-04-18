@@ -1,8 +1,7 @@
 <script lang="ts">
+  import * as HoverCard from "@workspace/ui/hover-card/index.js";
   import type { LanguageModelUsage } from "ai";
   import type { Snippet } from "svelte";
-
-  import * as HoverCard from "$lib/components/ui/hover-card/index.js";
 
   import { setContextState } from "./context-context.svelte.js";
 

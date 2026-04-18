@@ -3,14 +3,14 @@
   import PlusIcon from "@lucide/svelte/icons/plus";
   import XIcon from "@lucide/svelte/icons/x";
   import { isDefined } from "@workspace/shared/is-defined.js";
+  import { Button } from "@workspace/ui/button/index.js";
+  import * as Dialog from "@workspace/ui/dialog/index.js";
+  import * as Field from "@workspace/ui/field/index.js";
+  import { Textarea } from "@workspace/ui/textarea/index.js";
   import { useId } from "bits-ui";
   import dedent from "dedent";
   import { cn } from "tailwind-variants";
 
-  import { Button } from "$lib/components/ui/button/index.js";
-  import * as Dialog from "$lib/components/ui/dialog/index.js";
-  import * as Field from "$lib/components/ui/field/index.js";
-  import { Textarea } from "$lib/components/ui/textarea/index.js";
   import { authClient } from "$lib/utils/client.js";
 
   let TEMPLATES: { key: string; label: string; text: string }[] = [

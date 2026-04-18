@@ -10,9 +10,7 @@
   },
   "dependencies": {
     "@workspace/shared": "workspace:*",
-    "@ai-sdk/google": "^3.0.30",
     "@ai-sdk/groq": "^3.0.29",
-    "@neondatabase/serverless": "^1.0.2",
     "ai": "catalog:",
     "better-auth": "catalog:",
     "drizzle-orm": "^0.45.1",

@@ -1,12 +1,11 @@
 <script lang="ts">
+  import { cn } from "@workspace/ui/cn.js";
+  import { CollapsibleContent } from "@workspace/ui/collapsible/index.js";
   import type { ComponentProps } from "svelte";
   import { Streamdown } from "svelte-streamdown";
   import Code from "svelte-streamdown/code";
   import Math from "svelte-streamdown/math";
   import Mermaid from "svelte-streamdown/mermaid";
-
-  import { CollapsibleContent } from "$lib/components/ui/collapsible/index.js";
-  import { cn } from "$lib/utils/cn.js";
 
   let {
     content = "",

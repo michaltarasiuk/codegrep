@@ -1,8 +1,7 @@
 <script lang="ts">
   import ImageIcon from "@lucide/svelte/icons/image";
+  import * as DropdownMenu from "@workspace/ui/dropdown-menu/index.js";
   import type { ComponentProps } from "svelte";
-
-  import * as DropdownMenu from "$lib/components/ui/dropdown-menu/index.js";
 
   import { getPromptInputAttachments } from "./prompt-input-context.svelte.js";
 

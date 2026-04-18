@@ -1,10 +1,9 @@
 <script lang="ts">
+  import { cn } from "@workspace/ui/cn.js";
   import { Streamdown, type StreamdownProps } from "svelte-streamdown";
   import Code from "svelte-streamdown/code";
   import Math from "svelte-streamdown/math";
   import Mermaid from "svelte-streamdown/mermaid";
-
-  import { cn } from "$lib/utils/cn.js";
 
   let { class: className, ...props }: StreamdownProps = $props();
 </script>

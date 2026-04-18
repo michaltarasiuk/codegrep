@@ -1,10 +1,9 @@
 <script lang="ts">
   import DotIcon from "@lucide/svelte/icons/dot";
+  import { cn, type WithElementRef } from "@workspace/ui/cn.js";
   import type { Component, Snippet } from "svelte";
   import type { HTMLAttributes } from "svelte/elements";
   import { tv, type VariantProps } from "tailwind-variants";
-
-  import { cn, type WithElementRef } from "$lib/utils/cn.js";
 
   let stepVariants = tv({
     base: "fade-in-0 slide-in-from-top-2 animate-in flex gap-2 text-sm",

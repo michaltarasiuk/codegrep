@@ -1,14 +1,13 @@
 <script lang="ts">
   import { isDefined } from "@workspace/shared/is-defined.js";
+  import { cn } from "@workspace/ui/cn.js";
+  import * as InputGroup from "@workspace/ui/input-group/index.js";
   import type { ComponentProps } from "svelte";
   import type {
     ClipboardEventHandler,
     FormEventHandler,
     KeyboardEventHandler,
   } from "svelte/elements";
-
-  import * as InputGroup from "$lib/components/ui/input-group/index.js";
-  import { cn } from "$lib/utils/cn.js";
 
   import {
     getPromptInputAttachments,

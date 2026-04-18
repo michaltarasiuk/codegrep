@@ -3,14 +3,14 @@
   import NotebookPenIcon from "@lucide/svelte/icons/notebook-pen";
   import DotsVerticalIcon from "@tabler/icons-svelte/icons/dots-vertical";
   import LogoutIcon from "@tabler/icons-svelte/icons/logout";
+  import * as Avatar from "@workspace/ui/avatar/index.js";
+  import * as DropdownMenu from "@workspace/ui/dropdown-menu/index.js";
+  import * as Sidebar from "@workspace/ui/sidebar/index.js";
+  import { Skeleton } from "@workspace/ui/skeleton/index.js";
   import { onMount } from "svelte";
 
   import { goto } from "$app/navigation";
   import { resolve } from "$app/paths";
-  import * as Avatar from "$lib/components/ui/avatar/index.js";
-  import * as DropdownMenu from "$lib/components/ui/dropdown-menu/index.js";
-  import * as Sidebar from "$lib/components/ui/sidebar/index.js";
-  import { Skeleton } from "$lib/components/ui/skeleton/index.js";
   import { authClient } from "$lib/utils/client.js";
 
   import PersonalInstructionsDialog from "./personal-instructions-dialog.svelte";

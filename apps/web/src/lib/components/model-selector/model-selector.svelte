@@ -1,7 +1,6 @@
 <script lang="ts">
+  import * as Dialog from "@workspace/ui/dialog/index.js";
   import type { ComponentProps } from "svelte";
-
-  import * as Dialog from "$lib/components/ui/dialog/index.js";
 
   let {
     open = $bindable(false),

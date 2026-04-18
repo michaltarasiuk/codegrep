@@ -1,9 +1,8 @@
 <script lang="ts">
+  import { cn, type WithElementRef } from "@workspace/ui/cn.js";
+  import { Separator } from "@workspace/ui/separator/index.js";
   import type { Snippet } from "svelte";
   import type { HTMLAttributes } from "svelte/elements";
-
-  import { Separator } from "$lib/components/ui/separator/index.js";
-  import { cn, type WithElementRef } from "$lib/utils/cn.js";
 
   type CheckpointProps = WithElementRef<HTMLAttributes<HTMLDivElement>> & {
     children?: Snippet;

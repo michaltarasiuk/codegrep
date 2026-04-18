@@ -1,8 +1,7 @@
 <script lang="ts">
   import BookmarkIcon from "@lucide/svelte/icons/bookmark";
+  import { cn } from "@workspace/ui/cn.js";
   import type { ComponentProps, Snippet } from "svelte";
-
-  import { cn } from "$lib/utils/cn.js";
 
   type CheckpointIconProps = ComponentProps<typeof BookmarkIcon> & {
     children?: Snippet;

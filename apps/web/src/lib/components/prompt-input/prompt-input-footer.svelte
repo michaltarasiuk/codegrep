@@ -1,8 +1,7 @@
 <script lang="ts">
+  import { cn } from "@workspace/ui/cn.js";
+  import * as InputGroup from "@workspace/ui/input-group/index.js";
   import type { ComponentProps } from "svelte";
-
-  import * as InputGroup from "$lib/components/ui/input-group/index.js";
-  import { cn } from "$lib/utils/cn.js";
 
   let {
     align = "block-end",

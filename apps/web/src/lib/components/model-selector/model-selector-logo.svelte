@@ -1,7 +1,6 @@
 <script lang="ts">
+  import { cn } from "@workspace/ui/cn.js";
   import type { HTMLImgAttributes } from "svelte/elements";
-
-  import { cn } from "$lib/utils/cn.js";
 
   type Provider =
     | "moonshotai-cn"

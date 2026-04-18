@@ -1,7 +1,6 @@
 <script lang="ts">
+  import { cn, type WithElementRef } from "@workspace/ui/cn.js";
   import type { HTMLAttributes } from "svelte/elements";
-
-  import { cn, type WithElementRef } from "$lib/utils/cn.js";
 
   import { getMessageBranch } from "./message-branch-context.svelte.js";
 

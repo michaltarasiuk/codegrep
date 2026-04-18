@@ -1,11 +1,10 @@
 <script lang="ts">
-  import type { ComponentProps } from "svelte";
-
+  import { cn } from "@workspace/ui/cn.js";
   import {
     Collapsible,
     CollapsibleContent,
-  } from "$lib/components/ui/collapsible/index.js";
-  import { cn } from "$lib/utils/cn.js";
+  } from "@workspace/ui/collapsible/index.js";
+  import type { ComponentProps } from "svelte";
 
   import { getChainOfThought } from "./chain-of-thought-context.svelte.js";
 

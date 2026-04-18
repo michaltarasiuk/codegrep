@@ -1,8 +1,7 @@
 <script lang="ts">
+  import { cn, type WithElementRef } from "@workspace/ui/cn.js";
   import type { Snippet } from "svelte";
   import type { HTMLAttributes } from "svelte/elements";
-
-  import { cn, type WithElementRef } from "$lib/utils/cn.js";
 
   type ContextContentBodyProps = WithElementRef<
     HTMLAttributes<HTMLDivElement>

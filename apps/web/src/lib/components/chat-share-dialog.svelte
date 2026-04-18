@@ -1,15 +1,15 @@
 <script lang="ts">
   import LockOpenIcon from "@lucide/svelte/icons/lock-open";
   import { isDefined } from "@workspace/shared/is-defined.js";
+  import { Button } from "@workspace/ui/button/index.js";
+  import * as Dialog from "@workspace/ui/dialog/index.js";
+  import * as Field from "@workspace/ui/field/index.js";
+  import { Input } from "@workspace/ui/input/index.js";
+  import { Spinner } from "@workspace/ui/spinner/index.js";
   import { useId } from "bits-ui";
 
   import { invalidate } from "$app/navigation";
   import { PUBLIC_WEB_URL } from "$env/static/public";
-  import { Button } from "$lib/components/ui/button/index.js";
-  import * as Dialog from "$lib/components/ui/dialog/index.js";
-  import * as Field from "$lib/components/ui/field/index.js";
-  import { Input } from "$lib/components/ui/input/index.js";
-  import { Spinner } from "$lib/components/ui/spinner/index.js";
   import { client } from "$lib/utils/client.js";
   import { CHAT_LIST_KEY } from "$lib/utils/invalidation.js";
 
@@ -105,7 +105,7 @@
     >
       {#if isDefined(loadingMessage)}
         <div class="text-muted-foreground flex items-center gap-2 text-sm">
-          <Spinner variant="arcs" class="size-4 shrink-0" />
+          <Spinner class="size-4 shrink-0" />
           <span>{loadingMessage}</span>
         </div>
       {:else}
@@ -154,7 +154,7 @@
     >
       {#if isDefined(loadingMessage)}
         <div class="text-muted-foreground flex items-center gap-2 text-sm">
-          <Spinner variant="arcs" class="size-4 shrink-0" />
+          <Spinner class="size-4 shrink-0" />
           <span>{loadingMessage}</span>
         </div>
       {:else if confirmingUnshare}

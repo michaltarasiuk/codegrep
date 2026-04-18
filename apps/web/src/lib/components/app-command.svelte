@@ -5,11 +5,11 @@
   import PlusIcon from "@lucide/svelte/icons/plus";
   import SunIcon from "@lucide/svelte/icons/sun";
   import LogoutIcon from "@tabler/icons-svelte/icons/logout";
+  import * as Command from "@workspace/ui/command/index.js";
   import { mode, toggleMode } from "mode-watcher";
 
   import { goto } from "$app/navigation";
   import { resolve } from "$app/paths";
-  import * as Command from "$lib/components/ui/command/index.js";
   import { authClient } from "$lib/utils/client.js";
 
   import PersonalInstructionsDialog from "./personal-instructions-dialog.svelte";

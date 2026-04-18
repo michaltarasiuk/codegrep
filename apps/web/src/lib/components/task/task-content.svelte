@@ -1,8 +1,7 @@
 <script lang="ts">
+  import { cn } from "@workspace/ui/cn.js";
+  import { CollapsibleContent } from "@workspace/ui/collapsible/index.js";
   import type { ComponentProps } from "svelte";
-
-  import { CollapsibleContent } from "$lib/components/ui/collapsible/index.js";
-  import { cn } from "$lib/utils/cn.js";
 
   let {
     children,

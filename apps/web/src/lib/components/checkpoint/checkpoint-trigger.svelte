@@ -1,8 +1,7 @@
 <script lang="ts">
+  import { Button } from "@workspace/ui/button/index.js";
+  import * as Tooltip from "@workspace/ui/tooltip/index.js";
   import type { ComponentProps } from "svelte";
-
-  import { Button } from "$lib/components/ui/button/index.js";
-  import * as Tooltip from "$lib/components/ui/tooltip/index.js";
 
   type CheckpointTriggerProps = ComponentProps<typeof Button> & {
     tooltip?: string;

@@ -1,9 +1,8 @@
 <script lang="ts">
   import MoonIcon from "@lucide/svelte/icons/moon";
   import SunIcon from "@lucide/svelte/icons/sun";
+  import * as Sidebar from "@workspace/ui/sidebar/index.js";
   import { toggleMode } from "mode-watcher";
-
-  import * as Sidebar from "$lib/components/ui/sidebar/index.js";
 </script>
 
 <Sidebar.MenuItem>

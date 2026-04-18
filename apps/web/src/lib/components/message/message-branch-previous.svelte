@@ -1,8 +1,7 @@
 <script lang="ts">
   import ChevronLeftIcon from "@lucide/svelte/icons/chevron-left";
+  import { Button } from "@workspace/ui/button/index.js";
   import type { ComponentProps } from "svelte";
-
-  import { Button } from "$lib/components/ui/button/index.js";
 
   import { getMessageBranch } from "./message-branch-context.svelte.js";
 

@@ -1,8 +1,7 @@
 <script lang="ts">
+  import { cn, type WithElementRef } from "@workspace/ui/cn.js";
   import type { HTMLAttributes } from "svelte/elements";
   import { SvelteSet } from "svelte/reactivity";
-
-  import { cn, type WithElementRef } from "$lib/utils/cn.js";
 
   import { setFileTree } from "./file-tree-context.svelte.js";
 

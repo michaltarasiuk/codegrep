@@ -1,10 +1,9 @@
 <script lang="ts">
   import ChevronDownIcon from "@lucide/svelte/icons/chevron-down";
   import SearchIcon from "@lucide/svelte/icons/search";
+  import { cn } from "@workspace/ui/cn.js";
+  import { CollapsibleTrigger } from "@workspace/ui/collapsible/index.js";
   import type { ComponentProps } from "svelte";
-
-  import { CollapsibleTrigger } from "$lib/components/ui/collapsible/index.js";
-  import { cn } from "$lib/utils/cn.js";
 
   let {
     title,

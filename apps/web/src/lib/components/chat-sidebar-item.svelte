@@ -5,12 +5,12 @@
   import PencilIcon from "@lucide/svelte/icons/pencil";
   import TrashIcon from "@lucide/svelte/icons/trash-2";
   import { isDefined } from "@workspace/shared/is-defined.js";
+  import * as DropdownMenu from "@workspace/ui/dropdown-menu/index.js";
+  import * as Sidebar from "@workspace/ui/sidebar/index.js";
 
   import { goto } from "$app/navigation";
   import { resolve } from "$app/paths";
   import { page } from "$app/state";
-  import * as DropdownMenu from "$lib/components/ui/dropdown-menu/index.js";
-  import * as Sidebar from "$lib/components/ui/sidebar/index.js";
 
   import ChatDeleteDialog from "./chat-delete-dialog.svelte";
   import ChatShareDialog from "./chat-share-dialog.svelte";

@@ -45,6 +45,10 @@
           "svelte": "html"
         },
         "experimental": {
+          "configFile": {
+            "apps/web/src/styles/global.css": "apps/web/src/**",
+            "packages/ui/src/styles.css": "packages/ui/src/**"
+          },
           "classRegex": [
             "class=\"([^\"]*)\"",
             "class='([^']*)'",

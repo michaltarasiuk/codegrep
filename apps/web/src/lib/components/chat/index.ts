@@ -8,21 +8,21 @@ import Root from "./chat-root.svelte";
 import Suggestions from "./chat-suggestions.svelte";
 
 export {
-  Root,
-  Content,
-  Conversation,
-  Message,
-  Suggestions,
-  PrivateChatCheckpoint,
-  PromptInput,
-  ModelSelector,
-  //
-  Root as ChatRoot,
   Content as ChatContent,
   Conversation as ChatConversation,
   Message as ChatMessage,
-  Suggestions as ChatSuggestions,
+  ModelSelector as ChatModelSelector,
   PrivateChatCheckpoint as ChatPrivateChatCheckpoint,
   PromptInput as ChatPromptInput,
-  ModelSelector as ChatModelSelector,
+  //
+  Root as ChatRoot,
+  Suggestions as ChatSuggestions,
+  Content,
+  Conversation,
+  Message,
+  ModelSelector,
+  PrivateChatCheckpoint,
+  PromptInput,
+  Root,
+  Suggestions,
 };
