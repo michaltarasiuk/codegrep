@@ -1,13 +1,12 @@
 {
   "extends": ["../../tsconfig.base.json"],
   "compilerOptions": {
+    "baseUrl": ".",
     "moduleResolution": "bundler",
     "rewriteRelativeImportExtensions": true,
-    "baseUrl": ".",
     "paths": {
       "$lib": ["./src"],
       "$lib/*": ["./src/*"]
     }
-  },
-  "include": ["src/**/*.ts", "src/**/*.svelte", "src/**/*.d.ts"]
+  }
 }
