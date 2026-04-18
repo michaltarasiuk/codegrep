@@ -1,9 +1,8 @@
 <script lang="ts">
+  import * as Conversation from "@workspace/ai-elements/conversation/index.js";
   import { Spinner } from "@workspace/ui/spinner/index.js";
   import type { UIMessage } from "ai";
   import type { Snippet } from "svelte";
-
-  import * as Conversation from "$lib/components/conversation/index.js";
 
   import { getChat } from "./chat-context.js";
 

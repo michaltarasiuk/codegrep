@@ -1,14 +1,14 @@
 <script lang="ts">
   import { Chat } from "@ai-sdk/svelte";
+  import * as PromptInput from "@workspace/ai-elements/prompt-input/index.js";
   import { isDefined } from "@workspace/shared/is-defined.js";
+  import { cn } from "@workspace/ui/cn.js";
   import { DefaultChatTransport, type UIMessage } from "ai";
-  import { cn } from "tailwind-variants";
 
   import { goto } from "$app/navigation";
   import { resolve } from "$app/paths";
   import { MODELS } from "$lib/components/chat/consts.js";
   import * as ChatUI from "$lib/components/chat/index.js";
-  import * as PromptInput from "$lib/components/prompt-input/index.js";
   import { CHAT_LIST_KEY } from "$lib/utils/invalidation.js";
 
   let {

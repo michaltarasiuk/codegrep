@@ -1,8 +1,7 @@
 <script lang="ts">
   import CheckIcon from "@lucide/svelte/icons/check";
-
-  import * as ModelSelector from "$lib/components/model-selector/index.js";
-  import * as PromptInput from "$lib/components/prompt-input/index.js";
+  import * as ModelSelector from "@workspace/ai-elements/model-selector/index.js";
+  import * as PromptInput from "@workspace/ai-elements/prompt-input/index.js";
 
   import type { ChatModel } from "./consts.js";
 

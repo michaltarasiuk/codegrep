@@ -2,9 +2,8 @@
   import CheckIcon from "@lucide/svelte/icons/check";
   import CopyIcon from "@lucide/svelte/icons/copy";
   import RefreshCcwIcon from "@lucide/svelte/icons/refresh-ccw";
+  import * as Message from "@workspace/ai-elements/message/index.js";
   import type { UIMessage } from "ai";
-
-  import * as Message from "$lib/components/message/index.js";
 
   import { getChat, getModel } from "./chat-context.js";
 

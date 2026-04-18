@@ -1,8 +1,7 @@
 <script lang="ts">
   import type { UIMessage } from "ai";
 
-  import * as Reasoning from "$lib/components/reasoning/index.js";
-
+  import * as Reasoning from "../reasoning/index.js";
   import Response from "./message-response.svelte";
 
   let {

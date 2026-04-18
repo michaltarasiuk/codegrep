@@ -6,17 +6,17 @@ import Icon from "./file-tree-icon.svelte";
 import Name from "./file-tree-name.svelte";
 
 export {
-  Root,
-  Folder,
-  File,
-  Icon,
-  Name,
   Actions,
+  File,
   //
   Root as FileTree,
-  Folder as FileTreeFolder,
+  Actions as FileTreeActions,
   File as FileTreeFile,
+  Folder as FileTreeFolder,
   Icon as FileTreeIcon,
   Name as FileTreeName,
-  Actions as FileTreeActions,
+  Folder,
+  Icon,
+  Name,
+  Root,
 };

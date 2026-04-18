@@ -1,5 +1,5 @@
 <script lang="ts">
-  import * as PromptInput from "$lib/components/prompt-input/index.js";
+  import * as PromptInput from "@workspace/ai-elements/prompt-input/index.js";
 
   import { getChat } from "./chat-context.js";
   import ModelSelector from "./chat-model-selector.svelte";

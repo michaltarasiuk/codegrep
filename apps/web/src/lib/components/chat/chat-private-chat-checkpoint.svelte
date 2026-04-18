@@ -1,5 +1,5 @@
 <script lang="ts">
-  import * as Checkpoint from "$lib/components/checkpoint/index.js";
+  import * as Checkpoint from "@workspace/ai-elements/checkpoint/index.js";
 </script>
 
 <Checkpoint.Root>

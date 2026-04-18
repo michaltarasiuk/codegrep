@@ -1,5 +1,6 @@
 <script lang="ts">
-  import * as Suggestion from "../suggestion/index.js";
+  import * as Suggestion from "@workspace/ai-elements/suggestion/index.js";
+
   import { SUGGESTIONS } from "./consts.js";
 
   let { onPick }: { onPick: (text: string) => void } = $props();

@@ -4,12 +4,12 @@
   import XIcon from "@lucide/svelte/icons/x";
   import { isDefined } from "@workspace/shared/is-defined.js";
   import { Button } from "@workspace/ui/button/index.js";
+  import { cn } from "@workspace/ui/cn.js";
   import * as Dialog from "@workspace/ui/dialog/index.js";
   import * as Field from "@workspace/ui/field/index.js";
   import { Textarea } from "@workspace/ui/textarea/index.js";
   import { useId } from "bits-ui";
   import dedent from "dedent";
-  import { cn } from "tailwind-variants";
 
   import { authClient } from "$lib/utils/client.js";
 
