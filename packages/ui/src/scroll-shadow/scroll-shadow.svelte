@@ -40,9 +40,9 @@
   import "./scroll-shadow.css";
 
   import { serializeStyles } from "@emotion/serialize";
-  import { cn, type WithElementRef } from "@workspace/ui/cn.js";
   import type { HTMLAttributes } from "svelte/elements";
 
+  import { cn, type WithElementRef } from "../cn.js";
   import {
     type ScrollShadowVisibility,
     useScrollShadow,
