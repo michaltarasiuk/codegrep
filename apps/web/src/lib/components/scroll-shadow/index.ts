@@ -7,7 +7,7 @@
 
 export { default as ScrollShadow } from "./scroll-shadow.svelte";
 export {
-  type ScrollShadowVisibility,
   useScrollShadow,
+  type ScrollShadowVisibility,
   type UseScrollShadowProps,
 } from "./use-scroll-shadow.svelte.js";

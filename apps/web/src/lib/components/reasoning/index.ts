@@ -3,11 +3,11 @@ import Content from "./reasoning-content.svelte";
 import Trigger from "./reasoning-trigger.svelte";
 
 export {
+  Root,
+  Trigger,
   Content,
   //
   Root as Reasoning,
-  Content as ReasoningContent,
   Trigger as ReasoningTrigger,
-  Root,
-  Trigger,
+  Content as ReasoningContent,
 };

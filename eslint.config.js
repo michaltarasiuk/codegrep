@@ -75,7 +75,10 @@ let config = [
     },
   },
   {
-    files: ["./apps/web/components/**/index.ts", "./packages/ui/**/index.ts"],
+    files: [
+      "./apps/web/src/lib/components/**/index.ts",
+      "./packages/ui/**/index.ts",
+    ],
     rules: {
       "simple-import-sort/exports": "off",
     },

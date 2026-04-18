@@ -7,19 +7,19 @@ import SearchResults from "./chain-of-thought-search-results.svelte";
 import Step from "./chain-of-thought-step.svelte";
 
 export {
+  Root,
+  Header,
+  Content,
+  Step,
+  SearchResults,
+  SearchResult,
+  Image,
   //
   Root as ChainOfThought,
-  Content as ChainOfThoughtContent,
   Header as ChainOfThoughtHeader,
-  Image as ChainOfThoughtImage,
-  SearchResult as ChainOfThoughtSearchResult,
-  SearchResults as ChainOfThoughtSearchResults,
+  Content as ChainOfThoughtContent,
   Step as ChainOfThoughtStep,
-  Content,
-  Header,
-  Image,
-  Root,
-  SearchResult,
-  SearchResults,
-  Step,
+  SearchResults as ChainOfThoughtSearchResults,
+  SearchResult as ChainOfThoughtSearchResult,
+  Image as ChainOfThoughtImage,
 };

@@ -5,15 +5,15 @@ import ItemFile from "./task-item-file.svelte";
 import Trigger from "./task-trigger.svelte";
 
 export {
+  Root,
+  Trigger,
   Content,
   Item,
   ItemFile,
-  Root,
   //
   Root as Task,
+  Trigger as TaskTrigger,
   Content as TaskContent,
   Item as TaskItem,
   ItemFile as TaskItemFile,
-  Trigger as TaskTrigger,
-  Trigger,
 };
