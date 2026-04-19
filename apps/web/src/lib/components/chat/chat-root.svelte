@@ -3,7 +3,7 @@
   import { StickToBottom } from "@workspace/stick-to-bottom";
   import type { Snippet } from "svelte";
 
-  import { type Model, setChatState } from "./chat-context.svelte.js";
+  import { type Model, setChat, setModel } from "./chat-context.js";
 
   let {
     chat,
@@ -15,10 +15,8 @@
     children: Snippet;
   } = $props();
 
-  setChatState(
-    () => chat,
-    () => model
-  );
+  setChat(() => chat);
+  setModel(() => model);
 </script>
 
 <StickToBottom class="scrollbar-hide flex flex-1 flex-col overscroll-none px-4">

@@ -2,7 +2,7 @@
   import { cn } from "@workspace/ui/cn.js";
   import type { Snippet } from "svelte";
 
-  import { getChatState } from "./chat-context.svelte.js";
+  import { getChat } from "./chat-context.js";
 
   let {
     children,
@@ -10,8 +10,8 @@
     children: Snippet;
   } = $props();
 
-  let chatState = getChatState();
-  let hasMessages = $derived(chatState.messages.length > 0);
+  let chat = $derived(getChat());
+  let hasMessages = $derived(chat.messages.length > 0);
 </script>
 
 <div

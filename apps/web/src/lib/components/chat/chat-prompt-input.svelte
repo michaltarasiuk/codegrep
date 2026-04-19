@@ -1,7 +1,7 @@
 <script lang="ts">
   import * as PromptInput from "@workspace/ai-elements/prompt-input/index.js";
 
-  import { getChatState } from "./chat-context.svelte.js";
+  import { getChat } from "./chat-context.js";
   import ModelSelector from "./chat-model-selector.svelte";
   import ChatPromptAddFilesButton from "./chat-prompt-add-files-button.svelte";
   import { MODELS } from "./consts.js";
@@ -14,7 +14,7 @@
     handleSubmit: (message: PromptInput.PromptInputMessage) => void;
   } = $props();
 
-  let chatState = getChatState();
+  let chat = $derived(getChat());
 </script>
 
 <PromptInput.Provider>
@@ -34,9 +34,9 @@
       <div class="flex shrink-0 items-center gap-3">
         <ModelSelector bind:selectedModel models={MODELS} />
         <PromptInput.Submit
-          status={chatState.status}
+          status={chat.status}
           size="icon-sm"
-          onStop={() => chatState.chat.stop()}
+          onStop={() => chat.stop()}
         />
       </div>
     </PromptInput.Footer>
