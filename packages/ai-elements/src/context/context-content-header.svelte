@@ -5,7 +5,7 @@
 
   import {
     compactFormatter,
-    getContextState,
+    getUsagePanelState,
     percentFormatter,
   } from "./context-context.svelte.js";
 
@@ -24,7 +24,7 @@
     ...restProps
   }: ContextContentHeaderProps = $props();
 
-  let context = getContextState();
+  let context = getUsagePanelState();
 
   let usedPercent = $derived(context.usedTokens / context.maxTokens);
   let displayPct = $derived(percentFormatter.format(usedPercent));

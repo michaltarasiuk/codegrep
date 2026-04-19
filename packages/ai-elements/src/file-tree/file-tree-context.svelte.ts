@@ -11,7 +11,7 @@ interface FileTreeStateProps {
 }
 
 class FileTreeState {
-  readonly props: FileTreeStateProps;
+  props: FileTreeStateProps;
 
   constructor(props: FileTreeStateProps) {
     this.props = props;
@@ -52,11 +52,11 @@ class FileTreeState {
 let FILE_TREE_KEY = Symbol.for("scn-file-tree");
 
 export function getFileTree() {
-  let value = getContext<FileTreeState | null>(FILE_TREE_KEY);
-  if (!isDefined(value)) {
+  let context = getContext<FileTreeState | undefined>(FILE_TREE_KEY);
+  if (!isDefined(context)) {
     throw new Error("Missing file tree context");
   }
-  return value;
+  return context;
 }
 
 export function setFileTree(props: FileTreeStateProps) {

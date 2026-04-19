@@ -1,14 +1,18 @@
 import type { Chat } from "@ai-sdk/svelte";
+import { isDefined } from "@workspace/shared/is-defined.js";
 import { getContext, setContext } from "svelte";
 
 export type Model = string;
 
-let CHAT_CONTEXT_KEY = Symbol("chat");
-let MODEL_CONTEXT_KEY = Symbol("model");
+let CHAT_CONTEXT_KEY = Symbol.for("web.chat");
+let MODEL_CONTEXT_KEY = Symbol.for("web.model");
 
 export function getChat() {
-  let chat = getContext<() => Chat>(CHAT_CONTEXT_KEY);
-  return chat();
+  let context = getContext<(() => Chat) | undefined>(CHAT_CONTEXT_KEY);
+  if (!isDefined(context)) {
+    throw new Error("Missing chat context");
+  }
+  return context();
 }
 
 export function setChat(chat: () => Chat) {
@@ -16,8 +20,11 @@ export function setChat(chat: () => Chat) {
 }
 
 export function getModel() {
-  let model = getContext<() => Model>(MODEL_CONTEXT_KEY);
-  return model();
+  let context = getContext<(() => Model) | undefined>(MODEL_CONTEXT_KEY);
+  if (!isDefined(context)) {
+    throw new Error("Missing model context");
+  }
+  return context();
 }
 
 export function setModel(model: () => Model) {

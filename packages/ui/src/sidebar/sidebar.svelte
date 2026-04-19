@@ -4,7 +4,7 @@
   import { cn, type WithElementRef } from "../cn.js";
   import * as Sheet from "../sheet/index.js";
   import { SIDEBAR_WIDTH_MOBILE } from "./constants.js";
-  import { useSidebar } from "./context.svelte.js";
+  import { getSidebar } from "./context.svelte.js";
 
   let {
     ref = $bindable(null),
@@ -20,7 +20,7 @@
     collapsible?: "offcanvas" | "icon" | "none";
   } = $props();
 
-  let sidebar = useSidebar();
+  let sidebar = getSidebar();
 </script>
 
 {#if !sidebar}

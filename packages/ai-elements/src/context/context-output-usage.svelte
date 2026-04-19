@@ -6,7 +6,7 @@
 
   import {
     currencyFormatter,
-    getContextState,
+    getUsagePanelState,
   } from "./context-context.svelte.js";
   import TokensWithCost from "./tokens-with-cost.svelte";
 
@@ -23,7 +23,7 @@
     ...restProps
   }: ContextOutputUsageProps = $props();
 
-  let context = getContextState();
+  let context = getUsagePanelState();
 
   let outputTokens = $derived(context.usage?.outputTokens ?? 0);
   let outputCost = $derived(

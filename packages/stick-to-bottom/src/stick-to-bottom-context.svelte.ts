@@ -14,8 +14,8 @@ export interface StickToBottomContext {
   contentRef: (el: HTMLElement | null) => void;
   scrollToBottom: ScrollToBottom;
   stopScroll: StopScroll;
-  readonly isAtBottom: boolean;
-  readonly escapedFromLock: boolean;
+  isAtBottom: boolean;
+  escapedFromLock: boolean;
   targetScrollTop: GetTargetScrollTop | null;
   state: StickToBottomState;
 }
@@ -23,7 +23,7 @@ export interface StickToBottomContext {
 let CONTEXT_KEY = Symbol.for("stick-to-bottom");
 
 export function getStickToBottomContext() {
-  let context = getContext<StickToBottomContext | null>(CONTEXT_KEY);
+  let context = getContext<StickToBottomContext | undefined>(CONTEXT_KEY);
   if (!isDefined(context)) {
     throw new Error("Missing stick to bottom context");
   }

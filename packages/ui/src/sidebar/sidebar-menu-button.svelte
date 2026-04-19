@@ -40,7 +40,7 @@
     type WithoutChildrenOrChild,
   } from "../cn.js";
   import * as Tooltip from "../tooltip/index.js";
-  import { useSidebar } from "./context.svelte.js";
+  import { getSidebar } from "./context.svelte.js";
 
   let {
     ref = $bindable(null),
@@ -64,7 +64,7 @@
     child?: Snippet<[{ props: Record<string, unknown> }]>;
   } = $props();
 
-  let sidebar = useSidebar();
+  let sidebar = getSidebar();
 
   let buttonProps = $derived({
     class: cn(sidebarMenuButtonVariants({ variant, size }), className),

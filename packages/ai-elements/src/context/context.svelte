@@ -3,7 +3,7 @@
   import type { LanguageModelUsage } from "ai";
   import type { Snippet } from "svelte";
 
-  import { setContextState } from "./context-context.svelte.js";
+  import { setUsagePanelState } from "./context-context.svelte.js";
 
   interface ContextProps {
     usedTokens: number;
@@ -16,7 +16,7 @@
   let { usedTokens, maxTokens, usage, modelId, children }: ContextProps =
     $props();
 
-  setContextState({
+  setUsagePanelState({
     get usedTokens() {
       return usedTokens;
     },

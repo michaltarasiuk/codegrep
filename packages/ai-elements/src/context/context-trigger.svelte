@@ -4,7 +4,7 @@
   import type { ComponentProps, Snippet } from "svelte";
 
   import {
-    getContextState,
+    getUsagePanelState,
     percentFormatter,
   } from "./context-context.svelte.js";
   import ContextIcon from "./context-icon.svelte";
@@ -15,7 +15,7 @@
 
   let { children, ...restProps }: ContextTriggerProps = $props();
 
-  let context = getContextState();
+  let context = getUsagePanelState();
 
   let usedPercent = $derived(context.usedTokens / context.maxTokens);
   let renderedPercent = $derived(percentFormatter.format(usedPercent));

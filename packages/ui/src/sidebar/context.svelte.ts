@@ -1,3 +1,4 @@
+import { isDefined } from "@workspace/shared/is-defined.js";
 import { getContext, setContext } from "svelte";
 
 import { IsMobile } from "../is-mobile.svelte.js";
@@ -22,7 +23,7 @@ export interface SidebarStateProps {
 }
 
 class SidebarState {
-  readonly props: SidebarStateProps;
+  props: SidebarStateProps;
   open = $derived.by(() => this.props.open());
   openMobile = $state(false);
   setOpen: SidebarStateProps["setOpen"];
@@ -63,6 +64,19 @@ class SidebarState {
 let SYMBOL_KEY = "scn-sidebar";
 
 /**
+ * Retrieves the `SidebarState` instance from the context. This is a class instance,
+ * so you cannot destructure it.
+ * @returns The `SidebarState` instance.
+ */
+export function getSidebar() {
+  let context = getContext<SidebarState | undefined>(Symbol.for(SYMBOL_KEY));
+  if (!isDefined(context)) {
+    throw new Error("Missing sidebar context");
+  }
+  return context;
+}
+
+/**
  * Instantiates a new `SidebarState` instance and sets it in the context.
  *
  * @param props The constructor props for the `SidebarState` class.
@@ -70,13 +84,4 @@ let SYMBOL_KEY = "scn-sidebar";
  */
 export function setSidebar(props: SidebarStateProps): SidebarState {
   return setContext(Symbol.for(SYMBOL_KEY), new SidebarState(props));
-}
-
-/**
- * Retrieves the `SidebarState` instance from the context. This is a class instance,
- * so you cannot destructure it.
- * @returns The `SidebarState` instance.
- */
-export function useSidebar(): SidebarState {
-  return getContext(Symbol.for(SYMBOL_KEY));
 }

@@ -7,21 +7,21 @@ let CONTEXT_KEY = Symbol.for("scn-context");
 type ModelId = string;
 
 export interface ContextState {
-  readonly usedTokens: number;
-  readonly maxTokens: number;
-  readonly usage?: LanguageModelUsage;
-  readonly modelId?: ModelId;
+  usedTokens: number;
+  maxTokens: number;
+  usage?: LanguageModelUsage;
+  modelId?: ModelId;
 }
 
-export function getContextState(): ContextState {
-  let value = getContext<ContextState | null>(CONTEXT_KEY);
-  if (!isDefined(value)) {
-    throw new Error("Missing context context");
+export function getUsagePanelState() {
+  let context = getContext<ContextState | undefined>(CONTEXT_KEY);
+  if (!isDefined(context)) {
+    throw new Error("Missing model usage panel context");
   }
-  return value;
+  return context;
 }
 
-export function setContextState(value: ContextState) {
+export function setUsagePanelState(value: ContextState) {
   return setContext(CONTEXT_KEY, value);
 }
 

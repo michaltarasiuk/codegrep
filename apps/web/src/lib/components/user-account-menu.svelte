@@ -16,7 +16,7 @@
   import PersonalInstructionsDialog from "./personal-instructions-dialog.svelte";
 
   let session = authClient.useSession();
-  let sidebar = Sidebar.useSidebar();
+  let sidebar = Sidebar.getSidebar();
 
   let hydrated = $state(false);
   let personalInstructionsOpen = $state(false);

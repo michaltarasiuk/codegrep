@@ -1,4 +1,4 @@
-import { useSidebar } from "./context.svelte.js";
+import { getSidebar } from "./context.svelte.js";
 import Root from "./sidebar.svelte";
 import Content from "./sidebar-content.svelte";
 import Footer from "./sidebar-footer.svelte";
@@ -47,7 +47,7 @@ export {
   MenuSub,
   MenuSubItem,
   MenuSubButton,
-  useSidebar,
+  getSidebar,
   //
   Root as Sidebar,
   Provider as SidebarProvider,

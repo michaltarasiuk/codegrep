@@ -91,9 +91,9 @@ export interface StickToBottomInstance {
   contentElement: HTMLElement | null;
   scrollToBottom: ScrollToBottom;
   stopScroll: StopScroll;
-  readonly isAtBottom: boolean;
-  readonly isNearBottom: boolean;
-  readonly escapedFromLock: boolean;
+  isAtBottom: boolean;
+  isNearBottom: boolean;
+  escapedFromLock: boolean;
   state: StickToBottomState;
 }
 
@@ -145,9 +145,9 @@ export class UseStickToBottom {
 
   #state: StickToBottomState;
 
-  readonly isAtBottom = $derived(this.#isAtBottom || this.#isNearBottom);
-  readonly isNearBottom = $derived(this.#isNearBottom);
-  readonly escapedFromLock = $derived(this.#escapedFromLock);
+  isAtBottom = $derived(this.#isAtBottom || this.#isNearBottom);
+  isNearBottom = $derived(this.#isNearBottom);
+  escapedFromLock = $derived(this.#escapedFromLock);
 
   get scrollElement() {
     return this.#scrollEl;

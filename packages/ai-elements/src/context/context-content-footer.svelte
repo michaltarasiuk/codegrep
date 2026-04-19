@@ -6,7 +6,7 @@
 
   import {
     currencyFormatter,
-    getContextState,
+    getUsagePanelState,
   } from "./context-context.svelte.js";
 
   type ContextContentFooterProps = WithElementRef<
@@ -22,7 +22,7 @@
     ...restProps
   }: ContextContentFooterProps = $props();
 
-  let context = getContextState();
+  let context = getUsagePanelState();
 
   let costUSD = $derived(
     context.modelId

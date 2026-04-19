@@ -4,17 +4,19 @@ import { getContext, setContext } from "svelte";
 let CHAIN_OF_THOUGHT_KEY = Symbol.for("scn-chain-of-thought");
 
 export interface ChainOfThoughtState {
-  readonly open: boolean;
+  open: boolean;
   toggle: () => void;
   setOpen: (value: boolean) => void;
 }
 
-export function getChainOfThought(): ChainOfThoughtState {
-  let value = getContext<ChainOfThoughtState | null>(CHAIN_OF_THOUGHT_KEY);
-  if (!isDefined(value)) {
+export function getChainOfThought() {
+  let context = getContext<ChainOfThoughtState | undefined>(
+    CHAIN_OF_THOUGHT_KEY
+  );
+  if (!isDefined(context)) {
     throw new Error("Missing chain of thought context");
   }
-  return value;
+  return context;
 }
 
 export function setChainOfThought(value: ChainOfThoughtState) {

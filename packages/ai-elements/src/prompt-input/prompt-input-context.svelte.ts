@@ -110,7 +110,7 @@ let LOCAL_ATTACHMENTS_KEY = Symbol.for("scn-prompt-input-local-attachments");
 let REFERENCED_SOURCES_KEY = Symbol.for("scn-prompt-input-referenced-sources");
 
 export function getPromptInputAttachments() {
-  let local = getContext<AttachmentsState | null>(LOCAL_ATTACHMENTS_KEY);
+  let local = getContext<AttachmentsState | undefined>(LOCAL_ATTACHMENTS_KEY);
   let provider = getProviderAttachments();
   return local ?? provider;
 }
@@ -120,11 +120,13 @@ export function setLocalAttachments(value: AttachmentsState) {
 }
 
 export function getProviderAttachments() {
-  let value = getContext<AttachmentsState | null>(PROVIDER_ATTACHMENTS_KEY);
-  if (!isDefined(value)) {
+  let context = getContext<AttachmentsState | undefined>(
+    PROVIDER_ATTACHMENTS_KEY
+  );
+  if (!isDefined(context)) {
     throw new Error("Missing provider attachments context");
   }
-  return value;
+  return context;
 }
 
 export function setProviderAttachments(value: AttachmentsState) {
@@ -132,7 +134,7 @@ export function setProviderAttachments(value: AttachmentsState) {
 }
 
 export function getPromptInputController() {
-  return getContext<PromptInputControllerState | null>(CONTROLLER_KEY);
+  return getContext<PromptInputControllerState | undefined>(CONTROLLER_KEY);
 }
 
 export function setPromptInputController(value: PromptInputControllerState) {
@@ -140,11 +142,13 @@ export function setPromptInputController(value: PromptInputControllerState) {
 }
 
 export function getPromptInputReferencedSources() {
-  let value = getContext<ReferencedSourcesState | null>(REFERENCED_SOURCES_KEY);
-  if (!isDefined(value)) {
+  let context = getContext<ReferencedSourcesState | undefined>(
+    REFERENCED_SOURCES_KEY
+  );
+  if (!isDefined(context)) {
     throw new Error("Missing prompt input referenced sources context");
   }
-  return value;
+  return context;
 }
 
 export function setReferencedSourcesState(value: ReferencedSourcesState) {

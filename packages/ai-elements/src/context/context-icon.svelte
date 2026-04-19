@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { getContextState } from "./context-context.svelte.js";
+  import { getUsagePanelState } from "./context-context.svelte.js";
 
   let ICON_RADIUS = 10;
   let ICON_VIEWBOX = 24;
@@ -7,7 +7,7 @@
   let ICON_STROKE_WIDTH = 2;
   let circumference = 2 * Math.PI * ICON_RADIUS;
 
-  let context = getContextState();
+  let context = getUsagePanelState();
 
   let usedPercent = $derived(context.usedTokens / context.maxTokens);
   let dashOffset = $derived(circumference * (1 - usedPercent));
