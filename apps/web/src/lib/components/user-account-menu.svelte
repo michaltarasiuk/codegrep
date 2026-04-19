@@ -21,7 +21,7 @@
   let hydrated = $state(false);
   let personalInstructionsOpen = $state(false);
 
-  onMount(function hydrate() {
+  onMount(() => {
     hydrated = true;
   });
 

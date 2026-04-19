@@ -18,7 +18,7 @@
 
   $effect(() => {
     let unregister = branch.registerBranch(index);
-    return function unregisterBranch() {
+    return () => {
       unregister();
     };
   });

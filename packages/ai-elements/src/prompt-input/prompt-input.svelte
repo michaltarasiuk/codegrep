@@ -222,7 +222,7 @@
     }
     formRef.addEventListener("drop", onDrop);
     formRef.addEventListener("dragover", onDragOver);
-    return function unbindFormDrop() {
+    return () => {
       formRef?.removeEventListener("drop", onDrop);
       formRef?.removeEventListener("dragover", onDragOver);
     };
@@ -250,13 +250,13 @@
     }
     document.addEventListener("drop", onDrop);
     document.addEventListener("dragover", onDragOver);
-    return function unbindDocumentDrop() {
+    return () => {
       document.removeEventListener("drop", onDrop);
       document.removeEventListener("dragover", onDragOver);
     };
   });
 
-  onDestroy(function cleanupLocalPromptInputAttachments() {
+  onDestroy(() => {
     if (!usingProvider) {
       attachments.cleanup();
     }

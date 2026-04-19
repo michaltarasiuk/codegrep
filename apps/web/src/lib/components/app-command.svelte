@@ -24,7 +24,7 @@
     let unsubscribe = mode.subscribe((value) => {
       darkMode = value === "dark";
     });
-    return function unwatchTheme() {
+    return () => {
       unsubscribe();
     };
   });

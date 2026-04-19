@@ -1,6 +1,6 @@
 <script lang="ts">
   import ArrowDownIcon from "@lucide/svelte/icons/arrow-down";
-  import { getStickToBottomContext } from "@workspace/stick-to-bottom";
+  import { getStickToBottom } from "@workspace/stick-to-bottom";
   import { Button } from "@workspace/ui/button/index.js";
   import { cn } from "@workspace/ui/cn.js";
   import type { ComponentProps } from "svelte";
@@ -11,7 +11,7 @@
     ...restProps
   }: ComponentProps<typeof Button> = $props();
 
-  let { isAtBottom, scrollToBottom } = $derived(getStickToBottomContext());
+  let { isAtBottom, scrollToBottom } = $derived(getStickToBottom());
 
   function handleScrollToBottom() {
     scrollToBottom();

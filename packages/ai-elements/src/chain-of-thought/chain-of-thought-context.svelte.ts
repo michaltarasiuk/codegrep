@@ -1,7 +1,7 @@
 import { isDefined } from "@workspace/shared/is-defined.js";
 import { getContext, setContext } from "svelte";
 
-let CHAIN_OF_THOUGHT_KEY = Symbol.for("scn-chain-of-thought");
+let CHAIN_OF_THOUGHT_KEY = Symbol.for("chain-of-thought");
 
 export interface ChainOfThoughtState {
   open: boolean;
@@ -10,13 +10,11 @@ export interface ChainOfThoughtState {
 }
 
 export function getChainOfThought() {
-  let context = getContext<ChainOfThoughtState | undefined>(
-    CHAIN_OF_THOUGHT_KEY
-  );
-  if (!isDefined(context)) {
-    throw new Error("Missing chain of thought context");
+  let value = getContext<ChainOfThoughtState | undefined>(CHAIN_OF_THOUGHT_KEY);
+  if (!isDefined(value)) {
+    throw new Error("Missing chain of thought context value");
   }
-  return context;
+  return value;
 }
 
 export function setChainOfThought(value: ChainOfThoughtState) {

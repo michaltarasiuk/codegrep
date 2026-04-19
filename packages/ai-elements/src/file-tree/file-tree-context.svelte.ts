@@ -49,14 +49,14 @@ class FileTreeState {
   };
 }
 
-let FILE_TREE_KEY = Symbol.for("scn-file-tree");
+let FILE_TREE_KEY = Symbol.for("file-tree");
 
 export function getFileTree() {
-  let context = getContext<FileTreeState | undefined>(FILE_TREE_KEY);
-  if (!isDefined(context)) {
-    throw new Error("Missing file tree context");
+  let value = getContext<FileTreeState | undefined>(FILE_TREE_KEY);
+  if (!isDefined(value)) {
+    throw new Error("Missing file tree context value");
   }
-  return context;
+  return value;
 }
 
 export function setFileTree(props: FileTreeStateProps) {

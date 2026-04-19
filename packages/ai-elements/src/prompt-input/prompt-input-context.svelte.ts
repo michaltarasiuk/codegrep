@@ -102,12 +102,10 @@ export class ReferencedSourcesState {
   };
 }
 
-let CONTROLLER_KEY = Symbol.for("scn-prompt-input-controller");
-let PROVIDER_ATTACHMENTS_KEY = Symbol.for(
-  "scn-prompt-input-provider-attachments"
-);
-let LOCAL_ATTACHMENTS_KEY = Symbol.for("scn-prompt-input-local-attachments");
-let REFERENCED_SOURCES_KEY = Symbol.for("scn-prompt-input-referenced-sources");
+let CONTROLLER_KEY = Symbol.for("prompt-input-controller");
+let PROVIDER_ATTACHMENTS_KEY = Symbol.for("prompt-input-provider-attachments");
+let LOCAL_ATTACHMENTS_KEY = Symbol.for("prompt-input-local-attachments");
+let REFERENCED_SOURCES_KEY = Symbol.for("prompt-input-referenced-sources");
 
 export function getPromptInputAttachments() {
   let local = getContext<AttachmentsState | undefined>(LOCAL_ATTACHMENTS_KEY);
@@ -120,13 +118,13 @@ export function setLocalAttachments(value: AttachmentsState) {
 }
 
 export function getProviderAttachments() {
-  let context = getContext<AttachmentsState | undefined>(
+  let value = getContext<AttachmentsState | undefined>(
     PROVIDER_ATTACHMENTS_KEY
   );
-  if (!isDefined(context)) {
-    throw new Error("Missing provider attachments context");
+  if (!isDefined(value)) {
+    throw new Error("Missing provider attachments context value");
   }
-  return context;
+  return value;
 }
 
 export function setProviderAttachments(value: AttachmentsState) {
@@ -142,13 +140,13 @@ export function setPromptInputController(value: PromptInputControllerState) {
 }
 
 export function getPromptInputReferencedSources() {
-  let context = getContext<ReferencedSourcesState | undefined>(
+  let value = getContext<ReferencedSourcesState | undefined>(
     REFERENCED_SOURCES_KEY
   );
-  if (!isDefined(context)) {
-    throw new Error("Missing prompt input referenced sources context");
+  if (!isDefined(value)) {
+    throw new Error("Missing prompt input referenced sources context value");
   }
-  return context;
+  return value;
 }
 
 export function setReferencedSourcesState(value: ReferencedSourcesState) {

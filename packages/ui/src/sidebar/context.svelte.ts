@@ -61,27 +61,16 @@ class SidebarState {
   };
 }
 
-let SYMBOL_KEY = "scn-sidebar";
+let SIDEBAR_CONTEXT_KEY = Symbol.for("sidebar");
 
-/**
- * Retrieves the `SidebarState` instance from the context. This is a class instance,
- * so you cannot destructure it.
- * @returns The `SidebarState` instance.
- */
 export function getSidebar() {
-  let context = getContext<SidebarState | undefined>(Symbol.for(SYMBOL_KEY));
-  if (!isDefined(context)) {
-    throw new Error("Missing sidebar context");
+  let value = getContext<SidebarState | undefined>(SIDEBAR_CONTEXT_KEY);
+  if (!isDefined(value)) {
+    throw new Error("Missing sidebar context value");
   }
-  return context;
+  return value;
 }
 
-/**
- * Instantiates a new `SidebarState` instance and sets it in the context.
- *
- * @param props The constructor props for the `SidebarState` class.
- * @returns  The `SidebarState` instance.
- */
-export function setSidebar(props: SidebarStateProps): SidebarState {
-  return setContext(Symbol.for(SYMBOL_KEY), new SidebarState(props));
+export function setSidebar(props: SidebarStateProps) {
+  return setContext(SIDEBAR_CONTEXT_KEY, new SidebarState(props));
 }

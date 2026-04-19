@@ -125,7 +125,7 @@ export function useScrollShadow(getProps: () => UseScrollShadowProps) {
     let resizeObserver = new ResizeObserver(checkOverflow);
     resizeObserver.observe(el);
 
-    return function disconnectOverflow() {
+    return () => {
       el.removeEventListener("scroll", checkOverflow);
       resizeObserver.disconnect();
 

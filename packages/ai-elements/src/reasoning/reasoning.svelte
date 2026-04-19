@@ -31,7 +31,7 @@
         hasAutoClosed = true;
       }, AUTO_CLOSE_DELAY);
 
-      return function clearAutoClose() {
+      return () => {
         clearTimeout(timer);
       };
     }

@@ -2,7 +2,7 @@ import { isDefined } from "@workspace/shared/is-defined.js";
 import type { LanguageModelUsage } from "ai";
 import { getContext, setContext } from "svelte";
 
-let CONTEXT_KEY = Symbol.for("scn-context");
+let USAGE_PANEL_STATE_CONTEXT_KEY = Symbol.for("usage-panel-state");
 
 type ModelId = string;
 
@@ -14,15 +14,17 @@ export interface ContextState {
 }
 
 export function getUsagePanelState() {
-  let context = getContext<ContextState | undefined>(CONTEXT_KEY);
-  if (!isDefined(context)) {
-    throw new Error("Missing model usage panel context");
+  let value = getContext<ContextState | undefined>(
+    USAGE_PANEL_STATE_CONTEXT_KEY
+  );
+  if (!isDefined(value)) {
+    throw new Error("Missing usage panel state context value");
   }
-  return context;
+  return value;
 }
 
 export function setUsagePanelState(value: ContextState) {
-  return setContext(CONTEXT_KEY, value);
+  return setContext(USAGE_PANEL_STATE_CONTEXT_KEY, value);
 }
 
 export let compactFormatter = new Intl.NumberFormat("en-US", {

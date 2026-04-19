@@ -140,14 +140,14 @@ export class MessageBranchState {
   };
 }
 
-let MESSAGE_BRANCH_KEY = Symbol.for("scn-message-branch");
+let MESSAGE_BRANCH_KEY = Symbol.for("message-branch");
 
 export function getMessageBranch() {
-  let context = getContext<MessageBranchState | undefined>(MESSAGE_BRANCH_KEY);
-  if (!isDefined(context)) {
-    throw new Error("Missing message branch context");
+  let value = getContext<MessageBranchState | undefined>(MESSAGE_BRANCH_KEY);
+  if (!isDefined(value)) {
+    throw new Error("Missing message branch context value");
   }
-  return context;
+  return value;
 }
 
 export function setMessageBranch(
