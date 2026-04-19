@@ -20,17 +20,19 @@ export interface StickToBottomContext {
   state: StickToBottomState;
 }
 
-let CONTEXT_KEY = Symbol.for("stick-to-bottom");
+let STICK_TO_BOTTOM_CONTEXT_KEY = Symbol.for("stick-to-bottom");
 
-export function getStickToBottomContext() {
-  let context = getContext<StickToBottomContext | undefined>(CONTEXT_KEY);
+export function getStickToBottom() {
+  let context = getContext<StickToBottomContext | undefined>(
+    STICK_TO_BOTTOM_CONTEXT_KEY
+  );
   if (!isDefined(context)) {
     throw new Error("Missing stick to bottom context");
   }
   return context;
 }
 
-export function setStickToBottomContext(getInstance: () => UseStickToBottom) {
+export function setStickToBottom(getInstance: () => UseStickToBottom) {
   let customTargetScrollTop: GetTargetScrollTop | null = $state(null);
 
   let context: StickToBottomContext = {
@@ -63,6 +65,6 @@ export function setStickToBottomContext(getInstance: () => UseStickToBottom) {
     },
   };
 
-  setContext(CONTEXT_KEY, context);
+  setContext(STICK_TO_BOTTOM_CONTEXT_KEY, context);
   return context;
 }

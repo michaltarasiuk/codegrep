@@ -4,7 +4,7 @@
   import { untrack } from "svelte";
   import type { HTMLAttributes } from "svelte/elements";
 
-  import { setStickToBottomContext } from "./stick-to-bottom-context.svelte.js";
+  import { setStickToBottom } from "./stick-to-bottom-context.svelte.js";
   import {
     type GetTargetScrollTop,
     type StickToBottomOptions,
@@ -44,7 +44,7 @@
   let scrollEl = $state<HTMLElement | null>(null);
   let active = $derived(instance ?? defaultInstance);
 
-  let context = setStickToBottomContext(() => active);
+  let context = setStickToBottom(() => active);
 
   $effect(() => {
     if (isDefined(scrollEl)) {

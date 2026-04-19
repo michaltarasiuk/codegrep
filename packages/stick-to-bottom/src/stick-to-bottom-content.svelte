@@ -3,7 +3,7 @@
   import { untrack } from "svelte";
   import type { HTMLAttributes } from "svelte/elements";
 
-  import { getStickToBottomContext } from "./stick-to-bottom-context.svelte.js";
+  import { getStickToBottom } from "./stick-to-bottom-context.svelte.js";
 
   interface Props extends HTMLAttributes<HTMLDivElement> {
     children: Snippet;
@@ -13,7 +13,7 @@
 
   let contentEl = $state<HTMLElement | null>(null);
 
-  let context = getStickToBottomContext();
+  let context = getStickToBottom();
 
   $effect(() => {
     untrack(() => context.contentRef(contentEl));

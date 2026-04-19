@@ -1,1 +1,1 @@
-export let CHAT_LIST_KEY = "chat-list";
+export let CHAT_LIST_KEY = "app:chat-list";

@@ -37,11 +37,10 @@
         .delete();
       if (!isDefined(result.error)) {
         if (isViewingChat()) {
-          await goto(resolve("/chat"), { invalidate: [CHAT_LIST_KEY] });
-        } else {
-          await invalidate(CHAT_LIST_KEY);
+          await goto(resolve("/chat"));
         }
         onClose();
+        await invalidate(CHAT_LIST_KEY);
       }
     } finally {
       loading = false;
