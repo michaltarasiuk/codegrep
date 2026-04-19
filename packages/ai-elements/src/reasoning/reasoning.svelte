@@ -18,13 +18,13 @@
 
   let hasAutoClosed = $state(false);
 
-  $effect(function openWhenStreaming() {
+  $effect(() => {
     if (isStreaming && !open) {
       open = true;
     }
   });
 
-  $effect(function scheduleAutoClose() {
+  $effect(() => {
     if (!isStreaming && open && !hasAutoClosed) {
       let timer = setTimeout(() => {
         open = false;

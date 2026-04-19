@@ -15,7 +15,7 @@
 
   let context = getStickToBottomContext();
 
-  $effect(function bindContent() {
+  $effect(() => {
     untrack(() => context.contentRef(contentEl));
     return function unbindContent() {
       untrack(() => context.contentRef(null));

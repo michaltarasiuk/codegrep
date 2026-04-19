@@ -16,7 +16,7 @@
 
   let branch = getMessageBranch();
 
-  $effect(function registerBranch() {
+  $effect(() => {
     let unregister = branch.registerBranch(index);
     return function unregisterBranch() {
       unregister();

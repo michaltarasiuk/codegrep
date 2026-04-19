@@ -107,7 +107,7 @@ export function useScrollShadow(getProps: () => UseScrollShadowProps) {
     });
   };
 
-  $effect(function observeOverflow() {
+  $effect(() => {
     let el = containerEl;
     let { visibility, isEnabled } = getProps();
 

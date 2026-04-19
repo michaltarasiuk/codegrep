@@ -110,7 +110,7 @@
     })
   );
 
-  $effect(function syncControlledVisibility() {
+  $effect(() => {
     let el = ref;
     if (!el || visibility === "auto") return;
 

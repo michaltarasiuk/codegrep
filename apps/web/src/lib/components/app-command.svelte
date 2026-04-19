@@ -20,7 +20,7 @@
   let personalInstructionsOpen = $state(false);
   let darkMode = $state(false);
 
-  $effect(function watchTheme() {
+  $effect(() => {
     let unsubscribe = mode.subscribe((value) => {
       darkMode = value === "dark";
     });

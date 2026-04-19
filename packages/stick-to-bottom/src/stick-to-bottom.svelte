@@ -46,7 +46,7 @@
 
   let context = setStickToBottomContext(() => active);
 
-  $effect(function ensureAutoOverflow() {
+  $effect(() => {
     if (isDefined(scrollEl)) {
       if (getComputedStyle(scrollEl).overflow === "visible") {
         scrollEl.style.overflow = "auto";
@@ -54,7 +54,7 @@
     }
   });
 
-  $effect(function bindScroll() {
+  $effect(() => {
     untrack(() => active.scrollRef(scrollEl));
     return function unbindScroll() {
       untrack(() => active.scrollRef(null));

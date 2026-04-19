@@ -184,7 +184,7 @@
     }
   }
 
-  $effect(function registerFileInput() {
+  $effect(() => {
     if (!usingProvider) {
       return;
     }
@@ -193,14 +193,14 @@
     });
   });
 
-  $effect(function resetEmptyFileInput() {
+  $effect(() => {
     if (!syncHiddenInput || !isDefined(fileInputRef) || !!attachmentsCount) {
       return;
     }
     fileInputRef.value = "";
   });
 
-  $effect(function bindFormDrop() {
+  $effect(() => {
     if (globalDrop || !isDefined(formRef)) {
       return;
     }
@@ -228,7 +228,7 @@
     };
   });
 
-  $effect(function bindDocumentDrop() {
+  $effect(() => {
     if (!globalDrop) {
       return;
     }
