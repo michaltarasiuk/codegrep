@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { StickToBottomContent } from "@workspace/stick-to-bottom";
   import { cn } from "@workspace/ui/cn.js";
   import type { Snippet } from "svelte";
   import type { HTMLAttributes } from "svelte/elements";
@@ -11,9 +10,6 @@
   let { children, class: className, ...restProps }: Props = $props();
 </script>
 
-<StickToBottomContent
-  class={cn("flex flex-1 flex-col gap-3 p-4", className)}
-  {...restProps}
->
+<div class={cn("flex flex-1 flex-col gap-3 p-4", className)} {...restProps}>
   {@render children()}
-</StickToBottomContent>
+</div>

@@ -1,31 +1,19 @@
 <script lang="ts">
-  import {
-    StickToBottom,
-    type StickToBottomOptions,
-  } from "@workspace/stick-to-bottom";
   import { cn } from "@workspace/ui/cn.js";
   import type { Snippet } from "svelte";
   import type { HTMLAttributes } from "svelte/elements";
 
-  interface Props extends HTMLAttributes<HTMLDivElement>, StickToBottomOptions {
+  interface Props extends HTMLAttributes<HTMLDivElement> {
     children: Snippet;
   }
 
-  let {
-    children,
-    initial = "smooth",
-    resize = "smooth",
-    class: className,
-    ...restProps
-  }: Props = $props();
+  let { children, class: className, ...restProps }: Props = $props();
 </script>
 
-<StickToBottom
+<div
   role="log"
-  {initial}
-  {resize}
   class={cn("relative flex-1 overflow-y-hidden", className)}
   {...restProps}
 >
   {@render children()}
-</StickToBottom>
+</div>
