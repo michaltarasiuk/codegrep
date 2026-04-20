@@ -41,8 +41,8 @@
           title: value,
         });
       if (!isDefined(result.error)) {
-        await invalidate(CHAT_LIST_KEY);
         onClose();
+        await invalidate(CHAT_LIST_KEY);
       }
     } finally {
       loading = false;
