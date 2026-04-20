@@ -6,14 +6,14 @@ export interface ChatModel {
   providers: string[];
 }
 
-export let SUGGESTIONS = [
+export const SUGGESTIONS = [
   "What is the project structure?",
   "How does the main entry point work?",
   "What are the key abstractions?",
   "Show me the testing patterns",
 ] as const;
 
-export let MODELS = [
+export const MODELS = [
   {
     chef: "Meta",
     chefSlug: "meta",

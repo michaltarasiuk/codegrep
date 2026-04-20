@@ -49,7 +49,7 @@ class FileTreeState {
   };
 }
 
-let FILE_TREE_KEY = Symbol.for("file-tree");
+const FILE_TREE_KEY = Symbol.for("file-tree");
 
 export function getFileTree() {
   let value = getContext<FileTreeState | undefined>(FILE_TREE_KEY);

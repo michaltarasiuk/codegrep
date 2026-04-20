@@ -4,8 +4,8 @@ import { getContext, setContext } from "svelte";
 
 export type Model = string;
 
-let CHAT_CONTEXT_KEY = Symbol.for("chat");
-let MODEL_CONTEXT_KEY = Symbol.for("model");
+const CHAT_CONTEXT_KEY = Symbol.for("chat");
+const MODEL_CONTEXT_KEY = Symbol.for("model");
 
 export function getChat() {
   let value = getContext<(() => Chat) | undefined>(CHAT_CONTEXT_KEY);

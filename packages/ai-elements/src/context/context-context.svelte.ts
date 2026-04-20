@@ -2,7 +2,7 @@ import { isDefined } from "@workspace/shared/is-defined.js";
 import type { LanguageModelUsage } from "ai";
 import { getContext, setContext } from "svelte";
 
-let USAGE_PANEL_STATE_CONTEXT_KEY = Symbol.for("usage-panel-state");
+const USAGE_PANEL_STATE_CONTEXT_KEY = Symbol.for("usage-panel-state");
 
 type ModelId = string;
 

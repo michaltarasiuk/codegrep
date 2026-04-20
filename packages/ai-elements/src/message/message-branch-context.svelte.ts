@@ -140,7 +140,7 @@ export class MessageBranchState {
   };
 }
 
-let MESSAGE_BRANCH_KEY = Symbol.for("message-branch");
+const MESSAGE_BRANCH_KEY = Symbol.for("message-branch");
 
 export function getMessageBranch() {
   let value = getContext<MessageBranchState | undefined>(MESSAGE_BRANCH_KEY);

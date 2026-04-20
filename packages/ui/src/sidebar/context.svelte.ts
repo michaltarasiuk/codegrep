@@ -61,7 +61,7 @@ class SidebarState {
   };
 }
 
-let SIDEBAR_CONTEXT_KEY = Symbol.for("sidebar");
+const SIDEBAR_CONTEXT_KEY = Symbol.for("sidebar");
 
 export function getSidebar() {
   let value = getContext<SidebarState | undefined>(SIDEBAR_CONTEXT_KEY);

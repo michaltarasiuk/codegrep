@@ -1,6 +1,6 @@
 import type { UIMessage } from "ai";
 
-let DEFAULT_TITLE = "New Chat";
+const DEFAULT_TITLE = "New Chat";
 
 export function getChatTitle(messages: UIMessage[]) {
   let title = DEFAULT_TITLE;

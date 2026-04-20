@@ -29,7 +29,7 @@ function getTimePeriod(date: Date): TimePeriod {
   return "Older";
 }
 
-let PERIOD_ORDER: TimePeriod[] = [
+const PERIOD_ORDER: TimePeriod[] = [
   "Today",
   "Yesterday",
   "Last 7 days",

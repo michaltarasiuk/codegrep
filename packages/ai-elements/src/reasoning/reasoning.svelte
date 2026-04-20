@@ -3,7 +3,7 @@
   import { Collapsible } from "@workspace/ui/collapsible/index.js";
   import type { ComponentProps } from "svelte";
 
-  let AUTO_CLOSE_DELAY = 1000;
+  const AUTO_CLOSE_DELAY = 1000;
 
   let {
     isStreaming = false,

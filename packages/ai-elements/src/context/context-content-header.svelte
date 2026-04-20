@@ -9,7 +9,7 @@
     percentFormatter,
   } from "./context-context.svelte.js";
 
-  let PERCENT_MAX = 100;
+  const PERCENT_MAX = 100;
 
   type ContextContentHeaderProps = WithElementRef<
     HTMLAttributes<HTMLDivElement>

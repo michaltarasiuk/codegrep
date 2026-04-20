@@ -119,32 +119,32 @@ export type SuperHeadersInit =
   | Iterable<[string, string]>
   | (SuperHeadersPropertyInit & Record<string, string | HeaderValue>);
 
-let CRLF = "\r\n";
+const CR_LF = "\r\n";
 
-let AcceptKey = "accept";
-let AcceptEncodingKey = "accept-encoding";
-let AcceptLanguageKey = "accept-language";
-let AcceptRangesKey = "accept-ranges";
-let AgeKey = "age";
-let CacheControlKey = "cache-control";
-let ConnectionKey = "connection";
-let ContentDispositionKey = "content-disposition";
-let ContentEncodingKey = "content-encoding";
-let ContentLanguageKey = "content-language";
-let ContentLengthKey = "content-length";
-let ContentTypeKey = "content-type";
-let CookieKey = "cookie";
-let DateKey = "date";
-let ETagKey = "etag";
-let ExpiresKey = "expires";
-let HostKey = "host";
-let IfModifiedSinceKey = "if-modified-since";
-let IfNoneMatchKey = "if-none-match";
-let IfUnmodifiedSinceKey = "if-unmodified-since";
-let LastModifiedKey = "last-modified";
-let LocationKey = "location";
-let RefererKey = "referer";
-let SetCookieKey = "set-cookie";
+const ACCEPT_KEY = "accept";
+const ACCEPT_ENCODING_KEY = "accept-encoding";
+const ACCEPT_LANGUAGE_KEY = "accept-language";
+const ACCEPT_RANGES_KEY = "accept-ranges";
+const AGE_KEY = "age";
+const CACHE_CONTROL_KEY = "cache-control";
+const CONNECTION_KEY = "connection";
+const CONTENT_DISPOSITION_KEY = "content-disposition";
+const CONTENT_ENCODING_KEY = "content-encoding";
+const CONTENT_LANGUAGE_KEY = "content-language";
+const CONTENT_LENGTH_KEY = "content-length";
+const CONTENT_TYPE_KEY = "content-type";
+const COOKIE_KEY = "cookie";
+const DATE_KEY = "date";
+const ETAG_KEY = "etag";
+const EXPIRES_KEY = "expires";
+const HOST_KEY = "host";
+const IF_MODIFIED_SINCE_KEY = "if-modified-since";
+const IF_NONE_MATCH_KEY = "if-none-match";
+const IF_UNMODIFIED_SINCE_KEY = "if-unmodified-since";
+const LAST_MODIFIED_KEY = "last-modified";
+const LOCATION_KEY = "location";
+const REFERER_KEY = "referer";
+const SET_COOKIE_KEY = "set-cookie";
 
 /**
  * An enhanced JavaScript `Headers` interface with type-safe access.
@@ -164,7 +164,7 @@ export class SuperHeaders extends Headers {
 
     if (init) {
       if (typeof init === "string") {
-        let lines = init.split(CRLF);
+        let lines = init.split(CR_LF);
         for (let line of lines) {
           let match = line.match(/^([^:]+):(.*)/);
           if (match) {
@@ -201,7 +201,7 @@ export class SuperHeaders extends Headers {
    */
   append(name: string, value: string): void {
     let key = name.toLowerCase();
-    if (key === SetCookieKey) {
+    if (key === SET_COOKIE_KEY) {
       this.#setCookies.push(value);
     } else {
       let existingValue = this.#map.get(key);
@@ -216,7 +216,7 @@ export class SuperHeaders extends Headers {
    */
   delete(name: string): void {
     let key = name.toLowerCase();
-    if (key === SetCookieKey) {
+    if (key === SET_COOKIE_KEY) {
       this.#setCookies = [];
     } else {
       this.#map.delete(key);
@@ -230,7 +230,7 @@ export class SuperHeaders extends Headers {
    */
   get(name: string): string | null {
     let key = name.toLowerCase();
-    if (key === SetCookieKey) {
+    if (key === SET_COOKIE_KEY) {
       return this.getSetCookie().join(", ");
     } else {
       let value = this.#map.get(key);
@@ -265,7 +265,7 @@ export class SuperHeaders extends Headers {
    */
   has(name: string): boolean {
     let key = name.toLowerCase();
-    return key === SetCookieKey
+    return key === SET_COOKIE_KEY
       ? this.#setCookies.length > 0
       : this.get(key) != null;
   }
@@ -278,7 +278,7 @@ export class SuperHeaders extends Headers {
    */
   set(name: string, value: string): void {
     let key = name.toLowerCase();
-    if (key === SetCookieKey) {
+    if (key === SET_COOKIE_KEY) {
       this.#setCookies = [value];
     } else {
       this.#map.set(key, value);
@@ -315,7 +315,7 @@ export class SuperHeaders extends Headers {
     }
 
     for (let value of this.getSetCookie()) {
-      yield [SetCookieKey, value];
+      yield [SET_COOKIE_KEY, value];
     }
   }
 
@@ -347,7 +347,7 @@ export class SuperHeaders extends Headers {
       lines.push(`${canonicalHeaderName(key)}: ${value}`);
     }
 
-    return lines.join(CRLF);
+    return lines.join(CR_LF);
   }
 
   // Header-specific getters and setters
@@ -361,11 +361,11 @@ export class SuperHeaders extends Headers {
    * [HTTP/1.1 Specification](https://datatracker.ietf.org/doc/html/rfc7231#section-5.3.2)
    */
   get accept(): Accept {
-    return this.#getHeaderValue(AcceptKey, Accept);
+    return this.#getHeaderValue(ACCEPT_KEY, Accept);
   }
 
   set accept(value: string | AcceptInit | undefined | null) {
-    this.#setHeaderValue(AcceptKey, Accept, value);
+    this.#setHeaderValue(ACCEPT_KEY, Accept, value);
   }
 
   /**
@@ -377,11 +377,11 @@ export class SuperHeaders extends Headers {
    * [HTTP/1.1 Specification](https://datatracker.ietf.org/doc/html/rfc7231#section-5.3.4)
    */
   get acceptEncoding(): AcceptEncoding {
-    return this.#getHeaderValue(AcceptEncodingKey, AcceptEncoding);
+    return this.#getHeaderValue(ACCEPT_ENCODING_KEY, AcceptEncoding);
   }
 
   set acceptEncoding(value: string | AcceptEncodingInit | undefined | null) {
-    this.#setHeaderValue(AcceptEncodingKey, AcceptEncoding, value);
+    this.#setHeaderValue(ACCEPT_ENCODING_KEY, AcceptEncoding, value);
   }
 
   /**
@@ -393,11 +393,11 @@ export class SuperHeaders extends Headers {
    * [HTTP/1.1 Specification](https://datatracker.ietf.org/doc/html/rfc7231#section-5.3.5)
    */
   get acceptLanguage(): AcceptLanguage {
-    return this.#getHeaderValue(AcceptLanguageKey, AcceptLanguage);
+    return this.#getHeaderValue(ACCEPT_LANGUAGE_KEY, AcceptLanguage);
   }
 
   set acceptLanguage(value: string | AcceptLanguageInit | undefined | null) {
-    this.#setHeaderValue(AcceptLanguageKey, AcceptLanguage, value);
+    this.#setHeaderValue(ACCEPT_LANGUAGE_KEY, AcceptLanguage, value);
   }
 
   /**
@@ -408,11 +408,11 @@ export class SuperHeaders extends Headers {
    * [HTTP/1.1 Specification](https://datatracker.ietf.org/doc/html/rfc7233#section-2.3)
    */
   get acceptRanges(): string | null {
-    return this.#getStringValue(AcceptRangesKey);
+    return this.#getStringValue(ACCEPT_RANGES_KEY);
   }
 
   set acceptRanges(value: string | undefined | null) {
-    this.#setStringValue(AcceptRangesKey, value);
+    this.#setStringValue(ACCEPT_RANGES_KEY, value);
   }
 
   /**
@@ -423,11 +423,11 @@ export class SuperHeaders extends Headers {
    * [HTTP/1.1 Specification](https://datatracker.ietf.org/doc/html/rfc7234#section-5.1)
    */
   get age(): number | null {
-    return this.#getNumberValue(AgeKey);
+    return this.#getNumberValue(AGE_KEY);
   }
 
   set age(value: string | number | undefined | null) {
-    this.#setNumberValue(AgeKey, value);
+    this.#setNumberValue(AGE_KEY, value);
   }
 
   /**
@@ -438,11 +438,11 @@ export class SuperHeaders extends Headers {
    * [HTTP/1.1 Specification](https://datatracker.ietf.org/doc/html/rfc7234#section-5.2)
    */
   get cacheControl(): CacheControl {
-    return this.#getHeaderValue(CacheControlKey, CacheControl);
+    return this.#getHeaderValue(CACHE_CONTROL_KEY, CacheControl);
   }
 
   set cacheControl(value: string | CacheControlInit | undefined | null) {
-    this.#setHeaderValue(CacheControlKey, CacheControl, value);
+    this.#setHeaderValue(CACHE_CONTROL_KEY, CacheControl, value);
   }
 
   /**
@@ -454,11 +454,11 @@ export class SuperHeaders extends Headers {
    * [HTTP/1.1 Specification](https://datatracker.ietf.org/doc/html/rfc7230#section-6.1)
    */
   get connection(): string | null {
-    return this.#getStringValue(ConnectionKey);
+    return this.#getStringValue(CONNECTION_KEY);
   }
 
   set connection(value: string | undefined | null) {
-    this.#setStringValue(ConnectionKey, value);
+    this.#setStringValue(CONNECTION_KEY, value);
   }
 
   /**
@@ -469,13 +469,13 @@ export class SuperHeaders extends Headers {
    * [RFC 6266](https://datatracker.ietf.org/doc/html/rfc6266)
    */
   get contentDisposition(): ContentDisposition {
-    return this.#getHeaderValue(ContentDispositionKey, ContentDisposition);
+    return this.#getHeaderValue(CONTENT_DISPOSITION_KEY, ContentDisposition);
   }
 
   set contentDisposition(
     value: string | ContentDispositionInit | undefined | null
   ) {
-    this.#setHeaderValue(ContentDispositionKey, ContentDisposition, value);
+    this.#setHeaderValue(CONTENT_DISPOSITION_KEY, ContentDisposition, value);
   }
 
   /**
@@ -489,12 +489,12 @@ export class SuperHeaders extends Headers {
    * [HTTP/1.1 Specification](https://httpwg.org/specs/rfc9110.html#field.content-encoding)
    */
   get contentEncoding(): string | null {
-    return this.#getStringValue(ContentEncodingKey);
+    return this.#getStringValue(CONTENT_ENCODING_KEY);
   }
 
   set contentEncoding(value: string | string[] | undefined | null) {
     this.#setStringValue(
-      ContentEncodingKey,
+      CONTENT_ENCODING_KEY,
       Array.isArray(value) ? value.join(", ") : value
     );
   }
@@ -510,12 +510,12 @@ export class SuperHeaders extends Headers {
    * [HTTP/1.1 Specification](https://httpwg.org/specs/rfc9110.html#field.content-language)
    */
   get contentLanguage(): string | null {
-    return this.#getStringValue(ContentLanguageKey);
+    return this.#getStringValue(CONTENT_LANGUAGE_KEY);
   }
 
   set contentLanguage(value: string | string[] | undefined | null) {
     this.#setStringValue(
-      ContentLanguageKey,
+      CONTENT_LANGUAGE_KEY,
       Array.isArray(value) ? value.join(", ") : value
     );
   }
@@ -528,11 +528,11 @@ export class SuperHeaders extends Headers {
    * [HTTP/1.1 Specification](https://datatracker.ietf.org/doc/html/rfc7230#section-3.3.2)
    */
   get contentLength(): number | null {
-    return this.#getNumberValue(ContentLengthKey);
+    return this.#getNumberValue(CONTENT_LENGTH_KEY);
   }
 
   set contentLength(value: string | number | undefined | null) {
-    this.#setNumberValue(ContentLengthKey, value);
+    this.#setNumberValue(CONTENT_LENGTH_KEY, value);
   }
 
   /**
@@ -543,11 +543,11 @@ export class SuperHeaders extends Headers {
    * [HTTP/1.1 Specification](https://datatracker.ietf.org/doc/html/rfc7231#section-3.1.1.5)
    */
   get contentType(): ContentType {
-    return this.#getHeaderValue(ContentTypeKey, ContentType);
+    return this.#getHeaderValue(CONTENT_TYPE_KEY, ContentType);
   }
 
   set contentType(value: string | ContentTypeInit | undefined | null) {
-    this.#setHeaderValue(ContentTypeKey, ContentType, value);
+    this.#setHeaderValue(CONTENT_TYPE_KEY, ContentType, value);
   }
 
   /**
@@ -559,11 +559,11 @@ export class SuperHeaders extends Headers {
    * [HTTP/1.1 Specification](https://datatracker.ietf.org/doc/html/rfc6265#section-5.4)
    */
   get cookie(): Cookie {
-    return this.#getHeaderValue(CookieKey, Cookie);
+    return this.#getHeaderValue(COOKIE_KEY, Cookie);
   }
 
   set cookie(value: string | CookieInit | undefined | null) {
-    this.#setHeaderValue(CookieKey, Cookie, value);
+    this.#setHeaderValue(COOKIE_KEY, Cookie, value);
   }
 
   /**
@@ -574,11 +574,11 @@ export class SuperHeaders extends Headers {
    * [HTTP/1.1 Specification](https://datatracker.ietf.org/doc/html/rfc7231#section-7.1.1.2)
    */
   get date(): Date | null {
-    return this.#getDateValue(DateKey);
+    return this.#getDateValue(DATE_KEY);
   }
 
   set date(value: string | DateInit | undefined | null) {
-    this.#setDateValue(DateKey, value);
+    this.#setDateValue(DATE_KEY, value);
   }
 
   /**
@@ -589,12 +589,12 @@ export class SuperHeaders extends Headers {
    * [HTTP/1.1 Specification](https://datatracker.ietf.org/doc/html/rfc7232#section-2.3)
    */
   get etag(): string | null {
-    return this.#getStringValue(ETagKey);
+    return this.#getStringValue(ETAG_KEY);
   }
 
   set etag(value: string | undefined | null) {
     this.#setStringValue(
-      ETagKey,
+      ETAG_KEY,
       typeof value === "string" ? quoteEtag(value) : value
     );
   }
@@ -607,11 +607,11 @@ export class SuperHeaders extends Headers {
    * [HTTP/1.1 Specification](https://datatracker.ietf.org/doc/html/rfc7234#section-5.3)
    */
   get expires(): Date | null {
-    return this.#getDateValue(ExpiresKey);
+    return this.#getDateValue(EXPIRES_KEY);
   }
 
   set expires(value: string | DateInit | undefined | null) {
-    this.#setDateValue(ExpiresKey, value);
+    this.#setDateValue(EXPIRES_KEY, value);
   }
 
   /**
@@ -622,11 +622,11 @@ export class SuperHeaders extends Headers {
    * [HTTP/1.1 Specification](https://datatracker.ietf.org/doc/html/rfc7230#section-5.4)
    */
   get host(): string | null {
-    return this.#getStringValue(HostKey);
+    return this.#getStringValue(HOST_KEY);
   }
 
   set host(value: string | undefined | null) {
-    this.#setStringValue(HostKey, value);
+    this.#setStringValue(HOST_KEY, value);
   }
 
   /**
@@ -638,11 +638,11 @@ export class SuperHeaders extends Headers {
    * [HTTP/1.1 Specification](https://datatracker.ietf.org/doc/html/rfc7232#section-3.3)
    */
   get ifModifiedSince(): Date | null {
-    return this.#getDateValue(IfModifiedSinceKey);
+    return this.#getDateValue(IF_MODIFIED_SINCE_KEY);
   }
 
   set ifModifiedSince(value: string | DateInit | undefined | null) {
-    this.#setDateValue(IfModifiedSinceKey, value);
+    this.#setDateValue(IF_MODIFIED_SINCE_KEY, value);
   }
 
   /**
@@ -653,13 +653,13 @@ export class SuperHeaders extends Headers {
    * [HTTP/1.1 Specification](https://datatracker.ietf.org/doc/html/rfc7232#section-3.2)
    */
   get ifNoneMatch(): IfNoneMatch {
-    return this.#getHeaderValue(IfNoneMatchKey, IfNoneMatch);
+    return this.#getHeaderValue(IF_NONE_MATCH_KEY, IfNoneMatch);
   }
 
   set ifNoneMatch(
     value: string | string[] | IfNoneMatchInit | undefined | null
   ) {
-    this.#setHeaderValue(IfNoneMatchKey, IfNoneMatch, value);
+    this.#setHeaderValue(IF_NONE_MATCH_KEY, IfNoneMatch, value);
   }
 
   /**
@@ -671,11 +671,11 @@ export class SuperHeaders extends Headers {
    * [HTTP/1.1 Specification](https://datatracker.ietf.org/doc/html/rfc7232#section-3.4)
    */
   get ifUnmodifiedSince(): Date | null {
-    return this.#getDateValue(IfUnmodifiedSinceKey);
+    return this.#getDateValue(IF_UNMODIFIED_SINCE_KEY);
   }
 
   set ifUnmodifiedSince(value: string | DateInit | undefined | null) {
-    this.#setDateValue(IfUnmodifiedSinceKey, value);
+    this.#setDateValue(IF_UNMODIFIED_SINCE_KEY, value);
   }
 
   /**
@@ -686,11 +686,11 @@ export class SuperHeaders extends Headers {
    * [HTTP/1.1 Specification](https://datatracker.ietf.org/doc/html/rfc7232#section-2.2)
    */
   get lastModified(): Date | null {
-    return this.#getDateValue(LastModifiedKey);
+    return this.#getDateValue(LAST_MODIFIED_KEY);
   }
 
   set lastModified(value: string | DateInit | undefined | null) {
-    this.#setDateValue(LastModifiedKey, value);
+    this.#setDateValue(LAST_MODIFIED_KEY, value);
   }
 
   /**
@@ -701,11 +701,11 @@ export class SuperHeaders extends Headers {
    * [HTTP/1.1 Specification](https://datatracker.ietf.org/doc/html/rfc7231#section-7.1.2)
    */
   get location(): string | null {
-    return this.#getStringValue(LocationKey);
+    return this.#getStringValue(LOCATION_KEY);
   }
 
   set location(value: string | undefined | null) {
-    this.#setStringValue(LocationKey, value);
+    this.#setStringValue(LOCATION_KEY, value);
   }
 
   /**
@@ -717,11 +717,11 @@ export class SuperHeaders extends Headers {
    * [HTTP/1.1 Specification](https://datatracker.ietf.org/doc/html/rfc7231#section-5.5.2)
    */
   get referer(): string | null {
-    return this.#getStringValue(RefererKey);
+    return this.#getStringValue(REFERER_KEY);
   }
 
   set referer(value: string | undefined | null) {
-    this.#setStringValue(RefererKey, value);
+    this.#setStringValue(REFERER_KEY, value);
   }
 
   /**

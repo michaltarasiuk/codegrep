@@ -102,10 +102,12 @@ export class ReferencedSourcesState {
   };
 }
 
-let CONTROLLER_KEY = Symbol.for("prompt-input-controller");
-let PROVIDER_ATTACHMENTS_KEY = Symbol.for("prompt-input-provider-attachments");
-let LOCAL_ATTACHMENTS_KEY = Symbol.for("prompt-input-local-attachments");
-let REFERENCED_SOURCES_KEY = Symbol.for("prompt-input-referenced-sources");
+const CONTROLLER_KEY = Symbol.for("prompt-input-controller");
+const PROVIDER_ATTACHMENTS_KEY = Symbol.for(
+  "prompt-input-provider-attachments"
+);
+const LOCAL_ATTACHMENTS_KEY = Symbol.for("prompt-input-local-attachments");
+const REFERENCED_SOURCES_KEY = Symbol.for("prompt-input-referenced-sources");
 
 export function getPromptInputAttachments() {
   let local = getContext<AttachmentsState | undefined>(LOCAL_ATTACHMENTS_KEY);

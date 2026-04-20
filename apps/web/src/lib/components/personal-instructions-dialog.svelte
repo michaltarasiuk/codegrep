@@ -13,7 +13,7 @@
 
   import { authClient } from "$lib/utils/client.js";
 
-  let TEMPLATES: { key: string; label: string; text: string }[] = [
+  const TEMPLATES: { key: string; label: string; text: string }[] = [
     {
       key: "role",
       label: "Role",
@@ -45,7 +45,7 @@
     },
   ];
 
-  let MAX_LENGTH = 4_000;
+  const MAX_LENGTH = 4_000;
 
   let { open, onClose }: { open: boolean; onClose: () => void } = $props();
 

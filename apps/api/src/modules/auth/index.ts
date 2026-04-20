@@ -2,7 +2,7 @@ import { Elysia, status } from "elysia";
 
 import { authService } from "./service.js";
 
-let ALLOWED_METHODS = new Set(["OPTIONS", "GET", "POST"]);
+const ALLOWED_METHODS = new Set(["OPTIONS", "GET", "POST"]);
 
 export let authPlugin = new Elysia({ name: "auth" }).all(
   "/auth/*",

@@ -1,7 +1,7 @@
 import { isDefined } from "@workspace/shared/is-defined.js";
 import { getContext, setContext } from "svelte";
 
-let CHAIN_OF_THOUGHT_KEY = Symbol.for("chain-of-thought");
+const CHAIN_OF_THOUGHT_KEY = Symbol.for("chain-of-thought");
 
 export interface ChainOfThoughtState {
   open: boolean;

@@ -48,19 +48,31 @@ let config = [
       "simple-import-sort": simpleImportSort,
     },
     rules: {
+      "no-undef-init": "error",
       "no-console": [
         "error",
         { allow: ["error", "warn", "info", "debug", "trace"] },
       ],
-      "no-restricted-syntax": [
+      "prefer-const": "off",
+      "@typescript-eslint/naming-convention": [
         "error",
         {
-          selector: "VariableDeclaration[kind='const']",
-          message: "Use 'let' instead of 'const'.",
+          selector: "variable",
+          modifiers: ["const", "destructured"],
+          format: null,
+        },
+        {
+          selector: "variable",
+          modifiers: ["const"],
+          format: ["UPPER_CASE", "camelCase", "PascalCase"],
+          leadingUnderscore: "allow",
+        },
+        {
+          selector: "variable",
+          format: ["camelCase", "PascalCase"],
+          leadingUnderscore: "allow",
         },
       ],
-      "no-undef-init": "error",
-      "prefer-const": "off",
       "@typescript-eslint/consistent-type-definitions": ["error", "interface"],
       "@typescript-eslint/no-unused-vars": [
         "warn",
@@ -85,5 +97,4 @@ let config = [
     },
   },
 ];
-
 export default config;
