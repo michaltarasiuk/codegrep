@@ -47,6 +47,7 @@
         "experimental": {
           "configFile": {
             "apps/web/src/styles/global.css": "apps/web/src/**",
+            "packages/ai-elements/src/styles.css": "packages/ai-elements/src/**",
             "packages/ui/src/styles.css": "packages/ui/src/**"
           },
           "classRegex": [
