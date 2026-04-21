@@ -58,18 +58,20 @@ let config = [
         "error",
         {
           selector: "variable",
-          modifiers: ["const", "destructured"],
-          format: null,
-        },
-        {
-          selector: "variable",
-          modifiers: ["const"],
-          format: ["UPPER_CASE", "camelCase", "PascalCase"],
+          format: ["camelCase", "StrictPascalCase"],
           leadingUnderscore: "allow",
         },
         {
           selector: "variable",
-          format: ["camelCase", "PascalCase"],
+          modifiers: ["const"],
+          format: ["UPPER_CASE"],
+          leadingUnderscore: "allow",
+        },
+        {
+          selector: "variable",
+          modifiers: ["const"],
+          types: ["function"],
+          format: ["camelCase"],
           leadingUnderscore: "allow",
         },
       ],

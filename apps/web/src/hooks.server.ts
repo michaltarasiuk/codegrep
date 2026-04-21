@@ -1,5 +1,4 @@
 import type { Handle } from "@sveltejs/kit";
-import { SetCookie } from "@workspace/headers";
 import { isDefined } from "@workspace/shared/is-defined.js";
 
 import { authClient } from "$lib/utils/client.server.js";
@@ -26,12 +25,10 @@ export let handle: Handle = async ({ event, resolve }) => {
     });
 
     if (isDefined(setCookie)) {
-      let parsed = new SetCookie(setCookie);
-      let cookieValue = parsed.toString();
-      let existingCookies = event.request.headers.get("cookie");
+      let headerCookie = event.request.headers.get("cookie");
       event.request.headers.set(
         "cookie",
-        [existingCookies, cookieValue].filter(isDefined).join("; ")
+        [headerCookie, setCookie].filter(isDefined).join("; ")
       );
     }
   }
