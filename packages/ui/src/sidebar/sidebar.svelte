@@ -106,7 +106,7 @@
       <div
         data-sidebar="sidebar"
         data-slot="sidebar-inner"
-        class="bg-sidebar group-data-[variant=floating]:border-sidebar-border flex h-full w-full flex-col group-data-[variant=floating]:rounded-lg group-data-[variant=floating]:border group-data-[variant=floating]:shadow-sm"
+        class="bg-sidebar group-data-[variant=floating]:border-sidebar-border flex h-full w-full flex-col [--sidebar-padding:calc(var(--spacing)*2)] [--sidebar-radius:var(--radius)] group-data-[variant=floating]:rounded-(--sidebar-radius) group-data-[variant=floating]:border group-data-[variant=floating]:shadow-sm"
       >
         {@render children?.()}
       </div>

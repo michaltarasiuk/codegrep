@@ -29,7 +29,7 @@
 <Sidebar.Provider
   style="--sidebar-width: calc(var(--spacing) * 72); --header-height: calc(var(--spacing) * 12);"
 >
-  <Sidebar.Root variant="inset">
+  <Sidebar.Root variant="floating">
     <Sidebar.Header>
       <Sidebar.Menu>
         <Sidebar.MenuItem>
