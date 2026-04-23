@@ -54,27 +54,6 @@ let config = [
         { allow: ["error", "warn", "info", "debug", "trace"] },
       ],
       "prefer-const": "off",
-      "@typescript-eslint/naming-convention": [
-        "error",
-        {
-          selector: "variable",
-          format: ["camelCase", "StrictPascalCase"],
-          leadingUnderscore: "allow",
-        },
-        {
-          selector: "variable",
-          modifiers: ["const"],
-          format: ["UPPER_CASE"],
-          leadingUnderscore: "allow",
-        },
-        {
-          selector: "variable",
-          modifiers: ["const"],
-          types: ["function"],
-          format: ["camelCase"],
-          leadingUnderscore: "allow",
-        },
-      ],
       "@typescript-eslint/consistent-type-definitions": ["error", "interface"],
       "@typescript-eslint/no-unused-vars": [
         "warn",
