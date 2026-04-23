@@ -10,7 +10,8 @@
 
   import { invalidate } from "$app/navigation";
   import { client } from "$lib/utils/client.js";
-  import { CHAT_LIST_KEY, getShareLink } from "$lib/utils/invalidation.js";
+  import { CHAT_LIST_KEY } from "$lib/utils/invalidation.js";
+  import { getShareLink } from "$lib/utils/share-link.js";
 
   let {
     chat,
