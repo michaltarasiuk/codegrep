@@ -1,7 +1,9 @@
 {
   "formatter": "prettier",
   "format_on_save": "on",
-  "code_actions_on_format": {},
+  "code_actions_on_format": {
+    "source.fixAll.eslint": true
+  },
   "languages": {
     "TypeScript": {
       "show_completions_on_input": true,
