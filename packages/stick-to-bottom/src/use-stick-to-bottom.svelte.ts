@@ -300,7 +300,7 @@ export function useStickToBottom(
               ignoreEscapes,
               duration: Math.max(0, durationElapsed - Date.now()) || undefined,
             });
-            resolve(result as unknown as boolean);
+            resolve(result);
             return;
           }
 
