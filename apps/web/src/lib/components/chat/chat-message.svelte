@@ -5,6 +5,7 @@
   import * as Message from "@workspace/ai-elements/message/index.js";
   import type { UIMessage } from "ai";
 
+  import CopyToClipboard from "../copy-to-clipboard.svelte";
   import { getChat, getModel } from "./chat-context.js";
 
   let {
@@ -14,8 +15,6 @@
     message: UIMessage;
     isLast: boolean;
   } = $props();
-
-  let copied = $state(false);
 
   let chat = $derived(getChat());
   let model = $derived(getModel());
@@ -31,13 +30,6 @@
   function handleRetry() {
     chat.regenerate({ body: { model } });
   }
-  function handleCopy() {
-    navigator.clipboard.writeText(messageText);
-    copied = true;
-    setTimeout(() => {
-      copied = false;
-    }, 2_000);
-  }
 </script>
 
 <Message.Root from={message.role}>
@@ -50,13 +42,17 @@
       <Message.Action label="Retry" tooltip="Retry" onclick={handleRetry}>
         <RefreshCcwIcon class="size-3" />
       </Message.Action>
-      <Message.Action label="Copy" tooltip="Copy" onclick={handleCopy}>
-        {#if copied}
-          <CheckIcon class="size-3" />
-        {:else}
-          <CopyIcon class="size-3" />
-        {/if}
-      </Message.Action>
+      <CopyToClipboard text={messageText}>
+        {#snippet children(copy, copied)}
+          <Message.Action label="Copy" tooltip="Copy" onclick={copy}>
+            {#if copied}
+              <CheckIcon class="size-3" />
+            {:else}
+              <CopyIcon class="size-3" />
+            {/if}
+          </Message.Action>
+        {/snippet}
+      </CopyToClipboard>
     </Message.Actions>
   {/if}
 </Message.Root>

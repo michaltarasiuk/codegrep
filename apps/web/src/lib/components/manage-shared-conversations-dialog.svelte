@@ -1,4 +1,5 @@
 <script lang="ts">
+  import CheckIcon from "@lucide/svelte/icons/check";
   import CopyIcon from "@lucide/svelte/icons/copy";
   import LinkIcon from "@lucide/svelte/icons/link";
   import { isDefined } from "@workspace/shared/is-defined.js";
@@ -9,6 +10,7 @@
   import * as Table from "@workspace/ui/table/index.js";
 
   import { invalidate } from "$app/navigation";
+  import CopyToClipboard from "$lib/components/copy-to-clipboard.svelte";
   import { client } from "$lib/utils/client.js";
   import { formatDate } from "$lib/utils/format-date.js";
   import { CHAT_LIST_KEY } from "$lib/utils/invalidation.js";
@@ -60,11 +62,6 @@
     } finally {
       unsharing = false;
     }
-  }
-
-  async function copyLink(shareId: string) {
-    let shareLink = getShareLink(shareId);
-    await navigator.clipboard.writeText(shareLink);
   }
 </script>
 
@@ -125,14 +122,18 @@
               </Table.Cell>
               <Table.Cell>
                 <div class="flex items-center justify-end gap-1">
-                  <Button
-                    variant="ghost"
-                    size="icon-xs"
-                    onclick={() => copyLink(chat.shareId!)}
-                  >
-                    <CopyIcon />
-                    <span class="sr-only">Copy link</span>
-                  </Button>
+                  <CopyToClipboard text={getShareLink(chat.shareId!)}>
+                    {#snippet children(copy, copied)}
+                      <Button variant="ghost" size="icon-xs" onclick={copy}>
+                        {#if copied}
+                          <CheckIcon class="size-3.5" />
+                        {:else}
+                          <CopyIcon class="size-3.5" />
+                        {/if}
+                        <span class="sr-only">Copy link</span>
+                      </Button>
+                    {/snippet}
+                  </CopyToClipboard>
                 </div>
               </Table.Cell>
             </Table.Row>
