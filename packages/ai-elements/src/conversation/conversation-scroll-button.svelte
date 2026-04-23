@@ -24,7 +24,7 @@
     size="icon"
     variant="outline"
     class={cn(
-      "dark:bg-background dark:hover:bg-muted absolute bottom-4 left-[50%] translate-x-[-50%] rounded-full",
+      "dark:bg-background dark:hover:bg-muted sticky inset-s-[50%] bottom-40 translate-x-[-50%] rounded-full",
       className
     )}
     onclick={handleScrollToBottom}

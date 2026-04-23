@@ -57,9 +57,9 @@
                 {/each}
               </ModelSelector.LogoGroup>
               {#if selectedModel === model.id}
-                <CheckIcon class="ml-auto size-4" />
+                <CheckIcon class="ms-auto size-4" />
               {:else}
-                <span class="ml-auto size-4"></span>
+                <span class="ms-auto size-4"></span>
               {/if}
             </ModelSelector.Item>
           {/each}

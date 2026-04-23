@@ -34,7 +34,7 @@
     {...restProps}
   >
     <BrainIcon class="size-4" />
-    <span class="flex-1 text-left">
+    <span class="flex-1 text-start">
       {#if children}
         {@render children()}
       {:else}

@@ -17,7 +17,7 @@
   bind:this={ref}
   class={cn(
     "group flex w-full max-w-9/10 flex-col gap-2",
-    from === "user" ? "is-user ml-auto justify-end" : "is-assistant",
+    from === "user" ? "is-user ms-auto justify-end" : "is-assistant",
     className
   )}
   {...restProps}

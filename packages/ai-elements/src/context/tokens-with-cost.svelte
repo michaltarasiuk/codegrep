@@ -19,6 +19,6 @@
 <span>
   {formatted}
   {#if costText}
-    <span class="text-muted-foreground ml-2">• {costText}</span>
+    <span class="text-muted-foreground ms-2">• {costText}</span>
   {/if}
 </span>

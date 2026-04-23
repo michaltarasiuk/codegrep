@@ -17,7 +17,7 @@
   )}
   {...restProps}
 >
-  <div class="border-muted mt-4 space-y-2 border-l-2 pl-4">
+  <div class="border-muted mt-4 space-y-2 border-s-2 ps-4">
     {@render children?.()}
   </div>
 </CollapsibleContent>

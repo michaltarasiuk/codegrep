@@ -18,7 +18,7 @@
   <div
     bind:this={ref}
     class={cn(
-      "inline-flex items-center rounded-md border [&>*:not(:first-child)]:rounded-l-md [&>*:not(:last-child)]:rounded-r-md",
+      "inline-flex items-center rounded-md border [&>*:not(:first-child)]:rounded-s-md [&>*:not(:last-child)]:rounded-e-md",
       className
     )}
     {...restProps}

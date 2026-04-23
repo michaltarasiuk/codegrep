@@ -17,7 +17,7 @@
 <div
   bind:this={ref}
   data-slot="file-tree-actions"
-  class={cn("ml-auto flex items-center gap-1", className)}
+  class={cn("ms-auto flex items-center gap-1", className)}
   onclick={stopPropagation}
   onkeydown={stopPropagation}
   role="group"

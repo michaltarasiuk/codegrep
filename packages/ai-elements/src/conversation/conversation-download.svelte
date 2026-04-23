@@ -42,7 +42,7 @@
   size="icon"
   variant="outline"
   class={cn(
-    "dark:bg-background dark:hover:bg-muted absolute top-4 right-4 rounded-full",
+    "dark:bg-background dark:hover:bg-muted absolute inset-e-4 top-4 rounded-full",
     className
   )}
   onclick={handleDownload}

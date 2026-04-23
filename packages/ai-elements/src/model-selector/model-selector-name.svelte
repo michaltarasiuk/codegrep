@@ -12,7 +12,7 @@
 
 <span
   bind:this={ref}
-  class={cn("flex-1 truncate text-left", className)}
+  class={cn("flex-1 truncate text-start", className)}
   {...restProps}
 >
   {@render children?.()}

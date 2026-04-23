@@ -56,7 +56,7 @@
   >
     <div
       class={cn(
-        "hover:bg-muted/50 flex w-full items-center gap-1 rounded px-2 py-1 text-left transition-colors",
+        "hover:bg-muted/50 flex w-full items-center gap-1 rounded px-2 py-1 text-start transition-colors",
         isSelected && "bg-muted"
       )}
     >
@@ -72,7 +72,7 @@
       </CollapsibleTrigger>
       <button
         type="button"
-        class="flex min-w-0 flex-1 cursor-pointer items-center gap-1 border-none bg-transparent p-0 text-left"
+        class="flex min-w-0 flex-1 cursor-pointer items-center gap-1 border-none bg-transparent p-0 text-start"
         onclick={handleSelect}
       >
         <FileTreeIcon>
@@ -86,7 +86,7 @@
       </button>
     </div>
     <CollapsibleContent>
-      <div class="ml-4 border-l pl-2">
+      <div class="ms-4 border-s ps-2">
         {@render children?.()}
       </div>
     </CollapsibleContent>

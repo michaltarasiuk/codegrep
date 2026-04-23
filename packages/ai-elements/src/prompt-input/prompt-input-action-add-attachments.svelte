@@ -23,6 +23,6 @@
 </script>
 
 <DropdownMenu.Item onSelect={handleSelect} {...restProps}>
-  <ImageIcon class="mr-2 size-4" />
+  <ImageIcon class="me-2 size-4" />
   {label}
 </DropdownMenu.Item>

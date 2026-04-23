@@ -46,7 +46,9 @@
 >
   <div class="relative mt-0.5">
     <Icon class="size-4" />
-    <div class="bg-border absolute top-7 bottom-0 left-1/2 -mx-px w-px"></div>
+    <div
+      class="bg-border absolute inset-s-1/2 top-7 bottom-0 -mx-px w-px"
+    ></div>
   </div>
   <div class="flex-1 space-y-2 overflow-hidden">
     <div>{@render label()}</div>

@@ -26,7 +26,7 @@
         autofocus
       />
     </PromptInput.Body>
-    <PromptInput.Footer class="pr-2">
+    <PromptInput.Footer class="pe-2">
       <PromptInput.Tools>
         <ChatPromptAddFilesButton />
       </PromptInput.Tools>

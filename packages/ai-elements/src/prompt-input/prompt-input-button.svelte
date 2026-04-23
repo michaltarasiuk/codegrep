@@ -40,7 +40,7 @@
     >
       {typeof tooltip === "string" ? tooltip : tooltip.content}
       {#if typeof tooltip !== "string" && tooltip.shortcut}
-        <span class="text-muted-foreground ml-2">{tooltip.shortcut}</span>
+        <span class="text-muted-foreground ms-2">{tooltip.shortcut}</span>
       {/if}
     </Tooltip.Content>
   </Tooltip.Root>
