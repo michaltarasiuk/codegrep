@@ -3,6 +3,7 @@
   import NotebookPenIcon from "@lucide/svelte/icons/notebook-pen";
   import DotsVerticalIcon from "@tabler/icons-svelte/icons/dots-vertical";
   import LogoutIcon from "@tabler/icons-svelte/icons/logout";
+  import MessageShareIcon from "@tabler/icons-svelte/icons/message-share";
   import * as Avatar from "@workspace/ui/avatar/index.js";
   import * as DropdownMenu from "@workspace/ui/dropdown-menu/index.js";
   import * as Sidebar from "@workspace/ui/sidebar/index.js";
@@ -13,13 +14,16 @@
   import { resolve } from "$app/paths";
   import { authClient } from "$lib/utils/client.js";
 
+  import ManageSharedConversationsDialog from "./manage-shared-conversations-dialog.svelte";
   import PersonalInstructionsDialog from "./personal-instructions-dialog.svelte";
 
   let session = authClient.useSession();
   let sidebar = Sidebar.getSidebar();
 
   let hydrated = $state(false);
+
   let personalInstructionsOpen = $state(false);
+  let manageSharedConversationsOpen = $state(false);
 
   onMount(() => {
     hydrated = true;
@@ -108,6 +112,12 @@
             <NotebookPenIcon />
             Personal instructions
           </DropdownMenu.Item>
+          <DropdownMenu.Item
+            onclick={() => (manageSharedConversationsOpen = true)}
+          >
+            <MessageShareIcon />
+            Manage shared conversations
+          </DropdownMenu.Item>
         </DropdownMenu.Group>
         <DropdownMenu.Separator />
         <DropdownMenu.Item onclick={signOut}>
@@ -134,4 +144,9 @@
 <PersonalInstructionsDialog
   open={personalInstructionsOpen}
   onClose={() => (personalInstructionsOpen = false)}
+/>
+
+<ManageSharedConversationsDialog
+  open={manageSharedConversationsOpen}
+  onClose={() => (manageSharedConversationsOpen = false)}
 />

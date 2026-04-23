@@ -9,9 +9,8 @@
   import { useId } from "bits-ui";
 
   import { invalidate } from "$app/navigation";
-  import { PUBLIC_WEB_URL } from "$env/static/public";
   import { client } from "$lib/utils/client.js";
-  import { CHAT_LIST_KEY } from "$lib/utils/invalidation.js";
+  import { CHAT_LIST_KEY, getShareLink } from "$lib/utils/invalidation.js";
 
   let {
     chat,
@@ -29,7 +28,7 @@
   let shareLinkFieldId = useId();
 
   let shareId = $derived(chat.shareId);
-  let shareLink = $derived(`${PUBLIC_WEB_URL}/chat/share/${shareId}`);
+  let shareLink = $derived(isDefined(shareId) ? getShareLink(shareId) : null);
 
   let sharing = $state(false);
   let unsharing = $state(false);
@@ -73,7 +72,9 @@
   }
 
   async function copyLink() {
-    await navigator.clipboard.writeText(shareLink);
+    if (isDefined(shareLink)) {
+      await navigator.clipboard.writeText(shareLink);
+    }
   }
 </script>
 
