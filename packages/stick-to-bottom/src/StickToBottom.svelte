@@ -14,7 +14,6 @@
       Omit<HTMLAttributes<HTMLDivElement>, "children">,
       StickToBottomOptions {
     children?: Snippet<[StickToBottomInstance]>;
-    contentClass?: string;
   }
 
   let {
