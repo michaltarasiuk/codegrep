@@ -2,7 +2,7 @@
   "name": "@workspace/stick-to-bottom",
   "type": "module",
   "exports": {
-    ".": "./src/index.ts"
+    "./*": "./src/*"
   },
   "dependencies": {
     "@workspace/shared": "workspace:*"

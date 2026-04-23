@@ -28,3 +28,5 @@
     </div>
   {/if}
 </Conversation.Content>
+
+<Conversation.ScrollButton />

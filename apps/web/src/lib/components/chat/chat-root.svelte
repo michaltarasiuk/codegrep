@@ -1,5 +1,6 @@
 <script lang="ts">
   import type { Chat } from "@ai-sdk/svelte";
+  import { StickToBottom } from "@workspace/stick-to-bottom/index.js";
   import type { Snippet } from "svelte";
 
   import { type Model, setChat, setModel } from "./chat-context.js";
@@ -18,8 +19,8 @@
   setModel(() => model);
 </script>
 
-<div class="scrollbar-hide flex flex-1 flex-col overscroll-none px-4">
+<StickToBottom class="scrollbar-hide flex flex-1 flex-col overscroll-none px-4">
   <div class="relative mx-auto flex w-full max-w-2xl flex-1 flex-col">
     {@render children()}
   </div>
-</div>
+</StickToBottom>
