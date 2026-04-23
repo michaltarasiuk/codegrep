@@ -13,7 +13,7 @@
   import { formatDate } from "$lib/utils/format-date.js";
   import { CHAT_LIST_KEY, getShareLink } from "$lib/utils/invalidation.js";
 
-  interface Chat {
+  interface SharedChat {
     id: string;
     title: string;
     shareId: string;
@@ -22,7 +22,7 @@
 
   let { open, onClose }: { open: boolean; onClose: () => void } = $props();
 
-  let sharedChats = $state<Chat[]>([]);
+  let sharedChats = $state<SharedChat[]>([]);
   let confirmingUnshareAll = $state(false);
   let loading = $state(true);
   let unsharing = $state(false);
@@ -38,7 +38,7 @@
       loading = true;
       let result = await client.api.chat.get();
       if (isDefined(result.data)) {
-        sharedChats = result.data.filter((chat): chat is Chat =>
+        sharedChats = result.data.filter((chat): chat is SharedChat =>
           isDefined(chat.shareId)
         );
       }
@@ -144,7 +144,11 @@
       >
         {#if confirmingUnshareAll}
           <div class="text-destructive text-sm">
-            Are you sure you want to unshare all conversations?
+            {#if sharedChats.length > 1}
+              Are you sure you want to unshare all {sharedChats.length} conversations?
+            {:else}
+              Are you sure you want to unshare this conversation?
+            {/if}
           </div>
         {:else}
           <div></div>
