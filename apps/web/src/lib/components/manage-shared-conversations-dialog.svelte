@@ -81,7 +81,7 @@
     }
   }}
 >
-  <Dialog.Content class="sm:max-w-3xl">
+  <Dialog.Content class="sm:max-w-2xl">
     <Dialog.Header>
       <Dialog.Title>Manage shared conversations</Dialog.Title>
     </Dialog.Header>
