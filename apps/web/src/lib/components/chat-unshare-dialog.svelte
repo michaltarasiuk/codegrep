@@ -18,7 +18,7 @@
       title: string;
     };
     onUnshare: () => void;
-    children: Snippet<[() => void]>;
+    children: Snippet<[openDialog: () => void]>;
   } = $props();
 
   let open = $state(false);

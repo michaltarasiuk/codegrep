@@ -9,7 +9,7 @@
   }: {
     text: string;
     resetMs?: number;
-    children: Snippet<[() => void, boolean]>;
+    children: Snippet<[copy: () => void, copied: boolean]>;
   } = $props();
 
   let copied = $state(false);
