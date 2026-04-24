@@ -3,11 +3,12 @@
   import CopyIcon from "@lucide/svelte/icons/copy";
   import LinkIcon from "@lucide/svelte/icons/link";
   import { isDefined } from "@workspace/shared/is-defined.js";
-  import { Button } from "@workspace/ui/button/index.js";
+  import { Button, buttonVariants } from "@workspace/ui/button/index.js";
   import * as Dialog from "@workspace/ui/dialog/index.js";
   import * as Empty from "@workspace/ui/empty/index.js";
   import { Spinner } from "@workspace/ui/spinner/index.js";
   import * as Table from "@workspace/ui/table/index.js";
+  import * as Tooltip from "@workspace/ui/tooltip/index.js";
 
   import { invalidate } from "$app/navigation";
   import CopyToClipboard from "$lib/components/copy-to-clipboard.svelte";
@@ -124,14 +125,23 @@
                 <div class="flex items-center justify-end gap-1">
                   <CopyToClipboard text={getShareLink(chat.shareId!)}>
                     {#snippet children(copy, copied)}
-                      <Button variant="ghost" size="icon-xs" onclick={copy}>
-                        {#if copied}
-                          <CheckIcon class="size-3.5" />
-                        {:else}
-                          <CopyIcon class="size-3.5" />
-                        {/if}
-                        <span class="sr-only">Copy link</span>
-                      </Button>
+                      <Tooltip.Root>
+                        <Tooltip.Trigger
+                          onclick={copy}
+                          class={buttonVariants({
+                            variant: "ghost",
+                            size: "icon-xs",
+                          })}
+                        >
+                          {#if copied}
+                            <CheckIcon class="size-3" />
+                          {:else}
+                            <CopyIcon class="size-3" />
+                          {/if}
+                          <span class="sr-only">Copy</span>
+                        </Tooltip.Trigger>
+                        <Tooltip.Content side="bottom">Copy</Tooltip.Content>
+                      </Tooltip.Root>
                     {/snippet}
                   </CopyToClipboard>
                 </div>

@@ -1,7 +1,8 @@
 <script lang="ts">
   import { Tooltip as TooltipPrimitive } from "bits-ui";
 
-  let props: TooltipPrimitive.ProviderProps = $props();
+  let { delayDuration = 500, ...restProps }: TooltipPrimitive.ProviderProps =
+    $props();
 </script>
 
-<TooltipPrimitive.Provider {...props} />
+<TooltipPrimitive.Provider {delayDuration} {...restProps} />
