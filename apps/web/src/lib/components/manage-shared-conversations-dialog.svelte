@@ -2,6 +2,7 @@
   import CheckIcon from "@lucide/svelte/icons/check";
   import CopyIcon from "@lucide/svelte/icons/copy";
   import LinkIcon from "@lucide/svelte/icons/link";
+  import LinkSlashIcon from "@lucide/svelte/icons/link-2-off";
   import { isDefined } from "@workspace/shared/is-defined.js";
   import { Button, buttonVariants } from "@workspace/ui/button/index.js";
   import * as Dialog from "@workspace/ui/dialog/index.js";
@@ -11,6 +12,7 @@
   import * as Tooltip from "@workspace/ui/tooltip/index.js";
 
   import { invalidate } from "$app/navigation";
+  import ChatUnshareDialog from "$lib/components/chat-unshare-dialog.svelte";
   import CopyToClipboard from "$lib/components/copy-to-clipboard.svelte";
   import { client } from "$lib/utils/client.js";
   import { formatDate } from "$lib/utils/format-date.js";
@@ -63,6 +65,10 @@
     } finally {
       unsharing = false;
     }
+  }
+
+  function handleUnshare(chatId: string) {
+    sharedChats = sharedChats.filter((c) => c.id !== chatId);
   }
 </script>
 
@@ -144,6 +150,28 @@
                       </Tooltip.Root>
                     {/snippet}
                   </CopyToClipboard>
+                  <ChatUnshareDialog
+                    {chat}
+                    onUnshare={() => handleUnshare(chat.id)}
+                  >
+                    {#snippet children(openDialog)}
+                      <Tooltip.Root>
+                        <Tooltip.Trigger
+                          onclick={openDialog}
+                          class={buttonVariants({
+                            variant: "ghost",
+                            size: "icon-xs",
+                          })}
+                        >
+                          <LinkSlashIcon class="size-3" />
+                          <span class="sr-only">Unshare chat</span>
+                        </Tooltip.Trigger>
+                        <Tooltip.Content side="bottom">
+                          Unshare chat
+                        </Tooltip.Content>
+                      </Tooltip.Root>
+                    {/snippet}
+                  </ChatUnshareDialog>
                 </div>
               </Table.Cell>
             </Table.Row>
