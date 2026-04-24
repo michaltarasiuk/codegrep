@@ -16,6 +16,6 @@
   }
 }
 
-body {
-  @apply overscroll-none;
+:root {
+  font-size: 17px;
 }
