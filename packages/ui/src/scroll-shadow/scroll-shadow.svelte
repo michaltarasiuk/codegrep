@@ -94,7 +94,7 @@
     ...restProps
   }: ScrollShadowRootProps = $props();
 
-  let { containerRef } = useScrollShadow(() => ({
+  let { containerAction } = useScrollShadow(() => ({
     offset,
     visibility,
     isEnabled,
@@ -133,7 +133,7 @@
 
 <div
   bind:this={ref}
-  use:containerRef
+  use:containerAction
   data-orientation={orientation}
   data-scroll-shadow-size={size}
   style={serializeStyles([

@@ -139,7 +139,7 @@ export function useScrollShadow(getProps: () => UseScrollShadowProps) {
   });
 
   return {
-    containerRef(node: HTMLElement) {
+    containerAction(node: HTMLElement) {
       containerEl = node;
       return {
         destroy() {
