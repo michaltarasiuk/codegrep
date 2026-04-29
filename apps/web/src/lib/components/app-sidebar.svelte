@@ -1,5 +1,6 @@
 <script lang="ts">
   import PlusIcon from "@lucide/svelte/icons/plus";
+  import { ScrollShadow } from "@workspace/ui/scroll-shadow/index.js";
   import * as Sidebar from "@workspace/ui/sidebar/index.js";
   import type { Snippet } from "svelte";
 
@@ -41,20 +42,22 @@
       </Sidebar.Menu>
     </Sidebar.Header>
     <Sidebar.Content>
-      {#each groupedChats as group (group.period)}
-        {#if !!group.chats.length}
-          <Sidebar.Group>
-            <Sidebar.GroupLabel>{group.period}</Sidebar.GroupLabel>
-            <Sidebar.GroupContent>
-              <Sidebar.Menu>
-                {#each group.chats as chat (chat.id)}
-                  <ChatSidebarItem {chat} />
-                {/each}
-              </Sidebar.Menu>
-            </Sidebar.GroupContent>
-          </Sidebar.Group>
-        {/if}
-      {/each}
+      <ScrollShadow class="h-full">
+        {#each groupedChats as group (group.period)}
+          {#if !!group.chats.length}
+            <Sidebar.Group>
+              <Sidebar.GroupLabel>{group.period}</Sidebar.GroupLabel>
+              <Sidebar.GroupContent>
+                <Sidebar.Menu>
+                  {#each group.chats as chat (chat.id)}
+                    <ChatSidebarItem {chat} />
+                  {/each}
+                </Sidebar.Menu>
+              </Sidebar.GroupContent>
+            </Sidebar.Group>
+          {/if}
+        {/each}
+      </ScrollShadow>
     </Sidebar.Content>
     <Sidebar.Footer>
       <Sidebar.Menu>
