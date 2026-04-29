@@ -135,17 +135,12 @@
     let el = viewportRef;
     if (!el || visibility === "auto") return;
 
-    delete el.dataset["topScroll"];
-    delete el.dataset["bottomScroll"];
-    delete el.dataset["topBottomScroll"];
-    delete el.dataset["leftScroll"];
-    delete el.dataset["rightScroll"];
-    delete el.dataset["leftRightScroll"];
+    delete el.dataset["startScroll"];
+    delete el.dataset["endScroll"];
+    delete el.dataset["startEndScroll"];
 
     if (visibility === "both") {
-      el.dataset[
-        orientation === "vertical" ? "topBottomScroll" : "leftRightScroll"
-      ] = "true";
+      el.dataset["startEndScroll"] = "true";
     } else if (visibility !== "none") {
       el.dataset[`${visibility}Scroll`] = "true";
     }

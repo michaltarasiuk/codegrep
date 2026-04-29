@@ -1,11 +1,4 @@
-export type ScrollShadowVisibility =
-  | "auto"
-  | "both"
-  | "top"
-  | "bottom"
-  | "left"
-  | "right"
-  | "none";
+export type ScrollShadowVisibility = "auto" | "both" | "start" | "end" | "none";
 
 export interface UseScrollShadowProps {
   orientation: "vertical" | "horizontal";
@@ -61,44 +54,22 @@ export function useScrollShadow(getProps: () => UseScrollShadowProps) {
     rafId = requestAnimationFrame(() => {
       rafId = null;
 
-      if (isVertical) {
-        if (hasScrollBefore && hasScrollAfter) {
-          el.dataset["topBottomScroll"] = "true";
-          delete el.dataset["topScroll"];
-          delete el.dataset["bottomScroll"];
-
-          onVisibilityChange?.("both");
-        } else {
-          el.dataset["topScroll"] = String(hasScrollBefore);
-          el.dataset["bottomScroll"] = String(hasScrollAfter);
-          delete el.dataset["topBottomScroll"];
-
-          if (onVisibilityChange) {
-            if (hasScrollBefore) {
-              onVisibilityChange("top");
-            } else if (hasScrollAfter) {
-              onVisibilityChange("bottom");
-            } else {
-              onVisibilityChange("none");
-            }
-          }
-        }
-      } else if (hasScrollBefore && hasScrollAfter) {
-        el.dataset["leftRightScroll"] = "true";
-        delete el.dataset["leftScroll"];
-        delete el.dataset["rightScroll"];
+      if (hasScrollBefore && hasScrollAfter) {
+        el.dataset["startEndScroll"] = "true";
+        delete el.dataset["startScroll"];
+        delete el.dataset["endScroll"];
 
         onVisibilityChange?.("both");
       } else {
-        el.dataset["leftScroll"] = String(hasScrollBefore);
-        el.dataset["rightScroll"] = String(hasScrollAfter);
-        delete el.dataset["leftRightScroll"];
+        el.dataset["startScroll"] = String(hasScrollBefore);
+        el.dataset["endScroll"] = String(hasScrollAfter);
+        delete el.dataset["startEndScroll"];
 
         if (onVisibilityChange) {
           if (hasScrollBefore) {
-            onVisibilityChange("left");
+            onVisibilityChange("start");
           } else if (hasScrollAfter) {
-            onVisibilityChange("right");
+            onVisibilityChange("end");
           } else {
             onVisibilityChange("none");
           }
