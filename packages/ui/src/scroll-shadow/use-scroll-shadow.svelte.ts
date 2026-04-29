@@ -1,3 +1,6 @@
+/** DOM scroll metrics mix subpixels and integers; max scroll rarely sums exactly to scrollSize. */
+const SCROLL_EDGE_EPSILON_PX = 1;
+
 export type ScrollShadowVisibility = "auto" | "both" | "start" | "end" | "none";
 
 export interface UseScrollShadowProps {
@@ -31,7 +34,8 @@ export function useScrollShadow(getProps: () => UseScrollShadowProps) {
     let clientSize = isVertical ? el.clientHeight : el.clientWidth;
 
     let hasScrollBefore = scrollStart > offset;
-    let hasScrollAfter = scrollStart + clientSize + offset < scrollSize;
+    let hasScrollAfter =
+      scrollStart + clientSize + offset < scrollSize - SCROLL_EDGE_EPSILON_PX;
 
     // Skip DOM updates if state hasn't changed
     if (
@@ -43,7 +47,10 @@ export function useScrollShadow(getProps: () => UseScrollShadowProps) {
     }
 
     // Update state cache
-    prevState = { hasScrollBefore, hasScrollAfter };
+    prevState = {
+      hasScrollBefore,
+      hasScrollAfter,
+    };
 
     // Cancel previous pending update
     if (rafId !== null) {
