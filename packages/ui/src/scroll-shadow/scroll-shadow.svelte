@@ -162,11 +162,7 @@
 <ScrollArea.Root
   bind:ref
   bind:viewportRef
-  orientation={orientation === "vertical"
-    ? "vertical"
-    : orientation === "horizontal"
-      ? "horizontal"
-      : "both"}
+  {orientation}
   {scrollbarXClasses}
   {scrollbarYClasses}
   data-orientation={orientation}
