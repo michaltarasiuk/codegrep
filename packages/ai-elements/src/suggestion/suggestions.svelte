@@ -1,22 +1,25 @@
 <script lang="ts">
   import { cn } from "@workspace/ui/cn.js";
-  import * as ScrollArea from "@workspace/ui/scroll-area/index.js";
+  import { ScrollShadow } from "@workspace/ui/scroll-shadow/index.js";
   import type { ComponentProps } from "svelte";
 
   let {
     children,
     class: className,
     ...restProps
-  }: ComponentProps<typeof ScrollArea.Root> = $props();
+  }: Omit<
+    ComponentProps<typeof ScrollShadow>,
+    "orientation" | "hideScrollBar"
+  > = $props();
 </script>
 
-<ScrollArea.Root
+<ScrollShadow
   orientation="horizontal"
-  scrollbarXClasses="hidden"
-  class="w-full overflow-x-auto whitespace-nowrap"
+  hideScrollBar
+  class="w-full whitespace-nowrap"
   {...restProps}
 >
   <div class={cn("flex w-max flex-nowrap items-center gap-2 py-2", className)}>
     {@render children?.()}
   </div>
-</ScrollArea.Root>
+</ScrollShadow>

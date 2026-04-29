@@ -4,18 +4,9 @@
   --scroll-shadow-size: 40px;
 }
 
-/* Orientation: Vertical */
-.scroll-shadow--vertical {
-  @apply overflow-y-auto;
-}
-
-/* Orientation: Horizontal */
-.scroll-shadow--horizontal {
-  @apply overflow-x-auto;
-}
-
-/* Variant: Fade - Vertical */
-.scroll-shadow--fade.scroll-shadow--vertical {
+/* Variant: Fade - Vertical (applied to viewport) */
+.scroll-shadow--fade.scroll-shadow--vertical
+  [data-slot="scroll-area-viewport"] {
   &[data-top-scroll="true"] {
     --scroll-linear-gradient:
       0deg, #000 calc(100% - var(--scroll-shadow-size)), transparent;
@@ -42,8 +33,9 @@
   }
 }
 
-/* Variant: Fade - Horizontal */
-.scroll-shadow--fade.scroll-shadow--horizontal {
+/* Variant: Fade - Horizontal (applied to viewport) */
+.scroll-shadow--fade.scroll-shadow--horizontal
+  [data-slot="scroll-area-viewport"] {
   &[data-left-scroll="true"] {
     --scroll-linear-gradient:
       270deg, #000 calc(100% - var(--scroll-shadow-size)), transparent;
@@ -70,12 +62,7 @@
   }
 }
 
-/* Hide scrollbar modifier */
-.scroll-shadow--hide-scrollbar {
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-
-  &::-webkit-scrollbar {
-    @apply hidden;
-  }
+/* Hide scrollbar modifier (hides the custom ScrollArea scrollbar) */
+.scroll-shadow--hide-scrollbar [data-slot="scroll-area-scrollbar"] {
+  @apply hidden;
 }

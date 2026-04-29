@@ -40,18 +40,16 @@
   import "./scroll-shadow.css";
 
   import { serializeStyles } from "@emotion/serialize";
-  import type { HTMLAttributes } from "svelte/elements";
 
-  import { cn, type WithElementRef } from "../cn.js";
+  import { cn } from "../cn.js";
+  import * as ScrollArea from "../scroll-area/index.js";
   import {
     type ScrollShadowVisibility,
     useScrollShadow,
   } from "./use-scroll-shadow.svelte.js";
 
-  interface ScrollShadowRootProps
-    extends
-      Omit<WithElementRef<HTMLAttributes<HTMLDivElement>>, "size">,
-      ScrollShadowVariants {
+  interface ScrollShadowRootProps extends ScrollShadowVariants {
+    ref?: HTMLElement | null;
     /**
      * The shadow size in pixels
      * @default 40
@@ -73,6 +71,26 @@
      */
     isEnabled?: boolean;
     /**
+     * Custom classes for the horizontal scrollbar
+     */
+    scrollbarXClasses?: string;
+    /**
+     * Custom classes for the vertical scrollbar
+     */
+    scrollbarYClasses?: string;
+    /**
+     * Custom class name
+     */
+    class?: string;
+    /**
+     * Custom inline styles
+     */
+    style?: string;
+    /**
+     * Children snippet
+     */
+    children?: import("svelte").Snippet;
+    /**
      * Callback invoked when shadow visibility changes
      */
     onVisibilityChange?: (visibility: ScrollShadowVisibility) => void;
@@ -87,12 +105,15 @@
     hideScrollBar = false,
     orientation = "vertical",
     variant = "fade",
-    onVisibilityChange,
-    children,
+    scrollbarXClasses = "",
+    scrollbarYClasses = "",
     style,
+    children,
+    onVisibilityChange,
     class: className,
-    ...restProps
   }: ScrollShadowRootProps = $props();
+
+  let viewportRef = $state<HTMLElement | null>(null);
 
   let { containerAction } = useScrollShadow(() => ({
     offset,
@@ -111,7 +132,7 @@
   );
 
   $effect(() => {
-    let el = ref;
+    let el = viewportRef;
     if (!el || visibility === "auto") return;
 
     delete el.dataset["topScroll"];
@@ -129,11 +150,25 @@
       el.dataset[`${visibility}Scroll`] = "true";
     }
   });
+
+  $effect(() => {
+    let el = viewportRef;
+    if (!el) return;
+
+    return containerAction(el).destroy;
+  });
 </script>
 
-<div
-  bind:this={ref}
-  use:containerAction
+<ScrollArea.Root
+  bind:ref
+  bind:viewportRef
+  orientation={orientation === "vertical"
+    ? "vertical"
+    : orientation === "horizontal"
+      ? "horizontal"
+      : "both"}
+  {scrollbarXClasses}
+  {scrollbarYClasses}
   data-orientation={orientation}
   data-scroll-shadow-size={size}
   style={serializeStyles([
@@ -143,7 +178,6 @@
     style,
   ]).styles}
   class={cn(slots.base(), className)}
-  {...restProps}
 >
   {@render children?.()}
-</div>
+</ScrollArea.Root>
