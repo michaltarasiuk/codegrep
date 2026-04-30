@@ -1,6 +1,5 @@
 <script lang="ts">
   import { ScrollArea as ScrollAreaPrimitive } from "bits-ui";
-  import type { ClassValue } from "clsx";
 
   import { cn, type WithoutChild } from "../cn.js";
   import { Scrollbar } from "./index.js";
@@ -16,10 +15,10 @@
     class: className,
     ...restProps
   }: WithoutChild<ScrollAreaPrimitive.RootProps> & {
+    viewportRef?: HTMLElement | null;
     orientation?: "vertical" | "horizontal" | "both";
     scrollbarXClasses?: string;
     scrollbarYClasses?: string;
-    viewportRef?: HTMLElement | null;
     viewportProps?: WithoutChild<ScrollAreaPrimitive.ViewportProps>;
   } = $props();
 </script>
@@ -27,7 +26,7 @@
 <ScrollAreaPrimitive.Root
   bind:ref
   data-slot="scroll-area"
-  class={cn("relative", className as ClassValue)}
+  class={cn("relative", className)}
   {...restProps}
 >
   <ScrollAreaPrimitive.Viewport
