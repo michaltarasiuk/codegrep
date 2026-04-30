@@ -146,7 +146,6 @@
 <ScrollArea.Root
   bind:ref
   bind:viewportRef
-  viewportProps={viewportAttrs}
   {orientation}
   {scrollbarXClasses}
   {scrollbarYClasses}
@@ -159,6 +158,7 @@
     style,
   ]).styles}
   class={cn(slots.base(), className)}
+  viewportProps={viewportAttrs}
 >
   {@render children?.()}
 </ScrollArea.Root>
