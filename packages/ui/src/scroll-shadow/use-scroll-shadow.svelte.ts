@@ -1,7 +1,10 @@
+import type { ScrollShadowVisibility } from "./utils.js";
+import { clearScrollDataset } from "./utils.js";
+
 /** DOM scroll metrics mix subpixels and integers; max scroll rarely sums exactly to scrollSize. */
 const SCROLL_EDGE_EPSILON_PX = 1;
 
-export type ScrollShadowVisibility = "auto" | "both" | "start" | "end" | "none";
+export type { ScrollShadowVisibility } from "./utils.js";
 
 export interface UseScrollShadowProps {
   orientation: "vertical" | "horizontal";
@@ -107,7 +110,9 @@ export function useScrollShadow(getProps: () => UseScrollShadowProps) {
       el.removeEventListener("scroll", checkOverflow);
       resizeObserver.disconnect();
 
-      // Cancel pending RAF and cleanup cache
+      // Clear any imperative dataset writes so the static spread becomes the source of truth.
+      clearScrollDataset(el);
+
       if (rafId !== null) {
         cancelAnimationFrame(rafId);
         rafId = null;

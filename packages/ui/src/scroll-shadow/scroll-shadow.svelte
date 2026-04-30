@@ -43,10 +43,11 @@
 
   import { cn } from "../cn.js";
   import * as ScrollArea from "../scroll-area/index.js";
+  import { useScrollShadow } from "./use-scroll-shadow.svelte.js";
   import {
+    getScrollShadowViewportAttrs,
     type ScrollShadowVisibility,
-    useScrollShadow,
-  } from "./use-scroll-shadow.svelte.js";
+  } from "./utils.js";
 
   interface ScrollShadowRootProps extends ScrollShadowVariants {
     ref?: HTMLElement | null;
@@ -130,21 +131,9 @@
       variant,
     })
   );
-
-  $effect(() => {
-    let el = viewportRef;
-    if (!el || visibility === "auto") return;
-
-    delete el.dataset["startScroll"];
-    delete el.dataset["endScroll"];
-    delete el.dataset["startEndScroll"];
-
-    if (visibility === "both") {
-      el.dataset["startEndScroll"] = "true";
-    } else if (visibility !== "none") {
-      el.dataset[`${visibility}Scroll`] = "true";
-    }
-  });
+  let viewportAttrs = $derived(
+    getScrollShadowViewportAttrs(visibility, isEnabled)
+  );
 
   $effect(() => {
     let el = viewportRef;
@@ -157,6 +146,7 @@
 <ScrollArea.Root
   bind:ref
   bind:viewportRef
+  viewportProps={viewportAttrs}
   {orientation}
   {scrollbarXClasses}
   {scrollbarYClasses}
