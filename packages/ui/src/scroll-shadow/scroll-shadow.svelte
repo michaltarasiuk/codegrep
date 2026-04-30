@@ -131,7 +131,7 @@
       variant,
     })
   );
-  let viewportAttrs = $derived(
+  let viewportAttrs = $derived.by(() =>
     getScrollShadowViewportAttrs(visibility, isEnabled)
   );
 
