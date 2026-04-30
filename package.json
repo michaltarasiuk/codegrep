@@ -1,5 +1,5 @@
 {
-  "name": "githubgrep",
+  "name": "codegrep",
   "type": "module",
   "scripts": {
     "prepare": "lefthook install",

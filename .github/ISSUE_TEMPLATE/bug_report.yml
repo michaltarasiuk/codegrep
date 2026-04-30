@@ -1,0 +1,107 @@
+name: Bug report
+description: Report a defect or unexpected behaviour.
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to file a bug. Please fill in as much of the form as you can.
+        For security issues, contact the maintainers privately instead of opening a public issue.
+
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+      description: A short description of the problem.
+      placeholder: Chat stream stops after the first token when signed in anonymously.
+    validations:
+      required: true
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Affected area
+      description: Where does the bug live?
+      options:
+        - Web app (apps/web)
+        - API (apps/api)
+        - Shared package (packages/*)
+        - Tooling / CI / build
+        - Documentation
+        - Other / not sure
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: Minimal steps that reliably trigger the bug.
+      placeholder: |
+        1. Run `bun run dev`
+        2. Visit http://localhost:5173
+        3. Sign in with GitHub
+        4. Send a chat message — stream stops after the first token
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behaviour
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behaviour
+      description: Include logs, stack traces, or screenshots if relevant.
+    validations:
+      required: true
+
+  - type: input
+    id: bun-version
+    attributes:
+      label: Bun version
+      description: Output of `bun --version`.
+      placeholder: 1.3.12
+    validations:
+      required: true
+
+  - type: input
+    id: os
+    attributes:
+      label: Operating system
+      placeholder: macOS 15.2 / Ubuntu 24.04 / Windows 11
+    validations:
+      required: true
+
+  - type: input
+    id: browser
+    attributes:
+      label: Browser (for web app issues)
+      placeholder: Chrome 134, Safari 18, Firefox 137 — leave blank if not applicable
+
+  - type: input
+    id: commit
+    attributes:
+      label: Commit / branch
+      description: SHA or branch you reproduced on.
+      placeholder: main @ a1b2c3d
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional context
+      description: Anything else that might help — env, related issues, hypotheses.
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Pre-flight checks
+      options:
+        - label: I searched existing issues and didn't find a duplicate.
+          required: true
+        - label: I can reproduce this on the latest `main`.
+          required: false

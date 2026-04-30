@@ -1,0 +1,54 @@
+name: Feature request
+description: Suggest a new feature or improvement.
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What user-facing problem or limitation does this address?
+      placeholder: There is no way to share a chat conversation with someone else.
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed solution
+      description: Describe the change you'd like. Include UX or API sketches if helpful.
+    validations:
+      required: true
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Affected area
+      options:
+        - Web app (apps/web)
+        - API (apps/api)
+        - Shared package (packages/*)
+        - Tooling / CI / build
+        - Documentation
+        - Other / not sure
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: Other approaches you thought about and why you ruled them out.
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional context
+      description: Links, mockups, prior art, or related issues.
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Pre-flight checks
+      options:
+        - label: I searched existing issues and discussions and didn't find a duplicate.
+          required: true
