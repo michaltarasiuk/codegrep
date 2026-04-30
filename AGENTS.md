@@ -2,7 +2,7 @@
 
 ## Project overview
 
-`codegrep` (package name `githubgrep`) is an AI chat application for exploring GitHub code. It is a Bun + Turborepo monorepo with a SvelteKit web app and an Elysia API.
+`codegrep` is an AI chat application for exploring GitHub code. It is a Bun + Turborepo monorepo with a SvelteKit web app and an Elysia API.
 
 - **Frontend** (`apps/web`): SvelteKit 5 (runes), Tailwind CSS v4, Bits UI, Better Auth client, AI SDK (`@ai-sdk/svelte`), deployed to Vercel.
 - **Backend** (`apps/api`): Elysia (Bun runtime), Better Auth (with anonymous + GitHub OAuth), Drizzle ORM on Postgres, Vercel AI SDK.
