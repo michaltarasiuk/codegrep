@@ -8,7 +8,6 @@
   interface Repository {
     label: string;
     value: string;
-    private: boolean;
   }
 
   let { selected = $bindable<string[]>([]) }: { selected?: string[] } =
@@ -41,7 +40,7 @@
   <Popover.Trigger>
     {#snippet child({ props })}
       <PromptInput.Button
-        class="px-0! hover:bg-transparent! aria-expanded:bg-transparent! dark:aria-expanded:bg-transparent!"
+        class="px-0! hover:bg-transparent! aria-expanded:bg-transparent! dark:hover:bg-transparent!"
         {...props}
       >
         <BookIcon class="shrink-0" />
@@ -53,14 +52,14 @@
     align="start"
     side="bottom"
     avoidCollisions={false}
-    class="flex max-h-80 min-h-0 w-72 flex-col overflow-hidden p-0"
+    class="flex max-h-80 min-h-0 flex-col overflow-hidden p-0"
   >
     <Command.Root
       shouldFilter={false}
-      class="flex min-h-0 flex-1 flex-col overflow-hidden overscroll-contain"
+      class="min-h-0 flex-1 overscroll-contain"
     >
       <Command.Input bind:value={search} placeholder="Search GitHub…" />
-      <Command.List class="max-h-64 min-h-0 flex-1 scroll-py-1 overflow-y-auto">
+      <Command.List class="min-h-0 flex-1">
         {#if repositories.length === 0}
           <Command.Empty>No repository found.</Command.Empty>
         {:else}
