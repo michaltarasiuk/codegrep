@@ -7,8 +7,16 @@ import { getChatTitle } from "$api/utils/get-chat-title.js";
 
 import { sessionPlugin } from "../auth/session.js";
 import { chatModel } from "./model.js";
-import { groqProvider } from "./provider.js";
+import { getChatModel } from "./provider.js";
 import { ChatService } from "./service.js";
+
+function notFound(error: NotFoundError) {
+  return status(404, { message: error.message });
+}
+
+function upsertFailed(error: UpsertFailedError) {
+  return status(500, { message: error.message });
+}
 
 export let chatPlugin = new Elysia({ name: "chat", prefix: "/chat" })
   .use(sessionPlugin)
@@ -26,16 +34,14 @@ export let chatPlugin = new Elysia({ name: "chat", prefix: "/chat" })
   .get(
     "/:id/messages",
     async ({ params: { id: chatId }, user }) => {
-      let chatMessages = await ChatService.findMessages({
+      let result = await ChatService.findMessages({
         chatId,
         userId: user.id,
       });
-      if (chatMessages instanceof NotFoundError) {
-        return status(404, {
-          message: chatMessages.message,
-        });
+      if (result instanceof NotFoundError) {
+        return notFound(result);
       }
-      return chatMessages;
+      return result;
     },
     {
       params: "chat.messages.params",
@@ -48,15 +54,13 @@ export let chatPlugin = new Elysia({ name: "chat", prefix: "/chat" })
   .get(
     "/shared/:id/messages",
     async ({ params: { id: shareId } }) => {
-      let chatMessages = await ChatService.findSharedMessages({
+      let result = await ChatService.findSharedMessages({
         shareId,
       });
-      if (chatMessages instanceof NotFoundError) {
-        return status(404, {
-          message: chatMessages.message,
-        });
+      if (result instanceof NotFoundError) {
+        return notFound(result);
       }
-      return chatMessages;
+      return result;
     },
     {
       params: "chat.shared.messages.params",
@@ -75,27 +79,28 @@ export let chatPlugin = new Elysia({ name: "chat", prefix: "/chat" })
         userId: user.id,
       });
       if (chat instanceof UpsertFailedError) {
-        return status(500, {
-          message: chat.message,
-        });
+        return upsertFailed(chat);
       }
       let stream = streamText({
-        model: groqProvider(model),
+        model: getChatModel(model),
         messages: await convertToModelMessages(messages),
         ...(isDefined(user.personalInstructions) && {
           system: user.personalInstructions,
         }),
+        onError({ error }) {
+          console.error("chat stream error", error);
+        },
       });
       return stream.toUIMessageStreamResponse({
         originalMessages: messages,
         onFinish: async ({ messages }) => {
-          let chatMessages = await ChatService.setMessages({
+          let result = await ChatService.setMessages({
             messages,
             chatId,
             userId: user.id,
           });
-          if (chatMessages instanceof NotFoundError) {
-            console.error(chatMessages.message);
+          if (result instanceof NotFoundError) {
+            console.error(result.message);
           }
         },
       });
@@ -107,17 +112,15 @@ export let chatPlugin = new Elysia({ name: "chat", prefix: "/chat" })
   .put(
     "/:id",
     async ({ params: { id: chatId }, body: { title }, user }) => {
-      let updatedChat = await ChatService.update({
+      let result = await ChatService.update({
         title,
         chatId,
         userId: user.id,
       });
-      if (updatedChat instanceof NotFoundError) {
-        return status(404, {
-          message: updatedChat.message,
-        });
+      if (result instanceof NotFoundError) {
+        return notFound(result);
       }
-      return updatedChat;
+      return result;
     },
     {
       params: "chat.update.params",
@@ -131,16 +134,14 @@ export let chatPlugin = new Elysia({ name: "chat", prefix: "/chat" })
   .put(
     "/:id/share",
     async ({ params: { id: chatId }, user }) => {
-      let sharedChat = await ChatService.share({
+      let result = await ChatService.share({
         chatId,
         userId: user.id,
       });
-      if (sharedChat instanceof NotFoundError) {
-        return status(404, {
-          message: sharedChat.message,
-        });
+      if (result instanceof NotFoundError) {
+        return notFound(result);
       }
-      return sharedChat;
+      return result;
     },
     {
       params: "chat.share.params",
@@ -153,16 +154,14 @@ export let chatPlugin = new Elysia({ name: "chat", prefix: "/chat" })
   .put(
     "/:id/unshare",
     async ({ params: { id: chatId }, user }) => {
-      let unsharedChat = await ChatService.unshare({
+      let result = await ChatService.unshare({
         chatId,
         userId: user.id,
       });
-      if (unsharedChat instanceof NotFoundError) {
-        return status(404, {
-          message: unsharedChat.message,
-        });
+      if (result instanceof NotFoundError) {
+        return notFound(result);
       }
-      return unsharedChat;
+      return result;
     },
     {
       params: "chat.unshare.params",
@@ -185,16 +184,14 @@ export let chatPlugin = new Elysia({ name: "chat", prefix: "/chat" })
   .delete(
     "/:id",
     async ({ params: { id: chatId }, user }) => {
-      let deletedChat = await ChatService.delete({
+      let result = await ChatService.delete({
         chatId,
         userId: user.id,
       });
-      if (deletedChat instanceof NotFoundError) {
-        return status(404, {
-          message: deletedChat.message,
-        });
+      if (result instanceof NotFoundError) {
+        return notFound(result);
       }
-      return deletedChat;
+      return result;
     },
     {
       params: "chat.delete.params",

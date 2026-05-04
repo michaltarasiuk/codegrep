@@ -15,10 +15,31 @@ export const SUGGESTIONS = [
 
 export const MODELS = [
   {
-    chef: "Meta",
-    chefSlug: "meta",
-    id: "llama-3.3-70b-versatile",
-    name: "Llama 3.3 70B",
-    providers: ["groq"],
+    chef: "Anthropic",
+    chefSlug: "anthropic",
+    id: "claude-opus-4-20250514",
+    name: "Claude 4 Opus",
+    providers: ["anthropic", "azure", "google-vertex", "amazon-bedrock"],
+  },
+  {
+    chef: "Anthropic",
+    chefSlug: "anthropic",
+    id: "claude-sonnet-4-20250514",
+    name: "Claude 4 Sonnet",
+    providers: ["anthropic", "azure", "google-vertex", "amazon-bedrock"],
+  },
+  {
+    chef: "Anthropic",
+    chefSlug: "anthropic",
+    id: "claude-sonnet-4-5-20250929",
+    name: "Claude 4.5 Sonnet",
+    providers: ["anthropic", "azure", "google-vertex", "amazon-bedrock"],
+  },
+  {
+    chef: "Anthropic",
+    chefSlug: "anthropic",
+    id: "claude-haiku-4-5-20251001",
+    name: "Claude 4.5 Haiku",
+    providers: ["anthropic", "azure", "google-vertex", "amazon-bedrock"],
   },
 ] as const satisfies ChatModel[];

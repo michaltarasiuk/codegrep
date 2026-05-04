@@ -1,4 +1,5 @@
 <script lang="ts">
+  import Loader2Icon from "@lucide/svelte/icons/loader-2";
   import SearchIcon from "@lucide/svelte/icons/search";
   import { Command as CommandPrimitive } from "bits-ui";
 
@@ -7,16 +8,26 @@
   let {
     ref = $bindable(null),
     value = $bindable(""),
+    loading = false,
     class: className,
     ...restProps
-  }: CommandPrimitive.InputProps = $props();
+  }: CommandPrimitive.InputProps & {
+    loading?: boolean;
+  } = $props();
 </script>
 
 <div
   class="flex h-9 items-center gap-2 border-b ps-3 pe-8"
   data-slot="command-input-wrapper"
 >
-  <SearchIcon class="size-4 shrink-0 opacity-50" />
+  {#if loading}
+    <Loader2Icon
+      class="size-4 shrink-0 animate-spin opacity-50"
+      aria-hidden="true"
+    />
+  {:else}
+    <SearchIcon class="size-4 shrink-0 opacity-50" aria-hidden="true" />
+  {/if}
   <CommandPrimitive.Input
     data-slot="command-input"
     class={cn(

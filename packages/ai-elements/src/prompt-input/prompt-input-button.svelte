@@ -13,7 +13,6 @@
 
   let {
     variant = "ghost",
-    size = "icon-sm",
     tooltip,
     children,
     ...restProps
@@ -23,14 +22,14 @@
 </script>
 
 {#if !tooltip}
-  <InputGroup.Button {variant} {size} {...restProps}>
+  <InputGroup.Button {variant} {...restProps}>
     {@render children?.()}
   </InputGroup.Button>
 {:else}
   <Tooltip.Root>
     <Tooltip.Trigger>
       {#snippet child({ props })}
-        <InputGroup.Button {variant} {size} {...props} {...restProps}>
+        <InputGroup.Button {variant} {...props} {...restProps}>
           {@render children?.()}
         </InputGroup.Button>
       {/snippet}

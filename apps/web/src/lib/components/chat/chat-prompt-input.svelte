@@ -3,7 +3,7 @@
 
   import { getChat } from "./chat-context.js";
   import ModelSelector from "./chat-model-selector.svelte";
-  import ChatPromptAddFilesButton from "./chat-prompt-add-files-button.svelte";
+  import RepositoriesCombobox from "./chat-repositories-combobox.svelte";
   import { MODELS } from "./consts.js";
 
   let {
@@ -26,9 +26,9 @@
         autofocus
       />
     </PromptInput.Body>
-    <PromptInput.Footer class="pe-2">
+    <PromptInput.Footer>
       <PromptInput.Tools>
-        <ChatPromptAddFilesButton />
+        <RepositoriesCombobox />
       </PromptInput.Tools>
 
       <div class="flex shrink-0 items-center gap-3">

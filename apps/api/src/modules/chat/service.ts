@@ -6,22 +6,11 @@ import { db } from "$api/db/index.js";
 import { chat, message } from "$api/db/schema.js";
 import { NotFoundError, UpsertFailedError } from "$api/errors.js";
 
-export abstract class ChatService {
-  static async findFirst({
-    chatId,
-    userId,
-  }: {
-    chatId: string;
-    userId: string;
-  }) {
-    let [found] = await db
-      .select()
-      .from(chat)
-      .where(and(eq(chat.id, chatId), eq(chat.userId, userId)))
-      .limit(1);
-    return found;
-  }
+function ownedBy(chatId: string, userId: string) {
+  return and(eq(chat.id, chatId), eq(chat.userId, userId));
+}
 
+export abstract class ChatService {
   static async findMany({ userId }: { userId: string }) {
     return await db
       .select({
@@ -72,7 +61,8 @@ export abstract class ChatService {
       })
       .from(message)
       .innerJoin(chat, eq(message.chatId, chat.id))
-      .where(eq(chat.shareId, shareId));
+      .where(eq(chat.shareId, shareId))
+      .orderBy(asc(message.createdAt));
     if (!messages.length) {
       return new NotFoundError({
         resource: "chat",
@@ -96,7 +86,8 @@ export abstract class ChatService {
       .values({ id: chatId, title, userId })
       .onConflictDoUpdate({
         target: chat.id,
-        set: { title },
+        set: { updatedAt: new Date() },
+        where: eq(chat.userId, userId),
       })
       .returning();
     if (!isDefined(upserted)) {
@@ -119,7 +110,7 @@ export abstract class ChatService {
     let [updated] = await db
       .update(chat)
       .set({ title })
-      .where(and(eq(chat.id, chatId), eq(chat.userId, userId)))
+      .where(ownedBy(chatId, userId))
       .returning({ id: chat.id, title: chat.title });
     if (!isDefined(updated)) {
       return new NotFoundError({
@@ -139,12 +130,16 @@ export abstract class ChatService {
     chatId: string;
     userId: string;
   }) {
+    if (messages.length === 0) {
+      return { id: chatId };
+    }
     return await db.transaction(async (tx) => {
-      let found = await this.findFirst({
-        chatId,
-        userId,
-      });
-      if (!isDefined(found)) {
+      let [owned] = await tx
+        .select({ id: chat.id })
+        .from(chat)
+        .where(ownedBy(chatId, userId))
+        .limit(1);
+      if (!isDefined(owned)) {
         return new NotFoundError({
           resource: "chat",
           id: chatId,
@@ -176,7 +171,7 @@ export abstract class ChatService {
     let [shared] = await db
       .update(chat)
       .set({ shareId: sql`coalesce(${chat.shareId}, ${generateId()})` })
-      .where(and(eq(chat.id, chatId), eq(chat.userId, userId)))
+      .where(ownedBy(chatId, userId))
       .returning({ id: chat.id, shareId: chat.shareId });
     if (!isDefined(shared)) {
       return new NotFoundError({
@@ -191,8 +186,8 @@ export abstract class ChatService {
     let [unshared] = await db
       .update(chat)
       .set({ shareId: null })
-      .where(and(eq(chat.id, chatId), eq(chat.userId, userId)))
-      .returning({ id: chat.id });
+      .where(ownedBy(chatId, userId))
+      .returning({ id: chat.id, shareId: chat.shareId });
     if (!isDefined(unshared)) {
       return new NotFoundError({
         resource: "chat",
@@ -214,7 +209,7 @@ export abstract class ChatService {
   static async delete({ chatId, userId }: { chatId: string; userId: string }) {
     let [deleted] = await db
       .delete(chat)
-      .where(and(eq(chat.id, chatId), eq(chat.userId, userId)))
+      .where(ownedBy(chatId, userId))
       .returning({ id: chat.id });
     if (!isDefined(deleted)) {
       return new NotFoundError({

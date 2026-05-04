@@ -32,7 +32,7 @@
 >
   <ModelSelector.Trigger>
     {#snippet child({ props })}
-      <PromptInput.Button class="w-fit hover:bg-transparent!" {...props}>
+      <PromptInput.Button class="px-0! hover:bg-transparent!" {...props}>
         <ModelSelector.Logo provider={selectedModelData.chefSlug} />
         <ModelSelector.Name>{selectedModelData.name}</ModelSelector.Name>
       </PromptInput.Button>

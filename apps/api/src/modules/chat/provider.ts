@@ -1,5 +1,9 @@
-import { createGroq } from "@ai-sdk/groq";
+import { createAnthropic } from "@ai-sdk/anthropic";
 
-export let groqProvider = createGroq({
-  apiKey: process.env.GROQ_API_KEY,
+let anthropic = createAnthropic({
+  apiKey: process.env.ANTHROPIC_API_KEY,
 });
+
+export function getChatModel(modelId: string) {
+  return anthropic(modelId);
+}
