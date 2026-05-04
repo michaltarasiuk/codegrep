@@ -9,8 +9,8 @@
     "type:check": "tsc --noEmit"
   },
   "dependencies": {
+    "@ai-sdk/anthropic": "^3.0.74",
     "@workspace/shared": "workspace:*",
-    "@ai-sdk/groq": "^3.0.29",
     "ai": "catalog:",
     "better-auth": "catalog:",
     "drizzle-orm": "^0.45.1",
