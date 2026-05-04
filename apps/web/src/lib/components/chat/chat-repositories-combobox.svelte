@@ -40,7 +40,10 @@
 <Popover.Root bind:open onOpenChange={onPopoverOpenChange}>
   <Popover.Trigger>
     {#snippet child({ props })}
-      <PromptInput.Button class="px-0! hover:bg-transparent!" {...props}>
+      <PromptInput.Button
+        class="px-0! hover:bg-transparent! aria-expanded:bg-transparent! dark:aria-expanded:bg-transparent!"
+        {...props}
+      >
         <BookIcon class="shrink-0" />
         <span class="truncate">{triggerLabel}</span>
       </PromptInput.Button>
