@@ -4,7 +4,7 @@
   import type { UIMessage } from "ai";
   import type { Snippet } from "svelte";
 
-  import { getChat } from "./chat-context.js";
+  import { getChat } from "./context.js";
 
   let {
     children,

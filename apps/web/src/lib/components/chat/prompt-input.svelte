@@ -1,10 +1,10 @@
 <script lang="ts">
   import * as PromptInput from "@workspace/ai-elements/prompt-input/index.js";
 
-  import { getChat } from "./chat-context.js";
-  import ModelSelector from "./chat-model-selector.svelte";
-  import RepositoriesCombobox from "./chat-repositories-combobox.svelte";
   import { MODELS } from "./consts.js";
+  import { getChat } from "./context.js";
+  import ModelSelector from "./model-selector.svelte";
+  import RepositoriesCombobox from "./repositories-combobox.svelte";
 
   let {
     selectedModel = $bindable(MODELS[0].id),

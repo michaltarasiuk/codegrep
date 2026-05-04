@@ -3,7 +3,7 @@
   import { StickToBottom } from "@workspace/stick-to-bottom/index.js";
   import type { Snippet } from "svelte";
 
-  import { type Model, setChat, setModel } from "./chat-context.js";
+  import { type Model, setChat, setModel } from "./context.js";
 
   let {
     chat,

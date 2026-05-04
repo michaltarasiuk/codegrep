@@ -5,8 +5,8 @@
   import { onMount } from "svelte";
 
   import { dev } from "$app/environment";
-  import AppCommand from "$lib/components/app-command.svelte";
-  import AppSidebar from "$lib/components/app-sidebar.svelte";
+  import AppCommand from "$lib/components/app/command.svelte";
+  import AppSidebar from "$lib/components/app/sidebar.svelte";
 
   let { children, data } = $props();
 

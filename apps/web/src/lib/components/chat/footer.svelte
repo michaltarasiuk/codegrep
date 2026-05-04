@@ -2,7 +2,7 @@
   import { cn } from "@workspace/ui/cn.js";
   import type { Snippet } from "svelte";
 
-  import { getChat } from "./chat-context.js";
+  import { getChat } from "./context.js";
 
   let {
     children,

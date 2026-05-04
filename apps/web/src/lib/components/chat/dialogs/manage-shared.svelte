@@ -12,12 +12,13 @@
   import * as Tooltip from "@workspace/ui/tooltip/index.js";
 
   import { invalidate } from "$app/navigation";
-  import ChatUnshareDialog from "$lib/components/chat-unshare-dialog.svelte";
-  import CopyToClipboard from "$lib/components/copy-to-clipboard.svelte";
+  import CopyToClipboard from "$lib/components/shared/copy-to-clipboard.svelte";
   import { client } from "$lib/utils/client.js";
   import { formatDate } from "$lib/utils/format-date.js";
   import { CHAT_LIST_KEY } from "$lib/utils/invalidation.js";
   import { getShareLink } from "$lib/utils/share-link.js";
+
+  import ChatUnshareDialog from "./unshare.svelte";
 
   interface SharedChat {
     id: string;

@@ -14,7 +14,7 @@
   import { resolve } from "$app/paths";
   import { authClient } from "$lib/utils/client.js";
 
-  import ManageSharedConversationsDialog from "./manage-shared-conversations-dialog.svelte";
+  import ManageSharedConversationsDialog from "../chat/dialogs/manage-shared.svelte";
   import PersonalInstructionsDialog from "./personal-instructions-dialog.svelte";
 
   let session = authClient.useSession();

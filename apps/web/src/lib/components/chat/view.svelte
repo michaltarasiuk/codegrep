@@ -6,9 +6,16 @@
 
   import { goto } from "$app/navigation";
   import { resolve } from "$app/paths";
-  import { MODELS } from "$lib/components/chat/consts.js";
-  import * as ChatUI from "$lib/components/chat/index.js";
   import { CHAT_LIST_KEY } from "$lib/utils/invalidation.js";
+
+  import { MODELS } from "./consts.js";
+  import ChatConversation from "./conversation.svelte";
+  import ChatFooter from "./footer.svelte";
+  import ChatMessage from "./message.svelte";
+  import ChatPrivateChatCheckpoint from "./private-chat-checkpoint.svelte";
+  import ChatPromptInput from "./prompt-input.svelte";
+  import ChatRoot from "./root.svelte";
+  import ChatSuggestions from "./suggestions.svelte";
 
   let {
     id,
@@ -55,22 +62,22 @@
   }
 </script>
 
-<ChatUI.Root {chat} {model}>
-  <ChatUI.Conversation>
+<ChatRoot {chat} {model}>
+  <ChatConversation>
     {#snippet children(message, isLast)}
-      <ChatUI.Message {message} {isLast} />
+      <ChatMessage {message} {isLast} />
 
       {#if shared && isLast}
-        <ChatUI.PrivateChatCheckpoint />
+        <ChatPrivateChatCheckpoint />
       {/if}
     {/snippet}
-  </ChatUI.Conversation>
+  </ChatConversation>
 
-  <ChatUI.Footer>
+  <ChatFooter>
     {#if !hasMessages}
-      <ChatUI.Suggestions onPick={handleSuggestionPick} />
+      <ChatSuggestions onPick={handleSuggestionPick} />
     {/if}
 
-    <ChatUI.PromptInput bind:selectedModel={model} handleSubmit={sendMessage} />
-  </ChatUI.Footer>
-</ChatUI.Root>
+    <ChatPromptInput bind:selectedModel={model} handleSubmit={sendMessage} />
+  </ChatFooter>
+</ChatRoot>

@@ -12,9 +12,9 @@
   import { resolve } from "$app/paths";
   import { page } from "$app/state";
 
-  import ChatDeleteDialog from "./chat-delete-dialog.svelte";
-  import ChatShareDialog from "./chat-share-dialog.svelte";
-  import ChatTitleDialog from "./chat-title-dialog.svelte";
+  import ChatDeleteDialog from "./dialogs/delete.svelte";
+  import ChatShareDialog from "./dialogs/share.svelte";
+  import ChatTitleDialog from "./dialogs/title.svelte";
 
   interface Props {
     chat: {

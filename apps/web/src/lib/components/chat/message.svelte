@@ -5,8 +5,8 @@
   import * as Message from "@workspace/ai-elements/message/index.js";
   import type { UIMessage } from "ai";
 
-  import CopyToClipboard from "../copy-to-clipboard.svelte";
-  import { getChat, getModel } from "./chat-context.js";
+  import CopyToClipboard from "../shared/copy-to-clipboard.svelte";
+  import { getChat, getModel } from "./context.js";
 
   let {
     message,

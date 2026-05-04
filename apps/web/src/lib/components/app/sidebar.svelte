@@ -8,7 +8,7 @@
   import { resolve } from "$app/paths";
   import { groupChatsByPeriod } from "$lib/utils/group-chats-by-period.js";
 
-  import ChatSidebarItem from "./chat-sidebar-item.svelte";
+  import ChatSidebarItem from "../chat/sidebar-item.svelte";
   import ThemeToggle from "./theme-toggle.svelte";
   import UserAccountMenu from "./user-account-menu.svelte";
 
