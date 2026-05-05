@@ -12,7 +12,7 @@
   import ChatConversation from "./conversation.svelte";
   import ChatFooter from "./footer.svelte";
   import ChatMessage from "./message.svelte";
-  import ChatPrivateChatCheckpoint from "./private-chat-checkpoint.svelte";
+  import ChatPrivateCheckpoint from "./private-checkpoint.svelte";
   import ChatPromptInput from "./prompt-input.svelte";
   import ChatRoot from "./root.svelte";
   import ChatSuggestions from "./suggestions.svelte";
@@ -68,7 +68,7 @@
       <ChatMessage {message} {isLast} />
 
       {#if shared && isLast}
-        <ChatPrivateChatCheckpoint />
+        <ChatPrivateCheckpoint />
       {/if}
     {/snippet}
   </ChatConversation>
