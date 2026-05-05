@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@ai-sdk/anthropic": "^3.0.74",
+    "@octokit/rest": "^22.0.1",
     "@workspace/shared": "workspace:*",
     "ai": "catalog:",
     "better-auth": "catalog:",

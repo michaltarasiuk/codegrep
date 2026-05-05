@@ -4,7 +4,7 @@
   import { MODELS } from "./consts.js";
   import { getChat } from "./context.js";
   import ModelSelector from "./model-selector.svelte";
-  import RepositoriesCombobox from "./repositories-combobox.svelte";
+  import ReposCombobox from "./repos-combobox.svelte";
 
   let {
     selectedModel = $bindable(MODELS[0].id),
@@ -28,7 +28,7 @@
     </PromptInput.Body>
     <PromptInput.Footer>
       <PromptInput.Tools>
-        <RepositoriesCombobox />
+        <ReposCombobox />
       </PromptInput.Tools>
 
       <div class="flex shrink-0 items-center gap-3">

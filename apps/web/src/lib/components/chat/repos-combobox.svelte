@@ -5,28 +5,28 @@
   import * as Command from "@workspace/ui/command/index.js";
   import * as Popover from "@workspace/ui/popover/index.js";
 
-  interface Repository {
-    label: string;
-    value: string;
+  interface Repo {
+    id: number;
+    fullName: string;
   }
 
-  let { selected = $bindable<string[]>([]) }: { selected?: string[] } =
-    $props();
+  let { selected = $bindable<Repo[]>([]) }: { selected?: Repo[] } = $props();
 
   let open = $state(false);
   let search = $state("");
-  let repositories = $state<Repository[]>([]);
+  let repos = $state<Repo[]>([]);
 
+  let selectedIds = $derived.by(() => {
+    return new Set(selected.map((r) => r.id));
+  });
   let triggerLabel = $derived.by(() => {
     if (selected.length === 0) return "Select a repository";
-    if (selected.length === 1) return selected[0]!;
+    if (selected.length === 1) return selected[0]!.fullName;
     return `${selected.length} repositories`;
   });
 
-  function toggleRepository(value: string) {
-    selected = selected.includes(value)
-      ? selected.filter((v) => v !== value)
-      : [...selected, value];
+  function isSelected(repo: Repo) {
+    return selectedIds.has(repo.id);
   }
 
   function onPopoverOpenChange(next: boolean) {
@@ -52,30 +52,27 @@
     align="start"
     side="bottom"
     avoidCollisions={false}
-    class="flex max-h-80 min-h-0 flex-col overflow-hidden p-0"
+    class="flex max-h-60 min-h-0 flex-col overflow-hidden p-0"
   >
     <Command.Root
       shouldFilter={false}
       class="min-h-0 flex-1 overscroll-contain"
     >
-      <Command.Input bind:value={search} placeholder="Search GitHub…" />
+      <Command.Input bind:value={search} placeholder="Search" />
       <Command.List class="min-h-0 flex-1">
-        {#if repositories.length === 0}
+        {#if repos.length === 0}
           <Command.Empty>No repository found.</Command.Empty>
         {:else}
           <Command.Group>
-            {#each repositories as repo (repo.value)}
-              {@const isChecked = selected.includes(repo.value)}
-              <Command.Item
-                value={repo.value}
-                onSelect={() => toggleRepository(repo.value)}
-              >
+            {#each repos as repo (repo.id)}
+              {@const value = String(repo.id)}
+              <Command.Item {value}>
                 <Checkbox
-                  checked={isChecked}
+                  checked={isSelected(repo)}
                   tabindex={-1}
                   aria-hidden="true"
                 />
-                <span class="truncate">{repo.label}</span>
+                <span class="truncate">{repo.fullName}</span>
               </Command.Item>
             {/each}
           </Command.Group>

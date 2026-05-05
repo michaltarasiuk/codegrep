@@ -24,7 +24,7 @@ let ChatMessage = t.Object(
   { additionalProperties: true }
 );
 
-export let chatModel = new Elysia({ name: "model.chat" }).model({
+export let chatModel = new Elysia({ name: "chat.model" }).model({
   "chat.list.response": t.Array(Chat),
 
   "chat.messages.params": t.Pick(chatSelect, ["id"]),

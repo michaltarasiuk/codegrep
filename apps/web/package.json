@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@elysiajs/eden": "^1.4.8",
-    "@tailwindcss/vite": "catalog:",
+    "@tailwindcss/vite": "^4.1.18",
     "@workspace/ai-elements": "workspace:*",
     "@workspace/fetch-proxy": "workspace:*",
     "@workspace/headers": "workspace:*",
