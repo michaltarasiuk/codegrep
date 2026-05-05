@@ -20,7 +20,7 @@ interface Repo {
 }
 
 interface SearchInput {
-  query: string;
+  query?: string;
   limit: number;
 }
 
@@ -67,7 +67,7 @@ async function searchAuthenticated(
   { query, limit }: SearchInput
 ) {
   let octokit = new Octokit({ auth, ...OCTOKIT_DEFAULTS });
-  if (OWNER_SCOPED.test(query)) {
+  if (isDefined(query) && OWNER_SCOPED.test(query)) {
     return await runSearch(octokit, {
       query,
       limit,
@@ -77,9 +77,19 @@ async function searchAuthenticated(
   let {
     data: { login },
   } = await octokit.users.getAuthenticated();
+  let ownedQuery = isDefined(query)
+    ? `user:${login} ${query}`
+    : `user:${login}`;
+  if (!isDefined(query)) {
+    return await runSearch(octokit, {
+      query: ownedQuery,
+      limit,
+      sort: "updated",
+    });
+  }
   let [owned, popular] = await Promise.all([
     runSearch(octokit, {
-      query: `user:${login} ${query}`,
+      query: ownedQuery,
       limit,
       sort: "updated",
     }),
@@ -93,6 +103,9 @@ async function searchAuthenticated(
 }
 
 async function searchPublic({ query, limit }: SearchInput) {
+  if (!isDefined(query)) {
+    return [];
+  }
   return await runSearch(publicClient, { query, limit, sort: "stars" });
 }
 
