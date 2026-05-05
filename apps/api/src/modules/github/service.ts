@@ -8,7 +8,7 @@ import { GithubUpstreamError } from "$api/errors.js";
 
 const GITHUB_PROVIDER_ID = "github";
 const USER_AGENT = "codegrep";
-const SCOPE_QUALIFIER = /(?:^|\s)(?:user|org|owner|repo):/i;
+const OWNER_SCOPED = /(?:^|\s)(?:user|org|repo):/i;
 
 interface OctokitRepo {
   id: number;
@@ -67,7 +67,7 @@ async function searchAuthenticated(
   { query, limit }: SearchInput
 ) {
   let octokit = new Octokit({ auth, ...OCTOKIT_DEFAULTS });
-  if (SCOPE_QUALIFIER.test(query)) {
+  if (OWNER_SCOPED.test(query)) {
     return await runSearch(octokit, {
       query,
       limit,
