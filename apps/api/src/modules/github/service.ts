@@ -6,17 +6,15 @@ import { db } from "$api/db/index.js";
 import { account } from "$api/db/schema.js";
 import { GithubUpstreamError } from "$api/errors.js";
 
+import type { Repo } from "./model.js";
+
 const GITHUB_PROVIDER_ID = "github";
 const USER_AGENT = "codegrep";
-const OWNER_SCOPED = /(?:^|\s)(?:user|org|repo):/i;
+const OWNER_SCOPED = /(?:^|\s)(?:user|org|owner|repo):/i;
 
 interface OctokitRepo {
   id: number;
   full_name: string;
-}
-interface Repo {
-  id: number;
-  fullName: string;
 }
 
 interface SearchInput {

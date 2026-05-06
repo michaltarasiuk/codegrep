@@ -4,6 +4,7 @@ export let Repo = t.Object({
   id: t.Number(),
   fullName: t.String({ minLength: 1 }),
 });
+export type Repo = typeof Repo.static;
 
 export let githubModel = new Elysia({ name: "github.model" }).model({
   "github.search.query": t.Object({

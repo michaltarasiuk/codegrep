@@ -14,7 +14,7 @@ export let githubPlugin = new Elysia({ name: "github", prefix: "/github" })
   .use(sessionPlugin)
   .use(githubModel)
   .get(
-    "/repositories/search",
+    "/repos",
     async ({ user, query: { q, limit } }) => {
       let result = await GithubService.searchRepos({
         userId: user.id,
